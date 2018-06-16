@@ -10,14 +10,14 @@ add_action( 'admin_menu', 'thfo_openwp_add_menu' );
  * Add an option page
  */
 function thfo_openwp_add_menu() {
-	add_options_page( __( 'OpenAgenda Settings', 'openagenda-wp' ), __( 'OpenAgenda Settings', 'openagenda-wp' ), 'manage_options', 'openagenda-settings', 'options_page' );
+	add_options_page( __( 'OpenAgenda WP', 'openagenda-wp' ), __( 'OpenAgenda Settings', 'openagenda-wp' ), 'manage_options', 'openagenda-settings', 'options_page' );
 }
 
 /**
  *  Display an option page
  */
 function options_page() { ?>
-	<h3><?php echo esc_html( get_admin_page_title() ); ?></h3>
+	<h3><?php echo esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ); ?></h3>
 	<form method="post" action="options.php">
 		<?php settings_fields( 'openagenda-wp' ); ?>
 		<?php do_settings_sections( 'openagenda-wp' ); ?>
@@ -41,8 +41,11 @@ function thfo_openwp_register_settings() {
 /**
  * Register Openagenda API Key
  */
-function thfo_openwp_api() { ?>
+function thfo_openwp_api() {
+	?>
 	<input type="text" name="openagenda_api" value="<?php echo esc_html( get_option( 'openagenda_api' ) ); ?>"/>
-	<p><?php esc_html_e( 'Create an account on OpenAgenda, and go to your setting page to get your API key.', 'openagenda-wp' ); ?></p>
+	<?php $url = esc_url( 'https://openagenda.com' ); ?>
+	<?php // translators: Add the OpenAGenda URL. ?>
+	<p><?php printf( wp_kses( __( 'Create an account on <a href="%s" target="_blank">OpenAgenda</a>, and go to your setting page to get your API key.', 'openagenda-wp' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $url ) ); ?></p>
 	<?php
 }
