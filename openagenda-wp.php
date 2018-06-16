@@ -34,7 +34,18 @@ class Openagenda_WP_Main {
 		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
+		/**
+		 * Load Files
+		 */
+		add_action( 'plugins_loaded', array( $this, 'thfo_openwp_load_files' ) );
 
+	}
+
+	/**
+	 * Include all files needed to the plugin work
+	 */
+	public function thfo_openwp_load_files() {
+		include_once THFO_OPENWP_PLUGIN_PATH . '/admin/register_settings.php';
 	}
 }
 new Openagenda_WP_Main();
