@@ -17,3 +17,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
+/**
+ * Class Openagenda_WP_Main
+ */
+class Openagenda_WP_Main {
+
+	/**
+	 * Openagenda_WP_Main constructor.
+	 */
+	public function __construct() {
+
+		/**
+		 * Define Constant
+		 */
+		define( 'PLUGIN_VERSION', '1.0.0' );
+		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
+
+	}
+}
+new Openagenda_WP_Main();
