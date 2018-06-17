@@ -19,9 +19,9 @@ class OpenAgenda_Shortcode {
 	/**
 	 * Display a basic Shortcode
 	 * [openwp_basic slug='your_slug' nb=11 lang='fr']
-	 * slug => string with slug of agenda.
-	 * nb => Number of events to display.
-	 * lang => language to display (2 letters country code: en/fr...)
+	 * slug => string with slug of agenda. required.
+	 * nb => Number of events to display. default 10. optional.
+	 * lang => language to display (2 letters country code: en/fr...). default: en. optional.
 
 	 * @param array $atts contain slug, nb and languages.
 	 * @return array|mixed|object|string
@@ -31,15 +31,14 @@ class OpenAgenda_Shortcode {
 		$atts   = shortcode_atts( array(
 			'slug' => 'test',
 			'nb' => 10,
-			'lang' => 'en'
+			'lang' => 'en',
 		), $atts, 'openwp_basic' );
 		$openwp = new OpenAgendaApi();
 
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $atts['slug'], $atts['nb'] );
 
 		ob_start();
-		foreach ($openwp_data['events'] as $events) {
-		//	var_dump($events);
+		foreach ( $openwp_data['events'] as $events ) {
 			?>
 			<a href="<?php echo esc_url( $events['canonicalUrl'] ); ?>" target="_blank">
 				<p><?php echo esc_attr( $events['range'][ $atts['lang'] ] ); ?></p>
