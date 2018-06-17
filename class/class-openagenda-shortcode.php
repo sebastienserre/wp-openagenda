@@ -30,7 +30,7 @@ class OpenAgenda_Shortcode {
 
 		$atts   = shortcode_atts( array(
 			'slug' => 'test',
-			'nb' => 10,
+			'nb'   => 10,
 			'lang' => 'en',
 		), $atts, 'openwp_basic' );
 		$openwp = new OpenAgendaApi();
@@ -49,6 +49,7 @@ class OpenAgenda_Shortcode {
 			<hr>
 			<?php
 		}
+
 		return ob_get_clean();
 	}
 
