@@ -3,6 +3,8 @@
  *  Add an OpenAgenda Option page.
 
  * @package openagenda-wp
+ * @since 1.0.0
+ * @author sebastienserre
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
