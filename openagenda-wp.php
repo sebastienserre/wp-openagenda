@@ -46,6 +46,8 @@ class Openagenda_WP_Main {
 	 */
 	public function thfo_openwp_load_files() {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/admin/register-settings.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagendaapi.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-shortcode.php';
 	}
 }
 new Openagenda_WP_Main();
