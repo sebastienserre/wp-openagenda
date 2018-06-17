@@ -31,7 +31,7 @@ class OpenAgenda_Shortcode {
 		$atts   = shortcode_atts( array(
 			'slug' => 'test',
 			'nb' => 10,
-			'lang' => 'fr'
+			'lang' => 'en'
 		), $atts, 'openwp_basic' );
 		$openwp = new OpenAgendaApi();
 
