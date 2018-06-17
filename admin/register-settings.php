@@ -1,4 +1,9 @@
 <?php
+/**
+ *  Add an OpenAgenda Option page.
+
+ * @package openagenda-wp
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
