@@ -30,6 +30,7 @@ function options_page() { ?>
 		<?php do_settings_sections( 'openagenda-wp' ); ?>
 		<?php submit_button( __( 'Save' ) ); ?>
 		<?php do_settings_sections( 'openagenda-wp-help' ); ?>
+		<?php do_settings_sections( 'openagenda-wp-credits' ); ?>
 	</form>
 
 	<?php
@@ -40,8 +41,9 @@ add_action( 'admin_init', 'thfo_openwp_register_settings' );
  * Register OpenAgenda Settings
  */
 function thfo_openwp_register_settings() {
-	add_settings_section( 'openagenda-wp-help', '', 'thfo_openwp_help', 'openagenda-wp-help' );
+	add_settings_section( 'openagenda-wp-help', __( 'Help Center', 'openagenda-wp' ), 'thfo_openwp_help', 'openagenda-wp-help' );
 	add_settings_section( 'openagenda-wp', '', '', 'openagenda-wp' );
+	add_settings_section( 'openagenda-wp-credits', __( 'Credits', 'openagenda-wp' ), 'thfo_openwp_credits', 'openagenda-wp-credits' );
 	register_setting( 'openagenda-wp', 'openagenda_api' );
 	add_settings_field( 'openagenda-wp', __( 'API Openagenda', 'openagenda-wp' ), 'thfo_openwp_api', 'openagenda-wp', 'openagenda-wp' );
 
@@ -70,5 +72,11 @@ function thfo_openwp_help() {
 			<li><?php _e( 'The Agenda slug is <strong>mandatory</strong>', 'openagenda-wp' ); ?></li>
 		</ul>
 	</ul>
+<?php
+}
+
+function thfo_openwp_credits() {
+	?>
+	<p><?php _e('This plugin is created with love by ', 'openagenda-wp'); ?><a href="https://thivinfo.com">Thivinfo.com</a></p>
 <?php
 }
