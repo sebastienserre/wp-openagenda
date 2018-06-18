@@ -37,18 +37,11 @@ class OpenAgenda_Shortcode {
 
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $atts['slug'], $atts['nb'] );
 
+		$lang = $atts['lang'];
+
 		ob_start();
-		foreach ( $openwp_data['events'] as $events ) {
-			?>
-			<a href="<?php echo esc_url( $events['canonicalUrl'] ); ?>" target="_blank">
-				<p><?php echo esc_attr( $events['range'][ $atts['lang'] ] ); ?></p>
-				<img src="<?php echo esc_attr( $events['image'] ); ?>">
-				<h3><?php echo esc_attr( $events['title'][ $atts['lang'] ] ); ?></h3>
-				<p><?php echo esc_textarea( $events['longDescription'][ $atts['lang'] ] ); ?></p>
-			</a>
-			<hr>
-			<?php
-		}
+
+		$openwp->openwp_basic_html( $openwp_data, $lang );
 
 		return ob_get_clean();
 	}
