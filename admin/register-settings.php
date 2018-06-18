@@ -63,15 +63,14 @@ function thfo_openwp_api() {
 
 function thfo_openwp_help() {
 	?>
-	<h4><?php _e( 'Help Center', 'openagenda-wp' ); ?></h4>
-	<h5><?php _e( 'Shortcodes', 'openagenda-wp' ); ?></h5>
+	<h4><?php _e( 'Shortcodes', 'openagenda-wp' ); ?></h4>
 	<ul>
 		<li>[openwp_basic]</li>
 		<ul>
 			<li><?php _e( 'This shortcode will display a list of events from an OpenAgenda', 'openagenda-wp' ); ?></li>
 			<li><?php _e( 'The param Agenda slug is <strong>mandatory</strong>. example: slug=\'my-agenda-slug\' ', 'openagenda-wp' ); ?></li>
 			<li><?php _e( 'The param nb is <strong>optional</strong>. Default value is 10. It will retrieve data for the "nb" events. example: nb=12 ', 'openagenda-wp' ); ?></li>
-			<li><?php _e( 'The param lang is <strong>optional</strong>. Default value is en (english). It will retrieve data for the "nb" events. example: nb=12 ', 'openagenda-wp' ); ?></li>
+			<li><?php _e( 'The param lang is <strong>optional</strong>. Default value is en (english). It will retrieve data with the "lang" params (if exists). example: lang = \'fr\' ', 'openagenda-wp' ); ?></li>
 		</ul>
 	</ul>
 <?php
