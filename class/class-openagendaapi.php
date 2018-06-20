@@ -82,6 +82,24 @@ class OpenAgendaApi {
 		return $decoded_body;
 	}
 
+	/**
+	 *  Basic Display.
+	 */
+	public function openwp_basic_html( $openwp_data, $lang ) {
+		foreach ( $openwp_data['events'] as $events ) {
+
+			?>
+			<a href="<?php echo esc_url( $events['canonicalUrl'] ); ?>" target="_blank">
+				<p><?php echo esc_attr( $events['range'][$lang] ); ?></p>
+				<img src="<?php echo esc_attr( $events['image'] ); ?>">
+				<h3><?php echo esc_attr( $events['title'][$lang] ); ?></h3>
+				<p><?php echo esc_textarea( $events['longDescription'][$lang] ); ?></p>
+			</a>
+			<hr>
+			<?php
+		}
+	}
+
 }
 
 new OpenAgendaApi();
