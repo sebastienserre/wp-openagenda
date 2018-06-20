@@ -28,11 +28,16 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * The param Agenda slug is mandatory. example: slug=\'my-agenda-slug\'.
 * The param nb is optional. Default value is 10. It will retrieve data for the \"nb\" events. example: nb=12
 * The param lang is optional. Default value is en (english). It will retrieve data with the \"lang\" params (if exists). example: lang = \'fr\'
+= Is this plugin created by Openagenda.com? =
+* No! This plugin is developped by [Thivinfo.com](https://thivinfo.com)
+= Do I need to be the owner of the Agenda?
+* No! You can display all Agenda from [Openagenda.com](openagenda.com) by just copying the Agenda's slug.
+= May I display several Agenda?
+* Yes! (one by widget, shortcode)
 
 == Screenshots ==
 1. settings
 2. display in front
-3. shortcode on backoffice
 
 == Changelog ==
 
