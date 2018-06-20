@@ -15,7 +15,7 @@ class OpenwpBasicWidget extends WP_Widget {
 	public function __construct() {
 		$widget_args = array(
 			'classname'   => 'Openagenda Basic Widget',
-			'description' => __( 'Display an Openagenda.com\'s Agenda in your WordPress Sidebar with a beautiful widget', 'openagenda-wp' ),
+			'description' => __( 'Display an Openagenda.com\'s Agenda in your WordPress Sidebar with a beautiful widget', 'wp-openagenda' ),
 		);
 		parent::__construct(
 			'openwp_basic_widget',
