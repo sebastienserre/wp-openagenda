@@ -12,8 +12,8 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 Display Events hosted in Openagenda.com easily in your WordPress Website.
 
 == Description ==
-Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode.
-Shortly is planned to be produced WordPress Widget, Gutenberg Blocks and page builder elements.
+Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode and Widget.
+Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 
 == Installation ==
 * 1- unzip
