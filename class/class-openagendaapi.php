@@ -45,7 +45,7 @@ class OpenAgendaApi {
 	 */
 	public function thfo_openwp_retrieve_data( $slug, $nb = 10 ) {
 		if ( empty( $slug ) ) {
-			return '<p>' . __( 'You forgot to add a slug of agenda to retrieve', 'openagenda-wp' ) . '</p>';
+			return '<p>' . __( 'You forgot to add a slug of agenda to retrieve', 'wp-openagenda' ) . '</p>';
 		}
 		if ( empty( $nb ) ) {
 			$nb = 10;
@@ -60,7 +60,7 @@ class OpenAgendaApi {
 				$uid          = $decoded_body['data']['uid'];
 			}
 		} else {
-			$warning = '<p>' . __( 'Please add an OpenAgenda API Key in Settings / OpenAgenda Settings', 'openagenda-wp' ) . '</p>';
+			$warning = '<p>' . __( 'Please add an OpenAgenda API Key in Settings / OpenAgenda Settings', 'wp-openagenda' ) . '</p>';
 
 			return $warning;
 		}
@@ -73,10 +73,10 @@ class OpenAgendaApi {
 				$body         = wp_remote_retrieve_body( $response );
 				$decoded_body = json_decode( $body, true );
 			} else {
-				$decoded_body = '<p>' . __( 'Impossible to retrieve Events Data', 'openagenda-wp' ) . '</p>';
+				$decoded_body = '<p>' . __( 'Impossible to retrieve Events Data', 'wp-openagenda' ) . '</p>';
 			}
 		} else {
-			$decoded_body = '<p>' . __( 'Impossible to retrieve Events Data', 'openagenda-wp' ) . '</p>';
+			$decoded_body = '<p>' . __( 'Impossible to retrieve Events Data', 'wp-openagenda' ) . '</p>';
 		}
 
 		return $decoded_body;

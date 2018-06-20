@@ -7,7 +7,7 @@
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 4.9
- * Text Domain: openagenda-wp
+ * Text Domain: wp-openagenda
  * License: GPLv3
 
  * @package openagenda-wp
