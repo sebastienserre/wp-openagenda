@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -35,6 +35,11 @@ Shortly is planned to be produced WordPress Widget, Gutenberg Blocks and page bu
 3. shortcode on backoffice
 
 == Changelog ==
+
+* 1.1.0 -- 20 june 2018
+    Add a Widget
+    Correct text-domain
+
 * 1.0.0 -- 18 june 2018
     initial commit
     Display Events with a Basic Shortcode
