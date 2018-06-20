@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Openagenda
- * Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
+ * Plugin URI: https://wordpress.org/plugins/wp-openagenda/
  * Description: Easily display an OpenAgenga.com in your WordPress website
  * Version: 1.1.0
  * Author: Sébastien Serre
