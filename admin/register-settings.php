@@ -91,5 +91,15 @@ function thfo_openwp_credits() {
 		?>
 
 	</p>
+	<p>
+		<?php
+		$url_open  = 'https://openagenda.com';
+		$text_open = 'openagenda.com';
+		// translators: This line add disclosure from Openagenda.com and thivinfo.com.
+		$link = sprintf( wp_kses( __( 'There\'s no relations between <a href="%1$s">%2$s</a> and <a href="%3$s">%4$s</a>.', 'wp-openagenda' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $url ), esc_attr( $text ), esc_url( $url_open ), esc_attr( $text_open ) );
+		echo $link;
+		?>
+
+	</p>
 	<?php
 }
