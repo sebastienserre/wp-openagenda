@@ -1,10 +1,10 @@
 <?php
 /**
  *  Add an OpenAgenda Option page.
-
+ *
  * @package openagenda-wp
- * @since 1.0.0
- * @author sebastienserre
+ * @since   1.0.0
+ * @author  sebastienserre
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -63,21 +63,33 @@ function thfo_openwp_api() {
 
 function thfo_openwp_help() {
 	?>
-	<h4><?php _e( 'Shortcodes', 'wp-openagenda' ); ?></h4>
+	<h4><?php esc_attr_e( 'Shortcodes', 'wp-openagenda' ); ?></h4>
 	<ul>
 		<li>[openwp_basic]</li>
 		<ul>
-			<li><?php _e( 'This shortcode will display a list of events from an OpenAgenda', 'wp-openagenda' ); ?></li>
-			<li><?php _e( 'The param Agenda slug is <strong>mandatory</strong>. example: slug=\'my-agenda-slug\' ', 'wp-openagenda' ); ?></li>
-			<li><?php _e( 'The param nb is <strong>optional</strong>. Default value is 10. It will retrieve data for the "nb" events. example: nb=12 ', 'wp-openagenda' ); ?></li>
-			<li><?php _e( 'The param lang is <strong>optional</strong>. Default value is en (english). It will retrieve data with the "lang" params (if exists). example: lang = \'fr\' ', 'wp-openagenda' ); ?></li>
+			<li><?php esc_attr_e( 'This shortcode will display a list of events from an OpenAgenda', 'wp-openagenda' ); ?></li>
+			<li><?php esc_attr_e( 'The param Agenda slug is <strong>mandatory</strong>. example: slug=\'my-agenda-slug\' ', 'wp-openagenda' ); ?></li>
+			<li><?php wp_kses( _e( 'The param nb is <strong>optional</strong>. Default value is 10. It will retrieve data for the "nb" events. example: nb=12 ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
+			<li><?php wp_kses( _e( 'The param lang is <strong>optional</strong>. Default value is en (english). It will retrieve data with the "lang" params (if exists). example: lang = \'fr\' ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
 		</ul>
 	</ul>
-<?php
+	<?php
 }
 
+/**
+ * Add Credit to this Plugins.
+ */
 function thfo_openwp_credits() {
 	?>
-	<p><?php _e('This plugin is created with love by ', 'wp-openagenda'); ?><a href="https://thivinfo.com">Thivinfo.com</a></p>
-<?php
+	<p>
+		<?php
+		$url  = 'https://thivinfo.com';
+		$text = 'Thivinfo.com';
+		// translators: This line add credits to thivinfo.com.
+		$link = sprintf( wp_kses( __( 'This plugin is created with love by <a href="%1$s">%2$s</a>.', 'wp-openagenda' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $url ), esc_attr( $text ) );
+		echo $link;
+		?>
+
+	</p>
+	<?php
 }
