@@ -49,6 +49,7 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagendaapi.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-shortcode.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openwpbasicwidget.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . '/visual-composer/class-vc-events.php';
 	}
 }
 new Openagenda_WP_Main();
