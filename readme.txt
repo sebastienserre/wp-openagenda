@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -34,12 +34,25 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * No! You can display all Agenda from [Openagenda.com](openagenda.com) by just copying the Agenda's slug.
 = May I display several Agenda?
 * Yes! (one by widget, shortcode)
+= Is a Roadmap exist?
+* No! No roadmap but Ideas:
+    * Gutenberg Blocks,
+    * Elementor Widget
+    * Markdown parsing
+= May I give Idea?
+* Yes please use the [Github](https://github.com/sebastienserre/openagenda-wp/issues) issue
+
 
 == Screenshots ==
 1. settings
 2. display in front
 
 == Changelog ==
+
+* 1.2.0 -- 27 june 2018
+    Add a WPBakery Page Builder (Visual Composer) Element.
+    Add Hooks
+    Add CSS Class to allow custom style
 
 * 1.1.0 -- 20 june 2018
     Add a Widget
