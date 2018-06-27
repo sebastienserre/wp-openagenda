@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -49,8 +49,9 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 
 == Changelog ==
 
-* 1.2.1 -- 27 june 2018
+* 1.2.1/2-- 27 june 2018
     Correct a bug if VC not activated
+    Cosmectic change
 
 * 1.2.0 -- 27 june 2018
     Add a WPBakery Page Builder (Visual Composer) Element.
