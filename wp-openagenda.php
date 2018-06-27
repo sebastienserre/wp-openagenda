@@ -3,7 +3,7 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://www.thivinfo.com/blog/afficher-facilement-vos-agendas-openagenda-com-sur-votre-site-wordpress-avec-openagenda-pour-wordpress/
  * Description: Easily display an OpenAgenga.com in your WordPress website
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 4.9
@@ -30,7 +30,7 @@ class Openagenda_WP_Main {
 		/**
 		 * Define Constant
 		 */
-		define( 'THFO_OPENWP_VERSION', '1.2.0' );
+		define( 'THFO_OPENWP_VERSION', '1.2.1' );
 		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -49,7 +49,10 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagendaapi.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-shortcode.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openwpbasicwidget.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/visual-composer/class-vc-events.php';
+
+		if ( class_exists( 'Vc_Manager' ) ) {
+			include_once THFO_OPENWP_PLUGIN_PATH . '/visual-composer/class-vc-events.php';
+		}
 	}
 }
 new Openagenda_WP_Main();
