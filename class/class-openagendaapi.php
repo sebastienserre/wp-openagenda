@@ -2,9 +2,9 @@
 /**
  * Set of methods to retrieve data from OpenAgenda
  *
- * @author: sebastienserre
+ * @author  : sebastienserre
  * @package Openagenda-api
- * @since 1.0.0
+ * @since   1.0.0
  */
 
 /**
@@ -39,7 +39,7 @@ class OpenAgendaApi {
 	 * Retrieve data from Openagenda
 	 *
 	 * @param string $slug Slug of your agenda.
-	 * @param int    $nb Number of event to retrieve. Default 10.
+	 * @param int    $nb   Number of event to retrieve. Default 10.
 	 *
 	 * @return array|mixed|object|string
 	 */
@@ -86,20 +86,29 @@ class OpenAgendaApi {
 	 *  Basic Display.
 	 */
 	public function openwp_basic_html( $openwp_data, $lang ) {
+		?>
+		<div class="openwp-events">
+		<?php
+		do_action( 'openwp_before_html' );
 		foreach ( $openwp_data['events'] as $events ) {
 			$pub = apply_filters( 'openagendawp_pub', '<p>' . __( 'This plugin is created with love by ', 'wp-openagenda' ) . '<a href="https://goo.gl/K4eoTB">Thivinfo.com</a></p>' );
 			?>
-			<a href="<?php echo esc_url( $events['canonicalUrl'] ); ?>" target="_blank">
-				<p><?php echo esc_attr( $events['range'][$lang] ); ?></p>
-				<img src="<?php echo esc_attr( $events['image'] ); ?>">
-				<h3><?php echo esc_attr( $events['title'][$lang] ); ?></h3>
-				<p><?php echo esc_textarea( $events['longDescription'][$lang] ); ?></p>
-			</a>
+			<div class="openwp-event">
+				<a href="<?php echo esc_url( $events['canonicalUrl'] ); ?>" target="_blank">
+					<p><?php echo esc_attr( $events['range'][ $lang ] ); ?></p>
+					<img src="<?php echo esc_attr( $events['image'] ); ?>">
+					<h3><?php echo esc_attr( $events['title'][ $lang ] ); ?></h3>
+					<p><?php echo esc_textarea( $events['longDescription'][ $lang ] ); ?></p>
+				</a>
 				<?php echo $pub; ?>
 
-			<hr>
+			</div>
 			<?php
 		}
+		do_action( 'openwp_after_html' );
+		?>
+		</div>
+<?php
 	}
 
 }
