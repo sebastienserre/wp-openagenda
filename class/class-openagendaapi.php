@@ -106,12 +106,13 @@ class OpenAgendaApi {
 					<h3><?php echo esc_attr( $events['title'][ $lang ] ); ?></h3>
 					<p><?php echo $parsedown->text(esc_textarea( $events['longDescription'][ $lang ] ) ); ?></p>
 				</a>
-				<?php echo $pub; ?>
 
 			</div>
 			<?php
 		}
 		do_action( 'openwp_after_html' );
+		echo $pub;
+		echo thfo_openwp_stars();
 		?>
 		</div>
 <?php

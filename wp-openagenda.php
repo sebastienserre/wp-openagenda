@@ -38,6 +38,7 @@ class Openagenda_WP_Main {
 		 * Load Files
 		 */
 		add_action( 'plugins_loaded', array( $this, 'thfo_openwp_load_files' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'thfo_openwp_load_style' ) );
 
 	}
 
@@ -54,6 +55,13 @@ class Openagenda_WP_Main {
 		if ( class_exists( 'Vc_Manager' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/inc/visual-composer/class-vc-events.php';
 		}
+	}
+
+	/**
+	 * Load light style CSS
+	 */
+	public function thfo_openwp_load_style() {
+		wp_enqueue_style( 'openwp', THFO_OPENWP_PLUGIN_URL . 'assets/css/openwp.css' );
 	}
 }
 new Openagenda_WP_Main();

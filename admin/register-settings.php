@@ -77,6 +77,58 @@ function thfo_openwp_help() {
 }
 
 /**
+ * Display Review star link to wp.org.
+ */
+function thfo_openwp_stars() {
+	$output = ob_start();
+	?>
+	<div class="openwp-stars">
+        <span id="openwp-footer-credits">
+                <span class="dashicons dashicons-wordpress"></span>
+	        <?php _e( "Love OpenAgenda for WordPress ? Don't forget to rate it 5 stars!", "wp-openagenda" ) ?>
+
+	        <span class="wporg-ratings rating-stars">
+                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=1#postform" data-rating="1"
+                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
+                                                      style="color:#FFDE24 !important;"></span></a>
+                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=2#postform" data-rating="2"
+                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
+                                                      style="color:#FFDE24 !important;"></span></a>
+                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=3#postform" data-rating="3"
+                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
+                                                      style="color:#FFDE24 !important;"></span></a>
+                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=4#postform" data-rating="4"
+                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
+                                                      style="color:#FFDE24 !important;"></span></a>
+                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=5#postform" data-rating="5"
+                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
+                                                      style="color:#FFDE24 !important;"></span></a>
+                </span>
+                <script>
+                    jQuery(document).ready(function ($) {
+                        $(".rating-stars").find("a").hover(
+                            function () {
+                                $(this).nextAll("a").children("span").removeClass("dashicons-star-filled").addClass("dashicons-star-empty");
+                                $(this).prevAll("a").children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
+                                $(this).children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
+                            }, function () {
+                                var rating = $("input#rating").val();
+                                if (rating) {
+                                    var list = $(".rating-stars a");
+                                    list.children("span").removeClass("dashicons-star-filled").addClass("dashicons-star-empty");
+                                    list.slice(0, rating).children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
+                                }
+                            }
+                        );
+                    });
+                </script>
+            </span>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+
+/**
  * Add Credit to this Plugins.
  */
 function thfo_openwp_credits() {
@@ -102,4 +154,5 @@ function thfo_openwp_credits() {
 
 	</p>
 	<?php
+	echo thfo_openwp_stars();
 }
