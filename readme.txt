@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -37,10 +37,12 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 = Is a Roadmap exist?
 * No! No roadmap but Ideas:
     * Gutenberg Blocks,
-    * Elementor Widget
-    * Markdown parsing
+    * yours!
 = May I give Idea?
 * Yes please use the [Github](https://github.com/sebastienserre/openagenda-wp/issues) issue
+
+= I'm using Elementor Page Builder, How to use OpenAgenda for Wordpress to display events?
+* simply use the WordPress Widget, it will display your agenda on Elementor page Builder
 
 
 == Screenshots ==
@@ -49,7 +51,11 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 
 == Changelog ==
 
-* 1.2.1/2-- 27 june 2018
+* 1.2.3 -- 29 june 2018
+    Add support of markdown (md). Markdown can be used in OpenAgenda to  define the markup of descriptions.
+    WordPress Widget can be used on Elementor Page Builder
+
+* 1.2.1/2 -- 27 june 2018
     Correct a bug if VC not activated
     Cosmectic change
 
