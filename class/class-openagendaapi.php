@@ -92,6 +92,7 @@ class OpenAgendaApi {
 	public function openwp_basic_html( $openwp_data, $lang ) {
 		?>
 		<div class="openwp-events">
+			<!-- OpenAgenda for WordPress Plugin downloadable for free on https://wordpress.org/plugins/wp-openagenda/-->
 			<?php
 			do_action( 'openwp_before_html' );
 			$parsedown = new Parsedown();
@@ -100,11 +101,9 @@ class OpenAgendaApi {
 				$pub = apply_filters( 'openagendawp_pub', '<p>' . __( 'This plugin is created with love by ', 'wp-openagenda' ) . '<a href="https://goo.gl/K4eoTB">Thivinfo.com</a></p>' . thfo_openwp_stars() );
 				?>
 				<div class="openwp-event">
-					<!-- OpenAgenda for WordPress Plugin downloadable for free on https://wordpress.org/plugins/wp-openagenda/-->
 					<a href="<?php echo esc_url( $events['canonicalUrl'] ); ?>" target="_blank">
 						<p><?php echo esc_attr( $events['range'][ $lang ] ); ?></p>
 						<?php
-						//var_dump($events);
 						if ( $events['image'] !== false ) {
 							?>
 							<img src="<?php echo esc_attr( $events['image'] ); ?>">
