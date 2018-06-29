@@ -48,6 +48,7 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/admin/register-settings.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagendaapi.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-shortcode.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/parsedown/Parsedown.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openwpbasicwidget.php';
 
 		if ( class_exists( 'Vc_Manager' ) ) {

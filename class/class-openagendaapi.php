@@ -90,6 +90,8 @@ class OpenAgendaApi {
 		<div class="openwp-events">
 		<?php
 		do_action( 'openwp_before_html' );
+		$parsedown = new Parsedown();
+
 		foreach ( $openwp_data['events'] as $events ) {
 			$pub = apply_filters( 'openagendawp_pub', '<p>' . __( 'This plugin is created with love by ', 'wp-openagenda' ) . '<a href="https://goo.gl/K4eoTB">Thivinfo.com</a></p>' );
 			?>
@@ -98,7 +100,7 @@ class OpenAgendaApi {
 					<p><?php echo esc_attr( $events['range'][ $lang ] ); ?></p>
 					<img src="<?php echo esc_attr( $events['image'] ); ?>">
 					<h3><?php echo esc_attr( $events['title'][ $lang ] ); ?></h3>
-					<p><?php echo esc_textarea( $events['longDescription'][ $lang ] ); ?></p>
+					<p><?php echo $parsedown->text(esc_textarea( $events['longDescription'][ $lang ] ) ); ?></p>
 				</a>
 				<?php echo $pub; ?>
 
