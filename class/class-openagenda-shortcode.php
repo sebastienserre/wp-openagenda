@@ -4,6 +4,10 @@
  * @package openagenda-shortcode
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} // Exit if accessed directly.
+
 /**
  * Class OpenAgenda_Shortcode
  */

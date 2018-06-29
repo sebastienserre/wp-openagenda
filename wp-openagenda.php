@@ -54,6 +54,9 @@ class Openagenda_WP_Main {
 		if ( class_exists( 'Vc_Manager' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/inc/visual-composer/class-vc-events.php';
 		}
+		if ( class_exists( 'Plugin' ) ) {
+			include_once THFO_OPENWP_PLUGIN_PATH . '/inc/elementor/class-elementor-basic.php';
+		}
 	}
 }
 new Openagenda_WP_Main();

@@ -5,6 +5,10 @@
  * @package VC_Events
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} // Exit if accessed directly.
+
 /**
  *
  * Class VC_Events
