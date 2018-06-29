@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -22,18 +22,23 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * 4- have fun!
 
 == Frequently Asked Questions ==
+
 = How to display an agenda in my website? =
 * 1st get an Openagenda API Key in your Openagenda profile.
 * 2nd use the [openwp_basic] with with params below to customize it.
 * The param Agenda slug is mandatory. example: slug=\'my-agenda-slug\'.
 * The param nb is optional. Default value is 10. It will retrieve data for the \"nb\" events. example: nb=12
 * The param lang is optional. Default value is en (english). It will retrieve data with the \"lang\" params (if exists). example: lang = \'fr\'
+
 = Is this plugin created by Openagenda.com? =
 * No! This plugin is developped by [Thivinfo.com](https://thivinfo.com)
+
 = Do I need to be the owner of the Agenda?
 * No! You can display all Agenda from [Openagenda.com](openagenda.com) by just copying the Agenda's slug.
+
 = May I display several Agenda?
 * Yes! (one by widget, shortcode)
+
 = Is a Roadmap exist?
 * No! No roadmap but Ideas:
     * Gutenberg Blocks,
@@ -50,6 +55,10 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 2. display in front
 
 == Changelog ==
+
+* 1.2.4 -- 29 june 2018
+    Improve basic layout
+    add CSS to adapt some display
 
 * 1.2.3 -- 29 june 2018
     Add support of markdown (md). Markdown can be used in OpenAgenda to  define the markup of descriptions.
