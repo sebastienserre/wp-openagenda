@@ -27,66 +27,67 @@ class Vc_Events {
 	 */
 	public function openwp_vc_openagenda_element() {
 
+		$params = array(
+
+			array(
+				'type'        => 'textfield',
+				'holder'      => 'h3',
+				'class'       => 'title-class',
+				'heading'     => __( 'Title', 'wp-openagenda' ),
+				'param_name'  => 'title',
+				'value'       => __( 'Title', 'wp-openagenda' ),
+				'admin_label' => false,
+				'weight'      => 0,
+				'group'       => __( 'Settings', 'wp-openagenda' ),
+			),
+
+			array(
+				'type'        => 'textfield',
+				'holder'      => 'a',
+				'class'       => 'url-class',
+				'heading'     => __( 'URL to Agenda', 'wp-openagenda' ),
+				'param_name'  => 'agenda_url',
+				'value'       => esc_url( site_url() ),
+				'description' => __( 'URL to Agenda. You must create a page integrating OpenAgenda', 'wp-openagenda' ),
+				'admin_label' => false,
+				'weight'      => 0,
+				'group'       => __( 'Settings', 'wp-openagenda' ),
+			),
+
+			array(
+				'type'        => 'textfield',
+				'holder'      => 'p',
+				'class'       => 'openagenda_lang',
+				'heading'     => __( 'language to display', 'wp-openagenda' ),
+				'param_name'  => 'lang',
+				'description' => __( 'Choose the lang to display.', 'wp-openagenda' ),
+				'admin_label' => false,
+				'value'       => '',
+				'weight'      => 0,
+				'group'       => __( 'Settings', 'wp-openagenda' ),
+			),
+			array(
+				'type'        => 'textfield',
+				'holder'      => 'p',
+				'class'       => 'title-class',
+				'heading'     => __( 'Nb of event', 'wp-openagenda' ),
+				'param_name'  => 'nb_event',
+				'value'       => '1',
+				'description' => __( 'Number of event to display', 'wp-openagenda' ),
+				'admin_label' => false,
+				'weight'      => 0,
+				'group'       => __( 'Settings', 'wp-openagenda' ),
+			),
+
+
+		);
 		vc_map( array(
 				'name'        => __( 'Event Openagenda', 'wp-openagenda' ),
 				'base'        => 'openwp-vc-basic',
 				'description' => __( 'Display Event from Openagenda', 'wp-openagenda' ),
 				'category'    => __( 'OpenAgenda', 'wp-openagenda' ),
 				'icon'        => THFO_OPENWP_PLUGIN_URL . '/assets/img/icon.jpg',
-				'params'      => array(
-
-					array(
-						'type'        => 'textfield',
-						'holder'      => 'h3',
-						'class'       => 'title-class',
-						'heading'     => __( 'Title', 'wp-openagenda' ),
-						'param_name'  => 'title',
-						'value'       => __( 'Title', 'wp-openagenda' ),
-						'admin_label' => false,
-						'weight'      => 0,
-						'group'       => __( 'Settings', 'wp-openagenda' ),
-					),
-
-					array(
-						'type'        => 'textfield',
-						'holder'      => 'a',
-						'class'       => 'url-class',
-						'heading'     => __( 'URL to Agenda', 'wp-openagenda' ),
-						'param_name'  => 'agenda_url',
-						'value'       => esc_url( site_url() ),
-						'description' => __( 'URL to Agenda. You must create a page integrating OpenAgenda', 'wp-openagenda' ),
-						'admin_label' => false,
-						'weight'      => 0,
-						'group'       => __( 'Settings', 'wp-openagenda' ),
-					),
-
-					array(
-						'type'        => 'textfield',
-						'holder'      => 'p',
-						'class'       => 'openagenda_lang',
-						'heading'     => __( 'language to display', 'wp-openagenda' ),
-						'param_name'  => 'openagenda_lang',
-						'description' => __( 'Choose the lang to display.', 'wp-openagenda' ),
-						'admin_label' => false,
-						'value'       => '',
-						'weight'      => 0,
-						'group'       => __( 'Settings', 'wp-openagenda' ),
-					),
-					array(
-						'type'        => 'textfield',
-						'holder'      => 'p',
-						'class'       => 'title-class',
-						'heading'     => __( 'Nb of event', 'wp-openagenda' ),
-						'param_name'  => 'nb_event',
-						'value'       => '1',
-						'description' => __( 'Number of event to display', 'wp-openagenda' ),
-						'admin_label' => false,
-						'weight'      => 0,
-						'group'       => __( 'Settings', 'wp-openagenda' ),
-					),
-
-
-				),
+				'params'      => apply_filters('openwp_vc_params', $params),
 			)
 		);
 
@@ -383,7 +384,7 @@ class Vc_Events {
 		$atts = shortcode_atts( array(
 			'agenda_url'        => '',
 			'title'             => '',
-			'openagenda_lang'    => '',
+			'lang'    => '',
 			'nb_event'          => '1',
 			),
 			$atts, 'openwp-vc-basic'
@@ -401,7 +402,6 @@ class Vc_Events {
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $slug, $atts['nb_event'] );
 
 		ob_start();
-
 		$openwp->openwp_basic_html( $openwp_data, $atts['lang'] );
 
 		return ob_get_clean();
