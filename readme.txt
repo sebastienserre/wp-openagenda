@@ -53,11 +53,15 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 = Is it possible to create an event from my website to the OpenAgenda?
 * Not yet but at this time, you have a link to your openagenda where visitors can add events (if allowed by the OpenAgenda settings)
 
+= Is OpenAgenda for WordPress is working with WPBakery Page Builder (formerly Visual Composer) ?
+* Yes! I try to create Visual Composer Element in the same time I create WordPress Widget and WordPress Shortcode.
+
 == Screenshots ==
 1. settings
 2. display in front
 
 == Changelog ==
+
 * 1.2.6 -- 03 july 2018
     Add a link to allow visitors to post event on OpenAgenda.com
 
