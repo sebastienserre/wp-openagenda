@@ -43,12 +43,15 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * No! No roadmap but Ideas:
     * Gutenberg Blocks,
     * yours!
+
 = May I give Idea?
 * Yes please use the [Github](https://github.com/sebastienserre/openagenda-wp/issues) issue
 
 = I'm using Elementor Page Builder, How to use OpenAgenda for Wordpress to display events?
 * simply use the WordPress Widget, it will display your agenda on Elementor page Builder
 
+= Is it possible to create an event from my website to the OpenAgenda?
+* Not yet but at this time, you have a link to your openagenda where visitors can add events (if allowed by the OpenAgenda settings)
 
 == Screenshots ==
 1. settings
