@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -55,8 +55,10 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 2. display in front
 
 == Changelog ==
+* 1.2.6 -- 03 july 2018
+    Add a link to allow visitors to post event on OpenAgenda.com
 
-* 1.2.5 -- 30june 2018
+* 1.2.5 -- 30 june 2018
     Correct a bug in Visual Composer lang param
 
 * 1.2.4 -- 29 june 2018
