@@ -55,6 +55,12 @@ class OpenAgendaApi {
 			$nb = 10;
 		}
 
+		$re = '/[a-zA-Z\.\/:]*\/([a-zA-Z\.\/:\0-_9]*)/';
+
+		preg_match( $re, $slug, $matches, PREG_OFFSET_CAPTURE, 0 );
+
+		$slug = untrailingslashit( $matches[1][0] );
+
 		if ( ! empty( $this->thfo_openwp_get_api_key() ) ) {
 			$key      = $this->thfo_openwp_get_api_key();
 			$response = wp_remote_get( 'https://api.openagenda.com/v1/agendas/uid/' . $slug . '?key=' . $key );
@@ -89,7 +95,7 @@ class OpenAgendaApi {
 	/**
 	 *  Basic Display.
 	 */
-	public function openwp_basic_html( $openwp_data, $lang ) {
+	public function openwp_basic_html( $openwp_data, $lang, $slug ) {
 		?>
 		<div class="openwp-events">
 			<!-- OpenAgenda for WordPress Plugin downloadable for free on https://wordpress.org/plugins/wp-openagenda/-->
@@ -118,7 +124,12 @@ class OpenAgendaApi {
 				<?php
 			}
 			do_action( 'openwp_after_html' );
+			// translators: this is a link to add events in Openagenda.com.
+			$text = sprintf( wp_kses( __( 'Have an Event to display here? <a href="%s">Add it!</a>', 'wp-openagenda' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $slug ) );
+			$text = apply_filters( 'openwp_custom_add_event_text', $text );
+			echo $text;
 			echo $pub;
+
 			?>
 		</div>
 		<?php

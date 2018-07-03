@@ -393,16 +393,12 @@ class Vc_Events {
 		$atts['openagenda_cat'] = $this->clean( $atts['openagenda_cat'] );
 		$atts['openagenda_tag'] = $this->clean( $atts['openagenda_tag'] );
 
-		$re = '/[a-zA-Z\.\/:]*\/([a-zA-Z\.\/:\0-_9]*)/';
 
-		preg_match( $re, $atts['agenda_url'], $matches, PREG_OFFSET_CAPTURE, 0 );
-
-		$slug = untrailingslashit( $matches[1][0] );
 		$openwp = new OpenAgendaApi();
-		$openwp_data = $openwp->thfo_openwp_retrieve_data( $slug, $atts['nb_event'] );
+		$openwp_data = $openwp->thfo_openwp_retrieve_data( $atts['agenda_url'], $atts['nb_event'] );
 
 		ob_start();
-		$openwp->openwp_basic_html( $openwp_data, $atts['lang'] );
+		$openwp->openwp_basic_html( $openwp_data, $atts['lang'], $atts['agenda_url'] );
 
 		return ob_get_clean();
 

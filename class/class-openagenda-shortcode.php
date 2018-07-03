@@ -40,12 +40,12 @@ class OpenAgenda_Shortcode {
 		$openwp = new OpenAgendaApi();
 
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $atts['slug'], $atts['nb'] );
-
 		$lang = $atts['lang'];
 
 		ob_start();
 
-		$openwp->openwp_basic_html( $openwp_data, $lang );
+		$openwp->openwp_basic_html( $openwp_data, $lang, $atts['slug'] );
+
 
 		return ob_get_clean();
 	}
