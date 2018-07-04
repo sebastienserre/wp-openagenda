@@ -54,6 +54,7 @@ class Openagenda_WP_Main {
 
 		if ( class_exists( 'Vc_Manager' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/inc/visual-composer/class-vc-events.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/inc/pro/vc/openagenda-main.php';
 		}
 	}
 
