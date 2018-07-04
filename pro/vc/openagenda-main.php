@@ -8,7 +8,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly
-
 function openwp_vc_openagenda_main_init() {
 
 	vc_map( array(
