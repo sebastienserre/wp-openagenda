@@ -61,19 +61,7 @@ class OpenAgendaApi {
 
 		$slug = untrailingslashit( $matches[1][0] );
 
-		if ( ! empty( $this->thfo_openwp_get_api_key() ) ) {
-			$key      = $this->thfo_openwp_get_api_key();
-			$response = wp_remote_get( 'https://api.openagenda.com/v1/agendas/uid/' . $slug . '?key=' . $key );
-			if ( 200 === (int) wp_remote_retrieve_response_code( $response ) ) {
-				$body         = wp_remote_retrieve_body( $response );
-				$decoded_body = json_decode( $body, true );
-				$uid          = $decoded_body['data']['uid'];
-			}
-		} else {
-			$warning = '<p>' . __( 'Please add an OpenAgenda API Key in Settings / OpenAgenda Settings', 'wp-openagenda' ) . '</p>';
-
-			return $warning;
-		}
+		$uid = $this->openwp_get_uid( $slug );
 		if ( $uid ) {
 			$url          = 'https://openagenda.com/agendas/' . $uid . '/events.json?key=' . $key . '&limit=' . $nb;
 			$response     = wp_remote_get( $url );
@@ -92,6 +80,18 @@ class OpenAgendaApi {
 		return $decoded_body;
 	}
 
+	public function openwp_get_uid( $slug ) {
+		if ( ! empty( $this->thfo_openwp_get_api_key() ) ) {
+			$key      = $this->thfo_openwp_get_api_key();
+			$response = wp_remote_get( 'https://api.openagenda.com/v1/agendas/uid/' . $slug . '?key=' . $key );
+			if ( 200 === (int) wp_remote_retrieve_response_code( $response ) ) {
+				$body         = wp_remote_retrieve_body( $response );
+				$decoded_body = json_decode( $body, true );
+				$uid          = $decoded_body['data']['uid'];
+			}
+		}
+		return $uid;
+	}
 	/**
 	 *  Basic Display.
 	 */
