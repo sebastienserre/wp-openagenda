@@ -63,17 +63,6 @@ function openwp_vc_openagenda_main_init() {
 				'weight'      => 0,
 				'group'       => __( 'Settings', 'wp-openagenda' ),
 			),
-			array(
-				'type'        => 'vc_link',
-				'holder'      => 'p',
-				'class'       => 'title-class',
-				'heading'     => __( 'Agenda page in your Website', 'wp-openagenda' ),
-				'param_name'  => 'openagenda_url',
-				'description' => __( 'Select the page where the main agenda is', 'wp-openagenda' ),
-				'admin_label' => false,
-				'weight'      => 0,
-				'group'       => __( 'Settings', 'wp-openagenda' ),
-			),
 		),
 			)
 	);
@@ -94,12 +83,9 @@ function openwp_vc_openagenda_main( $atts ) {
 		'agenda_url'      => '',
 		'title'           => '',
 		'openagenda_type' => 'nothing',
-		'openagenda_url'  => '',
-		),
+	),
 		$atts, 'openagenda-main'
 	);
-
-	$url = ( ! empty( $atts['openagenda_url'] ) ) ? vc_build_link( $atts['openagenda_url'] ) : '';
 
 	$re = '/[a-zA-Z\.\/:]*\/([a-zA-Z\.\/:\0-_9]*)/';
 
@@ -110,7 +96,7 @@ function openwp_vc_openagenda_main( $atts ) {
 	$key = get_option( 'openagenda_api' );
 	if ( ! empty( $key ) ) {
 		$openwp = new OpenAgendaApi();
-		$uid = $openwp->openwp_get_uid( $slug );
+		$uid    = $openwp->openwp_get_uid( $slug );
 	}
 
 	if ( $uid ) {
