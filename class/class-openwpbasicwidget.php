@@ -46,7 +46,7 @@ class OpenwpBasicWidget extends WP_Widget {
 
 		$lang = $instance['lang'];
 
-		$openwp->openwp_basic_html( $openwp_data, $lang );
+		$openwp->openwp_basic_html( $openwp_data, $lang, $instance['slug']);
 	}
 
 	/**
