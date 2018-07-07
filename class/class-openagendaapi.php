@@ -40,6 +40,23 @@ class OpenAgendaApi {
 	}
 
 	/**
+	 * Get SLug from an URL.
+	 *
+	 * @param string $slug URL of openagenda.com Agenda.
+	 *
+	 * @return string
+	 */
+	public function openwp_get_slug( $slug ) {
+		$re = '/[a-zA-Z\.\/:]*\/([a-zA-Z\.\/:\0-_9]*)/';
+
+		preg_match( $re, $slug, $matches, PREG_OFFSET_CAPTURE, 0 );
+
+		$slug = untrailingslashit( $matches[1][0] );
+
+		return $slug;
+	}
+
+	/**
 	 * Retrieve data from Openagenda
 	 *
 	 * @param string $slug Slug of your agenda.
@@ -55,11 +72,7 @@ class OpenAgendaApi {
 			$nb = 10;
 		}
 
-		$re = '/[a-zA-Z\.\/:]*\/([a-zA-Z\.\/:\0-_9]*)/';
-
-		preg_match( $re, $slug, $matches, PREG_OFFSET_CAPTURE, 0 );
-
-		$slug = untrailingslashit( $matches[1][0] );
+		$slug = $this->openwp_get_slug( $slug );
 
 		$uid = $this->openwp_get_uid( $slug );
 		if ( $uid ) {
