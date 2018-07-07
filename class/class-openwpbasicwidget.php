@@ -28,7 +28,7 @@ class OpenwpBasicWidget extends WP_Widget {
 	/**
 	 * Display the Widget in Front Office.
 	 *
-	 * @param array $args Argument of Widget.
+	 * @param array $args     Argument of Widget.
 	 * @param array $instance Settings of widget.
 	 */
 	public function widget( $args, $instance ) {
@@ -46,7 +46,7 @@ class OpenwpBasicWidget extends WP_Widget {
 
 		$lang = $instance['lang'];
 
-		$openwp->openwp_basic_html( $openwp_data, $lang, $instance['slug']);
+		$openwp->openwp_basic_html( $openwp_data, $lang, $instance['slug'] );
 	}
 
 	/**
@@ -61,20 +61,23 @@ class OpenwpBasicWidget extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_name( 'title' ); ?>"> <?php esc_attr_e( 'Title:' ); ?>
 			</label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type = "text" value="<?php echo $title; ?>"/>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
+			       name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>"/>
 		</p>
 
 
 		<p>
 			<label
-				for="<?php echo $this->get_field_name( 'slug' ); ?>"> <?php _e( 'OpenAgenda Slug:', 'openagenda-wp' ); ?>
+					for="<?php echo $this->get_field_name( 'slug' ); ?>"> <?php _e( 'OpenAgenda Slug:', 'openagenda-wp' ); ?>
 			</label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'slug' ); ?>" name="<?php echo $this->get_field_name( 'slug' ); ?>" type="text"  value="<?php echo $instance['slug']; ?>"/>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'slug' ); ?>"
+			       name="<?php echo $this->get_field_name( 'slug' ); ?>" type="text"
+			       value="<?php echo $instance['slug']; ?>"/>
 
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_name( 'nb' ); ?>"> <?php _e( 'Number of events:', 'openagenda-wp' ); ?></label>
+					for="<?php echo $this->get_field_name( 'nb' ); ?>"> <?php _e( 'Number of events:', 'openagenda-wp' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'nb' ); ?>"
 			       name="<?php echo $this->get_field_name( 'nb' ); ?>" type="text"
 			       value="<?php echo $instance['nb']; ?>"/>
@@ -82,7 +85,7 @@ class OpenwpBasicWidget extends WP_Widget {
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_name( 'lang' ); ?>"> <?php _e( 'Languages of events:', 'openagenda-wp' ); ?></label>
+					for="<?php echo $this->get_field_name( 'lang' ); ?>"> <?php _e( 'Languages of events:', 'openagenda-wp' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'nb' ); ?>"
 			       name="<?php echo $this->get_field_name( 'lang' ); ?>" type="text"
 			       value="<?php echo $instance['lang']; ?>"/>
@@ -99,5 +102,6 @@ class OpenwpBasicWidget extends WP_Widget {
 	}
 
 }
+
 new OpenwpBasicWidget();
 
