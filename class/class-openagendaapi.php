@@ -107,17 +107,17 @@ class OpenAgendaApi {
 				$pub = apply_filters( 'openagendawp_pub', '<p>' . __( 'This plugin is created with love by ', 'wp-openagenda' ) . '<a href="https://goo.gl/K4eoTB">Thivinfo.com</a></p>' . thfo_openwp_stars() );
 				?>
 				<div class="openwp-event">
-					<a href="<?php echo esc_url( $events['canonicalUrl'] ); ?>" target="_blank">
-						<p><?php echo esc_attr( $events['range'][ $lang ] ); ?></p>
+					<a class="openwp-event-link" href="<?php echo esc_url( $events['canonicalUrl'] ); ?>" target="_blank">
+						<p class="openwp-event-range"><?php echo esc_attr( $events['range'][ $lang ] ); ?></p>
 						<?php
 						if ( $events['image'] !== false ) {
 							?>
-							<img src="<?php echo esc_attr( $events['image'] ); ?>">
+							<img class="openwp-event-img" src="<?php echo esc_attr( $events['image'] ); ?>">
 							<?php
 						}
 						?>
-						<h3><?php echo esc_attr( $events['title'][ $lang ] ); ?></h3>
-						<p><?php echo $parsedown->text( esc_textarea( $events['description'][ $lang ] ) ); ?></p>
+						<h3 class="openwp-event-title"><?php echo esc_attr( $events['title'][ $lang ] ); ?></h3>
+						<p class="openwp-event-description"><?php echo $parsedown->text( esc_textarea( $events['description'][ $lang ] ) ); ?></p>
 					</a>
 
 				</div>
