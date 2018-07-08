@@ -11,7 +11,7 @@
  * License: GPLv3
 
  * @package openagenda-wp
- * @fs_premium_only /pro/
+ * @fs_premium_only /pro/, /.idea/
  **/
 
 if ( ! defined( 'ABSPATH' ) ) {
