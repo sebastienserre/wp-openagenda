@@ -39,7 +39,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				'has_addons'          => false,
 				'has_paid_plans'      => true,
 				'trial'               => array(
-					'days'               => 14,
+					'days'               => 30,
 					'is_require_payment' => false,
 				),
 				'menu'                => array(
