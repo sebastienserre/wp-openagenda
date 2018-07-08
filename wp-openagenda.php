@@ -3,7 +3,7 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://www.thivinfo.com/blog/afficher-facilement-vos-agendas-openagenda-com-sur-votre-site-wordpress-avec-openagenda-pour-wordpress/
  * Description: Easily display an OpenAgenga.com in your WordPress website
- * Version: 1.3.0
+ * Version: 1.4.0
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 4.9
@@ -39,7 +39,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				'has_addons'          => false,
 				'has_paid_plans'      => true,
 				'trial'               => array(
-					'days'               => 14,
+					'days'               => 30,
 					'is_require_payment' => false,
 				),
 				'menu'                => array(
@@ -67,13 +67,22 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 
 	}
 
-
+	/**
+	 * Load Pro Functions.
+	 */
 	function openwp_load_pro_files__premium_only() {
 
-			if ( class_exists( 'Vc_Manager' ) ) {
-				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/openagenda-main.php';
-			}
+		/**
+		 * If Visual Composer activated, load VC elements.
+		 */
+		if ( class_exists( 'Vc_Manager' ) ) {
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/openagenda-vc-main.php';
 		}
+
+		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/class-openwp-main-widget.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/class-openagenda-main-widget.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagenda-embed-shortcode.php';
+	}
 
 	/**
 	 * Class Openagenda_WP_Main
@@ -88,7 +97,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			/**
 			 * Define Constant
 			 */
-			define( 'THFO_OPENWP_VERSION', '1.3.0' );
+			define( 'THFO_OPENWP_VERSION', '1.4.0' );
 			define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -108,7 +117,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagendaapi.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-shortcode.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/parsedown/Parsedown.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openwpbasicwidget.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-wp-basic-widget.php';
 
 			if ( class_exists( 'Vc_Manager' ) ) {
 				include_once THFO_OPENWP_PLUGIN_PATH . '/inc/visual-composer/class-vc-events.php';
