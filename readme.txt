@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -51,16 +51,30 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * simply use the WordPress Widget, it will display your agenda on Elementor page Builder
 
 = Is it possible to create an event from my website to the OpenAgenda?
-* Not yet but at this time, you have a link to your openagenda where visitors can add events (if allowed by the OpenAgenda settings)
+* Not yet but at this time, you have a link to your openagenda where visitors can add events (if allowed by the OpenAgenda settings).
+* Planned to be added in the Pro Version
 
 = Is OpenAgenda for WordPress is working with WPBakery Page Builder (formerly Visual Composer) ?
 * Yes! I try to create Visual Composer Element in the same time I create WordPress Widget and WordPress Shortcode.
+
+= May I test for free the Pro Version?
+* Yes! 30 days free trial. Do not hesitate.
+
+= How expensive is the Pro Version?
+* [Check OpenAgenda for WordPress Pro Price](https://checkout.freemius.com/mode/dialog/plugin/2279/plan/3475/licenses/unlimited/)
 
 == Screenshots ==
 1. settings
 2. display in front
 
 == Changelog ==
+* 1.4.0 -- 8 july 2018
+    Free Version:
+        Add CSS Class to all HTML markup. Better customization.
+        Add a 30 days Free trial of the pro version.
+    Pro Version:
+        Add a Visual Composer element, a Widget WordPress and a Shortcode to display the embeds Widget from OpenAgenda.
+        Simply choose the OpenAgenda URL, the widget (general, map, search, categories, tags, calendrier, preview) to display.
 
 * 1.3.0 -- 4 july 2018
     introduce Pro Options
