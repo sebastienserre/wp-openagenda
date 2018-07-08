@@ -72,8 +72,6 @@ class OpenAgendaApi {
 			$nb = 10;
 		}
 
-		$slug = $this->openwp_get_slug( $slug );
-
 		$uid = $this->openwp_get_uid( $slug );
 		if ( $uid ) {
 			$url          = 'https://openagenda.com/agendas/' . $uid . '/events.json?key=' . $key . '&limit=' . $nb;
@@ -93,6 +91,13 @@ class OpenAgendaApi {
 		return $decoded_body;
 	}
 
+	/**
+	 * Retrieve OpenAenda UID.
+	 *
+	 * @param mixed|string $slug OpenAgenda Agenda URL.
+	 *
+	 * @return mixed
+	 */
 	public function openwp_get_uid( $slug ) {
 		$slug = $this->openwp_get_slug( $slug );
 		if ( ! empty( $this->thfo_openwp_get_api_key() ) ) {
@@ -109,7 +114,11 @@ class OpenAgendaApi {
 	}
 
 	/**
-	 *  Basic Display.
+	 * Display a basic WordPress Widget.
+	 *
+	 * @param   object $openwp_data    Object with OPenagenda Events data.
+	 * @param   string $lang   Language code to display.
+	 * @param   string $slug   OpenAgenda Agenda URL.
 	 */
 	public function openwp_basic_html( $openwp_data, $lang, $slug ) {
 		?>
@@ -127,7 +136,7 @@ class OpenAgendaApi {
 					   target="_blank">
 						<p class="openwp-event-range"><?php echo esc_attr( $events['range'][ $lang ] ); ?></p>
 						<?php
-						if ( $events['image'] !== false ) {
+						if ( false !== $events['image'] ) {
 							?>
 							<img class="openwp-event-img" src="<?php echo esc_attr( $events['image'] ); ?>">
 							<?php
@@ -155,7 +164,7 @@ class OpenAgendaApi {
 	/**
 	 * Method to display OpenAgenda Widget.
 	 *
-	 * @param int   $widget Embeds uid.
+	 * @param int   $embed Embeds uid.
 	 * @param int   $uid    Agenda UID.
 	 * @param array $atts   Shortcode attributs.
 	 *
