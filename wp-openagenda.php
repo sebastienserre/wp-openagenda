@@ -76,7 +76,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		 * If Visual Composer activated, load VC elements.
 		 */
 		if ( class_exists( 'Vc_Manager' ) ) {
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/openagenda-main.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/openagenda-vc-main.php';
 		}
 
 		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/class-openwp-main-widget.php';
