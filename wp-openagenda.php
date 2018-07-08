@@ -116,7 +116,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagendaapi.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-shortcode.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/parsedown/Parsedown.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openwpbasicwidget.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-wp-basic-widget.php';
 
 			if ( class_exists( 'Vc_Manager' ) ) {
 				include_once THFO_OPENWP_PLUGIN_PATH . '/inc/visual-composer/class-vc-events.php';
