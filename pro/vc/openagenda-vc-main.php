@@ -109,15 +109,12 @@ function openwp_vc_openagenda_main( $atts ) {
 	}
 
 	if ( $uid ) {
-		$widget = wp_remote_get( 'https://openagenda.com/agendas/'. $uid .'/settings.json?key='. $key );
-		if ( 200 === (int) wp_remote_retrieve_response_code( $widget ) ) {
-			$body         = wp_remote_retrieve_body( $widget );
-			$decoded_body = json_decode( $body, true );
-		}
-		$widget = $decoded_body['embeds'][0];
 
+		$embed = $openwp->openwp_get_embed( $uid, $key);
+
+var_dump($embed);
 		$main = new OpenAgendaApi();
-		echo $main->openwp_main_widget_html__premium_only( $widget, $uid, $atts );
+		echo $main->openwp_main_widget_html__premium_only( $embed, $uid, $atts );
 	} else {
 		return '<p>' . $warning . '</p>';
 	}
