@@ -43,6 +43,19 @@ function openwp_vc_openagenda_main_init() {
 				),
 
 				array(
+					'type'        => 'textfield',
+					'holder'      => 'a',
+					'class'       => 'url-class',
+					'heading'     => __( 'Nb of events', 'wp-openagenda' ),
+					'param_name'  => 'agenda_nb',
+					'value'       => 10,
+					'description' => __( 'Number of events to display', 'wp-openagenda' ),
+					'admin_label' => false,
+					'weight'      => 0,
+					'group'       => __( 'Settings', 'wp-openagenda' ),
+				),
+
+				array(
 					'type'        => 'dropdown',
 					'holder'      => 'p',
 					'class'       => 'title-class',
@@ -83,6 +96,7 @@ function openwp_vc_openagenda_main( $atts ) {
 		'agenda_url'      => '',
 		'title'           => '',
 		'openagenda_type' => 'nothing',
+		'agenda_nb' => 10,
 		),
 		$atts, 'openagenda-main'
 	);
