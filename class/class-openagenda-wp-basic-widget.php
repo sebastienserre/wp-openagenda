@@ -6,9 +6,9 @@
  */
 
 /**
- * Class OpenwpBasicWidget
+ * Class Openwp_WP_Basic_Widget
  */
-class OpenwpBasicWidget extends WP_Widget {
+class Openagenda_WP_Basic_Widget extends WP_Widget {
 	/**
 	 * OpenwpBasicWidget constructor.
 	 */
@@ -47,6 +47,7 @@ class OpenwpBasicWidget extends WP_Widget {
 		$lang = $instance['lang'];
 
 		$openwp->openwp_basic_html( $openwp_data, $lang, $instance['slug'] );
+		var_dump('test');
 	}
 
 	/**
@@ -98,10 +99,10 @@ class OpenwpBasicWidget extends WP_Widget {
 	 * Initialize a new Widget.
 	 */
 	public function init_openwp_basic_widget() {
-		register_widget( 'OpenwpBasicWidget' );
+		register_widget( 'Openagenda_WP_Basic_Widget' );
 	}
 
 }
 
-new OpenwpBasicWidget();
+new Openagenda_WP_Basic_Widget();
 
