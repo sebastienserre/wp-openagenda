@@ -94,8 +94,7 @@ class OpenAgendaApi {
 	}
 
 	public function openwp_get_uid( $slug ) {
-		$slug = $this->openwp_get_slug( $slug);
-		var_dump($slug);
+		$slug = $this->openwp_get_slug( $slug );
 		if ( ! empty( $this->thfo_openwp_get_api_key() ) ) {
 			$key      = $this->thfo_openwp_get_api_key();
 			$response = wp_remote_get( 'https://api.openagenda.com/v1/agendas/uid/' . $slug . '?key=' . $key );
@@ -105,8 +104,10 @@ class OpenAgendaApi {
 				$uid          = $decoded_body['data']['uid'];
 			}
 		}
+
 		return $uid;
 	}
+
 	/**
 	 *  Basic Display.
 	 */
@@ -122,7 +123,8 @@ class OpenAgendaApi {
 				$pub = apply_filters( 'openagendawp_pub', '<p>' . __( 'This plugin is created with love by ', 'wp-openagenda' ) . '<a href="https://goo.gl/K4eoTB">Thivinfo.com</a></p>' . thfo_openwp_stars() );
 				?>
 				<div class="openwp-event">
-					<a class="openwp-event-link" href="<?php echo esc_url( $events['canonicalUrl'] ); ?>" target="_blank">
+					<a class="openwp-event-link" href="<?php echo esc_url( $events['canonicalUrl'] ); ?>"
+					   target="_blank">
 						<p class="openwp-event-range"><?php echo esc_attr( $events['range'][ $lang ] ); ?></p>
 						<?php
 						if ( $events['image'] !== false ) {
@@ -148,6 +150,49 @@ class OpenAgendaApi {
 			?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Method to display OpenAgenda Widget.
+	 *
+	 * @param int   $widget Embeds uid.
+	 * @param int   $uid    Agenda UID.
+	 * @param array $atts   Shortcode attributs.
+	 *
+	 * @return string
+	 */
+	public function openwp_main_widget_html__premium_only( $widget, $uid, $atts ) {
+		switch ( $atts['openagenda_type'] ) {
+			case 'general':
+				$openagenda_code = '<iframe style="width:100%;" frameborder="0" scrolling="no" allowtransparency="allowtransparency" class="cibulFrame cbpgbdy" data-oabdy src="//openagenda.com/agendas/' . $uid . '/embeds/' . $widget . '/events?lang=fr"></iframe><script type="text/javascript" src="//openagenda.com/js/embed/cibulBodyWidget.js"></script>';
+				break;
+			case 'map':
+				$openagenda_code = '<div class="cbpgmp cibulMap" data-oamp data-cbctl="' . $uid . '/' . $widget . '" data-lang="fr" ></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulMapWidget.js"></script>';
+				break;
+			case 'search':
+				$openagenda_code = '<div class="cbpgsc cibulSearch" data-oasc data-cbctl="' . $uid . '/' . $widget . '|fr" data-lang="fr"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulSearchWidget.js"></script>';
+				break;
+			case 'categories':
+				$openagenda_code = '<div class="cbpgct cibulCategories" data-oact data-cbctl="' . $uid . '/' . $widget . '" data-lang="fr"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulCategoriesWidget.js"></script>';
+				break;
+			case 'tags':
+				$openagenda_code = '<div class="cbpgtg cibulTags" data-oatg data-cbctl="' . $uid . '/' . $widget . '"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulTagsWidget.js"></script>';
+				break;
+			case 'calendrier':
+				$openagenda_code = '<div class="cbpgcl cibulCalendar" data-oacl data-cbctl="' . $uid . '/' . $widget . '|fr" data-lang="fr"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulCalendarWidget.js"></script>';
+				break;
+			case 'preview':
+				$openagenda_code = '<div class="oa-preview cbpgpr" data-oapr data-cbctl="' . $uid . '|fr"> 
+  <a href="' . $url['url'] . '">Voir l\'agenda</a> 
+</div><script src="//openagenda.com/js/embed/oaPreviewWidget.js"></script>';
+				break;
+		}
+
+		ob_start();
+
+		echo $openagenda_code;
+
+		return ob_get_clean();
 	}
 
 }
