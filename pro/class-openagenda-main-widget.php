@@ -74,7 +74,7 @@ class Openagenda_Main_Widget extends WP_Widget {
 
 		<p>
 			<label
-				for="<?php echo $this->get_field_name( 'url' ); ?>"> <?php _e( 'OpenAgenda URL:', 'openagenda-wp' ); ?>
+				for="<?php echo $this->get_field_name( 'url' ); ?>"> <?php _e( 'OpenAgenda URL:', 'wp-openagenda-pro' ); ?>
 			</label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'url' ); ?>"
 			       name="<?php echo $this->get_field_name( 'url' ); ?>" type="text"
@@ -84,7 +84,7 @@ class Openagenda_Main_Widget extends WP_Widget {
 
 		<p>
 			<label
-				for="<?php echo $this->get_field_name( 'lang' ); ?>"> <?php _e( 'Languages of events:', 'openagenda-wp' ); ?></label>
+				for="<?php echo $this->get_field_name( 'lang' ); ?>"> <?php _e( 'Languages of events:', 'wp-openagenda-pro' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'nb' ); ?>"
 			       name="<?php echo $this->get_field_name( 'lang' ); ?>" type="text"
 			       value="<?php echo $instance['lang']; ?>"/>
@@ -92,7 +92,7 @@ class Openagenda_Main_Widget extends WP_Widget {
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_name( 'widget' ); ?>"> <?php _e( 'OpenAgenda Widget to display:', 'openagenda-wp' ); ?></label>
+				for="<?php echo $this->get_field_name( 'widget' ); ?>"> <?php _e( 'OpenAgenda Widget to display:', 'wp-openagenda-pro-pro' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'widget' ); ?>">
 				<option <?php if ( $instance['widget'] === 'general') { echo 'selected'; } ?> value="general"><?php _e( 'General', 'wp-openagenda-pro' ); ?></option>
 				<option <?php if ( $instance['widget'] === 'map') { echo 'selected'; } ?> value="map"><?php _e( 'Map', 'wp-openagenda-pro' ); ?></option>

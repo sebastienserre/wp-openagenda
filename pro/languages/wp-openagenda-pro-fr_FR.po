@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-09 05:59+0000\n"
-"PO-Revision-Date: 2018-07-09 06:05+0000\n"
+"POT-Creation-Date: 2018-07-09 06:22+0000\n"
+"PO-Revision-Date: 2018-07-09 06:22+0000\n"
 "Last-Translator: sebastienserre <sebastien@thivinfo.com>\n"
-"Language-Team: \n"
+"Language-Team: Français\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
@@ -18,25 +18,127 @@ msgid ""
 "Display the main Widget from OpenAgenda where ever you want in your "
 "WordPress Website"
 msgstr ""
+"Afficher le Widget Principal d'OpenAgenda où vous voulez sur votre site"
+
+#: pro/class-openagenda-main-widget.php:77
+msgid "OpenAgenda URL:"
+msgstr "URL OpenAgenda"
+
+#: pro/class-openagenda-main-widget.php:87
+msgid "Languages of events:"
+msgstr "Langues des évènements :"
+
+#: pro/class-openagenda-main-widget.php:97 pro/vc/openagenda-vc-main.php:66
+msgid "General"
+msgstr "Général"
+
+#: pro/class-openagenda-main-widget.php:98 pro/vc/openagenda-vc-main.php:67
+msgid "Map"
+msgstr "Carte"
+
+#: pro/class-openagenda-main-widget.php:99 pro/vc/openagenda-vc-main.php:68
+msgid "Search"
+msgstr "Recherche"
+
+#: pro/class-openagenda-main-widget.php:100 pro/vc/openagenda-vc-main.php:69
+msgid "Categories"
+msgstr "Catégories"
+
+#: pro/class-openagenda-main-widget.php:101 pro/vc/openagenda-vc-main.php:70
+msgid "Tags"
+msgstr "Mots-clés"
+
+#: pro/class-openagenda-main-widget.php:102
+msgid "calendrier"
+msgstr "Calendrier"
+
+#: pro/class-openagenda-main-widget.php:103
+msgid "preview"
+msgstr "Prévisualisation"
+
+#: pro/vc/openagenda-vc-main.php:14
+msgid "Main Openagenda"
+msgstr "Openagenda Principal"
+
+#: pro/vc/openagenda-vc-main.php:16
+msgid "Display Openagenda Script"
+msgstr "Afficher le script OpenAgenda"
+
+#: pro/vc/openagenda-vc-main.php:17
+msgid "OpenAgenda"
+msgstr "OpenAgenda"
+
+#: pro/vc/openagenda-vc-main.php:24 pro/vc/openagenda-vc-main.php:26
+msgid "Title"
+msgstr "Titre"
+
+#: pro/vc/openagenda-vc-main.php:27
+msgid "Add a word between % to add a different style. Only 1 allowed"
+msgstr ""
+"Ajouter une expression entre % pour ajouter un style différent. 1 expression "
+"autorisée."
+
+#: pro/vc/openagenda-vc-main.php:30 pro/vc/openagenda-vc-main.php:42
+#: pro/vc/openagenda-vc-main.php:55 pro/vc/openagenda-vc-main.php:77
+msgid "Settings"
+msgstr "Réglages"
+
+#: pro/vc/openagenda-vc-main.php:36
+msgid "URL to Event"
+msgstr "URL vers l'évènement"
+
+#: pro/vc/openagenda-vc-main.php:39
+msgid "URL to the OpenAgenda Agenda"
+msgstr "URL vers l'agenda OpenAgenda"
+
+#: pro/vc/openagenda-vc-main.php:49
+msgid "Nb of events"
+msgstr "Nombre d'évènements"
+
+#: pro/vc/openagenda-vc-main.php:52
+msgid "Number of events to display"
+msgstr "Nombre d'évènements à afficher"
+
+#: pro/vc/openagenda-vc-main.php:62
+msgid "Widget Type"
+msgstr "Type de widget"
+
+#: pro/vc/openagenda-vc-main.php:65
+msgid "Please select an OpenAgenda Widget"
+msgstr "Veuillez sélectionner un widget OpenAGenda"
+
+#: pro/vc/openagenda-vc-main.php:71
+msgid "Calendrier"
+msgstr "Calendrier"
+
+#: pro/vc/openagenda-vc-main.php:72
+msgid "Preview Widget"
+msgstr "Widget de prévisualisation"
+
+#: pro/vc/openagenda-vc-main.php:74
+msgid "Select the widget to display"
+msgstr "Veuillez sélectionner un widget OpenAGenda"
+
+#. Name of the plugin
+msgid "WP Openagenda"
+msgstr "WP Openagenda"
 
 #. Description of the plugin
 msgid "Easily display an OpenAgenga.com in your WordPress website"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "http://www.thivinfo.com"
-msgstr ""
+msgstr "Afficher simplement un openagenda.com sur votre WordPress"
 
 #. URI of the plugin
 msgid ""
 "https://www.thivinfo.com/blog/afficher-facilement-vos-agendas-openagenda-com-"
 "sur-votre-site-wordpress-avec-openagenda-pour-wordpress/"
 msgstr ""
+"https://www.thivinfo.com/blog/afficher-facilement-vos-agendas-openagenda-com-"
+"sur-votre-site-wordpress-avec-openagenda-pour-wordpress/"
 
 #. Author of the plugin
 msgid "Sébastien Serre"
-msgstr ""
+msgstr "Sébastien Serre"
 
-#. Name of the plugin
-msgid "WP Openagenda"
-msgstr ""
+#. Author URI of the plugin
+msgid "http://www.thivinfo.com"
+msgstr "http://www.thivinfo.com"

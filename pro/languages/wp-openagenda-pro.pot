@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-09 05:59+0000\n"
+"POT-Creation-Date: 2018-07-09 06:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -20,12 +20,109 @@ msgid ""
 "WordPress Website"
 msgstr ""
 
-#. Description of the plugin
-msgid "Easily display an OpenAgenga.com in your WordPress website"
+#: pro/class-openagenda-main-widget.php:77
+msgid "OpenAgenda URL:"
 msgstr ""
 
-#. Author URI of the plugin
-msgid "http://www.thivinfo.com"
+#: pro/class-openagenda-main-widget.php:87
+msgid "Languages of events:"
+msgstr ""
+
+#: pro/class-openagenda-main-widget.php:97 pro/vc/openagenda-vc-main.php:66
+msgid "General"
+msgstr ""
+
+#: pro/class-openagenda-main-widget.php:98 pro/vc/openagenda-vc-main.php:67
+msgid "Map"
+msgstr ""
+
+#: pro/class-openagenda-main-widget.php:99 pro/vc/openagenda-vc-main.php:68
+msgid "Search"
+msgstr ""
+
+#: pro/class-openagenda-main-widget.php:100 pro/vc/openagenda-vc-main.php:69
+msgid "Categories"
+msgstr ""
+
+#: pro/class-openagenda-main-widget.php:101 pro/vc/openagenda-vc-main.php:70
+msgid "Tags"
+msgstr ""
+
+#: pro/class-openagenda-main-widget.php:102
+msgid "calendrier"
+msgstr ""
+
+#: pro/class-openagenda-main-widget.php:103
+msgid "preview"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:14
+msgid "Main Openagenda"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:16
+msgid "Display Openagenda Script"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:17
+msgid "OpenAgenda"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:24 pro/vc/openagenda-vc-main.php:26
+msgid "Title"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:27
+msgid "Add a word between % to add a different style. Only 1 allowed"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:30 pro/vc/openagenda-vc-main.php:42
+#: pro/vc/openagenda-vc-main.php:55 pro/vc/openagenda-vc-main.php:77
+msgid "Settings"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:36
+msgid "URL to Event"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:39
+msgid "URL to the OpenAgenda Agenda"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:49
+msgid "Nb of events"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:52
+msgid "Number of events to display"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:62
+msgid "Widget Type"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:65
+msgid "Please select an OpenAgenda Widget"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:71
+msgid "Calendrier"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:72
+msgid "Preview Widget"
+msgstr ""
+
+#: pro/vc/openagenda-vc-main.php:74
+msgid "Select the widget to display"
+msgstr ""
+
+#. Name of the plugin
+msgid "WP Openagenda"
+msgstr ""
+
+#. Description of the plugin
+msgid "Easily display an OpenAgenga.com in your WordPress website"
 msgstr ""
 
 #. URI of the plugin
@@ -38,6 +135,6 @@ msgstr ""
 msgid "Sébastien Serre"
 msgstr ""
 
-#. Name of the plugin
-msgid "WP Openagenda"
+#. Author URI of the plugin
+msgid "http://www.thivinfo.com"
 msgstr ""
