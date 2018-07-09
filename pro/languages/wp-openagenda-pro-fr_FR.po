@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-09 06:22+0000\n"
-"PO-Revision-Date: 2018-07-09 06:22+0000\n"
+"POT-Creation-Date: 2018-07-09 06:37+0000\n"
+"PO-Revision-Date: 2018-07-09 06:37+0000\n"
 "Last-Translator: sebastienserre <sebastien@thivinfo.com>\n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -27,6 +27,10 @@ msgstr "URL OpenAgenda"
 #: pro/class-openagenda-main-widget.php:87
 msgid "Languages of events:"
 msgstr "Langues des évènements :"
+
+#: pro/class-openagenda-main-widget.php:95
+msgid "OpenAgenda Widget to display:"
+msgstr "Widget OpenAgenda a afficher :"
 
 #: pro/class-openagenda-main-widget.php:97 pro/vc/openagenda-vc-main.php:66
 msgid "General"

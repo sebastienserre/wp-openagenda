@@ -92,7 +92,7 @@ class Openagenda_Main_Widget extends WP_Widget {
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_name( 'widget' ); ?>"> <?php _e( 'OpenAgenda Widget to display:', 'wp-openagenda-pro-pro' ); ?></label>
+				for="<?php echo $this->get_field_name( 'widget' ); ?>"> <?php _e( 'OpenAgenda Widget to display:', 'wp-openagenda-pro' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'widget' ); ?>">
 				<option <?php if ( $instance['widget'] === 'general') { echo 'selected'; } ?> value="general"><?php _e( 'General', 'wp-openagenda-pro' ); ?></option>
 				<option <?php if ( $instance['widget'] === 'map') { echo 'selected'; } ?> value="map"><?php _e( 'Map', 'wp-openagenda-pro' ); ?></option>
