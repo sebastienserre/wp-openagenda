@@ -84,6 +84,16 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagenda-embed-shortcode.php';
 	}
 
+	add_action( 'plugins_loaded', 'openwp_load_textdomain__premium_only' );
+	/**
+	 * Load plugin textdomain.
+	 *
+	 * @since 1.0.0
+	 */
+	function openwp_load_textdomain__premium_only() {
+		load_plugin_textdomain( 'wp-openagenda-pro', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
+	}
+
 	/**
 	 * Class Openagenda_WP_Main
 	 */
