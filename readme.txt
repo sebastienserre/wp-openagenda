@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -68,6 +68,10 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 2. display in front
 
 == Changelog ==
+* 1.4.1 -- 9 july 2018
+    Add i18n for Pro different from Free one
+    fr_FR added
+
 * 1.4.0 -- 8 july 2018
     Free Version:
         Add CSS Class to all HTML markup. Better customization.
