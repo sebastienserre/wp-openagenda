@@ -70,7 +70,7 @@ class Openagenda_WP_Basic_Widget extends WP_Widget {
 
 		<p>
 			<label
-					for="<?php echo $this->get_field_name( 'slug' ); ?>"> <?php _e( 'OpenAgenda Slug:', 'wp-openagenda' ); ?>
+					for="<?php echo $this->get_field_name( 'slug' ); ?>"> <?php _e( 'OpenAgenda URL', 'wp-openagenda' ); ?>
 			</label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'slug' ); ?>"
 			       name="<?php echo $this->get_field_name( 'slug' ); ?>" type="text"

@@ -58,7 +58,7 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * Yes! I try to create Visual Composer Element in the same time I create WordPress Widget and WordPress Shortcode.
 
 = May I test for free the Pro Version?
-* Yes! 30 days free trial. Do not hesitate.
+* Yes! 14 days free trial. Do not hesitate.
 
 = How expensive is the Pro Version?
 * [Check OpenAgenda for WordPress Pro Price](https://checkout.freemius.com/mode/dialog/plugin/2279/plan/3475/licenses/unlimited/)
@@ -66,6 +66,10 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 == Screenshots ==
 1. settings
 2. display in front
+3. Free WordPress Widget
+4. Customer account embed. Free Trial Tab
+5. Visual Composer Element (PRO Version)
+6. Display OpenAgenda widget in a great WP Widget (Pro Version)
 
 == Changelog ==
 * 1.4.1 -- 9 july 2018
