@@ -17,7 +17,7 @@ class Openagenda_Main_Widget extends WP_Widget {
 	public function __construct() {
 		$widget_args = array(
 			'classname'   => 'Openagenda Main Widget',
-			'description' => __( 'Display the main Widget from OpenAgenda where ever you want in your WordPress Website', 'wp-openagenda' ),
+			'description' => __( 'Display the main Widget from OpenAgenda where ever you want in your WordPress Website', 'wp-openagenda-pro' ),
 		);
 		parent::__construct(
 			'openagenda_main_widget',
@@ -94,13 +94,13 @@ class Openagenda_Main_Widget extends WP_Widget {
 			<label
 				for="<?php echo $this->get_field_name( 'widget' ); ?>"> <?php _e( 'OpenAgenda Widget to display:', 'openagenda-wp' ); ?></label>
 			<select name="<?php echo $this->get_field_name( 'widget' ); ?>">
-				<option <?php if ( $instance['widget'] === 'general') { echo 'selected'; } ?> value="general"><?php _e( 'General', 'wp-openagenda' ); ?></option>
-				<option <?php if ( $instance['widget'] === 'map') { echo 'selected'; } ?> value="map"><?php _e( 'Map', 'wp-openagenda' ); ?></option>
-				<option <?php if ( $instance['widget'] === 'search') { echo 'selected'; } ?> value="search"><?php _e( 'Search', 'wp-openagenda' ); ?></option>
-				<option <?php if ( $instance['widget'] === 'categories') { echo 'selected'; } ?> value="categories"><?php _e( 'Categories', 'wp-openagenda' ); ?></option>
-				<option <?php if ( $instance['widget'] === 'tags') { echo 'selected'; } ?> value="tags"><?php _e( 'Tags', 'wp-openagenda' ); ?></option>
-				<option <?php if ( $instance['widget'] === 'calendrier') { echo 'selected'; } ?> value="calendrier"><?php _e( 'calendrier', 'wp-openagenda' ); ?></option>
-				<option <?php if ( $instance['widget'] === 'preview') { echo 'selected'; } ?> value="preview"><?php _e( 'preview', 'wp-openagenda' ); ?></option>
+				<option <?php if ( $instance['widget'] === 'general') { echo 'selected'; } ?> value="general"><?php _e( 'General', 'wp-openagenda-pro' ); ?></option>
+				<option <?php if ( $instance['widget'] === 'map') { echo 'selected'; } ?> value="map"><?php _e( 'Map', 'wp-openagenda-pro' ); ?></option>
+				<option <?php if ( $instance['widget'] === 'search') { echo 'selected'; } ?> value="search"><?php _e( 'Search', 'wp-openagenda-pro' ); ?></option>
+				<option <?php if ( $instance['widget'] === 'categories') { echo 'selected'; } ?> value="categories"><?php _e( 'Categories', 'wp-openagenda-pro' ); ?></option>
+				<option <?php if ( $instance['widget'] === 'tags') { echo 'selected'; } ?> value="tags"><?php _e( 'Tags', 'wp-openagenda-pro' ); ?></option>
+				<option <?php if ( $instance['widget'] === 'calendrier') { echo 'selected'; } ?> value="calendrier"><?php _e( 'calendrier', 'wp-openagenda-pro' ); ?></option>
+				<option <?php if ( $instance['widget'] === 'preview') { echo 'selected'; } ?> value="preview"><?php _e( 'preview', 'wp-openagenda-pro' ); ?></option>
 			</select>
 		</p>
 		<?php
