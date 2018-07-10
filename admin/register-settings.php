@@ -65,6 +65,7 @@ function thfo_openwp_help() {
 	?>
 	<h4><?php esc_attr_e( 'Shortcodes', 'wp-openagenda' ); ?></h4>
 	<ul>
+		<div class="shortcode-help">
 		<li>[openwp_basic]</li>
 		<ul>
 			<li><?php esc_attr_e( 'This shortcode will display a list of events from an OpenAgenda', 'wp-openagenda' ); ?></li>
@@ -72,6 +73,15 @@ function thfo_openwp_help() {
 			<li><?php wp_kses( _e( 'The param nb is <strong>optional</strong>. Default value is 10. It will retrieve data for the "nb" events. example: nb=12 ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
 			<li><?php wp_kses( _e( 'The param lang is <strong>optional</strong>. Default value is en (english). It will retrieve data with the "lang" params (if exists). example: lang = \'fr\' ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
 		</ul>
+		</div>
+		<div class="shortcode-help">
+		<li >[openagenda_embed] <?php esc_attr_e( 'only on Pro Version', 'wp-openagenda' ); ?></li>
+		<ul>
+			<li><?php esc_attr_e( 'url => string with URL of OpenAgenda agenda. (required)', 'wp-openagenda' ); ?></li>
+			<li><?php esc_attr_e( 'lang => language to display (2 letters country code: en/fr...). default: en. optional.', 'wp-openagenda' ); ?></li>
+			<li><?php esc_attr_e( 'widget => Openagenda widget to display. Possible settings: general, map, search, categories, tags, calendrier, preview.', 'wp-openagenda' ); ?></li>
+		</ul>
+		</div>
 	</ul>
 	<?php
 	if ( openagenda_fs()->is_not_paying() ) {
