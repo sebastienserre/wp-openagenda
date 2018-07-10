@@ -116,6 +116,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			 */
 			add_action( 'plugins_loaded', array( $this, 'thfo_openwp_load_files' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'thfo_openwp_load_style' ) );
+			add_action( 'admin_print_styles', array( $this, 'openwp_load_admin_style' ) );
 
 		}
 
@@ -139,6 +140,13 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		 */
 		public function thfo_openwp_load_style() {
 			wp_enqueue_style( 'openwp', THFO_OPENWP_PLUGIN_URL . 'assets/css/openwp.css' );
+		}
+
+		/**
+		 * Load Admin Styles.
+		 */
+		public function openwp_load_admin_style() {
+			wp_enqueue_style( 'openawp-admin-style', THFO_OPENWP_PLUGIN_URL . 'admin/assets/openwp-admin-styles.css' );
 		}
 	}
 
