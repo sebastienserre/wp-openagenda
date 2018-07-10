@@ -1,0 +1,25 @@
+.shortcode-help {
+    background: white;
+    max-width: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+section.pro-pub {
+    max-width: 50%;
+    background: #fe5000;
+    color: white;
+    padding: 10px;
+}
+
+.pro-pub a {
+    color: #fe5000;
+}
+
+a.upgrade_button {
+    background: white;
+    padding: 10px;
+    margin: 0 auto;
+    display: block;
+    width: fit-content;
+}
