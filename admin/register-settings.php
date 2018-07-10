@@ -85,10 +85,10 @@ function thfo_openwp_help() {
 	</ul>
 	<?php
 	if ( openagenda_fs()->is_not_paying() ) {
-		echo '<section>
+		echo '<section class="pro-pub">
 <h2>' . __( 'Discover Our Pro Version', 'wp-openagenda' ) . '</h2>
 <p>' . __( 'Easy display all OpenAgenda Widget without any code to copy/past! Configure and that\'s it', 'wp-openagenda' ) . '</p>';
-		echo '<p><a href="' . openagenda_fs()->get_upgrade_url() . '">' .
+		echo '<p><a class="upgrade_button" href="' . openagenda_fs()->get_upgrade_url() . '">' .
 		     __( 'Upgrade Now!', 'wp-openagenda' ) .
 		     '</a></p>';
 		echo '
