@@ -55,7 +55,7 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * Planned to be added in the Pro Version
 
 = Is OpenAgenda for WordPress is working with WPBakery Page Builder (formerly Visual Composer) ?
-* Yes! I try to create Visual Composer Element in the same time I create WordPress Widget and WordPress Shortcode.
+* Yes! The Pro version is coming with Visual Composer element. Free one provide only WP Shortcodes and WP Widgets.
 
 = May I test for free the Pro Version?
 * Yes! 14 days free trial. Do not hesitate.
