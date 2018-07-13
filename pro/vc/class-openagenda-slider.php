@@ -152,10 +152,9 @@ class Openagenda_Slider {
 		);
 
 		wp_enqueue_script( 'slickjs' );
-		wp_enqueue_script( 'psliderjs' );
+		wp_enqueue_script( 'openagendaSliderJS' );
 		wp_enqueue_style( 'slickcss' );
 		wp_enqueue_style( 'slickthemecss' );
-		//wp_enqueue_style( 'pslidercss' );
 
 
 		$openwp = new OpenAgendaApi();
@@ -207,13 +206,13 @@ class Openagenda_Slider {
 						$html .= '<p class="bloc-openagenda__lieu">' . $ev['locationName'] . '</p>';
 					}
 
-					$html .= '</div>';
+					$html .= '<div class="arrows-bottom"></div></div>';
 					$html .= '</a>';
 					$html .= '</div>';
 
 				}
 			}
-			$html .= '</div><div class="arrows-bottom"></div></div><a href="' . $atts['agenda_url'] . '">' . $atts['agenda_url_text'] . '</a>';
+			$html .= '</div></div><a href="' . $atts['agenda_url'] . '">' . $atts['agenda_url_text'] . '</a>';
 
 
 		}
@@ -224,13 +223,13 @@ class Openagenda_Slider {
 
 	public function openwp_slider_register_scripts() {
 		wp_register_script( 'slickjs', THFO_OPENWP_PLUGIN_URL . 'assets/slick/slick.min.js', array( 'jquery' ) );
-		wp_register_script( 'psliderjs', THFO_OPENWP_PLUGIN_URL . 'assets/js/openagenda_slick.js', array(
+		$openagendasliderjs = apply_filters( 'openwp_openagendasliderjs', THFO_OPENWP_PLUGIN_URL . 'assets/js/openagenda_slick.js' );
+		wp_register_script( 'openagendaSliderJS', $openagendasliderjs , array(
 			'jquery',
 			'slickjs',
 		) );
 		wp_register_style( 'slickcss', THFO_OPENWP_PLUGIN_URL . 'assets/slick/slick.css' );
 		wp_register_style( 'slickthemecss', THFO_OPENWP_PLUGIN_URL . 'assets/slick/slick-theme.css' );
-		//wp_register_style( 'pslidercss', THFO_OPENWP_PLUGIN_URL . 'assets/css/p2p5-pslider.css' );
 	}
 }
 

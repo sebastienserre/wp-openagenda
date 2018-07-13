@@ -2,7 +2,8 @@ jQuery(document).ready(function ($) {
     $('.bloc-openagenda__slider').slick({
         infinite: true,
         /*autoplay: true,*/
-        arrows: true,
+        /*arrows: true,*/
+        dots: true,
         cssEase: 'linear',
         adaptiveHeight: true
     })
