@@ -46,7 +46,6 @@ class OpenagendaSliderShortcode {
 	public function openwp_slider_html( $atts ) {
 		$openwp = new OpenAgendaApi();
 		$datas  = $openwp->thfo_openwp_retrieve_data( $atts['agenda_url'], $atts['number'] );
-
 		$car_exist = strpos( $atts['title'], '%' );
 
 		if ( $car_exist ) {
@@ -59,11 +58,11 @@ class OpenagendaSliderShortcode {
 
 		$html = '<div class="bloc-openagenda"><h2 class="bloc-openagenda__title openagenda" style="color:' . $atts['agenda_title_color'] . ';">' . $title . '</h2>';
 
+
 		if ( 0 === $datas['total'] ) {
 
 			$html .= '<p>' . __( 'Sorry, no events found', 'wp-openagenda-pro' ) . '</p>';
 		} else {
-
 			$html .= '<div class="bloc-openagenda__slider">';
 
 			foreach ( $datas as $event ) {
