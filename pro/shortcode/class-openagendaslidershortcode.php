@@ -71,7 +71,7 @@ class OpenagendaSliderShortcode {
 					if ( empty( $atts['agenda_url_intern'] ) ) {
 						$url = $atts['agenda_url'] . '?oaq%5Buids%5D%5B0%5D=' . $ev['uid'];
 					} else {
-						$url = $atts['agenda_url_interne'] . '?oaq%5Buids%5D%5B0%5D=' . $ev['uid'];
+						$url = $atts['agenda_url_intern'] . '?oaq%5Buids%5D%5B0%5D=' . $ev['uid'];
 					}
 					$date = $ev['range']['fr'];
 

@@ -12,8 +12,13 @@ p.bloc-openagenda__lieu::before {
     background-repeat: no-repeat;
     background-size:16px 16px;
     background-position:center center;
+    margin-right: 0.2em;
 }
 
 .slick-slide img {
     margin: 0 auto;
+}
+
+.bloc-openagenda__date {
+    padding: 0.5em;
 }
