@@ -13,3 +13,7 @@ p.bloc-openagenda__lieu::before {
     background-size:16px 16px;
     background-position:center center;
 }
+
+.slick-slide img {
+    margin: 0 auto;
+}
