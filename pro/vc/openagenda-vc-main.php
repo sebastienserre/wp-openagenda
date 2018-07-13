@@ -60,7 +60,7 @@ function openwp_vc_openagenda_main_init() {
 					'holder'      => 'p',
 					'class'       => 'title-class',
 					'heading'     => __( 'OpenAgenda Widget to display:', 'wp-openagenda' ),
-					'param_name'  => 'openagenda_type',
+					'param_name'  => 'widget',
 					'value'       => array(
 						__( 'Please select an OpenAgenda Widget', 'wp-openagenda-pro' ) => 'nothing',
 						__( 'General', 'wp-openagenda-pro' )                            => 'general',
@@ -92,27 +92,24 @@ add_action( 'init', 'openwp_vc_openagenda_main_init' );
  * @return string
  */
 function openwp_vc_openagenda_main( $atts ) {
-	$atts = shortcode_atts( array(
-		'agenda_url'      => '',
-		'title'           => '',
-		'openagenda_type' => 'nothing',
-		'agenda_nb' => 10,
+	$atts = shortcode_atts(
+		array(
+			'agenda_url' => '',
+			'title'      => '',
+			'widget'     => 'general',
+			'agenda_nb'  => 10,
 		),
 		$atts, 'openagenda-main'
 	);
-
-
-	$key = get_option( 'openagenda_api' );
+	$key  = get_option( 'openagenda_api' );
 	if ( ! empty( $key ) ) {
 		$openwp = new OpenAgendaApi();
 		$uid    = $openwp->openwp_get_uid( $atts['agenda_url'] );
 	}
-
 	if ( $uid ) {
 
 		$embed = $openwp->openwp_get_embed( $uid, $key );
-
-		$main = new OpenAgendaApi();
+		$main  = new OpenAgendaApi();
 		echo $main->openwp_main_widget_html__premium_only( $embed, $uid, $atts );
 	} else {
 		return '<p>' . $warning . '</p>';
