@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -47,6 +47,9 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 = May I give Idea?
 * Yes please use the [Github](https://github.com/sebastienserre/openagenda-wp/issues) issue
 
+= Where can I found help ?
+* I'm starting to write a Wiki on [Github](https://github.com/sebastienserre/openagenda-wp/wiki)
+
 = I'm using Elementor Page Builder, How to use OpenAgenda for Wordpress to display events?
 * simply use the WordPress Widget, it will display your agenda on Elementor page Builder
 
@@ -72,6 +75,11 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 6. Display OpenAgenda widget in a great WP Widget (Pro Version)
 
 == Changelog ==
+* 1.4.3 -- 13 july 2018
+    Add a slider (SlickJS) in Pro Version
+    Add filters for dev
+    Fix Minor bugs on free stuff
+
 * 1.4.2 -- 10 july 2018
     Add cosmetic stuff (Style)
     Add Help on setting page
@@ -87,6 +95,7 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
     Pro Version:
         Add a Visual Composer element, a Widget WordPress and a Shortcode to display the embeds Widget from OpenAgenda.
         Simply choose the OpenAgenda URL, the widget (general, map, search, categories, tags, calendrier, preview) to display.
+        Display single event without going out of you website.
 
 * 1.3.0 -- 4 july 2018
     introduce Pro Options
