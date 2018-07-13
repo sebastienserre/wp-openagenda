@@ -74,6 +74,7 @@ class OpenAgendaApi {
 
 		$uid = $this->openwp_get_uid( $slug );
 		if ( $uid ) {
+
 			$url          = 'https://openagenda.com/agendas/' . $uid . '/events.json?key=' . $key . '&limit=' . $nb;
 			$response     = wp_remote_get( $url );
 			$decoded_body = array();

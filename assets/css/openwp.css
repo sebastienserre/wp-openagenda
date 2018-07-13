@@ -2,3 +2,14 @@
     border-bottom: solid 1px;
     margin-bottom: 30px;
 }
+
+p.bloc-openagenda__lieu::before {
+    background-image: url(../img/pin.svg);
+    content: '';
+    display:inline-block;
+    width: 16px;
+    height:16px;
+    background-repeat: no-repeat;
+    background-size:16px 16px;
+    background-position:center center;
+}

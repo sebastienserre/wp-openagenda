@@ -110,9 +110,8 @@ function openwp_vc_openagenda_main( $atts ) {
 
 	if ( $uid ) {
 
-		$embed = $openwp->openwp_get_embed( $uid, $key);
+		$embed = $openwp->openwp_get_embed( $uid, $key );
 
-var_dump($embed);
 		$main = new OpenAgendaApi();
 		echo $main->openwp_main_widget_html__premium_only( $embed, $uid, $atts );
 	} else {
