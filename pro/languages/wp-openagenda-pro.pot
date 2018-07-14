@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-09 06:37+0000\n"
+"POT-Creation-Date: 2018-07-14 11:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,50 +14,126 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: pro/class-openagenda-main-widget.php:20
+#: pro/widget/class-openagenda-slider-widget.php:8
+msgid ""
+"Display your Openagenda.com's Events in a slider in your WordPress Sidebar "
+"with a beautiful widget"
+msgstr ""
+
+#: pro/widget/class-openagenda-slider-widget.php:58
+#: pro/vc/class-vc-events.php:48 pro/vc/class-openagenda-slider.php:74
+msgid "Internal URL of Main Agenda Page:"
+msgstr ""
+
+#: pro/widget/class-openagenda-slider-widget.php:66
+#: pro/vc/class-openagenda-slider.php:126
+#: pro/vc/class-openagenda-slider.php:128
+msgid "Display venue"
+msgstr ""
+
+#: pro/widget/class-openagenda-slider-widget.php:82
+#: pro/vc/class-vc-events.php:76 pro/vc/openagenda-vc-main.php:52
+#: pro/vc/class-openagenda-slider.php:61
+msgid "Number of Events"
+msgstr ""
+
+#: pro/widget/class-openagenda-main-widget.php:20
 msgid ""
 "Display the main Widget from OpenAgenda where ever you want in your "
 "WordPress Website"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:77
+#: pro/widget/class-openagenda-main-widget.php:77
 msgid "OpenAgenda URL:"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:87
+#: pro/widget/class-openagenda-main-widget.php:87 pro/vc/class-vc-events.php:61
 msgid "Languages of events:"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:95
+#: pro/widget/class-openagenda-main-widget.php:95
 msgid "OpenAgenda Widget to display:"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:97 pro/vc/openagenda-vc-main.php:66
+#: pro/widget/class-openagenda-main-widget.php:97
+#: pro/vc/openagenda-vc-main.php:66
 msgid "General"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:98 pro/vc/openagenda-vc-main.php:67
+#: pro/widget/class-openagenda-main-widget.php:98
+#: pro/vc/openagenda-vc-main.php:67
 msgid "Map"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:99 pro/vc/openagenda-vc-main.php:68
+#: pro/widget/class-openagenda-main-widget.php:99
+#: pro/vc/openagenda-vc-main.php:68
 msgid "Search"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:100 pro/vc/openagenda-vc-main.php:69
+#: pro/widget/class-openagenda-main-widget.php:100
+#: pro/vc/openagenda-vc-main.php:69
 msgid "Categories"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:101 pro/vc/openagenda-vc-main.php:70
+#: pro/widget/class-openagenda-main-widget.php:101
+#: pro/vc/openagenda-vc-main.php:70
 msgid "Tags"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:102
+#: pro/widget/class-openagenda-main-widget.php:102
 msgid "calendrier"
 msgstr ""
 
-#: pro/class-openagenda-main-widget.php:103
+#: pro/widget/class-openagenda-main-widget.php:103
 msgid "preview"
+msgstr ""
+
+#: pro/shortcode/class-openagendaslidershortcode.php:64
+msgid "Sorry, no events found"
+msgstr ""
+
+#: pro/vc/class-vc-events.php:36 pro/vc/class-vc-events.php:38
+#: pro/vc/openagenda-vc-main.php:24 pro/vc/openagenda-vc-main.php:26
+#: pro/vc/class-openagenda-slider.php:48 pro/vc/class-openagenda-slider.php:50
+msgid "Title"
+msgstr ""
+
+#: pro/vc/class-vc-events.php:41 pro/vc/class-vc-events.php:54
+#: pro/vc/class-vc-events.php:67 pro/vc/class-vc-events.php:79
+#: pro/vc/openagenda-vc-main.php:30 pro/vc/openagenda-vc-main.php:42
+#: pro/vc/openagenda-vc-main.php:55 pro/vc/openagenda-vc-main.php:77
+#: pro/vc/class-openagenda-slider.php:41 pro/vc/class-openagenda-slider.php:54
+#: pro/vc/class-openagenda-slider.php:67 pro/vc/class-openagenda-slider.php:80
+#: pro/vc/class-openagenda-slider.php:93 pro/vc/class-openagenda-slider.php:106
+#: pro/vc/class-openagenda-slider.php:119
+#: pro/vc/class-openagenda-slider.php:131
+msgid "Settings"
+msgstr ""
+
+#: pro/vc/class-vc-events.php:51
+msgid ""
+"Internal URL of Main Agenda Page. You must create a page integrating "
+"OpenAgenda"
+msgstr ""
+
+#: pro/vc/class-vc-events.php:63
+msgid "Choose the lang to display."
+msgstr ""
+
+#: pro/vc/class-vc-events.php:73
+msgid "Nb of event"
+msgstr ""
+
+#: pro/vc/class-vc-events.php:85
+msgid "Event Openagenda"
+msgstr ""
+
+#: pro/vc/class-vc-events.php:87
+msgid "Display Event from Openagenda"
+msgstr ""
+
+#: pro/vc/class-vc-events.php:88 pro/vc/openagenda-vc-main.php:17
+msgid "OpenAgenda"
 msgstr ""
 
 #: pro/vc/openagenda-vc-main.php:14
@@ -68,41 +144,12 @@ msgstr ""
 msgid "Display Openagenda Script"
 msgstr ""
 
-#: pro/vc/openagenda-vc-main.php:17
-msgid "OpenAgenda"
-msgstr ""
-
-#: pro/vc/openagenda-vc-main.php:24 pro/vc/openagenda-vc-main.php:26
-msgid "Title"
-msgstr ""
-
-#: pro/vc/openagenda-vc-main.php:27
+#: pro/vc/openagenda-vc-main.php:27 pro/vc/class-openagenda-slider.php:51
 msgid "Add a word between % to add a different style. Only 1 allowed"
-msgstr ""
-
-#: pro/vc/openagenda-vc-main.php:30 pro/vc/openagenda-vc-main.php:42
-#: pro/vc/openagenda-vc-main.php:55 pro/vc/openagenda-vc-main.php:77
-msgid "Settings"
-msgstr ""
-
-#: pro/vc/openagenda-vc-main.php:36
-msgid "URL to Event"
 msgstr ""
 
 #: pro/vc/openagenda-vc-main.php:39
 msgid "URL to the OpenAgenda Agenda"
-msgstr ""
-
-#: pro/vc/openagenda-vc-main.php:49
-msgid "Nb of events"
-msgstr ""
-
-#: pro/vc/openagenda-vc-main.php:52
-msgid "Number of events to display"
-msgstr ""
-
-#: pro/vc/openagenda-vc-main.php:62
-msgid "Widget Type"
 msgstr ""
 
 #: pro/vc/openagenda-vc-main.php:65
@@ -119,6 +166,52 @@ msgstr ""
 
 #: pro/vc/openagenda-vc-main.php:74
 msgid "Select the widget to display"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:25
+msgid "Slider Openagenda"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:27
+msgid "Display Slider with Openagenda events"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:37
+msgid "my-agenda-URL"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:38
+msgid ""
+"The URL of your agenda in openagenda. For example, Openagenda URL is https:"
+"//openagenda.com/my-great-calendar"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:64
+msgid "Choose the number of events to show"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:87
+msgid "Color to Title"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:90
+msgid "Select the color for the  title part between %"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:100
+msgid "Background color"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:103
+msgid "Date Box background color"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:113
+msgid "text color"
+msgstr ""
+
+#: pro/vc/class-openagenda-slider.php:116
+msgid "Date Box text color"
 msgstr ""
 
 #. Name of the plugin
