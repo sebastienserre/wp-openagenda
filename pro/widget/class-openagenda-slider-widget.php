@@ -55,7 +55,7 @@ class Openagenda_Slider_Widget extends WP_Widget {
 		</p>
 		<p>
 			<label
-					for="<?php echo $this->get_field_name( 'agenda_url_intern' ); ?>"> <?php _e( 'Internal URl of Main Agenda Page:', 'wp-openagenda-pro' ); ?></label>
+					for="<?php echo $this->get_field_name( 'agenda_url_intern' ); ?>"> <?php _e( 'Internal URL of Main Agenda Page:', 'wp-openagenda-pro' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'agenda_url_intern' ); ?>"
 			       name="<?php echo $this->get_field_name( 'agenda_url_intern' ); ?>" type="text"
 			       value="<?php echo $instance['agenda_url_intern']; ?>"/>

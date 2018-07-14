@@ -49,7 +49,7 @@ function openwp_vc_openagenda_main_init() {
 					'heading'     => __( 'Number of events:', 'wp-openagenda' ),
 					'param_name'  => 'agenda_nb',
 					'value'       => 10,
-					'description' => __( 'Number of events to display', 'wp-openagenda-pro' ),
+					'description' => __( 'Number of Events', 'wp-openagenda-pro' ),
 					'admin_label' => false,
 					'weight'      => 0,
 					'group'       => __( 'Settings', 'wp-openagenda-pro' ),
