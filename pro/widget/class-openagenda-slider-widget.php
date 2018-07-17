@@ -34,6 +34,7 @@ class Openagenda_Slider_Widget extends WP_Widget {
 
 		$display_title = false;
 		echo $slide->openwp_slider_html( $instance, $display_title );
+		echo $args['after_widget'];
 	}
 
 	public function form( $instance ) {
@@ -67,15 +68,12 @@ class Openagenda_Slider_Widget extends WP_Widget {
 					for="<?php echo $this->get_field_name( 'agenda_lieu' ); ?>"> <?php _e( 'Display venue', 'wp-openagenda-pro' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'agenda_lieu' ); ?>"
 			       name="<?php echo $this->get_field_name( 'agenda_lieu' ); ?>" type="radio" value="true"
-				<?php if ( 'true' === $instance['agenda_lieu'] ) {
-					echo "checked";
-				} ?>
+				<?php checked( $instance['agenda_lieu'], 'true'); ?>
 			/> Yes
 			<input class="widefat" id="<?php echo $this->get_field_id( 'agenda_lieu' ); ?>"
 			       name="<?php echo $this->get_field_name( 'agenda_lieu' ); ?>" type="radio" value="false"
-				<?php if ( 'false' === $instance['agenda_lieu'] ) {
-					echo "checked";
-				} ?> /> No
+				<?php checked( $instance['agenda_lieu'], 'false');
+				?> /> No
 
 		</p>
 		<p>
@@ -87,6 +85,16 @@ class Openagenda_Slider_Widget extends WP_Widget {
 
 		</p>
 		<?php
+	}
+
+	public function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+		$instance[ 'title' ] = strip_tags( $new_instance[ 'title' ] );
+		$instance[ 'number' ] = $new_instance[ 'number' ];
+		$instance[ 'agenda_url' ] = esc_url( $new_instance[ 'agenda_url' ] );
+		$instance[ 'agenda_url_intern' ] = esc_url( $new_instance[ 'agenda_url_intern' ] );
+		$instance[ 'agenda_lieu' ] = $new_instance[ 'agenda_lieu' ];
+		return $instance;
 	}
 
 	public function init_openwp_slider_widget() {
