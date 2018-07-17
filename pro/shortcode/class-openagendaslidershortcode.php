@@ -43,7 +43,7 @@ class OpenagendaSliderShortcode {
 		wp_register_style( 'slickthemecss', THFO_OPENWP_PLUGIN_URL . 'pro/assets/slick/slick-theme.css' );
 	}
 
-	public function openwp_slider_html( $atts ) {
+	public function openwp_slider_html( $atts, $display_title = true ) {
 		$openwp = new OpenAgendaApi();
 		$datas  = $openwp->thfo_openwp_retrieve_data( $atts['agenda_url'], $atts['number'] );
 		$car_exist = strpos( $atts['title'], '%' );
@@ -56,8 +56,11 @@ class OpenagendaSliderShortcode {
 			$title = $atts['title'];
 		}
 
-		$html = '<div class="bloc-openagenda"><h2 class="bloc-openagenda__title openagenda" style="color:' . $atts['agenda_title_color'] . ';">' . $title . '</h2>';
+		$html = '<div class="bloc-openagenda">';
 
+		if ( $display_title === true ) {
+			$html = '<h2 class="bloc-openagenda__title openagenda" style="color:' . $atts['agenda_title_color'] . ';">' . $title . '</h2>';
+		}
 
 		if ( 0 === $datas['total'] ) {
 

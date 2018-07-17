@@ -32,7 +32,8 @@ class Openagenda_Slider_Widget extends WP_Widget {
 		wp_enqueue_style( 'slickthemecss' );
 		$slide = new OpenagendaSliderShortcode();
 
-		echo $slide->openwp_slider_html( $instance );
+		$display_title = false;
+		echo $slide->openwp_slider_html( $instance, $display_title );
 	}
 
 	public function form( $instance ) {
