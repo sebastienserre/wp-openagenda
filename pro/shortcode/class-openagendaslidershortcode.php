@@ -20,8 +20,8 @@ class OpenagendaSliderShortcode {
 			'agenda_title_color'     => '',
 			'agenda_date_color'      => '',
 			'agenda_date_text_color' => '',
-			'agenda_lieu'            => '',
-			'number'                 => '',
+			'agenda_lieu'            => 'true',
+			'number'                 => '10',
 		), $atts, 'openagenda_slider' );
 
 		wp_enqueue_script( 'slickjs' );
@@ -44,8 +44,8 @@ class OpenagendaSliderShortcode {
 	}
 
 	public function openwp_slider_html( $atts, $display_title = true ) {
-		$openwp = new OpenAgendaApi();
-		$datas  = $openwp->thfo_openwp_retrieve_data( $atts['agenda_url'], $atts['number'] );
+		$openwp    = new OpenAgendaApi();
+		$datas     = $openwp->thfo_openwp_retrieve_data( $atts['agenda_url'], $atts['number'] );
 		$car_exist = strpos( $atts['title'], '%' );
 
 		if ( $car_exist ) {
