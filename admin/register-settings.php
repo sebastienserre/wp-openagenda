@@ -82,6 +82,19 @@ function thfo_openwp_help() {
 			<li><?php esc_attr_e( 'widget => Openagenda widget to display. Possible settings: general, map, search, categories, tags, calendrier, preview.', 'wp-openagenda' ); ?></li>
 		</ul>
 		</div>
+		<div class="shortcode-help">
+			<li >[openagenda_slider] <?php esc_attr_e( 'only on Pro Version', 'wp-openagenda' ); ?></li>
+			<ul>
+				<li><?php esc_attr_e( 'agenda_ur => string with URL of OpenAgenda agenda. (required)', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'title => string with title to show (optional).', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'agenda_url_intern => URl of embed agenda. (Optional). default: agenda on Openagenda.com', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'agenda_title_color => Colr of title inside %%. (Optional).', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'agenda_date_color => Background color of date "box". (Optional).', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'agenda_date_text_color => Color of text (Optional).', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'agenda_lieu => Show Event Venue? "true" or "false" but in string.', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'number => number of events (Optional).', 'wp-openagenda' ); ?></li>
+			</ul>
+		</div>
 	</ul>
 	<?php
 	if ( openagenda_fs()->is_not_paying() ) {
