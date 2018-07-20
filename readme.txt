@@ -1,5 +1,5 @@
 === OpenAgenda for WordPress ===
-Contributors: sebastienthivinfocom
+Contributors: sebastienserre
 Tags: openagenda, agenda, events, calendar, open data, event, organizer, dates, date, conference, workshop, concert, meeting, seminar, summit, class, shortcode, widget, visual composer
 Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
