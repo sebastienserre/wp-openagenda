@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-14 11:12+0000\n"
+"POT-Creation-Date: 2018-07-23 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -20,18 +20,18 @@ msgid ""
 "with a beautiful widget"
 msgstr ""
 
-#: pro/widget/class-openagenda-slider-widget.php:58
+#: pro/widget/class-openagenda-slider-widget.php:60
 #: pro/vc/class-vc-events.php:48 pro/vc/class-openagenda-slider.php:74
 msgid "Internal URL of Main Agenda Page:"
 msgstr ""
 
-#: pro/widget/class-openagenda-slider-widget.php:66
+#: pro/widget/class-openagenda-slider-widget.php:68
 #: pro/vc/class-openagenda-slider.php:126
 #: pro/vc/class-openagenda-slider.php:128
 msgid "Display venue"
 msgstr ""
 
-#: pro/widget/class-openagenda-slider-widget.php:82
+#: pro/widget/class-openagenda-slider-widget.php:81
 #: pro/vc/class-vc-events.php:76 pro/vc/openagenda-vc-main.php:52
 #: pro/vc/class-openagenda-slider.php:61
 msgid "Number of Events"
@@ -88,7 +88,7 @@ msgstr ""
 msgid "preview"
 msgstr ""
 
-#: pro/shortcode/class-openagendaslidershortcode.php:64
+#: pro/shortcode/class-openagendaslidershortcode.php:67
 msgid "Sorry, no events found"
 msgstr ""
 
@@ -223,9 +223,7 @@ msgid "Easily display an OpenAgenga.com in your WordPress website"
 msgstr ""
 
 #. URI of the plugin
-msgid ""
-"https://www.thivinfo.com/blog/afficher-facilement-vos-agendas-openagenda-com-"
-"sur-votre-site-wordpress-avec-openagenda-pour-wordpress/"
+msgid "https://openagenda4wp.com/"
 msgstr ""
 
 #. Author of the plugin
