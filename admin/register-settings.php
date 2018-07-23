@@ -85,10 +85,10 @@ function thfo_openwp_help() {
 		<div class="shortcode-help">
 			<li >[openagenda_slider] <?php esc_attr_e( 'only on Pro Version', 'wp-openagenda' ); ?></li>
 			<ul>
-				<li><?php esc_attr_e( 'agenda_ur => string with URL of OpenAgenda agenda. (required)', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'agenda_url => string with URL of OpenAgenda agenda. (required)', 'wp-openagenda' ); ?></li>
 				<li><?php esc_attr_e( 'title => string with title to show (optional).', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'agenda_url_intern => URl of embed agenda. (Optional). default: agenda on Openagenda.com', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'agenda_title_color => Colr of title inside %%. (Optional).', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'agenda_url_intern => URL of embed agenda. (Optional). default: agenda on Openagenda.com', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'agenda_title_color => Color of title inside %%. (Optional).', 'wp-openagenda' ); ?></li>
 				<li><?php esc_attr_e( 'agenda_date_color => Background color of date "box". (Optional).', 'wp-openagenda' ); ?></li>
 				<li><?php esc_attr_e( 'agenda_date_text_color => Color of text (Optional).', 'wp-openagenda' ); ?></li>
 				<li><?php esc_attr_e( 'agenda_lieu => Show Event Venue? "true" or "false" but in string.', 'wp-openagenda' ); ?></li>
