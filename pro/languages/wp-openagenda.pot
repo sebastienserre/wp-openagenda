@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-28 14:30+0000\n"
+"POT-Creation-Date: 2018-10-28 20:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,71 +14,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: admin/register-settings.php:129
-msgid "agenda_date_color => Background color of date \"box\". (Optional)."
+#: admin/register-settings.php:20
+msgid "OpenAgenda WP"
 msgstr ""
 
-#: admin/register-settings.php:130
-msgid "agenda_date_text_color => Color of text (Optional)."
+#: admin/register-settings.php:20
+msgid "OpenAgenda Settings"
 msgstr ""
 
-#: admin/register-settings.php:131
-msgid "agenda_lieu => Show Event Venue? \"true\" or \"false\" but in string."
+#: admin/register-settings.php:28
+msgid "General"
 msgstr ""
 
-#: admin/register-settings.php:128
-#, php-format
-msgid "agenda_title_color => Color of title inside %%. (Optional)."
+#: admin/register-settings.php:29
+msgid "Help"
 msgstr ""
 
-#: admin/register-settings.php:125
-msgid "agenda_url => string with URL of OpenAgenda agenda. (required)"
+#: admin/register-settings.php:82
+msgid "Help Center"
 msgstr ""
 
-#: admin/register-settings.php:127
-msgid ""
-"agenda_url_intern => URL of embed agenda. (Optional). default: agenda on "
-"Openagenda.com"
+#: admin/register-settings.php:84
+msgid "Credits"
 msgstr ""
 
-#: admin/register-settings.php:85
+#: admin/register-settings.php:86
 msgid "API Openagenda"
 msgstr ""
 
 #. Add the OpenAGenda URL.
-#: admin/register-settings.php:97
+#: admin/register-settings.php:98
 #, php-format
 msgid ""
 "Create an account on <a href=\"%s\" target=\"_blank\">OpenAgenda</a>, and go "
 "to your setting page to get your API key."
 msgstr ""
 
-#: admin/register-settings.php:83
-msgid "Credits"
+#: admin/register-settings.php:112
+msgid "Welcome on the support center"
 msgstr ""
 
-#: admin/register-settings.php:139
+#: admin/register-settings.php:115
+msgid "Documentation Center"
+msgstr ""
+
+#: admin/register-settings.php:120
 msgid "Discover Our Pro Version"
 msgstr ""
 
-#: class/class-openagenda-wp-basic-widget.php:18
-msgid ""
-"Display an Openagenda.com's Agenda in your WordPress Sidebar with a "
-"beautiful widget"
-msgstr ""
-
-#. Description of the plugin
-msgid "Easily display an OpenAgenga.com in your WordPress website"
-msgstr ""
-
-#: admin/register-settings.php:140
+#: admin/register-settings.php:121
 msgid ""
 "Easy display all OpenAgenda Widget without any code to copy/past! Configure "
 "and that's it"
 msgstr ""
 
-#: admin/register-settings.php:28
-msgid "General"
+#: admin/register-settings.php:123
+msgid "Upgrade Now!"
+msgstr ""
+
+#: admin/register-settings.php:139
+msgid "Love OpenAgenda for WordPress ? Don't forget to rate it 5 stars!"
+msgstr ""
+
+#. This line add credits to thivinfo.com.
+#: admin/register-settings.php:192
+#, php-format
+msgid "This plugin is created with love by <a href=\"%1$s\">%2$s</a>."
+msgstr ""
+
+#. This line add disclosure from Openagenda.com and thivinfo.com.
+#: admin/register-settings.php:202
+#, php-format
+msgid ""
+"There's no relations between <a href=\"%1$s\">%2$s</a> and <a href=\"%3$s\">"
+"%4$s</a>."
+msgstr ""
+
+#: class/class-openagendaapi.php:69
+msgid "You forgot to add an agenda's url to retrieve"
+msgstr ""
+
+#: class/class-openagendaapi.php:86 class/class-openagendaapi.php:89
+msgid "Impossible to retrieve Events Data"
 msgstr ""
 
 #. this is a link to add events in Openagenda.com.
@@ -87,59 +104,16 @@ msgstr ""
 msgid "Have an Event to display here? <a href=\"%s\">Add it!</a>"
 msgstr ""
 
-#: admin/register-settings.php:29
-msgid "Help"
-msgstr ""
-
-#: admin/register-settings.php:81
-msgid "Help Center"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "http://www.thivinfo.com"
-msgstr ""
-
-#. URI of the plugin
-msgid "https://openagenda4wp.com/"
-msgstr ""
-
-#: class/class-openagendaapi.php:86 class/class-openagendaapi.php:89
-msgid "Impossible to retrieve Events Data"
-msgstr ""
-
-#: admin/register-settings.php:118
+#: class/class-openagendaapi.php:224
 msgid ""
-"lang => language to display (2 letters country code: en/fr...). default: en. "
-"optional."
+"This agenda doesn't have any embeds layout in their params.<br> We're sorry, "
+"but wen can't display it :("
 msgstr ""
 
-#: class/class-openagenda-wp-basic-widget.php:90
-msgid "Languages of events:"
-msgstr ""
-
-#: admin/register-settings.php:158
-msgid "Love OpenAgenda for WordPress ? Don't forget to rate it 5 stars!"
-msgstr ""
-
-#: admin/register-settings.php:132
-msgid "number => number of events (Optional)."
-msgstr ""
-
-#: class/class-openagenda-wp-basic-widget.php:82
-#: pro/vc/openagenda-vc-main.php:49
-msgid "Number of events:"
-msgstr ""
-
-#: admin/register-settings.php:115 admin/register-settings.php:123
-msgid "only on Pro Version"
-msgstr ""
-
-#: pro/vc/class-openagenda-slider.php:28
-msgid "OpenAgenda"
-msgstr ""
-
-#: admin/register-settings.php:20
-msgid "OpenAgenda Settings"
+#: class/class-openagenda-wp-basic-widget.php:18
+msgid ""
+"Display an Openagenda.com's Agenda in your WordPress Sidebar with a "
+"beautiful widget"
 msgstr ""
 
 #: class/class-openagenda-wp-basic-widget.php:73
@@ -148,87 +122,39 @@ msgstr ""
 msgid "OpenAgenda URL"
 msgstr ""
 
+#: class/class-openagenda-wp-basic-widget.php:82
+#: pro/vc/openagenda-vc-main.php:49
+msgid "Number of events:"
+msgstr ""
+
+#: class/class-openagenda-wp-basic-widget.php:90
+msgid "Languages of events:"
+msgstr ""
+
 #: pro/vc/openagenda-vc-main.php:62
 msgid "OpenAgenda Widget to display:"
 msgstr ""
 
-#: admin/register-settings.php:20
-msgid "OpenAgenda WP"
-msgstr ""
-
-#: admin/register-settings.php:103
-msgid "Shortcodes"
-msgstr ""
-
-#. Author of the plugin
-msgid "Sébastien Serre"
-msgstr ""
-
-#: admin/register-settings.php:109
-msgid ""
-"The param Agenda slug is <strong>mandatory</strong>. example: slug='my-"
-"agenda-slug' "
-msgstr ""
-
-#: admin/register-settings.php:111
-msgid ""
-"The param lang is <strong>optional</strong>. Default value is en (english). "
-"It will retrieve data with the \"lang\" params (if exists). example: lang = "
-"'fr' "
-msgstr ""
-
-#: admin/register-settings.php:110
-msgid ""
-"The param nb is <strong>optional</strong>. Default value is 10. It will "
-"retrieve data for the \"nb\" events. example: nb=12 "
-msgstr ""
-
-#. This line add disclosure from Openagenda.com and thivinfo.com.
-#: admin/register-settings.php:221
-#, php-format
-msgid ""
-"There's no relations between <a href=\"%1$s\">%2$s</a> and <a href=\"%3$s\">"
-"%4$s</a>."
-msgstr ""
-
-#: class/class-openagendaapi.php:224
-msgid ""
-"This agenda doesn't have any embeds layout in their params.<br> We're sorry, "
-"but wen can't display it :("
-msgstr ""
-
-#. This line add credits to thivinfo.com.
-#: admin/register-settings.php:211
-#, php-format
-msgid "This plugin is created with love by <a href=\"%1$s\">%2$s</a>."
-msgstr ""
-
-#: admin/register-settings.php:108
-msgid "This shortcode will display a list of events from an OpenAgenda"
-msgstr ""
-
-#: admin/register-settings.php:126
-msgid "title => string with title to show (optional)."
-msgstr ""
-
-#: admin/register-settings.php:142
-msgid "Upgrade Now!"
-msgstr ""
-
-#: admin/register-settings.php:117
-msgid "url => string with URL of OpenAgenda agenda. (required)"
-msgstr ""
-
-#: admin/register-settings.php:119
-msgid ""
-"widget => Openagenda widget to display. Possible settings: general, map, "
-"search, categories, tags, calendrier, preview."
+#: pro/vc/class-openagenda-slider.php:28
+msgid "OpenAgenda"
 msgstr ""
 
 #. Name of the plugin
 msgid "WP Openagenda"
 msgstr ""
 
-#: class/class-openagendaapi.php:69
-msgid "You forgot to add an agenda's url to retrieve"
+#. Description of the plugin
+msgid "Easily display an OpenAgenda.com in your WordPress website"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://openagenda4wp.com/"
+msgstr ""
+
+#. Author of the plugin
+msgid "Sébastien Serre"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://www.thivinfo.com"
 msgstr ""
