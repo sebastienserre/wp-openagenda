@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -75,9 +75,10 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 6. Display OpenAgenda widget in a great WP Widget (Pro Version)
 
 == Changelog ==
-= 1.4.5 == 28 octobre 2018
+= 1.4.6 == 28 octobre 2018
 * Upgrade Freemius SDK
 * Correct some bug in the shortcode
+* Improve settings page (add link to documentaion)
 
 = 1.4.4 == 20 juillet 2018
     Reformat code
