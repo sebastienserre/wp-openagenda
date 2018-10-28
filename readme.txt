@@ -75,7 +75,11 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 6. Display OpenAgenda widget in a great WP Widget (Pro Version)
 
 == Changelog ==
-* 1.4.4 -- 20 juillet 2018
+= 1.4.5 == 28 octobre 2018
+* Upgrade Freemius SDK
+* Correct some bug in the shortcode
+
+= 1.4.4 == 20 juillet 2018
     Reformat code
     Minor bugfix
     Add consistency in translation
