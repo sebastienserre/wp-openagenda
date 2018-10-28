@@ -64,15 +64,15 @@ class OpenAgendaApi {
 	 *
 	 * @return array|mixed|object|string
 	 */
-	public function thfo_openwp_retrieve_data( $slug, $nb = 10 ) {
-		if ( empty( $slug ) ) {
-			return '<p>' . __( 'You forgot to add a slug of agenda to retrieve', 'wp-openagenda' ) . '</p>';
+	public function thfo_openwp_retrieve_data( $url, $nb = 10 ) {
+		if ( empty( $url ) ) {
+			return '<p>' . __( 'You forgot to add an agenda\'s url to retrieve', 'wp-openagenda' ) . '</p>';
 		}
 		if ( empty( $nb ) ) {
 			$nb = 10;
 		}
 
-		$uid = $this->openwp_get_uid( $slug );
+		$uid = $this->openwp_get_uid( $url );
 		if ( $uid ) {
 
 			$url          = 'https://openagenda.com/agendas/' . $uid . '/events.json?key=' . $key . '&limit=' . $nb;
@@ -130,7 +130,6 @@ class OpenAgendaApi {
 			$parsedown = new Parsedown();
 
 			foreach ( $openwp_data['events'] as $events ) {
-				$pub = apply_filters( 'openagendawp_pub', '<p>' . __( 'This plugin is created with love by ', 'wp-openagenda' ) . '<a href="https://goo.gl/K4eoTB">Thivinfo.com</a></p>' . thfo_openwp_stars() );
 				?>
 				<div class="openwp-event">
 					<a class="openwp-event-link" href="<?php echo esc_url( $events['canonicalUrl'] ); ?>"
@@ -155,7 +154,6 @@ class OpenAgendaApi {
 			$text = sprintf( wp_kses( __( 'Have an Event to display here? <a href="%s">Add it!</a>', 'wp-openagenda' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $slug ) );
 			$text = apply_filters( 'openwp_custom_add_event_text', $text );
 			echo $text;
-			echo $pub;
 
 			?>
 		</div>
@@ -172,6 +170,9 @@ class OpenAgendaApi {
 	 * @return string
 	 */
 	public function openwp_main_widget_html__premium_only( $embed, $uid, $atts ) {
+		if ( ! is_array( $embed ) ){
+			return $embed;
+		}
 		switch ( $atts['widget'] ) {
 			case 'general':
 				$openagenda_code = '<iframe style="width:100%;" frameborder="0" scrolling="no" allowtransparency="allowtransparency" class="cibulFrame cbpgbdy" data-oabdy src="//openagenda.com/agendas/' . $uid . '/embeds/' . $embed . '/events?lang=fr"></iframe><script type="text/javascript" src="//openagenda.com/js/embed/cibulBodyWidget.js"></script>';
@@ -219,7 +220,11 @@ class OpenAgendaApi {
 			$body         = wp_remote_retrieve_body( $embed );
 			$decoded_body = json_decode( $body, true );
 		}
-		$embed = $decoded_body['embeds'][0];
+		if ( empty( $decoded_body['embeds'] ) ){
+			$embed = __('This agenda doesn\'t have any embeds layout in their params.<br> We\'re sorry, but wen can\'t display it :(', 'wp-openagenda' );
+		} else {
+			$embed = $decoded_body['embeds'][0];
+		}
 		return $embed;
 	}
 

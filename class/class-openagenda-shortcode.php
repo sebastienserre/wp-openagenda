@@ -33,13 +33,13 @@ class OpenAgenda_Shortcode {
 	public function thfo_openwp_basic_shortcode( $atts ) {
 
 		$atts   = shortcode_atts( array(
-			'slug' => 'test',
+			'url' => 'https://openagenda.com/cite-des-sciences',
 			'nb'   => 10,
 			'lang' => 'en',
 		), $atts, 'openwp_basic' );
 		$openwp = new OpenAgendaApi();
 
-		$openwp_data = $openwp->thfo_openwp_retrieve_data( $atts['slug'], $atts['nb'] );
+		$openwp_data = $openwp->thfo_openwp_retrieve_data( $atts['url'], $atts['nb'] );
 		$lang = $atts['lang'];
 
 		ob_start();

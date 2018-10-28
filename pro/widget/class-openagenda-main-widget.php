@@ -99,7 +99,7 @@ class Openagenda_Main_Widget extends WP_Widget {
 				<option <?php if ( $instance['widget'] === 'search') { echo 'selected'; } ?> value="search"><?php _e( 'Search', 'wp-openagenda-pro' ); ?></option>
 				<option <?php if ( $instance['widget'] === 'categories') { echo 'selected'; } ?> value="categories"><?php _e( 'Categories', 'wp-openagenda-pro' ); ?></option>
 				<option <?php if ( $instance['widget'] === 'tags') { echo 'selected'; } ?> value="tags"><?php _e( 'Tags', 'wp-openagenda-pro' ); ?></option>
-				<option <?php if ( $instance['widget'] === 'calendrier') { echo 'selected'; } ?> value="calendrier"><?php _e( 'calendrier', 'wp-openagenda-pro' ); ?></option>
+				<option <?php if ( $instance['widget'] === 'calendrier') { echo 'selected'; } ?> value="calendrier"><?php _e( 'calendar', 'wp-openagenda-pro' ); ?></option>
 				<option <?php if ( $instance['widget'] === 'preview') { echo 'selected'; } ?> value="preview"><?php _e( 'preview', 'wp-openagenda-pro' ); ?></option>
 			</select>
 		</p>

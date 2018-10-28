@@ -26,7 +26,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 
 		if ( ! isset( $openagenda_fs ) ) {
 			// Include Freemius SDK.
-			require_once dirname( __FILE__ ) . '/freemius/start.php';
+			require_once dirname(__FILE__) . '/freemius/start.php';
 
 			$openagenda_fs = fs_dynamic_init( array(
 				'id'                  => '2279',
@@ -34,17 +34,15 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				'type'                => 'plugin',
 				'public_key'          => 'pk_ab0021b682585d81e582568095957',
 				'is_premium'          => true,
-				// If your plugin is a serviceware, set this option to false.
-				'has_premium_version' => true,
 				'has_addons'          => false,
 				'has_paid_plans'      => true,
 				'trial'               => array(
-					'days'               => 14,
+					'days'               => 30,
 					'is_require_payment' => false,
 				),
 				'menu'                => array(
-					'slug'   => 'openagenda-settings',
-					'parent' => array(
+					'slug'           => 'openagenda-settings',
+					'parent'         => array(
 						'slug' => 'options-general.php',
 					),
 				),
@@ -87,7 +85,10 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagendaslidershortcode.php';
 	}
 
-	add_action( 'plugins_loaded', 'openwp_load_textdomain__premium_only' );
+	if ( openagenda_fs()->is__premium_only() ) {
+		add_action( 'plugins_loaded', 'openwp_load_textdomain__premium_only' );
+	}
+
 	/**
 	 * Load plugin textdomain.
 	 *

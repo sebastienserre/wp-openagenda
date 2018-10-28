@@ -1,178 +1,275 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-23 06:11+0000\n"
-"PO-Revision-Date: 2018-07-23 06:12+0000\n"
-"Last-Translator: sebastienserre <sebastien@thivinfo.com>\n"
-"Language-Team: Français\n"
+"POT-Creation-Date: 2018-09-29 15:11+0200\n"
+"PO-Revision-Date: 2018-09-29 15:39+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: fr_FR\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: wp-openagenda.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: pro/widget/class-openagenda-slider-widget.php:8
+#: admin/register-settings.php:20
+msgid "OpenAgenda WP"
+msgstr "WP Openagenda"
+
+#: admin/register-settings.php:20
+#, fuzzy
+msgid "OpenAgenda Settings"
+msgstr "Paramètres OpenAgenda"
+
+#: admin/register-settings.php:31
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: admin/register-settings.php:44
+msgid "Help Center"
+msgstr "Centre d’aide"
+
+#: admin/register-settings.php:46
+msgid "Credits"
+msgstr "Crédits"
+
+#: admin/register-settings.php:48
+#, fuzzy
+msgid "API Openagenda"
+msgstr "API Openagenda"
+
+#. translators: Add the OpenAGenda URL.
+#: admin/register-settings.php:60
+#, fuzzy, php-format
 msgid ""
-"Display your Openagenda.com's Events in a slider in your WordPress Sidebar "
-"with a beautiful widget"
+"Create an account on <a href=\"%s\" target=\"_blank\">OpenAgenda</a>, and go "
+"to your setting page to get your API key."
 msgstr ""
-"Afficher vos évènements OpenAgenda.com sous la forme d'un diaporama dans "
-"votre barre latérale grâce à un widget WordPress"
+"Créer un compte sur < a href = \" %s\" target = \"_ blank\" > OpenAgenda </"
+"a>, et aller à votre page de réglage pour obtenir votre clé API."
 
-#: pro/widget/class-openagenda-slider-widget.php:60
-#: pro/vc/class-vc-events.php:48 pro/vc/class-openagenda-slider.php:74
-msgid "Internal URL of Main Agenda Page:"
-msgstr "URL interne De votre agenda intégré:"
+#: admin/register-settings.php:66
+msgid "Shortcodes"
+msgstr "Shortcodes"
 
-#: pro/widget/class-openagenda-slider-widget.php:68
-#: pro/vc/class-openagenda-slider.php:126
-#: pro/vc/class-openagenda-slider.php:128
-msgid "Display venue"
-msgstr "Afficher le lieu"
+#: admin/register-settings.php:71
+#, fuzzy
+msgid "This shortcode will display a list of events from an OpenAgenda"
+msgstr ""
+"Cette shortcode affichera une liste d'événements à partir d'un OpenAgenda"
 
-#: pro/widget/class-openagenda-slider-widget.php:81
-#: pro/vc/class-vc-events.php:76 pro/vc/openagenda-vc-main.php:52
-#: pro/vc/class-openagenda-slider.php:61
-msgid "Number of Events"
-msgstr "Nombre d'évènements"
-
-#: pro/widget/class-openagenda-main-widget.php:20
+#: admin/register-settings.php:72
+#, fuzzy
 msgid ""
-"Display the main Widget from OpenAgenda where ever you want in your "
-"WordPress Website"
+"The param Agenda slug is <strong>mandatory</strong>. example: slug='my-"
+"agenda-slug' "
 msgstr ""
-"Afficher le Widget Principal d'OpenAgenda où vous voulez sur votre site"
+"La limace de l'ordre du jour param est <strong> obligatoire </strong>. "
+"exemple: Slug = 'My-Agenda-Slug'"
 
-#: pro/widget/class-openagenda-main-widget.php:77
-msgid "OpenAgenda URL:"
+#: admin/register-settings.php:73
+#, fuzzy
+msgid ""
+"The param nb is <strong>optional</strong>. Default value is 10. It will "
+"retrieve data for the \"nb\" events. example: nb=12 "
+msgstr ""
+"Le param NB est <strong> optionnel </strong>. La valeur par défaut est 10. "
+"Il récupère les données pour les événements «NB». exemple: NB = 12"
+
+#: admin/register-settings.php:74
+#, fuzzy
+msgid ""
+"The param lang is <strong>optional</strong>. Default value is en (english). "
+"It will retrieve data with the \"lang\" params (if exists). example: lang = "
+"'fr' "
+msgstr ""
+"Le param lang est <strong> facultatif </strong>. La valeur par défaut est en "
+"(anglais). Il va récupérer des données avec le \"lang\" params (si existe). "
+"exemple: lang = 'fr'"
+
+#: admin/register-settings.php:78 admin/register-settings.php:86
+#, fuzzy
+msgid "only on Pro Version"
+msgstr "uniquement sur la version Pro"
+
+#: admin/register-settings.php:80
+#, fuzzy
+msgid "url => string with URL of OpenAgenda agenda. (required)"
+msgstr "URL = > String avec l'URL de l'ordre du jour OpenAgenda. requis"
+
+#: admin/register-settings.php:81
+#, fuzzy
+msgid ""
+"lang => language to display (2 letters country code: en/fr...). default: en. "
+"optional."
+msgstr ""
+"lang = > langue à afficher (2 lettres code pays: fr/fr...). par défaut: fr. "
+"Optionnel."
+
+#: admin/register-settings.php:82
+#, fuzzy
+msgid ""
+"widget => Openagenda widget to display. Possible settings: general, map, "
+"search, categories, tags, calendrier, preview."
+msgstr ""
+"widget = > Openagenda widget à afficher. Paramètres possibles: général, "
+"carte, recherche, catégories, Tags, calendrier, aperçu."
+
+#: admin/register-settings.php:88
+#, fuzzy
+msgid "agenda_url => string with URL of OpenAgenda agenda. (required)"
+msgstr "agenda_url = > chaîne avec l'URL de l'ordre du jour OpenAgenda. requis"
+
+#: admin/register-settings.php:89
+#, fuzzy
+msgid "title => string with title to show (optional)."
+msgstr "title = > chaîne avec le titre à afficher (facultatif)."
+
+#: admin/register-settings.php:90
+#, fuzzy
+msgid ""
+"agenda_url_intern => URL of embed agenda. (Optional). default: agenda on "
+"Openagenda.com"
+msgstr ""
+"agenda_url_intern = > URL de l'Agenda embed. (facultatif). par défaut: ordre "
+"du jour sur Openagenda.com"
+
+#: admin/register-settings.php:91
+#, fuzzy, php-format
+msgid "agenda_title_color => Color of title inside %%. (Optional)."
+msgstr "agenda_title_color = > couleur du titre à l'intérieur%%. (facultatif)."
+
+#: admin/register-settings.php:92
+#, fuzzy
+msgid "agenda_date_color => Background color of date \"box\". (Optional)."
+msgstr ""
+"agenda_date_color = > couleur de fond de la date \"boîte\". (facultatif)."
+
+#: admin/register-settings.php:93
+#, fuzzy
+msgid "agenda_date_text_color => Color of text (Optional)."
+msgstr "agenda_date_text_color = > couleur du texte (facultatif)."
+
+#: admin/register-settings.php:94
+#, fuzzy
+msgid "agenda_lieu => Show Event Venue? \"true\" or \"false\" but in string."
+msgstr ""
+"agenda_lieu = > Show Event lieu? \"true\" ou \"false\" mais dans String."
+
+#: admin/register-settings.php:95
+#, fuzzy
+msgid "number => number of events (Optional)."
+msgstr "nombre = > nombre d'événements (facultatif)."
+
+#: admin/register-settings.php:102
+#, fuzzy
+msgid "Discover Our Pro Version"
+msgstr "Découvrez notre version Pro"
+
+#: admin/register-settings.php:103
+#, fuzzy
+msgid ""
+"Easy display all OpenAgenda Widget without any code to copy/past! Configure "
+"and that's it"
+msgstr ""
+"Facile d'affichage tous les widget OpenAgenda sans aucun code à copier/"
+"passé! Configurer et c'est tout"
+
+#: admin/register-settings.php:105
+#, fuzzy
+msgid "Upgrade Now!"
+msgstr "Mise à jour maintenant!"
+
+#: admin/register-settings.php:121
+#, fuzzy
+msgid "Love OpenAgenda for WordPress ? Don't forget to rate it 5 stars!"
+msgstr "Love OpenAgenda pour WordPress? N'oubliez pas de le noter 5 étoiles!"
+
+#. translators: This line add credits to thivinfo.com.
+#: admin/register-settings.php:174
+#, fuzzy, php-format
+msgid "This plugin is created with love by <a href=\"%1$s\">%2$s</a>."
+msgstr "Ce plugin est créé avec amour par < a href = \"%1$s\" >%2$s </a>."
+
+#. translators: This line add disclosure from Openagenda.com and thivinfo.com.
+#: admin/register-settings.php:184
+#, fuzzy, php-format
+msgid ""
+"There's no relations between <a href=\"%1$s\">%2$s</a> and <a href=\"%3$s\">"
+"%4$s</a>."
+msgstr ""
+"Il n'y a pas de relations entre < a href = \"%1$s\" >%2$s </a> et < a href = "
+"\"%3$s\" >%4$s </a>."
+
+#: class/class-openagenda-wp-basic-widget.php:18
+#, fuzzy
+msgid ""
+"Display an Openagenda.com's Agenda in your WordPress Sidebar with a "
+"beautiful widget"
+msgstr ""
+"Affichez l'agenda d'un Openagenda dans votre sidebar wordpress avec un beau "
+"widget"
+
+#: class/class-openagenda-wp-basic-widget.php:64
+#: pro/widget/class-openagenda-main-widget.php:68
+#: pro/widget/class-openagenda-slider-widget.php:43
+#, fuzzy
+msgid "Title:"
+msgstr "Titre"
+
+#: class/class-openagenda-wp-basic-widget.php:73
+#: pro/vc/class-openagenda-slider.php:35 pro/vc/openagenda-vc-main.php:36
+#: pro/widget/class-openagenda-slider-widget.php:51
+#, fuzzy
+msgid "OpenAgenda URL"
 msgstr "URL OpenAgenda"
 
-#: pro/widget/class-openagenda-main-widget.php:87 pro/vc/class-vc-events.php:61
+#: class/class-openagenda-wp-basic-widget.php:82
+#: pro/vc/openagenda-vc-main.php:49
+#, fuzzy
+msgid "Number of events:"
+msgstr "Nombre d'évènements"
+
+#: class/class-openagenda-wp-basic-widget.php:90 pro/vc/class-vc-events.php:61
+#: pro/widget/class-openagenda-main-widget.php:87
 msgid "Languages of events:"
 msgstr "Langues des évènements :"
 
-#: pro/widget/class-openagenda-main-widget.php:95
-msgid "OpenAgenda Widget to display:"
-msgstr "Widget OpenAgenda a afficher :"
+#: class/class-openagendaapi.php:69
+#, fuzzy
+msgid "You forgot to add a slug of agenda to retrieve"
+msgstr ""
+"Vous avez oublié d'ajouter une limace de l'ordre du jour pour récupérer"
 
-#: pro/widget/class-openagenda-main-widget.php:97
-#: pro/vc/openagenda-vc-main.php:66
-msgid "General"
-msgstr "Général"
+#: class/class-openagendaapi.php:86 class/class-openagendaapi.php:89
+#, fuzzy
+msgid "Impossible to retrieve Events Data"
+msgstr "Impossible de récupérer des données d'événements"
 
-#: pro/widget/class-openagenda-main-widget.php:98
-#: pro/vc/openagenda-vc-main.php:67
-msgid "Map"
-msgstr "Carte"
+#: class/class-openagendaapi.php:133
+#, fuzzy
+msgid "This plugin is created with love by "
+msgstr "Ce plugin est créé avec amour par"
 
-#: pro/widget/class-openagenda-main-widget.php:99
-#: pro/vc/openagenda-vc-main.php:68
-msgid "Search"
-msgstr "Recherche"
-
-#: pro/widget/class-openagenda-main-widget.php:100
-#: pro/vc/openagenda-vc-main.php:69
-msgid "Categories"
-msgstr "Catégories"
-
-#: pro/widget/class-openagenda-main-widget.php:101
-#: pro/vc/openagenda-vc-main.php:70
-msgid "Tags"
-msgstr "Mots-clés"
-
-#: pro/widget/class-openagenda-main-widget.php:102
-msgid "calendrier"
-msgstr "Calendrier"
-
-#: pro/widget/class-openagenda-main-widget.php:103
-msgid "preview"
-msgstr "Prévisualisation"
+#. translators: this is a link to add events in Openagenda.com.
+#: class/class-openagendaapi.php:155
+#, fuzzy, php-format
+msgid "Have an Event to display here? <a href=\"%s\">Add it!</a>"
+msgstr ""
+"Vous avez un évènement à afficher ici? < a href = \" %s\" > Ajoutez-le! </a>"
 
 #: pro/shortcode/class-openagendaslidershortcode.php:67
 msgid "Sorry, no events found"
 msgstr "Désolé, aucun évènements trouvés"
-
-#: pro/vc/class-vc-events.php:36 pro/vc/class-vc-events.php:38
-#: pro/vc/openagenda-vc-main.php:24 pro/vc/openagenda-vc-main.php:26
-#: pro/vc/class-openagenda-slider.php:48 pro/vc/class-openagenda-slider.php:50
-msgid "Title"
-msgstr "Titre"
-
-#: pro/vc/class-vc-events.php:41 pro/vc/class-vc-events.php:54
-#: pro/vc/class-vc-events.php:67 pro/vc/class-vc-events.php:79
-#: pro/vc/openagenda-vc-main.php:30 pro/vc/openagenda-vc-main.php:42
-#: pro/vc/openagenda-vc-main.php:55 pro/vc/openagenda-vc-main.php:77
-#: pro/vc/class-openagenda-slider.php:41 pro/vc/class-openagenda-slider.php:54
-#: pro/vc/class-openagenda-slider.php:67 pro/vc/class-openagenda-slider.php:80
-#: pro/vc/class-openagenda-slider.php:93 pro/vc/class-openagenda-slider.php:106
-#: pro/vc/class-openagenda-slider.php:119
-#: pro/vc/class-openagenda-slider.php:131
-msgid "Settings"
-msgstr "Réglages"
-
-#: pro/vc/class-vc-events.php:51
-msgid ""
-"Internal URL of Main Agenda Page. You must create a page integrating "
-"OpenAgenda"
-msgstr ""
-"URL interne De votre agenda intégré. Vous devez créer une page intégrant "
-"OpenAgenda"
-
-#: pro/vc/class-vc-events.php:63
-msgid "Choose the lang to display."
-msgstr "Choix de la langue à afficher"
-
-#: pro/vc/class-vc-events.php:73
-msgid "Nb of event"
-msgstr "Nombre d'évènements."
-
-#: pro/vc/class-vc-events.php:85
-msgid "Event Openagenda"
-msgstr "Évènement OpenAgenda"
-
-#: pro/vc/class-vc-events.php:87
-msgid "Display Event from Openagenda"
-msgstr "Afficher un évènement depuis OpenAgenda"
-
-#: pro/vc/class-vc-events.php:88 pro/vc/openagenda-vc-main.php:17
-msgid "OpenAgenda"
-msgstr "OpenAgenda"
-
-#: pro/vc/openagenda-vc-main.php:14
-msgid "Main Openagenda"
-msgstr "Openagenda Principal"
-
-#: pro/vc/openagenda-vc-main.php:16
-msgid "Display Openagenda Script"
-msgstr "Afficher le script OpenAgenda"
-
-#: pro/vc/openagenda-vc-main.php:27 pro/vc/class-openagenda-slider.php:51
-msgid "Add a word between % to add a different style. Only 1 allowed"
-msgstr ""
-"Ajouter une expression entre % pour ajouter un style différent. 1 expression "
-"autorisée."
-
-#: pro/vc/openagenda-vc-main.php:39
-msgid "URL to the OpenAgenda Agenda"
-msgstr "URL vers l'agenda OpenAgenda"
-
-#: pro/vc/openagenda-vc-main.php:65
-msgid "Please select an OpenAgenda Widget"
-msgstr "Veuillez sélectionner un widget OpenAGenda"
-
-#: pro/vc/openagenda-vc-main.php:71
-msgid "Calendrier"
-msgstr "Calendrier"
-
-#: pro/vc/openagenda-vc-main.php:72
-msgid "Preview Widget"
-msgstr "Widget de prévisualisation"
-
-#: pro/vc/openagenda-vc-main.php:74
-msgid "Select the widget to display"
-msgstr "Veuillez sélectionner un widget OpenAGenda"
 
 #: pro/vc/class-openagenda-slider.php:25
 msgid "Slider Openagenda"
@@ -182,21 +279,66 @@ msgstr "Diaporama OpenAgenda"
 msgid "Display Slider with Openagenda events"
 msgstr "Afficher un diaporama avec des évènements OpenAgenda"
 
+#: pro/vc/class-openagenda-slider.php:28 pro/vc/class-vc-events.php:88
+#: pro/vc/openagenda-vc-main.php:17
+msgid "OpenAgenda"
+msgstr "OpenAgenda"
+
 #: pro/vc/class-openagenda-slider.php:37
 msgid "my-agenda-URL"
 msgstr "my-agenda-URL"
 
 #: pro/vc/class-openagenda-slider.php:38
 msgid ""
-"The URL of your agenda in openagenda. For example, Openagenda URL is https:"
-"//openagenda.com/my-great-calendar"
+"The URL of your agenda in openagenda. For example, Openagenda URL is https://"
+"openagenda.com/my-great-calendar"
 msgstr ""
 "L'URL de votre OpenAgenda. Par exemple: https://openagenda.com/mon-super-"
 "agenda"
 
+#: pro/vc/class-openagenda-slider.php:41 pro/vc/class-openagenda-slider.php:54
+#: pro/vc/class-openagenda-slider.php:67 pro/vc/class-openagenda-slider.php:80
+#: pro/vc/class-openagenda-slider.php:93 pro/vc/class-openagenda-slider.php:106
+#: pro/vc/class-openagenda-slider.php:119
+#: pro/vc/class-openagenda-slider.php:131 pro/vc/class-vc-events.php:41
+#: pro/vc/class-vc-events.php:54 pro/vc/class-vc-events.php:67
+#: pro/vc/class-vc-events.php:79 pro/vc/openagenda-vc-main.php:30
+#: pro/vc/openagenda-vc-main.php:42 pro/vc/openagenda-vc-main.php:55
+#: pro/vc/openagenda-vc-main.php:77
+msgid "Settings"
+msgstr "Réglages"
+
+#: pro/vc/class-openagenda-slider.php:48 pro/vc/class-openagenda-slider.php:50
+#: pro/vc/class-vc-events.php:36 pro/vc/class-vc-events.php:38
+#: pro/vc/openagenda-vc-main.php:24 pro/vc/openagenda-vc-main.php:26
+msgid "Title"
+msgstr "Titre"
+
+#: pro/vc/class-openagenda-slider.php:51 pro/vc/openagenda-vc-main.php:27
+msgid "Add a word between % to add a different style. Only 1 allowed"
+msgstr ""
+"Ajouter une expression entre % pour ajouter un style différent. 1 expression "
+"autorisée."
+
+#: pro/vc/class-openagenda-slider.php:61 pro/vc/class-vc-events.php:76
+#: pro/vc/openagenda-vc-main.php:52
+#: pro/widget/class-openagenda-slider-widget.php:81
+msgid "Number of Events"
+msgstr "Nombre d'évènements"
+
 #: pro/vc/class-openagenda-slider.php:64
 msgid "Choose the number of events to show"
 msgstr "Choix du nombre d'évènements à afficher"
+
+#: pro/vc/class-openagenda-slider.php:74 pro/vc/class-vc-events.php:48
+#: pro/widget/class-openagenda-slider-widget.php:60
+msgid "Internal URL of Main Agenda Page:"
+msgstr "URL interne De votre agenda intégré:"
+
+#: pro/vc/class-openagenda-slider.php:77
+#, fuzzy
+msgid "Link to the page - Leave blank to hide"
+msgstr "Lien vers la page-laisser blanc à masquer"
 
 #: pro/vc/class-openagenda-slider.php:87
 msgid "Color to Title"
@@ -222,22 +364,138 @@ msgstr "Couleur du texte"
 msgid "Date Box text color"
 msgstr "Couleur de la date"
 
-#. Name of the plugin
+#: pro/vc/class-openagenda-slider.php:126
+#: pro/vc/class-openagenda-slider.php:128
+#: pro/widget/class-openagenda-slider-widget.php:68
+msgid "Display venue"
+msgstr "Afficher le lieu"
+
+#: pro/vc/class-vc-events.php:51
+msgid ""
+"Internal URL of Main Agenda Page. You must create a page integrating "
+"OpenAgenda"
+msgstr ""
+"URL interne De votre agenda intégré. Vous devez créer une page intégrant "
+"OpenAgenda"
+
+#: pro/vc/class-vc-events.php:63
+msgid "Choose the lang to display."
+msgstr "Choix de la langue à afficher"
+
+#: pro/vc/class-vc-events.php:73
+msgid "Nb of event"
+msgstr "Nombre d'évènements."
+
+#: pro/vc/class-vc-events.php:85
+msgid "Event Openagenda"
+msgstr "Évènement OpenAgenda"
+
+#: pro/vc/class-vc-events.php:87
+msgid "Display Event from Openagenda"
+msgstr "Afficher un évènement depuis OpenAgenda"
+
+#: pro/vc/openagenda-vc-main.php:14
+msgid "Main Openagenda"
+msgstr "Openagenda Principal"
+
+#: pro/vc/openagenda-vc-main.php:16
+msgid "Display Openagenda Script"
+msgstr "Afficher le script OpenAgenda"
+
+#: pro/vc/openagenda-vc-main.php:39
+msgid "URL to the OpenAgenda Agenda"
+msgstr "URL vers l'agenda OpenAgenda"
+
+#: pro/vc/openagenda-vc-main.php:62
+#: pro/widget/class-openagenda-main-widget.php:95
+msgid "OpenAgenda Widget to display:"
+msgstr "Widget OpenAgenda a afficher :"
+
+#: pro/vc/openagenda-vc-main.php:65
+msgid "Please select an OpenAgenda Widget"
+msgstr "Veuillez sélectionner un widget OpenAGenda"
+
+#: pro/vc/openagenda-vc-main.php:66
+#: pro/widget/class-openagenda-main-widget.php:97
+msgid "General"
+msgstr "Général"
+
+#: pro/vc/openagenda-vc-main.php:67
+#: pro/widget/class-openagenda-main-widget.php:98
+msgid "Map"
+msgstr "Carte"
+
+#: pro/vc/openagenda-vc-main.php:68
+#: pro/widget/class-openagenda-main-widget.php:99
+msgid "Search"
+msgstr "Recherche"
+
+#: pro/vc/openagenda-vc-main.php:69
+#: pro/widget/class-openagenda-main-widget.php:100
+msgid "Categories"
+msgstr "Catégories"
+
+#: pro/vc/openagenda-vc-main.php:70
+#: pro/widget/class-openagenda-main-widget.php:101
+msgid "Tags"
+msgstr "Mots-clés"
+
+#: pro/vc/openagenda-vc-main.php:71
+#, fuzzy
+msgid "Calendrier"
+msgstr "Calendrier"
+
+#: pro/vc/openagenda-vc-main.php:72
+msgid "Preview Widget"
+msgstr "Widget de prévisualisation"
+
+#: pro/vc/openagenda-vc-main.php:74
+msgid "Select the widget to display"
+msgstr "Veuillez sélectionner un widget OpenAGenda"
+
+#: pro/widget/class-openagenda-main-widget.php:20
+msgid ""
+"Display the main Widget from OpenAgenda where ever you want in your "
+"WordPress Website"
+msgstr ""
+"Afficher le Widget Principal d'OpenAgenda où vous voulez sur votre site"
+
+#: pro/widget/class-openagenda-main-widget.php:77
+msgid "OpenAgenda URL:"
+msgstr "URL OpenAgenda"
+
+#: pro/widget/class-openagenda-main-widget.php:102
+msgid "calendar"
+msgstr "calendrier"
+
+#: pro/widget/class-openagenda-main-widget.php:103
+msgid "preview"
+msgstr "Prévisualisation"
+
+#: pro/widget/class-openagenda-slider-widget.php:8
+msgid ""
+"Display your Openagenda.com's Events in a slider in your WordPress Sidebar "
+"with a beautiful widget"
+msgstr ""
+"Afficher vos évènements OpenAgenda.com sous la forme d'un diaporama dans "
+"votre barre latérale grâce à un widget WordPress"
+
+#. Plugin Name of the plugin/theme
 msgid "WP Openagenda"
 msgstr "WP Openagenda"
 
-#. Description of the plugin
-msgid "Easily display an OpenAgenga.com in your WordPress website"
-msgstr "Afficher simplement un openagenda.com sur votre WordPress"
-
-#. URI of the plugin
+#. Plugin URI of the plugin/theme
 msgid "https://openagenda4wp.com/"
 msgstr "https://openagenda4wp.com/"
 
-#. Author of the plugin
+#. Description of the plugin/theme
+msgid "Easily display an OpenAgenga.com in your WordPress website"
+msgstr "Afficher simplement un openagenda.com sur votre WordPress"
+
+#. Author of the plugin/theme
 msgid "Sébastien Serre"
 msgstr "Sébastien Serre"
 
-#. Author URI of the plugin
+#. Author URI of the plugin/theme
 msgid "http://www.thivinfo.com"
 msgstr "http://www.thivinfo.com"

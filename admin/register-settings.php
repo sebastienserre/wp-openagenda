@@ -23,16 +23,53 @@ function thfo_openwp_add_menu() {
 /**
  *  Display an option page
  */
-function thfo_openwp_options_page() { ?>
-	<h3><?php echo esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ); ?></h3>
-	<form method="post" action="options.php">
-		<?php settings_fields( 'openagenda-wp' ); ?>
-		<?php do_settings_sections( 'openagenda-wp' ); ?>
-		<?php submit_button( __( 'Save' ) ); ?>
-		<?php do_settings_sections( 'openagenda-wp-help' ); ?>
-		<?php do_settings_sections( 'openagenda-wp-credits' ); ?>
-	</form>
+function thfo_openwp_options_page() {
+	$tabs = array(
+		'general' => __( 'General', 'wp-openagenda' ),
+		'help'    => __( 'Help', 'wp-openagenda' ),
+	);
+	$tabs = apply_filters( 'openwp_settings_tabs', $tabs );
 
+	if ( isset( $_GET['tab'] ) ) {
+
+		$active_tab = $_GET['tab'];
+
+	} else {
+		$active_tab = 'general';
+	}
+	?>
+	<div class="wrap">
+		<h3><?php echo esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ); ?></h3>
+		<?php settings_errors(); ?>
+
+		<h2 class="nav-tab-wrapper">
+			<?php
+			foreach ( $tabs as $tab => $value ) {
+				?>
+				<a href="<?php echo esc_url( admin_url( 'options-general.php?page=openagenda-settings&tab=' . $tab ) ); ?>"
+				   class="nav-tab <?php echo $active_tab === $tab ? 'nav-tab-active' : ''; ?>"><?php echo $value ?></a>
+			<?php } ?>
+		</h2>
+		<form method="post" action="options.php">
+			<?php $active_tab = apply_filters( 'openwp_setting_active_tab', $active_tab ); ?>
+			<?php
+			switch ( $active_tab ) {
+				case 'general':
+					settings_fields( 'openagenda-wp' );
+					do_settings_sections( 'openagenda-wp' );
+					submit_button( __( 'Save' ) );
+					break;
+				case 'help':
+					settings_fields( 'openagenda-wp-help' );
+					do_settings_sections( 'openagenda-wp-help' );
+					break;
+			}
+			?>
+
+
+			<?php do_settings_sections( 'openagenda-wp-credits' ); ?>
+		</form>
+	</div>
 	<?php
 }
 
@@ -66,24 +103,24 @@ function thfo_openwp_help() {
 	<h4><?php esc_attr_e( 'Shortcodes', 'wp-openagenda' ); ?></h4>
 	<ul>
 		<div class="shortcode-help">
-		<li>[openwp_basic]</li>
-		<ul>
-			<li><?php esc_attr_e( 'This shortcode will display a list of events from an OpenAgenda', 'wp-openagenda' ); ?></li>
-			<li><?php esc_attr_e( 'The param Agenda slug is <strong>mandatory</strong>. example: slug=\'my-agenda-slug\' ', 'wp-openagenda' ); ?></li>
-			<li><?php wp_kses( _e( 'The param nb is <strong>optional</strong>. Default value is 10. It will retrieve data for the "nb" events. example: nb=12 ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
-			<li><?php wp_kses( _e( 'The param lang is <strong>optional</strong>. Default value is en (english). It will retrieve data with the "lang" params (if exists). example: lang = \'fr\' ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
-		</ul>
+			<li>[openwp_basic]</li>
+			<ul>
+				<li><?php esc_attr_e( 'This shortcode will display a list of events from an OpenAgenda', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'The param Agenda slug is <strong>mandatory</strong>. example: slug=\'my-agenda-slug\' ', 'wp-openagenda' ); ?></li>
+				<li><?php wp_kses( _e( 'The param nb is <strong>optional</strong>. Default value is 10. It will retrieve data for the "nb" events. example: nb=12 ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
+				<li><?php wp_kses( _e( 'The param lang is <strong>optional</strong>. Default value is en (english). It will retrieve data with the "lang" params (if exists). example: lang = \'fr\' ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
+			</ul>
 		</div>
 		<div class="shortcode-help">
-		<li >[openagenda_embed] <?php esc_attr_e( 'only on Pro Version', 'wp-openagenda' ); ?></li>
-		<ul>
-			<li><?php esc_attr_e( 'url => string with URL of OpenAgenda agenda. (required)', 'wp-openagenda' ); ?></li>
-			<li><?php esc_attr_e( 'lang => language to display (2 letters country code: en/fr...). default: en. optional.', 'wp-openagenda' ); ?></li>
-			<li><?php esc_attr_e( 'widget => Openagenda widget to display. Possible settings: general, map, search, categories, tags, calendrier, preview.', 'wp-openagenda' ); ?></li>
-		</ul>
+			<li>[openagenda_embed] <?php esc_attr_e( 'only on Pro Version', 'wp-openagenda' ); ?></li>
+			<ul>
+				<li><?php esc_attr_e( 'url => string with URL of OpenAgenda agenda. (required)', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'lang => language to display (2 letters country code: en/fr...). default: en. optional.', 'wp-openagenda' ); ?></li>
+				<li><?php esc_attr_e( 'widget => Openagenda widget to display. Possible settings: general, map, search, categories, tags, calendrier, preview.', 'wp-openagenda' ); ?></li>
+			</ul>
 		</div>
 		<div class="shortcode-help">
-			<li >[openagenda_slider] <?php esc_attr_e( 'only on Pro Version', 'wp-openagenda' ); ?></li>
+			<li>[openagenda_slider] <?php esc_attr_e( 'only on Pro Version', 'wp-openagenda' ); ?></li>
 			<ul>
 				<li><?php esc_attr_e( 'agenda_url => string with URL of OpenAgenda agenda. (required)', 'wp-openagenda' ); ?></li>
 				<li><?php esc_attr_e( 'title => string with title to show (optional).', 'wp-openagenda' ); ?></li>
