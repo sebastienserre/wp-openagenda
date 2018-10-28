@@ -23,3 +23,13 @@ a.upgrade_button {
     display: block;
     width: fit-content;
 }
+
+a.nav-tab.nav-tab-help {
+    float: right;
+    background: #fe5000;
+    color: white;
+}
+
+a.nav-tab {
+    text-transform: capitalize;
+}

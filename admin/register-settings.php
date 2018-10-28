@@ -47,7 +47,8 @@ function thfo_openwp_options_page() {
 			foreach ( $tabs as $tab => $value ) {
 				?>
 				<a href="<?php echo esc_url( admin_url( 'options-general.php?page=openagenda-settings&tab=' . $tab ) ); ?>"
-				   class="nav-tab <?php echo $active_tab === $tab ? 'nav-tab-active' : ''; ?>"><?php echo $value ?></a>
+				   class="nav-tab <?php echo 'nav-tab-' . $tab;
+				   echo $active_tab === $tab ? ' nav-tab-active' : ''; ?>"><?php echo $value ?></a>
 			<?php } ?>
 		</h2>
 		<form method="post" action="options.php">
@@ -99,40 +100,20 @@ function thfo_openwp_api() {
 }
 
 function thfo_openwp_help() {
+
+	$support_link = 'https://www.thivinfo.com/soumettre-un-ticket/';
+	$support      = sprintf( wp_kses( __( 'If you encounter a bug, you can leave me a ticket on <a href="%1$s" target="_blank">Thivinfo.com</a>', 'compare' ), array(
+		'a' => array(
+			'href'   => array(),
+			'target' => array()
+		)
+	) ), esc_url( $support_link ) );
 	?>
-	<h4><?php esc_attr_e( 'Shortcodes', 'wp-openagenda' ); ?></h4>
-	<ul>
-		<div class="shortcode-help">
-			<li>[openwp_basic]</li>
-			<ul>
-				<li><?php esc_attr_e( 'This shortcode will display a list of events from an OpenAgenda', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'The param Agenda slug is <strong>mandatory</strong>. example: slug=\'my-agenda-slug\' ', 'wp-openagenda' ); ?></li>
-				<li><?php wp_kses( _e( 'The param nb is <strong>optional</strong>. Default value is 10. It will retrieve data for the "nb" events. example: nb=12 ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
-				<li><?php wp_kses( _e( 'The param lang is <strong>optional</strong>. Default value is en (english). It will retrieve data with the "lang" params (if exists). example: lang = \'fr\' ', 'wp-openagenda' ), array( 'strong' ) ); ?></li>
-			</ul>
-		</div>
-		<div class="shortcode-help">
-			<li>[openagenda_embed] <?php esc_attr_e( 'only on Pro Version', 'wp-openagenda' ); ?></li>
-			<ul>
-				<li><?php esc_attr_e( 'url => string with URL of OpenAgenda agenda. (required)', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'lang => language to display (2 letters country code: en/fr...). default: en. optional.', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'widget => Openagenda widget to display. Possible settings: general, map, search, categories, tags, calendrier, preview.', 'wp-openagenda' ); ?></li>
-			</ul>
-		</div>
-		<div class="shortcode-help">
-			<li>[openagenda_slider] <?php esc_attr_e( 'only on Pro Version', 'wp-openagenda' ); ?></li>
-			<ul>
-				<li><?php esc_attr_e( 'agenda_url => string with URL of OpenAgenda agenda. (required)', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'title => string with title to show (optional).', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'agenda_url_intern => URL of embed agenda. (Optional). default: agenda on Openagenda.com', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'agenda_title_color => Color of title inside %%. (Optional).', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'agenda_date_color => Background color of date "box". (Optional).', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'agenda_date_text_color => Color of text (Optional).', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'agenda_lieu => Show Event Venue? "true" or "false" but in string.', 'wp-openagenda' ); ?></li>
-				<li><?php esc_attr_e( 'number => number of events (Optional).', 'wp-openagenda' ); ?></li>
-			</ul>
-		</div>
-	</ul>
+	<p><?php _e( 'Welcome on the support center', 'wp-openagenda' ); ?></p>
+	<p><?php echo $support; ?></p>
+	<p>
+		<a href="https://www.thivinfo.com/docs/openagenda-pour-wordpress/"><?php _e( 'Documentation Center', 'wp-openagenda' ); ?></a>
+	</p>
 	<?php
 	if ( openagenda_fs()->is_not_paying() ) {
 		echo '<section class="pro-pub">
