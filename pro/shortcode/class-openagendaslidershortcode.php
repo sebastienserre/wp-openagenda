@@ -68,40 +68,39 @@ class OpenagendaSliderShortcode {
 		} else {
 			$html .= '<div class="bloc-openagenda__slider">';
 
-			foreach ( $datas as $event ) {
-				foreach ( $event as $ev ) {
+			foreach ( $datas['events'] as $event ) {
 
-					if ( empty( $atts['agenda_url_intern'] ) ) {
-						$url = $atts['agenda_url'] . '?oaq%5Buids%5D%5B0%5D=' . $ev['uid'];
-					} else {
-						$url = $atts['agenda_url_intern'] . '?oaq%5Buids%5D%5B0%5D=' . $ev['uid'];
-					}
-					$date = $ev['range']['fr'];
-
-					if ( strlen( $ev['title']['fr'] ) > '59' ) {
-						$ev['title']['fr'] = substr( $ev['title']['fr'], 0, 59 ) . '...';
-					}
-
-					$html .= '<div class="bloc-openagenda__slide" >';
-					$html .= '<a class="bloc-openagenda__link" href="' . $url . '" style="color:' . $atts['agenda_date_text_color'] . ';" >';
-					$html .= '<div class="bloc-openagenda__pic">';
-					$html .= '<img src="' . $ev['image'] . '"  />';
-					$html .= '</div>';
-
-					$html .= '<div class="bloc-openagenda__date" style="background: ' . $atts['agenda_date_color'] . '; color:' . $atts['agenda_date_text_color'] . ';">';
-					$html .= '<div class="bloc-openagenda__box-title bloc-openagenda__box-title--uppercase" style=" color:' . $atts['agenda_date_text_color'] . ';"> ' . $date . '</div>';
-
-					if ( 'true' === $atts['agenda_lieu'] ) {
-						$html .= '<p class="bloc-openagenda__lieu">' . $ev['locationName'] . '</p>';
-					}
-
-					$html .= '<div class="arrows-bottom"></div></div>';
-					$html .= '</a>';
-					$html .= '</div>';
-
+				if ( empty( $atts['agenda_url_intern'] ) ) {
+					$url = $atts['agenda_url'] . '?oaq%5Buids%5D%5B0%5D=' . $event['uid'];
+				} else {
+					$url = $atts['agenda_url_intern'] . '?oaq%5Buids%5D%5B0%5D=' . $event['uid'];
 				}
+				$date = $event['range']['fr'];
+
+				if ( strlen( $event['title']['fr'] ) > '59' ) {
+					$event['title']['fr'] = substr( $event['title']['fr'], 0, 59 ) . '...';
+				}
+
+				$html .= '<div class="bloc-openagenda__slide" >';
+				$html .= '<a class="bloc-openagenda__link" href="' . $url . '" style="color:' . $atts['agenda_date_text_color'] . ';" >';
+				$html .= '<div class="bloc-openagenda__pic">';
+				$html .= '<img src="' . $event['image'] . '"  />';
+				$html .= '</div>';
+
+				$html .= '<div class="bloc-openagenda__date" style="background: ' . $atts['agenda_date_color'] . '; color:' . $atts['agenda_date_text_color'] . ';">';
+				$html .= '<div class="bloc-openagenda__box-title bloc-openagenda__box-title--uppercase" style=" color:' . $atts['agenda_date_text_color'] . ';"> ' . $date . '</div>';
+
+				if ( 'true' === $atts['agenda_lieu'] ) {
+					$html .= '<p class="bloc-openagenda__lieu">' . $event['locationName'] . '</p>';
+				}
+
+				$html .= '<div class="arrows-bottom"></div></div>';
+				$html .= '</a>';
+				$html .= '</div>';
 			}
-			$html .= '</div></div><a href="' . $atts['agenda_url'] . '">' . $atts['agenda_url_text'] . '</a>';
+			if ( ! empty( $atts['agenda_url_text'] ) ) {
+				$html .= '</div></div><a href="' . $atts['agenda_url'] . '">' . $atts['agenda_url_text'] . '</a>';
+			}
 
 
 		}

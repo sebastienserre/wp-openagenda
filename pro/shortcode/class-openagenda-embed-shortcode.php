@@ -35,7 +35,7 @@ class Openagenda_Embed_Shortcode {
 		$atts   = shortcode_atts( array(
 			'url'    => 'test',
 			'widget' => 'general',
-			'lang'   => 'en',
+			'lang'   => 'fr',
 		), $atts, 'openagenda_embed' );
 		$openwp = new OpenAgendaApi();
 		$uid    = $openwp->openwp_get_uid( $atts['url'] );
