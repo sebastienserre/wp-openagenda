@@ -115,6 +115,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/widget/class-openagenda-slider-widget.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagenda-embed-shortcode.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagendaslidershortcode.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagenda-search-shortcode.php';
 		}
 
 		/**
