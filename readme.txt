@@ -3,7 +3,7 @@ Contributors: sebastienserre
 Tags: openagenda, agenda, events, calendar, open data, event, organizer, dates, date, conference, workshop, concert, meeting, seminar, summit, class, shortcode, widget, visual composer
 Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
-Tested up to: 4.9
+Tested up to: 5.0
 Requires PHP: 5.6
 Stable tag: 1.4.6
 License: GPLv3
