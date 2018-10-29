@@ -171,8 +171,9 @@ class OpenAgendaApi {
 	 * @return string
 	 */
 	public function openwp_main_widget_html__premium_only( $embed, $uid, $atts ) {
-		if ( ! is_array( $embed ) ){
-			return $embed;
+		if ( null === $embed ){
+			return __('This agenda doesn\'t have any embeds layout in their params.<br> We\'re sorry, but wen can\'t display it :(', 'wp-openagenda' );
+
 		}
 		switch ( $atts['widget'] ) {
 			case 'general':
@@ -221,8 +222,8 @@ class OpenAgendaApi {
 			$body         = wp_remote_retrieve_body( $embed );
 			$decoded_body = json_decode( $body, true );
 		}
-		if ( empty( $decoded_body['embeds'] ) ){
-			$embed = __('This agenda doesn\'t have any embeds layout in their params.<br> We\'re sorry, but wen can\'t display it :(', 'wp-openagenda' );
+		if ( empty( $decoded_body['embeds'] ) ) {
+			$embed = null;
 		} else {
 			$embed = $decoded_body['embeds'][0];
 		}
