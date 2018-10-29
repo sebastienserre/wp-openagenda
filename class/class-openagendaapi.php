@@ -72,6 +72,7 @@ class OpenAgendaApi {
 			$nb = 10;
 		}
 
+		$key = $this->thfo_openwp_get_api_key();
 		$uid = $this->openwp_get_uid( $url );
 		if ( $uid ) {
 

@@ -44,7 +44,7 @@ class OpenAgenda_Shortcode {
 
 		ob_start();
 
-		$openwp->openwp_basic_html( $openwp_data, $lang, $atts['slug'] );
+		$openwp->openwp_basic_html( $openwp_data, $lang, $atts['url'] );
 
 
 		return ob_get_clean();
