@@ -9,8 +9,8 @@
  * Tested up to: 5.0
  * Text Domain: wp-openagenda
  * License: GPLv3
-
- * @package openagenda-wp
+ *
+ * @package         openagenda-wp
  * @fs_premium_only /pro/, /.idea/
  **/
 
@@ -26,29 +26,29 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 
 		if ( ! isset( $openagenda_fs ) ) {
 			// Include Freemius SDK.
-			require_once dirname(__FILE__) . '/freemius/start.php';
+			require_once dirname( __FILE__ ) . '/freemius/start.php';
 
 			$openagenda_fs = fs_dynamic_init( array(
-				'id'                  => '2279',
-				'slug'                => 'wp-openagenda',
-				'type'                => 'plugin',
-				'public_key'          => 'pk_ab0021b682585d81e582568095957',
-				'is_premium'          => true,
-				'has_addons'          => false,
-				'has_paid_plans'      => true,
-				'trial'               => array(
+				'id'             => '2279',
+				'slug'           => 'wp-openagenda',
+				'type'           => 'plugin',
+				'public_key'     => 'pk_ab0021b682585d81e582568095957',
+				'is_premium'     => true,
+				'has_addons'     => false,
+				'has_paid_plans' => true,
+				'trial'          => array(
 					'days'               => 30,
 					'is_require_payment' => false,
 				),
-				'menu'                => array(
-					'slug'           => 'openagenda-settings',
-					'parent'         => array(
+				'menu'           => array(
+					'slug'   => 'openagenda-settings',
+					'parent' => array(
 						'slug' => 'options-general.php',
 					),
 				),
 				// Set the SDK to work in a sandbox mode (for development & testing).
 				// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
-				'secret_key'          => 'sk_^FhYDtZ;KihDaYCX}LTf80_o}-Zf!',
+				'secret_key'     => 'sk_^FhYDtZ;KihDaYCX}LTf80_o}-Zf!',
 			) );
 		}
 
@@ -60,43 +60,6 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 // Signal that SDK was initiated.
 	do_action( 'openagenda_fs_loaded' );
 
-	if ( openagenda_fs()->is__premium_only() ) {
-		add_action( 'plugins_loaded', 'openwp_load_pro_files__premium_only' );
-
-	}
-
-	/**
-	 * Load Pro Functions.
-	 */
-	function openwp_load_pro_files__premium_only() {
-
-		/**
-		 * If Visual Composer activated, load VC elements.
-		 */
-		if ( class_exists( 'Vc_Manager' ) ) {
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/openagenda-vc-main.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-vc-events.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-slider.php';
-		}
-
-		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/widget/class-openagenda-main-widget.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/widget/class-openagenda-slider-widget.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagenda-embed-shortcode.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagendaslidershortcode.php';
-	}
-
-	if ( openagenda_fs()->is__premium_only() ) {
-		add_action( 'plugins_loaded', 'openwp_load_textdomain__premium_only' );
-	}
-
-	/**
-	 * Load plugin textdomain.
-	 *
-	 * @since 1.0.0
-	 */
-	function openwp_load_textdomain__premium_only() {
-		load_plugin_textdomain( 'wp-openagenda-pro', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
-	}
 
 	/**
 	 * Class Openagenda_WP_Main
@@ -122,7 +85,57 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'thfo_openwp_load_style' ) );
 			add_action( 'admin_print_styles', array( $this, 'openwp_load_admin_style' ) );
 
+			if ( openagenda_fs()->is__premium_only() ) {
+				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
+				add_action( 'plugins_loaded', array( $this, 'openwp_register_script__premium_only' ) );
+				add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
+				add_action( 'wp_enqueue_scripts', array( $this, 'openwp_pro_load_style__premium_only' ) );
+
+			}
+
 		}
+
+
+		/**
+		 * Load Pro Functions.
+		 */
+		public function openwp_load_pro_files__premium_only() {
+
+			/**
+			 * If Visual Composer activated, load VC elements.
+			 */
+			if ( class_exists( 'Vc_Manager' ) ) {
+				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/openagenda-vc-main.php';
+				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-vc-events.php';
+				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-slider.php';
+				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-search.php';
+			}
+
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/widget/class-openagenda-main-widget.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/widget/class-openagenda-slider-widget.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagenda-embed-shortcode.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcode/class-openagendaslidershortcode.php';
+		}
+
+		/**
+		 * Load plugin textdomain.
+		 *
+		 * @since 1.0.0
+		 */
+		public function openwp_load_textdomain__premium_only() {
+			load_plugin_textdomain( 'wp-openagenda-pro', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
+		}
+
+		public function openwp_register_script__premium_only() {
+			wp_register_script( 'dateOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/datepickerOA.js',
+				array(
+					'jquery',
+					'jquery-ui-core',
+					'jquery-ui-datepicker',
+				)
+			);
+		}
+
 
 		/**
 		 * Include all files needed to the plugin work
@@ -141,6 +154,13 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		 */
 		public function thfo_openwp_load_style() {
 			wp_enqueue_style( 'openwp', THFO_OPENWP_PLUGIN_URL . 'assets/css/openwp.css' );
+		}
+
+		/**
+		 * Load light style CSS
+		 */
+		public function openwp_pro_load_style__premium_only() {
+			wp_enqueue_style('jquery-ui-dp', THFO_OPENWP_PLUGIN_URL .'pro/assets/css/jquery-ui.min.css');
 		}
 
 		/**

@@ -230,6 +230,32 @@ class OpenAgendaApi {
 		return $embed;
 	}
 
+	/**
+	 * Get OA Agenda slug name
+	 *
+	 * @param $uid
+	 * @param $key
+	 *
+	 * @return array
+	 */
+	public function openwp_get_oa_slug( $uid, $key ) {
+		$agenda = wp_remote_get( 'https://openagenda.com/agendas/' . $uid . '/events.json?lang=fr&key=' . $key );
+		//$agenda = wp_remote_get( 'https://openagenda.com/agendas/35241188/events.json?lang=fr&key=hd2cmLOQHQgrfJqRTd7qW45TQ43eFVgN' );
+		if ( 200 === (int) wp_remote_retrieve_response_code( $agenda ) ) {
+			$body         = wp_remote_retrieve_body( $agenda );
+			$decoded_body = json_decode( $body, true );
+			foreach ( $decoded_body['events'] as $event ) {
+				$slug          = $event['origin']['slug'];
+				$org           = $event['origin']['uid'];
+				$slugs[ $org ] = $slug;
+			}
+
+			$slugs = array_unique( $slugs );
+		}
+
+		return $slugs;
+	}
+
 }
 
 new OpenAgendaApi();
