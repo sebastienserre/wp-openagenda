@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 5.0
 Requires PHP: 5.6
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -61,7 +61,7 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * Yes! The Pro version is coming with Visual Composer element. Free one provide only WP Shortcodes and WP Widgets.
 
 = May I test for free the Pro Version?
-* Yes! 14 days free trial. Do not hesitate.
+* Yes! 30 days free trial. Do not hesitate.
 
 = How expensive is the Pro Version?
 * [Check OpenAgenda for WordPress Pro Price](https://checkout.freemius.com/mode/dialog/plugin/2279/plan/3475/licenses/unlimited/)
@@ -75,6 +75,11 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 6. Display OpenAgenda widget in a great WP Widget (Pro Version)
 
 == Changelog ==
+
+= 1.4.8 == 30 octobre 2018 =
+* Improvment add Pro shortcode => search bar.
+* Refactore some part of code
+
 = 1.4.7 == 29 octobre 2018 =
 * Succesfully tested on WP.5.0 & New Editor ( Gutenberg with Shortcodes )
 * Several php notices corrected
