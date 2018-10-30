@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-28 20:25+0000\n"
+"POT-Creation-Date: 2018-10-30 06:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -94,17 +94,17 @@ msgstr ""
 msgid "You forgot to add an agenda's url to retrieve"
 msgstr ""
 
-#: class/class-openagendaapi.php:86 class/class-openagendaapi.php:89
+#: class/class-openagendaapi.php:87 class/class-openagendaapi.php:90
 msgid "Impossible to retrieve Events Data"
 msgstr ""
 
 #. this is a link to add events in Openagenda.com.
-#: class/class-openagendaapi.php:154
+#: class/class-openagendaapi.php:155
 #, php-format
 msgid "Have an Event to display here? <a href=\"%s\">Add it!</a>"
 msgstr ""
 
-#: class/class-openagendaapi.php:224
+#: class/class-openagendaapi.php:175
 msgid ""
 "This agenda doesn't have any embeds layout in their params.<br> We're sorry, "
 "but wen can't display it :("
@@ -129,6 +129,82 @@ msgstr ""
 
 #: class/class-openagenda-wp-basic-widget.php:90
 msgid "Languages of events:"
+msgstr ""
+
+#: pro/shortcode/class-openagenda-search-shortcode.php:81
+msgid "Search"
+msgstr ""
+
+#: pro/shortcode/class-openagenda-search-shortcode.php:107
+#: pro/vc/class-openagenda-search.php:88
+msgid "Tags"
+msgstr ""
+
+#: pro/shortcode/class-openagenda-search-shortcode.php:120
+msgid "All"
+msgstr ""
+
+#: pro/shortcode/class-openagenda-search-shortcode.php:138
+#: pro/vc/class-openagenda-search.php:89
+msgid "Category"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:24
+msgid "OpenAgenda Search"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:26
+msgid "Display your openAgenda searchbar in WordPress"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:27
+msgid "Openagenda"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:34
+msgid "Title"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:38 pro/vc/class-openagenda-search.php:49
+#: pro/vc/class-openagenda-search.php:66 pro/vc/class-openagenda-search.php:77
+#: pro/vc/class-openagenda-search.php:95
+msgid "Settings"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:44
+msgid "Agenda URL"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:46
+msgid "my-agenda-url"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:55
+msgid "Agenda title heading"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:72
+msgid "Agenda language"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:74
+msgid "fr"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:83
+msgid "Check the searchg field to show."
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:87
+msgid "Date"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:90
+msgid "Search field"
+msgstr ""
+
+#: pro/vc/class-openagenda-search.php:91
+msgid "Venue"
 msgstr ""
 
 #: pro/vc/openagenda-vc-main.php:62
