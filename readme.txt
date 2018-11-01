@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 5.0
 Requires PHP: 5.6
-Stable tag: 1.4.8
+Stable tag: 1.4.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -75,6 +75,9 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 6. Display OpenAgenda widget in a great WP Widget (Pro Version)
 
 == Changelog ==
+
+= 1.4.9 == 01 November 2018 =
+* Add parameters (show image, show title, show description) in Basic shortcode and Basic Widget
 
 = 1.4.8 == 30 octobre 2018 =
 * Improvment add Pro shortcode => search bar.
