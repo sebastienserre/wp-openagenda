@@ -47,8 +47,7 @@ class Openagenda_WP_Basic_Widget extends WP_Widget {
 		$lang = $instance['lang'];
 
 
-
-		$openwp->openwp_basic_html( $openwp_data, $lang, $instance['slug'] );
+		$openwp->openwp_basic_html( $openwp_data, $lang, $instance );
 	}
 
 	/**
@@ -92,6 +91,30 @@ class Openagenda_WP_Basic_Widget extends WP_Widget {
 			       name="<?php echo $this->get_field_name( 'lang' ); ?>" type="text"
 			       value="<?php echo $instance['lang']; ?>"/>
 
+		</p>
+		<p>
+			<label
+					for="<?php echo $this->get_field_name( 'img' ); ?>"> <?php _e( 'Display Image:', 'wp-openagenda' ); ?>
+			</label>
+
+ 			<input class="widefat" id="<?php echo $this->get_field_name( 'img' ); ?>"
+			       name="<?php echo $this->get_field_name( 'img' ); ?>" type="checkbox" value="yes" <?php checked( $instance['img'], 'yes' ); ?>>
+		</p>
+		<p>
+			<label
+					for="<?php echo $this->get_field_name( 'event-title' ); ?>"> <?php _e( 'Display event title:', 'wp-openagenda' ); ?>
+			</label>
+
+			<input class="widefat" id="<?php echo $this->get_field_name( 'event-title' ); ?>"
+			       name="<?php echo $this->get_field_name( 'event-title' ); ?>" type="checkbox" value="yes" <?php checked( $instance['event-title'], 'yes' ); ?>>
+		</p>
+		<p>
+			<label
+					for="<?php echo $this->get_field_name( 'event-description' ); ?>"> <?php _e( 'Display event description:', 'wp-openagenda' ); ?>
+			</label>
+
+			<input class="widefat" id="<?php echo $this->get_field_name( 'event-description' ); ?>"
+			       name="<?php echo $this->get_field_name( 'event-description' ); ?>" type="checkbox" value="yes" <?php checked( $instance['event-description'], 'yes' ); ?>>
 		</p>
 		<?php
 	}

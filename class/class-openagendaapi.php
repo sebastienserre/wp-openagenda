@@ -118,11 +118,14 @@ class OpenAgendaApi {
 	/**
 	 * Display a basic WordPress Widget.
 	 *
-	 * @param   object $openwp_data    Object with OPenagenda Events data.
-	 * @param   string $lang   Language code to display.
-	 * @param   string $slug   OpenAgenda Agenda URL.
+	 * @param   object $openwp_data Object with OPenagenda Events data.
+	 * @param   string $lang        Language code to display.
+	 * @param   string $slug        OpenAgenda Agenda URL.
 	 */
-	public function openwp_basic_html( $openwp_data, $lang, $slug ) {
+	public function openwp_basic_html( $openwp_data, $lang, $instance ) {
+		if ( is_array( $instance ) ) {
+			$slug = $instance['slug'];
+		}
 		?>
 		<div class="openwp-events">
 			<!-- OpenAgenda for WordPress Plugin downloadable for free on https://wordpress.org/plugins/wp-openagenda/-->
@@ -137,15 +140,19 @@ class OpenAgendaApi {
 					   target="_blank">
 						<p class="openwp-event-range"><?php echo esc_attr( $events['range'][ $lang ] ); ?></p>
 						<?php
-						if ( false !== $events['image'] ) {
+						if ( false !== $events['image'] && 'yes' === $instance['img'] ) {
 							?>
 							<img class="openwp-event-img" src="<?php echo esc_attr( $events['image'] ); ?>">
 							<?php
 						}
 						?>
-						<h3 class="openwp-event-title"><?php echo esc_attr( $events['title'][ $lang ] ); ?></h3>
+						<?php if ( 'yes' === $instance['event-title'] ) { ?>
+							<h3 class="openwp-event-title"><?php echo esc_attr( $events['title'][ $lang ] ); ?></h3>
+						<?php } ?>
+						<?php if ( 'yes' === $instance['event-description'] ) { ?>
 						<p class="openwp-event-description"><?php echo $parsedown->text( esc_textarea( $events['description'][ $lang ] ) ); ?></p>
 					</a>
+					<?php } ?>
 
 				</div>
 				<?php
@@ -165,14 +172,14 @@ class OpenAgendaApi {
 	 * Method to display OpenAgenda Widget.
 	 *
 	 * @param int   $embed Embeds uid.
-	 * @param int   $uid    Agenda UID.
-	 * @param array $atts   Shortcode attributs.
+	 * @param int   $uid   Agenda UID.
+	 * @param array $atts  Shortcode attributs.
 	 *
 	 * @return string
 	 */
 	public function openwp_main_widget_html__premium_only( $embed, $uid, $atts ) {
-		if ( null === $embed ){
-			return __('This agenda doesn\'t have any embeds layout in their params.<br> We\'re sorry, but wen can\'t display it :(', 'wp-openagenda' );
+		if ( null === $embed ) {
+			return __( 'This agenda doesn\'t have any embeds layout in their params.<br> We\'re sorry, but wen can\'t display it :(', 'wp-openagenda' );
 
 		}
 		switch ( $atts['widget'] ) {
@@ -180,7 +187,7 @@ class OpenAgendaApi {
 				$openagenda_code = '<iframe style="width:100%;" frameborder="0" scrolling="no" allowtransparency="allowtransparency" class="cibulFrame cbpgbdy" data-oabdy src="//openagenda.com/agendas/' . $uid . '/embeds/' . $embed . '/events?lang=fr"></iframe><script type="text/javascript" src="//openagenda.com/js/embed/cibulBodyWidget.js"></script>';
 				break;
 			case 'map':
-				$openagenda_code = '<div class="cbpgmp cibulMap" data-oamp data-cbctl="' . $uid . '/' . $embed . '" data-lang="fr" data-count="'. $atts['agenda_nb'] .'" ></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulMapWidget.js"></script>';
+				$openagenda_code = '<div class="cbpgmp cibulMap" data-oamp data-cbctl="' . $uid . '/' . $embed . '" data-lang="fr" data-count="' . $atts['agenda_nb'] . '" ></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulMapWidget.js"></script>';
 				break;
 			case 'search':
 				$openagenda_code = '<div class="cbpgsc cibulSearch" data-oasc data-cbctl="' . $uid . '/' . $embed . '|fr" data-lang="fr"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulSearchWidget.js"></script>';
@@ -217,7 +224,7 @@ class OpenAgendaApi {
 	 * @return array|WP_Error
 	 */
 	public function openwp_get_embed( $uid, $key ) {
-		$embed = wp_remote_get( 'https://openagenda.com/agendas/'. $uid .'/settings.json?key='. $key );
+		$embed = wp_remote_get( 'https://openagenda.com/agendas/' . $uid . '/settings.json?key=' . $key );
 		if ( 200 === (int) wp_remote_retrieve_response_code( $embed ) ) {
 			$body         = wp_remote_retrieve_body( $embed );
 			$decoded_body = json_decode( $body, true );
@@ -227,6 +234,7 @@ class OpenAgendaApi {
 		} else {
 			$embed = $decoded_body['embeds'][0];
 		}
+
 		return $embed;
 	}
 

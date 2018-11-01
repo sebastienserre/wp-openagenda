@@ -124,7 +124,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		 * @since 1.0.0
 		 */
 		public function openwp_load_textdomain__premium_only() {
-			load_plugin_textdomain( 'wp-openagenda-pro', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
+			load_plugin_textdomain( 'wp-openagenda', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
 		}
 
 		public function openwp_register_script__premium_only() {
