@@ -3,7 +3,7 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://openagenda4wp.com/
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 1.4.9
+ * Version: 1.5.0
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.0
@@ -74,7 +74,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			/**
 			 * Define Constant
 			 */
-			define( 'THFO_OPENWP_VERSION', '1.4.9' );
+			define( 'THFO_OPENWP_VERSION', '1.5.0' );
 			define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -84,6 +84,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'thfo_openwp_load_files' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'thfo_openwp_load_style' ) );
 			add_action( 'admin_print_styles', array( $this, 'openwp_load_admin_style' ) );
+			add_action( 'plugins_loaded', array( $this, 'openwp_load' ) );
 
 			if ( openagenda_fs()->is__premium_only() ) {
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
@@ -135,6 +136,14 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 					'jquery-ui-datepicker',
 				)
 			);
+		}
+
+		/**
+		 * Load Carbon-field v3
+		 */
+		public function openwp_load() {
+			require_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/autoload.php';
+			\Carbon_Fields\Carbon_Fields::boot();
 		}
 
 
