@@ -49,6 +49,7 @@ class BasicBlock {
 		     )
 		     )
 		     ->set_description( __( 'basic Openagenda Block', 'wp-openagenda' ) )
+			->set_category( 'custom-category', 'Openagenda', 'calendar-alt' )
 		     ->set_render_callback( array( $this, 'openwp_basic_render' ) );
 
 
