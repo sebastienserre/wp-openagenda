@@ -52,6 +52,12 @@ class Router {
 			'permission_callback' => 'allow_access',
 			'methods'             => 'GET',
 		),
+		'attachment_data' => array(
+			'path'                => '/attachment',
+			'callback'            => 'get_attachment_data',
+			'permission_callback' => 'allow_access',
+			'methods'             => 'GET',
+		),
 	);
 
 	/**
@@ -278,7 +284,7 @@ class Router {
 	public function get_association_data() {
 		$container_id = $_GET['container_id'];
 		$field_id     = $_GET['field_id'];
-		$options      = isset( $_GET['options'] ) ? $_GET['options'] : [];
+		$options      = isset( $_GET['options'] ) ? $_GET['options'] : array();
 		$return_value = array();
 
 		$field = Helper::get_field( null, $container_id, $field_id );
@@ -298,6 +304,18 @@ class Router {
 		}
 
 		return $return_value;
+	}
+
+	/**
+	 * Get attachment data by given ID or URL.
+	 *
+	 * @return array
+	 */
+	public function get_attachment_data() {
+		$type  = sanitize_text_field( $_GET['type'] );
+		$value = sanitize_text_field( $_GET['value'] );
+
+		return Helper::get_attachment_metadata( $value, $type );
 	}
 
 	/**

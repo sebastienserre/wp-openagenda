@@ -3,15 +3,15 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "X-Generator: babel-plugin-makepot\n"
 
-#: packages/blocks/components/block-edit/index.js:150
+#: packages/blocks/components/block-edit/index.js:152
 msgid "Show preview"
 msgstr ""
 
-#: packages/blocks/components/block-edit/index.js:151
+#: packages/blocks/components/block-edit/index.js:153
 msgid "Hide preview"
 msgstr ""
 
-#: packages/blocks/components/block-edit/index.js:167
+#: packages/blocks/components/block-edit/index.js:169
 msgid "Fields"
 msgstr ""
 
@@ -19,9 +19,8 @@ msgstr ""
 msgid "Field of type '%s' is not supported in Gutenberg."
 msgstr ""
 
-#: packages/blocks/fields/date/index.js:9
 #: packages/blocks/fields/datetime/index.js:14
-#: packages/metaboxes/fields/date/index.js:9
+#: packages/core/fields/date/index.js:15
 #: packages/metaboxes/fields/datetime/index.js:9
 msgid "Select Date"
 msgstr ""
@@ -56,11 +55,6 @@ msgstr ""
 msgid "Select Attachments"
 msgstr ""
 
-#: packages/blocks/fields/time/index.js:10
-#: packages/metaboxes/fields/time/index.js:10
-msgid "Select Time"
-msgstr ""
-
 #: packages/core/components/no-options/index.js:14
 msgid "No options."
 msgstr ""
@@ -69,21 +63,25 @@ msgstr ""
 msgid "Search..."
 msgstr ""
 
-#: packages/core/fields/association/index.js:208
+#: packages/core/fields/association/index.js:113
+msgid "Maximum number of items reached (%s items)"
+msgstr ""
+
+#: packages/core/fields/association/index.js:204
 msgid "Showing %1$d of %2$d results"
 msgstr ""
 
-#: packages/core/fields/association/index.js:381
+#: packages/core/fields/association/index.js:380
 msgid "An error occurred while trying to fetch association options."
 msgstr ""
 
-#: packages/core/fields/association/index.js:423
-#: packages/core/fields/complex/index.js:385
+#: packages/core/fields/association/index.js:430
+#: packages/core/fields/complex/index.js:394
 #: packages/core/hocs/with-validation/required.js:20
-msgid "This field is required. "
+msgid "This field is required."
 msgstr ""
 
-#: packages/core/fields/association/index.js:427
+#: packages/core/fields/association/index.js:434
 msgid "Minimum number of items not reached (%s items)"
 msgstr ""
 
@@ -91,19 +89,31 @@ msgstr ""
 msgid "Select a color"
 msgstr ""
 
-#: packages/core/fields/complex/group.js:147
+#: packages/core/fields/complex/group.js:150
 msgid "Duplicate"
 msgstr ""
 
-#: packages/core/fields/complex/group.js:156
+#: packages/core/fields/complex/group.js:159
 msgid "Remove"
 msgstr ""
 
-#: packages/core/fields/complex/group.js:165
+#: packages/core/fields/complex/group.js:168
 msgid "Collapse"
 msgstr ""
 
-#: packages/core/fields/complex/index.js:392
+#: packages/core/fields/complex/index.js:145
+msgid "Couldn't create the label of group - %s"
+msgstr ""
+
+#: packages/core/fields/complex/index.js:367
+msgid "Expand All"
+msgstr ""
+
+#: packages/core/fields/complex/index.js:367
+msgid "Collapse All"
+msgstr ""
+
+#: packages/core/fields/complex/index.js:401
 msgid "Minimum number of rows not reached (%1$d %2$s)"
 msgstr ""
 
@@ -112,11 +122,15 @@ msgid "Add %s"
 msgstr ""
 
 #: packages/core/fields/map/index.js:165
-msgid "The address could not be found. "
+msgid "The address could not be found."
 msgstr ""
 
 #: packages/core/fields/map/index.js:167
 msgid "Geocode was not successful for the following reason: "
+msgstr ""
+
+#: packages/core/fields/map/index.js:185
+msgid "Error alert"
 msgstr ""
 
 #: packages/core/fields/oembed/index.js:188
@@ -143,6 +157,18 @@ msgstr ""
 msgid "An error occurred while trying to create the sidebar."
 msgstr ""
 
+#: packages/core/fields/sidebar/index.js:58
+msgid "Please choose"
+msgstr ""
+
+#: packages/core/fields/time/index.js:16
+msgid "Select Time"
+msgstr ""
+
+#: packages/core/hocs/with-conditional-logic/index.js:62
+msgid "An unknown field is used in condition - \"%s\""
+msgstr ""
+
 #: packages/core/registry/index.js:40
 msgid "%1$s type must be a string."
 msgstr ""
@@ -155,6 +181,14 @@ msgstr ""
 msgid "The \"component\" param must be a function."
 msgstr ""
 
+#: packages/core/registry/index.js:79
+msgid "The provided context isn't a valid one. Must be one of - %s ."
+msgstr ""
+
+#: packages/core/registry/index.js:89
+msgid "%s %s isn't registered."
+msgstr ""
+
 #: packages/core/utils/api-fetch.js:19
 msgid "An error occured."
 msgstr ""
@@ -163,7 +197,7 @@ msgstr ""
 msgid "An error occurred while trying to fetch files data."
 msgstr ""
 
-#: packages/metaboxes/containers/index.js:51
+#: packages/metaboxes/containers/index.js:52
 msgid "Could not find DOM element for container \"%1$s\"."
 msgstr ""
 

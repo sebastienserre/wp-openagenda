@@ -3,7 +3,6 @@
  */
 import of from 'callbag-of';
 import distinctUntilChanged from 'callbag-distinct-until-changed';
-import { debounce } from 'callbag-debounce';
 import { pipe, merge } from 'callbag-basics';
 import { select } from '@wordpress/data';
 import {
@@ -64,12 +63,10 @@ function input( props ) {
 
 	return pipe(
 		merge(
-			of( getFieldsByContainerId( props.field.container_id ) ),
+			of( getFieldsByContainerId( props.containerId ) ),
 
-			fromSelector( getFieldsByContainerId, props.field.container_id )
+			fromSelector( getFieldsByContainerId, props.containerId )
 		),
-
-		debounce( 250 ),
 
 		distinctUntilChanged( isEqual )
 	);
@@ -86,7 +83,7 @@ function input( props ) {
 function output( props, fields ) {
 	fields = keyBy( fields, 'id' );
 
-	const container = select( 'carbon-fields/metaboxes' ).getContainerById( props.field.container_id );
+	const container = select( 'carbon-fields/metaboxes' ).getContainerById( props.containerId );
 	const isTopLevelField = some( container.fields, [ 'id', props.id ] );
 	let siblingFields = [];
 
@@ -98,7 +95,7 @@ function output( props, fields ) {
 
 		// Get the root field.
 		const rootField = find( fields, ( field ) => {
-			return field.container_id === props.field.container_id
+			return field.container_id === props.containerId
 				&& startsWith( fieldName, field.name );
 		} );
 

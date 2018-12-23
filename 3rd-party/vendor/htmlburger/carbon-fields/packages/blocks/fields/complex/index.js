@@ -34,7 +34,15 @@ class ComplexField extends Component {
 	 * @type {Object}
 	 */
 	state = {
-		collapsedGroups: []
+		collapsedGroups: this.props.value.reduce( ( accumulator, { _id, _type } ) => {
+			const group = find( this.props.field.groups, [ 'name', _type ] );
+
+			if ( ! group.collapsed ) {
+				return accumulator;
+			}
+
+			return accumulator.concat( _id );
+		}, [] )
 	};
 
 	/**
@@ -179,7 +187,6 @@ class ComplexField extends Component {
 		const values = omit( group, [ '_id', '_type' ] );
 
 		return assign( {}, props, {
-			key: group._id,
 			id: group._id,
 			fields: fields,
 			collapsed: this.state.collapsedGroups.indexOf( group._id ) > -1,
@@ -204,6 +211,8 @@ class ComplexField extends Component {
 		return [ Field, assign( {}, props, {
 			key: id,
 			id: id,
+			name: field.base_name,
+			containerId: this.props.containerId,
 			blockId,
 			field,
 			value,
