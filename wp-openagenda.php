@@ -84,7 +84,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'thfo_openwp_load_files' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'thfo_openwp_load_style' ) );
 			add_action( 'admin_print_styles', array( $this, 'openwp_load_admin_style' ) );
-			add_action( 'plugins_loaded', array( $this, 'openwp_load' ) );
+			add_action( 'plugins_loaded', array( $this, 'openwp_load' ), 400 );
 
 			if ( openagenda_fs()->is__premium_only() ) {
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
@@ -156,6 +156,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-shortcode.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/erusev/parsedown/Parsedown.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-wp-basic-widget.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-basicblock.php';
 
 		}
 

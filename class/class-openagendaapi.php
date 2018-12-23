@@ -140,7 +140,7 @@ class OpenAgendaApi {
 					   target="_blank">
 						<p class="openwp-event-range"><?php echo esc_attr( $events['range'][ $lang ] ); ?></p>
 						<?php
-						if ( false !== $events['image'] && 'yes' === $instance['img'] ) {
+						if ( false !== $events['image'] && 'yes' === $instance['openwp_img'] ) {
 							?>
 							<img class="openwp-event-img" src="<?php echo esc_attr( $events['image'] ); ?>">
 							<?php
