@@ -33,3 +33,10 @@ a.nav-tab.nav-tab-help {
 a.nav-tab {
     text-transform: capitalize;
 }
+
+/**
+Gutenberg Block
+ */
+li.cf-radio__list-item {
+    list-style: none;
+}

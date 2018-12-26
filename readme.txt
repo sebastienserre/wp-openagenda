@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 5.0
 Requires PHP: 5.6
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -77,8 +77,13 @@ On WP 5.0 Use the new Gutenberg Blocks!
 4. Customer account embed. Free Trial Tab
 5. Visual Composer Element (PRO Version)
 6. Display OpenAgenda widget in a great WP Widget (Pro Version)
+7. Gutenberg Block (Front-Office and Preview)
+8. Gutenberg Block (Back-Office and Settings)
 
 == Changelog ==
+
+= 1.5.0 = 26 december 2018 =
+* Add Gutenberg Blocks
 
 = 1.4.9 == 01 November 2018 =
 * Add parameters (show image, show title, show description) in Basic shortcode and Basic Widget
