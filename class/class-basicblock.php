@@ -5,18 +5,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Carbon_Fields\Block;
 use Carbon_Fields\Field;
-use Carbon_Fields\Container;
 
 class BasicBlock {
 
 	public function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'openwp_basic_block' ), 500 );
+		add_action( 'after_setup_theme', array( $this, 'openwp_basic_block' ), 500 );
 	}
 
 	public function openwp_basic_block() {
 		Block::make( __( 'OpenAgenda Basic Block', 'wp-openagenda' ) )
 		     ->add_fields( array(
-			     Field::make( 'text', 'slug', __( 'Openagenda URL', 'wp-openagenda' ) ),
+			     Field::make( 'text', 'openwp_url', __( 'Openagenda URL', 'wp-openagenda' ) ),
 			     Field::make( 'select', 'openwp_nb_results', __( 'Number of events', 'wp-openagenda' ) )
 			          ->set_options( array(
 			          		'0'   => 0,

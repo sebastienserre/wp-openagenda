@@ -38,11 +38,12 @@ class OpenAgenda_Shortcode {
 			'url'               => 'https://openagenda.com/cite-des-sciences',
 			'nb'                => 10,
 			'lang'              => 'en',
-			'img'               => 'yes',
+			'openwp_img'               => 'yes',
 			'event-title'       => 'yes',
 			'event-description' => 'yes',
 		), $atts, 'openwp_basic' );
 		$openwp = new OpenAgendaApi();
+
 
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $atts['url'], $atts['nb'] );
 		$lang        = $atts['lang'];

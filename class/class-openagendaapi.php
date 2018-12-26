@@ -124,7 +124,14 @@ class OpenAgendaApi {
 	 */
 	public function openwp_basic_html( $openwp_data, $lang, $instance ) {
 		if ( is_array( $instance ) ) {
-			$slug = $instance['slug'];
+			if ( empty( $instance['url'] ) ) {
+				$instance['openwp_url'] = $instance['slug'];
+			}
+			$slug = $instance['openwp_url'];
+		}
+
+		if ( null === $lang ){
+			$lang = 'fr';
 		}
 		?>
 		<div class="openwp-events">
@@ -146,13 +153,22 @@ class OpenAgendaApi {
 							<?php
 						}
 						?>
-						<?php if ( 'yes' === $instance['event-title'] ) { ?>
+						<?php if ( 'yes' === $instance['event-title'] && ! empty( $events['title'][ $lang ] ) ) { ?>
 							<h3 class="openwp-event-title"><?php echo esc_attr( $events['title'][ $lang ] ); ?></h3>
-						<?php } ?>
-						<?php if ( 'yes' === $instance['event-description'] ) { ?>
+						<?php } else {
+							?>
+					<h3 class="openwp-event-title"><?php echo esc_attr( $events['title']['en'] ); ?></h3>
+					<?php
+
+						} ?>
+						<?php if ( 'yes' === $instance['event-description'] && !empty( $events['description'][ $lang ] ) ) { ?>
 						<p class="openwp-event-description"><?php echo $parsedown->text( esc_textarea( $events['description'][ $lang ] ) ); ?></p>
 					</a>
-					<?php } ?>
+					<?php } else {
+							?>
+						<p class="openwp-event-description"><?php echo $parsedown->text( esc_textarea( $events['description']['en'] ) ); ?></p>
+						<?php
+					} ?>
 
 				</div>
 				<?php
