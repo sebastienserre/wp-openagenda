@@ -1,19 +1,21 @@
 === OpenAgenda for WordPress ===
 Contributors: sebastienserre
-Tags: openagenda, agenda, events, calendar, open data, event, organizer, dates, date, conference, workshop, concert, meeting, seminar, summit, class, shortcode, widget, visual composer
+Tags: openagenda, agenda, events, calendar, opendata,
 Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 5.0
 Requires PHP: 5.6
-Stable tag: 1.4.9
+Stable tag: 1.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
 Display Events hosted in Openagenda.com easily in your WordPress Website.
 
 == Description ==
-Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode and Widget.
+Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode, Gutenberg Blocks and Widget.
 Shortly is planned to be produced Gutenberg Blocks and page builder elements.
+
+/!\ New on OpenAgenda for WordPress 1.5.0: Gutenberg Blocks!
 
 == Installation ==
 * 1- unzip
@@ -24,6 +26,8 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 == Frequently Asked Questions ==
 
 = How to display an agenda in my website? =
+On WP 5.0 Use the new Gutenberg Blocks!
+
 * 1st get an Openagenda API Key in your Openagenda profile.
 * 2nd use the [openwp_basic] with with params below to customize it.
 * The param Agenda slug is mandatory. example: slug=\'my-agenda-slug\'.
@@ -37,7 +41,7 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * No! You can display all Agenda from [Openagenda.com](openagenda.com) by just copying the Agenda's slug.
 
 = May I display several Agenda?
-* Yes! (one by widget, shortcode)
+* Yes! (one by widget, shortcode, gutenberg Block)
 
 = Is a Roadmap exist?
 * No! No roadmap but Ideas:
