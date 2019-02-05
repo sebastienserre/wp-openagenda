@@ -59,7 +59,11 @@ class BasicBlock {
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $block['openwp_url'], $block['openwp_nb_results'] );
 		ob_start();
 
-		$openwp->openwp_basic_html( $openwp_data, $block['openwp_lang'], $block );
+		if ( empty( $block['lang'] ) ){
+			$block['lang'] = 'fr';
+		}
+
+		$openwp->openwp_basic_html( $openwp_data, $block['lang'], $block );
 		echo ob_get_clean();
 	}
 

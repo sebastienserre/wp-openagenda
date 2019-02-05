@@ -125,7 +125,7 @@ class OpenAgendaApi {
 	public function openwp_basic_html( $openwp_data, $lang, $instance ) {
 		if ( is_array( $instance ) ) {
 			if ( empty( $instance['url'] ) ) {
-				$instance['openwp_url'] = $instance['slug'];
+				$instance['openwp_url'] = $instance['openwp_url'];
 			}
 			$slug = $instance['openwp_url'];
 		}
