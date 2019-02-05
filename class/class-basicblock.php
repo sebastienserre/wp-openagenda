@@ -56,6 +56,9 @@ class BasicBlock {
 
 	public function openwp_basic_render( $block ) {
 		$openwp =new OpenAgendaApi();
+		if ( empty( $block['openwp_url'] ) ){
+			return;
+		}
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $block['openwp_url'], $block['openwp_nb_results'] );
 		ob_start();
 

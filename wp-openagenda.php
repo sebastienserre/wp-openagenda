@@ -87,10 +87,11 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'openwp_load' ), 400 );
 
 			if ( openagenda_fs()->is__premium_only() ) {
-				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
-				add_action( 'plugins_loaded', array( $this, 'openwp_register_script__premium_only' ) );
-				add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
 				add_action( 'wp_enqueue_scripts', array( $this, 'openwp_pro_load_style__premium_only' ) );
+				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
+				add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
+				add_action( 'plugins_loaded', array( $this, 'openwp_register_script__premium_only' ), 999 );
+
 
 			}
 
