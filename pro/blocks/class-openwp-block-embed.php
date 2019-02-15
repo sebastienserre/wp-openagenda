@@ -1,4 +1,7 @@
 <?php
+
+namespace WPGC\BlOCKS\EMBED;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
