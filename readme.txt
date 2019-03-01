@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 5.1
 Requires PHP: 5.6
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -81,6 +81,12 @@ On WP 5.0 Use the new Gutenberg Blocks!
 8. Gutenberg Block (Back-Office and Settings)
 
 == Changelog ==
+
+= 1.5.4 = 01/03/2019
+* Update Freemius SDK
+
+= 1.5.3 = 15/02/2019
+* Add Gutenberg Blocks
 
 = 1.5.2 = 05/02/2019
 * remove PHP Notices
