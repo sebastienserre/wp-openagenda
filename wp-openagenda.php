@@ -6,7 +6,7 @@
  * Version: 1.5.4
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
- * Tested up to: 5.0
+ * Tested up to: 5.1
  * Text Domain: wp-openagenda
  * License: GPLv3
  *
@@ -160,7 +160,8 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-shortcode.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/erusev/parsedown/Parsedown.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-wp-basic-widget.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-basicblock.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
 
 		}
 
