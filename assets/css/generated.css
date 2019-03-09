@@ -1,18 +1,18 @@
 		.main_openagenda {
 		display: grid;
-		grid-template-columns: repeat(2, auto);
+		grid-template-columns: repeat(, auto);
 		grid-gap: 10px 20px;
 		}
 		.openagenda_when {
-		background: #2a3cca;
-		color: #ffffff;
+		background: ;
+		color: ;
 		}
 		.openagenda_when p {
 		text-align: center;
 		}
 		.openagenda_event {
-		background: #365690;
-		color: #ffffff;
+		background: ;
+		color: ;
 		}
 		.openagenda_event p,
 		.openagenda_event h3{
