@@ -199,8 +199,7 @@ class MainAgendaBlock {
 		}
 
 		.openagenda_event_image {
-		display: flex;
-		justify-content: center;
+		text-align: center;
 		}
 		<?php
 		$css = ob_get_clean();

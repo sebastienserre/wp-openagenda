@@ -1,6 +1,6 @@
 		.main_openagenda {
 		display: grid;
-		grid-template-columns: repeat(, auto);
+		grid-template-columns: repeat(3, auto);
 		grid-gap: 10px 20px;
 		}
 		.openagenda_when {
@@ -25,7 +25,6 @@
 		}
 
 		.openagenda_event_image {
-		display: flex;
-		justify-content: center;
+		text-align: center;
 		}
 		
