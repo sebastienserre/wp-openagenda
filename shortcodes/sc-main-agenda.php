@@ -1,13 +1,10 @@
 <?php
 
-use Openagenda\MainAgendaBlock\MainAgendaBlock;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
 add_shortcode( 'main-openagenda', 'openwp_main_sc' );
-add_action( 'after_setup_theme', array( 'MainAgendaBlock', 'register_css' ) );
 
 /**
  * Add Shortcode Main Agenda
@@ -38,8 +35,9 @@ function openwp_main_sc( $atts ) {
 	if ( function_exists( 'openwp_main_agenda_render_html' ) ) {
 		openwp_main_agenda_render_html( $events, $atts );
 	}
-	if ( true === apply_filters( 'openagenda_deactivate_css_generation', true ) ) {
-		MainAgendaBlock::generate_css( $atts['nb_events_per_line'], $atts );
-		wp_enqueue_style( 'openagenda_main_block' );
+	if ( false === apply_filters( 'openagenda_deactivate_css_generation', false ) ) {
+
+		$file = create_css_files( 'main_agenda_sc', get_the_ID(), $atts );
+		wp_enqueue_style( 'main_agenda_sc-' . get_the_ID() );
 	}
 }
