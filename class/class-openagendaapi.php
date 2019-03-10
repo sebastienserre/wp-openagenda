@@ -1,4 +1,10 @@
 <?php
+namespace OpenAgendaAPI;
+
+use function add_action;
+use function esc_url;
+use function var_dump;
+
 /**
  * Set of methods to retrieve data from OpenAgenda
  *
@@ -25,6 +31,7 @@ class OpenAgendaApi {
 	 */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
+		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 	}
 
 	/**
@@ -130,7 +137,7 @@ class OpenAgendaApi {
 			$slug = $instance['openwp_url'];
 		}
 
-		if ( null === $lang ){
+		if ( null === $lang ) {
 			$lang = 'fr';
 		}
 		?>
@@ -157,15 +164,15 @@ class OpenAgendaApi {
 							<h3 class="openwp-event-title"><?php echo esc_attr( $events['title'][ $lang ] ); ?></h3>
 						<?php } else {
 							?>
-					<h3 class="openwp-event-title"><?php echo esc_attr( $events['title']['en'] ); ?></h3>
-					<?php
+							<h3 class="openwp-event-title"><?php echo esc_attr( $events['title']['en'] ); ?></h3>
+							<?php
 
 						} ?>
-						<?php if ( 'yes' === $instance['event-description'] && !empty( $events['description'][ $lang ] ) ) { ?>
+						<?php if ( 'yes' === $instance['event-description'] && ! empty( $events['description'][ $lang ] ) ) { ?>
 						<p class="openwp-event-description"><?php echo $parsedown->text( esc_textarea( $events['description'][ $lang ] ) ); ?></p>
 					</a>
 					<?php } else {
-							?>
+						?>
 						<p class="openwp-event-description"><?php echo $parsedown->text( esc_textarea( $events['description']['en'] ) ); ?></p>
 						<?php
 					} ?>
@@ -278,6 +285,25 @@ class OpenAgendaApi {
 		}
 
 		return $slugs;
+	}
+
+	public function check_api() {
+		$key   = $this->thfo_openwp_get_api_key();
+		$check = $this->openwp_get_uid( 'https://openagenda.com/iledefrance' );
+		//$check = wp_remote_get( 'https://api.openagenda.com/v1/events?key=' . $key . '&lang=fr' );
+		if ( null === $check ){
+			?>
+			<div class="notice notice-error openagenda-notice">
+				<p><?php _e( 'Woot! Your API Key seems to be non valid', 'wp-openagenda'); ?></p>
+				<p><?php printf( __( '<a href="%s" target="_blank">Find help</a>', 'wp-openagenda'), esc_url('https://thivinfo.com/docs/openagenda-pour-wordpress/')); ?></p>
+			</div>
+			<?php
+		} else {
+			?>
+			<div class="notice notice-success openagenda-notice"><?php _e( 'OpenAgenda API Key valid', 'wp-openagenda'); ?></div>
+		<?php
+			}
+
 	}
 
 }

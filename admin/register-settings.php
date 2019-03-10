@@ -97,6 +97,7 @@ function thfo_openwp_api() {
 	<?php // translators: Add the OpenAGenda URL. ?>
 	<p><?php printf( wp_kses( __( 'Create an account on <a href="%s" target="_blank">OpenAgenda</a>, and go to your setting page to get your API key.', 'wp-openagenda' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $url ) ); ?></p>
 	<?php
+	do_action( 'openagenda_check_api' );
 }
 
 function thfo_openwp_help() {
