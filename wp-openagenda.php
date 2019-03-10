@@ -157,7 +157,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		public function thfo_openwp_load_files() {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/admin/register-settings.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagendaapi.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-shortcode.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/shortcodes/class-openagenda-shortcode.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/erusev/parsedown/Parsedown.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-wp-basic-widget.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';

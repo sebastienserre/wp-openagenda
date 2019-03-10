@@ -92,16 +92,16 @@ class MainAgendaBlock {
 			openwp_main_agenda_render_html( $events, $block );
 		}
 		if ( true === apply_filters( 'openagenda/deactivate/css/generation', true ) ) {
-			$this->generate_css( $block['nb_events_per_line'], $block );
+			self::generate_css( $block['nb_events_per_line'], $block );
 			wp_enqueue_style( 'openagenda_main_block' );
 		}
 	}
 
-	function register_css() {
+	public static function register_css() {
 		wp_register_style( 'openagenda_main_block', THFO_OPENWP_PLUGIN_URL . 'assets/css/generated.css' );
 	}
 
-	function generate_css( $columns, $block ) {
+	public static function generate_css( $columns, $block ) {
 		$path                              = THFO_OPENWP_PLUGIN_PATH . '/assets/css/generated.css';
 		$file                              = fopen( $path, 'w+' );
 		$openagenda_description_background = $block['openagenda_description_background'];
