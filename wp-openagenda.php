@@ -40,6 +40,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 					'days'               => 30,
 					'is_require_payment' => false,
 				),
+				'has_affiliation'     => 'customers',
 				'menu'           => array(
 					'slug'   => 'openagenda-settings',
 					'parent' => array(
