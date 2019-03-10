@@ -37,7 +37,7 @@ function openwp_main_sc( $atts ) {
 	}
 	if ( false === apply_filters( 'openagenda_deactivate_css_generation', false ) ) {
 
-		$file = create_css_files( 'main_agenda_sc', get_the_ID(), $atts );
+		create_css_files( 'main_agenda_sc', get_the_ID(), $atts );
 		wp_enqueue_style( 'main_agenda_sc-' . get_the_ID() );
 	}
 }
