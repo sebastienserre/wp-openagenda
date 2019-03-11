@@ -28,7 +28,7 @@ function openwp_main_agenda_render_html( $events, $block ) {
 					$date = sprintf( __( 'On: %s', 'wp-openagenda' ), $firstDate );
 				}
 				?>
-				<div class="openagenda_event">
+				<div class="openagenda_event <?php if ( openagenda_fs()->is_premium() && true === $block['openagenda_masonry'] ){ echo 'openagenda_masonry'; }?>">
 					<div class="openagenda_when">
 						<p><?php echo $date; ?></p>
 					</div>
