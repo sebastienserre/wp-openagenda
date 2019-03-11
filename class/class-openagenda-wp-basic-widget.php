@@ -40,7 +40,7 @@ class Openagenda_WP_Basic_Widget extends WP_Widget {
 
 		echo $args['after_title'];
 
-		$openwp = new OpenAgendaApi();
+		$openwp = new OpenAgendaApi\OpenAgendaApi();
 
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $instance['slug'], $instance['nb'] );
 

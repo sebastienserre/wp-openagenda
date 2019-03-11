@@ -55,7 +55,7 @@ class BasicBlock {
 	}
 
 	public function openwp_basic_render( $block ) {
-		$openwp =new OpenAgendaApi();
+		$openwp =new OpenAgendaApi\OpenAgendaApi();
 		if ( empty( $block['openwp_url'] ) ){
 			return;
 		}

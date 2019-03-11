@@ -42,7 +42,7 @@ class OpenAgenda_Shortcode {
 			'event-title'       => 'yes',
 			'event-description' => 'yes',
 		), $atts, 'openwp_basic' );
-		$openwp = new OpenAgendaApi();
+		$openwp = new OpenAgendaApi\OpenAgendaApi();
 
 
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $atts['url'], $atts['nb'] );

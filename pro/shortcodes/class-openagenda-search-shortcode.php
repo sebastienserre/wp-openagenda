@@ -27,7 +27,7 @@ class Openagenda_search_shortcode {
 	public static function openagenda_search( $atts ) {
 		wp_enqueue_script( 'dateOA', '', '', '', true );
 		$criterias    = explode( ',', $atts['search_criteria'] );
-		$openwp       = new OpenAgendaApi();
+		$openwp       = new OpenAgendaApi\OpenAgendaApi();
 		$original_uid = $openwp->openwp_get_uid( $atts['agenda_url'] );
 		if ( isset( $_GET['venue'] ) && $_GET['venue'] != 'All' ) {
 			$uid = $_GET['venue'];
@@ -111,7 +111,7 @@ jQuery("input.dateTo").change(function(){
 
 	public function openagenda_venue_html( $uid, $embed, $atts ) {
 
-		$openwp = new OpenAgendaApi();
+		$openwp = new OpenAgendaApi\OpenAgendaApi();
 		$key    = $openwp->thfo_openwp_get_api_key();
 		$lieu   = $openwp->openwp_get_oa_slug( $uid, $key );
 

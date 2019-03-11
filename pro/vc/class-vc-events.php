@@ -394,7 +394,7 @@ class Vc_Events {
 		$atts['openagenda_tag'] = $this->clean( $atts['openagenda_tag'] );
 
 
-		$openwp = new OpenAgendaApi();
+		$openwp = new OpenAgendaApi\OpenAgendaApi();
 		$openwp_data = $openwp->thfo_openwp_retrieve_data( $atts['agenda_url'], $atts['nb_event'] );
 
 		ob_start();

@@ -49,7 +49,7 @@ class Openagenda_Main_Widget extends WP_Widget {
 
 		echo $args['after_title'];
 
-		$openwp = new OpenAgendaApi();
+		$openwp = new OpenAgendaApi\OpenAgendaApi();
 
 		$uid = $openwp->openwp_get_uid($instance['url']);
 		$embed = $openwp->openwp_get_embed($uid, $key);

@@ -1,4 +1,7 @@
 <?php
+
+use OpenAgendaAPI\OpenAgendaApi;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
@@ -45,6 +48,9 @@ class OpenagendaSliderShortcode {
 
 	public function openwp_slider_html( $atts, $display_title = true ) {
 		$openwp    = new OpenAgendaApi();
+		if ( empty( $atts['number'] ) ){
+			$atts['number'] = '10';
+		}
 		$datas     = $openwp->thfo_openwp_retrieve_data( $atts['agenda_url'], $atts['number'] );
 		$car_exist = strpos( $atts['title'], '%' );
 

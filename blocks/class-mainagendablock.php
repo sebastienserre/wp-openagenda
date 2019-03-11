@@ -83,7 +83,7 @@ class MainAgendaBlock {
 	}
 
 	public function render( $block ) {
-		$openagenda = new OpenAgendaApi();
+		$openagenda = new OpenAgendaApi\OpenAgendaApi();
 		$events     = $openagenda->thfo_openwp_retrieve_data( $block['openwp_url'], $block['nb_event'] );
 		if ( is_array( $events ) ) {
 			$events = $events['events'];

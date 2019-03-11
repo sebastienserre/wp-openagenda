@@ -103,13 +103,13 @@ function openwp_vc_openagenda_main( $atts ) {
 	);
 	$key  = get_option( 'openagenda_api' );
 	if ( ! empty( $key ) ) {
-		$openwp = new OpenAgendaApi();
+		$openwp = new OpenAgendaApi\OpenAgendaApi();
 		$uid    = $openwp->openwp_get_uid( $atts['agenda_url'] );
 	}
 	if ( $uid ) {
 
 		$embed = $openwp->openwp_get_embed( $uid, $key );
-		$main  = new OpenAgendaApi();
+		$main  = new OpenAgendaApi\OpenAgendaApi();
 		echo $main->openwp_main_widget_html__premium_only( $embed, $uid, $atts );
 	} else {
 		return '<p>' . $warning . '</p>';

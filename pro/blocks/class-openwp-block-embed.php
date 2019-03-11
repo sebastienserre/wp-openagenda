@@ -39,7 +39,7 @@ class OpenwpBlockEmbed {
 	}
 
 	public function openwp_embed_render( $block ) {
-		$openwp = new OpenAgendaApi();
+		$openwp = new OpenAgendaApi\OpenAgendaApi();
 		$uid    = $openwp->openwp_get_uid( $block['openwp_url'] );
 		$key    = $openwp->thfo_openwp_get_api_key();
 		$embed  = $openwp->openwp_get_embed( $uid, $key );

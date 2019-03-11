@@ -27,7 +27,7 @@ function openwp_main_sc( $atts ) {
 		$atts,
 		'main-openagenda'
 	);
-	$openagenda = new OpenAgendaApi();
+	$openagenda = new OpenAgendaApi\OpenAgendaApi();
 	$events     = $openagenda->thfo_openwp_retrieve_data( $atts['openwp_url'], $atts['nb_event'] );
 	if ( is_array( $events ) ) {
 		$events = $events['events'];
