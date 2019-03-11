@@ -81,6 +81,9 @@ On WP 5.0 Use the new Gutenberg Blocks!
 8. Gutenberg Block (Back-Office and Settings)
 
 == Changelog ==
+= 1.5.9 == 11/03/2019
+* BUGFIX - Prevent fatal error on slider
+
 = 1.5.8 == 10/03/2019
 * BUGFIX -- verification of OpenAgenda API KEY
 * FEATURE -- Add Affiliation program. Recommend this plugin and earn money!
