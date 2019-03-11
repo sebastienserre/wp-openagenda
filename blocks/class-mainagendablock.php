@@ -75,6 +75,8 @@ class MainAgendaBlock {
 				          ->set_option_value( 'yes' ),
 				     Field::make( 'checkbox', 'openagenda_show_desc', __( 'Show Description', 'wp_openagenda' ) )
 				          ->set_option_value( 'yes' ),
+				     Field::make( 'checkbox', 'openagenda_masonry', __( 'Display Masonry (Pro Only)', 'wp_openagenda' ) )
+				          ->set_option_value( 'yes' ),
 				     Field::make( 'color', 'openagenda_description_background', __( 'Description Background Color', 'wp-openagenda' ) ),
 				     Field::make( 'color', 'openagenda_description_color', __( 'Description Text Color', 'wp-openagenda' ) ),
 				     Field::make( 'color', 'openagenda_date_background', __( 'Date Background Color', 'wp-openagenda' ) ),

@@ -3,7 +3,7 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://openagenda4wp.com/
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 1.5.9
+ * Version: 1.6.0
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.1
@@ -75,7 +75,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			/**
 			 * Define Constant
 			 */
-			define( 'THFO_OPENWP_VERSION', '1.5.9' );
+			define( 'THFO_OPENWP_VERSION', '1.6.0' );
 			define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -92,12 +92,8 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_register_script__premium_only' ), 999 );
-
-
 			}
-
 		}
-
 
 		/**
 		 * Load Pro Functions.
@@ -139,6 +135,16 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 					'jquery',
 					'jquery-ui-core',
 					'jquery-ui-datepicker',
+				)
+			);
+			wp_register_script( 'IsotopeOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope.pkgd.min.js',
+				array(
+					'jquery'
+				)
+			);
+			wp_register_script( 'IsotopeInit', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope-init.js',
+				array(
+					'IsotopeOA'
 				)
 			);
 		}

@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 5.1
 Requires PHP: 5.6
-Stable tag: 1.5.7.1
+Stable tag: 1.6.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -43,11 +43,6 @@ On WP 5.0 Use the new Gutenberg Blocks!
 = May I display several Agenda?
 * Yes! (one by widget, shortcode, gutenberg Block)
 
-= Is a Roadmap exist?
-* No! No roadmap but Ideas:
-    * Gutenberg Blocks,
-    * yours!
-
 = May I give Idea?
 * Yes please use the [Github](https://github.com/sebastienserre/openagenda-wp/issues) issue
 
@@ -79,8 +74,12 @@ On WP 5.0 Use the new Gutenberg Blocks!
 6. Display OpenAgenda widget in a great WP Widget (Pro Version)
 7. Gutenberg Block (Front-Office and Preview)
 8. Gutenberg Block (Back-Office and Settings)
+9. Masonry layout (Pro Version)
 
 == Changelog ==
+= 1.6.0 == 11/03/2019
+* FEATURE -- Add Masonry Layout on Pro Version.
+
 = 1.5.9 == 11/03/2019
 * BUGFIX - Prevent fatal error on slider
 
