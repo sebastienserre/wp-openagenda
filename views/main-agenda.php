@@ -27,6 +27,11 @@ function openwp_main_agenda_render_html( $events, $block ) {
 				} else {
 					$date = sprintf( __( 'On: %s', 'wp-openagenda' ), $firstDate );
 				}
+				if ( openagenda_fs()->is_premium() && true === $block['openagenda_masonry'] ){
+					wp_enqueue_script( 'IsotopeOA');
+					wp_enqueue_script( 'IsotopeInit');
+				}
+
 				?>
 				<div class="openagenda_event <?php if ( openagenda_fs()->is_premium() && true === $block['openagenda_masonry'] ){ echo 'openagenda_masonry'; }?>">
 					<div class="openagenda_when">
@@ -63,3 +68,4 @@ function openwp_main_agenda_render_html( $events, $block ) {
 	</div><!--main_openagenda -->
 	<?php
 }
+

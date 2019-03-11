@@ -92,12 +92,8 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_register_script__premium_only' ), 999 );
-
-
 			}
-
 		}
-
 
 		/**
 		 * Load Pro Functions.
@@ -139,6 +135,16 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 					'jquery',
 					'jquery-ui-core',
 					'jquery-ui-datepicker',
+				)
+			);
+			wp_register_script( 'IsotopeOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope.pkgd.min.js',
+				array(
+					'jquery'
+				)
+			);
+			wp_register_script( 'IsotopeInit', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope-init.js',
+				array(
+					'IsotopeOA'
 				)
 			);
 		}

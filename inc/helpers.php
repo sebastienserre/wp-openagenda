@@ -22,6 +22,8 @@ function openwp_generate_css( $block ) {
 	$openagenda_description_color      = $block['openagenda_description_color'];
 	$openagenda_date_background        = $block['openagenda_date_background'];
 	$openagenda_date_color             = $block['openagenda_date_color'];
+	$nb_columns                        = $block['nb_events_per_line'];
+	$width                             = 100 / $nb_columns;
 
 	/**
 	 * Filters colors // return the hex color code
@@ -32,12 +34,24 @@ function openwp_generate_css( $block ) {
 	$openagenda_date_color             = apply_filters( 'openagenda/mainBlock/date/txt', $openagenda_date_color );
 
 	ob_start();
-	?>
-	.main_openagenda {
-	display: grid;
-	grid-template-columns: repeat(<?php echo $block['nb_events_per_line'] ?>, auto);
-	grid-gap: 10px 20px;
+
+	if ( openagenda_fs()->is_premium() && true !== $block['openagenda_masonry'] ) {
+		?>
+		.main_openagenda {
+		display: grid;
+		grid-template-columns: repeat(<?php echo $block['nb_events_per_line'] ?>, auto);
+		grid-gap: 10px 20px;
+		}
+		<?php
+	} else { ?>
+		.openagenda_event.openagenda_masonry {
+		float: left;
+		width: calc( <?php echo $width ?>% - 10px );
+		margin: 0 5px 10px 5px;
+		}
+		<?php
 	}
+	?>
 	.openagenda_when {
 	background: <?php echo $openagenda_date_background; ?>;
 	color: <?php echo $openagenda_date_color; ?>;
