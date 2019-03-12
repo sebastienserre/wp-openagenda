@@ -29,19 +29,19 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			require_once dirname( __FILE__ ) . '/freemius/start.php';
 
 			$openagenda_fs = fs_dynamic_init( array(
-				'id'             => '2279',
-				'slug'           => 'wp-openagenda',
-				'type'           => 'plugin',
-				'public_key'     => 'pk_ab0021b682585d81e582568095957',
-				'is_premium'     => true,
-				'has_addons'     => false,
-				'has_paid_plans' => true,
-				'trial'          => array(
+				'id'              => '2279',
+				'slug'            => 'wp-openagenda',
+				'type'            => 'plugin',
+				'public_key'      => 'pk_ab0021b682585d81e582568095957',
+				'is_premium'      => true,
+				'has_addons'      => false,
+				'has_paid_plans'  => true,
+				'trial'           => array(
 					'days'               => 30,
 					'is_require_payment' => false,
 				),
-				'has_affiliation'     => 'customers',
-				'menu'           => array(
+				'has_affiliation' => 'customers',
+				'menu'            => array(
 					'slug'   => 'openagenda-settings',
 					'parent' => array(
 						'slug' => 'options-general.php',
@@ -49,7 +49,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				),
 				// Set the SDK to work in a sandbox mode (for development & testing).
 				// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
-				'secret_key'     => 'sk_^FhYDtZ;KihDaYCX}LTf80_o}-Zf!',
+				'secret_key'      => 'sk_^FhYDtZ;KihDaYCX}LTf80_o}-Zf!',
 			) );
 		}
 
@@ -92,13 +92,21 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_register_script__premium_only' ), 999 );
+				register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
+			}
+		}
+
+		public function openwp_activation__premium_only() {
+			if ( ! wp_next_scheduled( 'openagenda_hourly_event' ) ) {
+				wp_schedule_event( time(), 'hourly', 'openagenda_hourly_event' );
 			}
 		}
 
 		/**
 		 * Load Pro Functions.
 		 */
-		public function openwp_load_pro_files__premium_only() {
+		public
+		function openwp_load_pro_files__premium_only() {
 
 			/**
 			 * If Visual Composer activated, load VC elements.
@@ -131,11 +139,13 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-		public function openwp_load_textdomain__premium_only() {
+		public
+		function openwp_load_textdomain__premium_only() {
 			load_plugin_textdomain( 'wp-openagenda', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
 		}
 
-		public function openwp_register_script__premium_only() {
+		public
+		function openwp_register_script__premium_only() {
 			wp_register_script( 'dateOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/datepickerOA.js',
 				array(
 					'jquery',
@@ -145,12 +155,12 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			);
 			wp_register_script( 'IsotopeOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope.pkgd.min.js',
 				array(
-					'jquery'
+					'jquery',
 				)
 			);
 			wp_register_script( 'IsotopeInit', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope-init.js',
 				array(
-					'IsotopeOA'
+					'IsotopeOA',
 				)
 			);
 		}
@@ -158,7 +168,8 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		/**
 		 * Load Carbon-field v3
 		 */
-		public function openwp_load() {
+		public
+		function openwp_load() {
 			require_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/autoload.php';
 			\Carbon_Fields\Carbon_Fields::boot();
 		}
@@ -167,7 +178,8 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		/**
 		 * Include all files needed to the plugin work
 		 */
-		public function thfo_openwp_load_files() {
+		public
+		function thfo_openwp_load_files() {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/inc/helpers.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/admin/register-settings.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagendaapi.php';
@@ -184,21 +196,24 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		/**
 		 * Load light style CSS
 		 */
-		public function thfo_openwp_load_style() {
+		public
+		function thfo_openwp_load_style() {
 			wp_enqueue_style( 'openwp', THFO_OPENWP_PLUGIN_URL . 'assets/css/openwp.css' );
 		}
 
 		/**
 		 * Load light style CSS
 		 */
-		public function openwp_pro_load_style__premium_only() {
-			wp_enqueue_style('jquery-ui-dp', THFO_OPENWP_PLUGIN_URL .'pro/assets/css/jquery-ui.min.css');
+		public
+		function openwp_pro_load_style__premium_only() {
+			wp_enqueue_style( 'jquery-ui-dp', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/jquery-ui.min.css' );
 		}
 
 		/**
 		 * Load Admin Styles.
 		 */
-		public function openwp_load_admin_style() {
+		public
+		function openwp_load_admin_style() {
 			wp_enqueue_style( 'openawp-admin-style', THFO_OPENWP_PLUGIN_URL . 'admin/assets/openwp-admin-styles.css' );
 		}
 	}
