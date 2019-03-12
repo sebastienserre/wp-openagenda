@@ -115,6 +115,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/venues.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/keywords.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/custom-fields.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/agenda.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/widget/class-openagenda-main-widget.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/widget/class-openagenda-slider-widget.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcodes/class-openagenda-embed-shortcode.php';
