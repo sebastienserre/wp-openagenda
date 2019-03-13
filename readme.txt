@@ -5,7 +5,7 @@ Donate link: https://www.paypal.me/sebastienserre
 Requires at least: 4.6
 Tested up to: 5.1
 Requires PHP: 5.6
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -77,6 +77,9 @@ On WP 5.0 Use the new Gutenberg Blocks!
 9. Masonry layout (Pro Version)
 
 == Changelog ==
+= 1.6.1 == 13/03/2019
+* BUGFIX -- Fix error on parsedown call
+
 = 1.6.0 == 11/03/2019
 * FEATURE -- Add Masonry Layout on Pro Version.
 
