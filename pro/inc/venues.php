@@ -32,10 +32,10 @@ if ( ! function_exists( 'openagenda_venue' ) ) {
 		);
 		$args = array(
 			'labels'                     => $labels,
-			'hierarchical'               => false,
+			'hierarchical'               => true,
 			'public'                     => false,
 			'show_ui'                    => true,
-			'show_admin_column'          => true,
+			'show_admin_column'          => false,
 			'show_in_nav_menus'          => false,
 			'show_tagcloud'              => false,
 			'rewrite'                    => false,
@@ -47,3 +47,10 @@ if ( ! function_exists( 'openagenda_venue' ) ) {
 	add_action( 'init', 'openagenda_venue', 0 );
 
 }
+
+add_action( 'pre_insert_term', function ( $term, $taxonomy )
+{
+	return ( 'openagenda_venue' === $taxonomy )
+		? new WP_Error( 'term_addition_blocked', __( 'You cannot add terms to this taxonomy', 'wp-openagenda' ) )
+		: $term;
+}, 0, 2 );

@@ -92,6 +92,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_register_script__premium_only' ), 999 );
+				add_action( 'admin_print_styles', array( $this, 'openwp_admin_style__premium_only') );
 				register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
 			}
 		}
@@ -121,6 +122,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/admin/settings.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/cpt.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/venues.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/categories.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/keywords.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/custom-fields.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/agenda.php';
@@ -153,6 +155,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 					'jquery-ui-datepicker',
 				)
 			);
+			wp_enqueue_style( 'openwp-pro', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/openwp-pro.css' );
 			wp_register_script( 'IsotopeOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope.pkgd.min.js',
 				array(
 					'jquery',
@@ -163,6 +166,10 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 					'IsotopeOA',
 				)
 			);
+		}
+
+		public function openwp_admin_style__premium_only(){
+			wp_enqueue_style( 'openwp-pro', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/openwp-pro.css' );
 		}
 
 		/**
