@@ -1,8 +1,17 @@
 <?php
+
 namespace OpenAgendaAPI;
 
 use function add_action;
+use function carbon_get_term_meta;
 use function esc_url;
+use function get_term_meta;
+use function is_wp_error;
+use function update_term_meta;
+use function var_dump;
+use WP_Error;
+use function wp_remote_get;
+use function wp_update_term;
 
 /**
  * Set of methods to retrieve data from OpenAgenda
@@ -30,6 +39,8 @@ class OpenAgendaApi {
 	 */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
+		add_action( 'openagenda_hourly_event', array( $this, 'register_venue' ) );
+		//add_action( 'admin_init', array( $this, 'register_venue' ) );
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 	}
 
@@ -290,20 +301,116 @@ class OpenAgendaApi {
 		$key   = $this->thfo_openwp_get_api_key();
 		$check = $this->openwp_get_uid( 'https://openagenda.com/iledefrance' );
 		//$check = wp_remote_get( 'https://api.openagenda.com/v1/events?key=' . $key . '&lang=fr' );
-		if ( null === $check ){
+		if ( null === $check ) {
 			?>
 			<div class="notice notice-error openagenda-notice">
-				<p><?php _e( 'Woot! Your API Key seems to be non valid', 'wp-openagenda'); ?></p>
-				<p><?php printf( __( '<a href="%s" target="_blank">Find help</a>', 'wp-openagenda'), esc_url('https://thivinfo.com/docs/openagenda-pour-wordpress/')); ?></p>
+				<p><?php _e( 'Woot! Your API Key seems to be non valid', 'wp-openagenda' ); ?></p>
+				<p><?php printf( __( '<a href="%s" target="_blank">Find help</a>', 'wp-openagenda' ), esc_url( 'https://thivinfo.com/docs/openagenda-pour-wordpress/' ) ); ?></p>
 			</div>
 			<?php
 		} else {
 			?>
-			<div class="notice notice-success openagenda-notice"><?php _e( 'OpenAgenda API Key valid', 'wp-openagenda'); ?></div>
-		<?php
-			}
+			<div class="notice notice-success openagenda-notice"><?php _e( 'OpenAgenda API Key valid', 'wp-openagenda' ); ?></div>
+			<?php
+		}
 
 	}
+
+	public function get_acces_token() {
+		$secret = $this->thfo_openwp_get_api_key();
+		$args   = array(
+			'sslverify' => false,
+			'timeout'   => 15,
+			'body'      => array(
+				'grant_type' => 'authorization_code',
+				'code'       => $secret,
+			),
+		);
+
+		$ch = wp_remote_post( 'https://api.openagenda.com/v1/requestAccessToken', $args );
+		/*		curl_setopt($ch, CURLOPT_POST, true);
+
+				curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+					'grant_type' => 'authorization_code',
+					'code' => $secret,
+				));*/
+		$received_content = curl_exec( $ch );
+		if ( 200 === (int) wp_remote_retrieve_response_code( $ch ) ) {
+			$body         = wp_remote_retrieve_body( $ch );
+			$decoded_body = json_decode( $body, true );
+		}
+
+	}
+
+	/**
+	 *  Register Venue from OpenAgenda
+	 */
+	public function register_venue() {
+		/**
+		 * Get List of Agenda
+		 */
+		$terms = get_terms( array(
+			'taxonomy'   => 'openagenda_agenda',
+			'hide_empty' => false,
+		) );
+		foreach ( $terms as $term ) {
+			$url_oa[ $term->term_id ] = $term->name;
+		}
+
+		/**
+		 * Get UID for each
+		 */
+		foreach ( $url_oa as $url ) {
+			$uid  = $this->openwp_get_uid( $url );
+			$json = wp_remote_get( 'https://openagenda.com/agendas/' . $uid . '/locations.json' );
+			if ( 200 === (int) wp_remote_retrieve_response_code( $json ) ) {
+				$body         = wp_remote_retrieve_body( $json );
+				$decoded_body = json_decode( $body, true );
+				/**
+				 * get all venue to update if exists
+				 */
+
+
+				foreach ( $decoded_body['items'] as $location ) {
+					/*$args = array(
+						'taxonomy'     => 'openagenda_venue',
+						'hide_empty'   => false,
+						'name' => $location['name']
+					);*/
+					$args  = array(
+						'taxonomy'   => 'openagenda_venue',
+						'hide_empty' => false,
+						'meta_key'   => '_oa_location_uid',
+						'meta_value' => (string) $location['uid'],
+					);
+					$venues = get_terms(
+						$args
+					);
+					if ( empty( $venues ) ) {
+						$name = $location['name'];
+						$insert = wp_insert_term( $name, 'openagenda_venue' );
+						update_term_meta( $insert['term_id'], '_oa_location_uid', $location['uid'] );
+					} else {
+
+
+						foreach ( $venues as $venue ) {
+							$locationuid = get_term_meta( $venue->term_id, '_oa_location_uid' );
+							$args        = array(
+								'name' => $location['name'],
+							);
+							// si $locationuid existe alors update
+							$locationuid = intval( $locationuid[0] );
+							if ( $location['uid'] === $locationuid ) {
+								wp_update_term( $venue->term_id, 'openagenda_venue', $args );
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}
+
 
 }
 
