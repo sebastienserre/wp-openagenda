@@ -3,7 +3,6 @@ namespace OpenAgendaAPI;
 
 use function add_action;
 use function esc_url;
-use function var_dump;
 
 /**
  * Set of methods to retrieve data from OpenAgenda
@@ -145,7 +144,7 @@ class OpenAgendaApi {
 			<!-- OpenAgenda for WordPress Plugin downloadable for free on https://wordpress.org/plugins/wp-openagenda/-->
 			<?php
 			do_action( 'openwp_before_html' );
-			$parsedown = new Parsedown();
+			$parsedown = new \Parsedown();
 
 			foreach ( $openwp_data['events'] as $events ) {
 				?>
