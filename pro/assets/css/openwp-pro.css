@@ -1,0 +1,14 @@
+/**
+Hide add Venue
+ */
+.taxonomy-openagenda_venue #col-left{
+    display: none;
+}
+
+.taxonomy-openagenda_venue #col-right{
+    width: 100%;
+}
+
+div#openagenda_venue-adder {
+    display: none;
+}
