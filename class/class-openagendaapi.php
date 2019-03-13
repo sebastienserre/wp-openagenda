@@ -4,8 +4,10 @@ namespace OpenAgendaAPI;
 
 use function add_action;
 use function carbon_get_term_meta;
+use function error_log;
 use function esc_url;
 use function get_term_meta;
+use function implode;
 use function is_wp_error;
 use function update_term_meta;
 use function var_dump;
@@ -372,11 +374,6 @@ class OpenAgendaApi {
 
 
 				foreach ( $decoded_body['items'] as $location ) {
-					/*$args = array(
-						'taxonomy'     => 'openagenda_venue',
-						'hide_empty'   => false,
-						'name' => $location['name']
-					);*/
 					$args  = array(
 						'taxonomy'   => 'openagenda_venue',
 						'hide_empty' => false,
@@ -386,17 +383,24 @@ class OpenAgendaApi {
 					$venues = get_terms(
 						$args
 					);
+					$name = implode( ' - ', array( $location['name'], $location['city'], $location['countryCode'], $location['uid'] ) );
 					if ( empty( $venues ) ) {
-						$name = $location['name'];
-						$insert = wp_insert_term( $name, 'openagenda_venue' );
-						update_term_meta( $insert['term_id'], '_oa_location_uid', $location['uid'] );
-					} else {
 
+						$insert = wp_insert_term( $name, 'openagenda_venue' );
+						if ( is_wp_error( $insert ) ){
+							$error = 'Fatal Error -- Import OpenAgenda: ' . $insert->get_error_message();
+							error_log( $error );
+						} else {
+							update_term_meta( $insert['term_id'], '_oa_location_uid', $location['uid'] );
+						}
+
+
+					} else {
 
 						foreach ( $venues as $venue ) {
 							$locationuid = get_term_meta( $venue->term_id, '_oa_location_uid' );
 							$args        = array(
-								'name' => $location['name'],
+								'name' => $name,
 							);
 							// si $locationuid existe alors update
 							$locationuid = intval( $locationuid[0] );
