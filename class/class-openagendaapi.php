@@ -5,6 +5,7 @@ namespace OpenAgendaAPI;
 use function add_action;
 use function add_query_arg;
 use function array_push;
+use function cap_format_ean;
 use function esc_url;
 use function get_term_meta;
 use function implode;
@@ -47,7 +48,7 @@ class OpenAgendaApi {
 		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
 		add_action( 'openagenda_hourly_event', array( $this, 'register_venue' ) );
 		//add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events' ) );
-		//add_action( 'admin_init', array( $this, 'import_oa_events' ) );
+		add_action( 'admin_init', array( $this, 'import_oa_events' ) );
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 	}
 
@@ -529,9 +530,17 @@ class OpenAgendaApi {
 					array_push( $venues_id, $venue->term_id);
 				}
 				if (! empty( $venues_id ) ){
-					$location = wp_set_post_terms( $insert, $venues_id, 'openagenda_venue');
+					wp_set_post_terms( $insert, $venues_id, 'openagenda_venue');
 				}
 
+				// insert origin Agenda
+				$agendas = get_term_by('name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
+
+				if ( ! empty( $agendas ) ){
+					$agenda_tax = wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
+				}
+
+				// insert post thumbnail
 			}
 		}
 	}
