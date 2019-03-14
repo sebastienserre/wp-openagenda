@@ -5,17 +5,21 @@ namespace OpenAgendaAPI;
 use function add_action;
 use function add_query_arg;
 use function array_push;
-use function cap_format_ean;
 use function esc_url;
 use function get_term_meta;
 use function implode;
 use function is_null;
 use function is_wp_error;
+use function media_sideload_image;
+use function pi;
+use function pippin_get_image_id;
+use function set_post_thumbnail;
 use function set_transient;
 use function strtotime;
 use function update_term_meta;
 use function var_dump;
 use WP_Error;
+use function wp_handle_sideload;
 use function wp_remote_get;
 use function wp_set_post_terms;
 use function wp_update_term;
@@ -47,8 +51,8 @@ class OpenAgendaApi {
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
 		add_action( 'openagenda_hourly_event', array( $this, 'register_venue' ) );
-		//add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events' ) );
-		add_action( 'admin_init', array( $this, 'import_oa_events' ) );
+		add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events' ) );
+		//add_action( 'admin_init', array( $this, 'import_oa_events' ) );
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 	}
 
@@ -365,7 +369,7 @@ class OpenAgendaApi {
 		return $url_oa;
 	}
 
-	public function get_venue( $uid ){
+	public function get_venue( $uid ) {
 		$args   = array(
 			'taxonomy'   => 'openagenda_venue',
 			'hide_empty' => false,
@@ -375,8 +379,10 @@ class OpenAgendaApi {
 		$venues = get_terms(
 			$args
 		);
+
 		return $venues;
 	}
+
 	/**
 	 *  Register Venue from OpenAgenda
 	 */
@@ -401,7 +407,7 @@ class OpenAgendaApi {
 				foreach ( $decoded_body['items'] as $location ) {
 					$venues = $this->get_venue( $location['uid'] );
 
-					$name   = implode( ' - ', array(
+					$name = implode( ' - ', array(
 						$location['name'],
 						$location['city'],
 						$location['countryCode'],
@@ -524,23 +530,85 @@ class OpenAgendaApi {
 				$insert = wp_insert_post( $args );
 
 				// Insert Post Term venue
-				$venues = $this->get_venue( $events['location']['uid'] );
+				$venues    = $this->get_venue( $events['location']['uid'] );
 				$venues_id = array();
-				foreach ( $venues as $venue ){
-					array_push( $venues_id, $venue->term_id);
+				foreach ( $venues as $venue ) {
+					array_push( $venues_id, $venue->term_id );
 				}
-				if (! empty( $venues_id ) ){
-					wp_set_post_terms( $insert, $venues_id, 'openagenda_venue');
+				if ( ! empty( $venues_id ) ) {
+					wp_set_post_terms( $insert, $venues_id, 'openagenda_venue' );
 				}
 
 				// insert origin Agenda
-				$agendas = get_term_by('name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
+				$agendas = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
 
-				if ( ! empty( $agendas ) ){
+				if ( ! empty( $agendas ) ) {
 					$agenda_tax = wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
 				}
 
 				// insert post thumbnail
+				// Gives us access to the download_url() and wp_handle_sideload() functions
+				require_once( ABSPATH . 'wp-admin/includes/file.php' );
+
+				// Download file to temp dir
+				$timeout_seconds = 5;
+				$url             = $events['originalImage'];
+
+				// Download file to temp dir.
+				$temp_file = download_url( $url, $timeout_seconds );
+				if ( ! is_wp_error( $temp_file ) ) {
+
+					// Array based on $_FILE as seen in PHP file uploads.
+					$file = array(
+						'name'     => basename( $url ), // ex: wp-header-logo.png
+						'type'     => 'image/png',
+						'tmp_name' => $temp_file,
+						'error'    => 0,
+						'size'     => filesize( $temp_file ),
+					);
+
+					$overrides = array(
+						/*
+						 * Tells WordPress to not look for the POST form fields that would
+						 * normally be present, default is true, we downloaded the file from
+						 * a remote server, so there will be no form fields.
+						 */
+						'test_form'   => false,
+
+						// Setting this to false lets WordPress allow empty files, not recommended.
+						'test_size'   => true,
+
+						// A properly uploaded file will pass this test. There should be no reason to override this one.
+						'test_upload' => true,
+					);
+
+					// Move the temporary file into the uploads directory.
+					$results       = wp_handle_sideload( $file, $overrides );
+					$wp_upload_dir = wp_upload_dir();
+
+					if ( empty( $results['error'] ) ) {
+
+						$filename      = $results['file']; // Full path to the file.
+						$filetype      = wp_check_filetype( $filename, null );
+						$attachment    = array(
+							'guid'           => $wp_upload_dir['url'] . '/' . basename( $filename ),
+							'post_mime_type' => $filetype['type'],
+							'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+							'post_content'   => '',
+							'post_status'    => 'inherit',
+						);
+						$attachment_id = wp_insert_attachment( $attachment, $filename, $insert );
+						update_post_meta( $attachment_id, '_wp_attachment_image_alt', $events['title']['fr'] );
+
+						// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+						require_once ABSPATH . 'wp-admin/includes/image.php';
+
+						// Generate the metadata for the attachment, and update the database record.
+						$attach_data = wp_generate_attachment_metadata( $attachment_id, $filename );
+						wp_update_attachment_metadata( $attachment_id, $attach_data );
+						set_post_thumbnail( $insert, $attachment_id );
+					}
+				}
 			}
 		}
 	}
