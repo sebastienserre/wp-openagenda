@@ -15,6 +15,11 @@ function oa_create_custom_fields() {
 			         Field::make( 'text', 'oa_conditions', __( 'Conditions of participation, rates', 'wp-openagenda' ) ),
 		         )
 	         )
+		->add_fields(
+			array(
+				Field::make( 'text', 'oa_event_uid', __( 'Event UID', 'wp-openagenda' ) ),
+			)
+		)
 	         ->add_fields(
 		         array(
 			         Field::make( 'text', 'oa_tools', __( 'Registration tools', 'wp-openagenda' ) ),
@@ -23,7 +28,7 @@ function oa_create_custom_fields() {
 	         ->add_fields(
 		         array(
 			         Field::make( 'date', 'oa_start_date', __( 'start date', 'wp-openagenda' ) )
-			              ->set_storage_format( 'c' )
+			              ->set_storage_format( 'U' )
 			              ->set_attribute( 'placeholder', __( 'End date for this event', 'wp-openagenda' ) )
 			              ->set_picker_options( [ 'allowInput' => false ] )
 			              ->set_width( 50 ),
@@ -32,7 +37,7 @@ function oa_create_custom_fields() {
 	         ->add_fields(
 		         array(
 			         Field::make( 'date', 'oa_end_date', __( 'End date', 'wp-openagenda' ) )
-			              ->set_storage_format( 'c' )
+			              ->set_storage_format( 'U' )
 			              ->set_attribute( 'placeholder', __( 'End date for this event', 'wp-openagenda' ) )
 			              ->set_picker_options( [ 'allowInput' => false ] )
 			              ->set_width( 50 ),

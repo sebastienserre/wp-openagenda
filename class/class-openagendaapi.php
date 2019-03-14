@@ -4,18 +4,19 @@ namespace OpenAgendaAPI;
 
 use function add_action;
 use function add_query_arg;
-use function array_merge;
-use function carbon_get_term_meta;
-use function error_log;
+use function array_push;
 use function esc_url;
 use function get_term_meta;
 use function implode;
+use function is_null;
 use function is_wp_error;
 use function set_transient;
+use function strtotime;
 use function update_term_meta;
 use function var_dump;
 use WP_Error;
 use function wp_remote_get;
+use function wp_set_post_terms;
 use function wp_update_term;
 
 /**
@@ -45,7 +46,8 @@ class OpenAgendaApi {
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
 		add_action( 'openagenda_hourly_event', array( $this, 'register_venue' ) );
-		add_action( 'admin_init', array( $this, 'import_oa_events' ) );
+		//add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events' ) );
+		//add_action( 'admin_init', array( $this, 'import_oa_events' ) );
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 	}
 
@@ -101,7 +103,7 @@ class OpenAgendaApi {
 		$today = date( 'd/m/Y' );
 		switch ( $when ) {
 			case 'current':
-				$when  = $today . '-31/12/2050';
+				$when = $today . '-31/12/2050';
 				break;
 			case 'all':
 				$when = '01/01/1970-31/12/2050';
@@ -362,6 +364,18 @@ class OpenAgendaApi {
 		return $url_oa;
 	}
 
+	public function get_venue( $uid ){
+		$args   = array(
+			'taxonomy'   => 'openagenda_venue',
+			'hide_empty' => false,
+			'meta_key'   => '_oa_location_uid',
+			'meta_value' => (string) $uid,
+		);
+		$venues = get_terms(
+			$args
+		);
+		return $venues;
+	}
 	/**
 	 *  Register Venue from OpenAgenda
 	 */
@@ -384,15 +398,8 @@ class OpenAgendaApi {
 
 
 				foreach ( $decoded_body['items'] as $location ) {
-					$args   = array(
-						'taxonomy'   => 'openagenda_venue',
-						'hide_empty' => false,
-						'meta_key'   => '_oa_location_uid',
-						'meta_value' => (string) $location['uid'],
-					);
-					$venues = get_terms(
-						$args
-					);
+					$venues = $this->get_venue( $location['uid'] );
+
 					$name   = implode( ' - ', array(
 						$location['name'],
 						$location['city'],
@@ -477,9 +484,56 @@ class OpenAgendaApi {
 		$url_oa = $this->get_agenda_list();
 
 		foreach ( $url_oa as $url ) {
-			$events[ $url ] = $this->thfo_openwp_retrieve_data( $url, 999 );
+			$agendas[ $url ] = $this->thfo_openwp_retrieve_data( $url, 999, 'current' );
 		}
 
+		foreach ( $agendas as $agenda ) {
+			foreach ( $agenda['events'] as $events ) {
+				if ( is_null( $events['longDescription']['fr'] ) ) {
+					$events['longDescription']['fr'] = $events['description']['fr'];
+				}
+
+				// Date Formating
+				$start = array_pop( array_reverse( $events['timings'] ) );
+				$start = $start['start'];
+				$start = strtotime( $start );
+
+				$end = array_pop( $events['timings'] );
+				$end = $end['end'];
+				$end = strtotime( $end );
+
+				$args   = array(
+					'post_content'   => $events['longDescription']['fr'],
+					'post_title'     => $events['title']['fr'],
+					'post_excerpt'   => $events['description']['fr'],
+					'post_status'    => 'publish',
+					'post_type'      => 'openagenda-events',
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+					'meta_input'     => array(
+						'_oa_conditions' => $events['conditions']['fr'],
+						'_oa_event_uid'  => $events['uid'],
+						'_oa_tools'      => $events['registrationUrl'],
+						'_oa_min_age'    => $events['age']['min'],
+						'_oa_max_age'    => $events['age']['max'],
+						'_oa_start_date' => $start,
+						'_oa_end_date'   => $end,
+					),
+				);
+				$insert = wp_insert_post( $args );
+
+				// Insert Post Term venue
+				$venues = $this->get_venue( $events['location']['uid'] );
+				$venues_id = array();
+				foreach ( $venues as $venue ){
+					array_push( $venues_id, $venue->term_id);
+				}
+				if (! empty( $venues_id ) ){
+					$location = wp_set_post_terms( $insert, $venues_id, 'openagenda_venue');
+				}
+
+			}
+		}
 	}
 
 
