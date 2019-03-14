@@ -9,6 +9,7 @@ use function esc_url;
 use function get_term_meta;
 use function implode;
 use function is_wp_error;
+use function set_transient;
 use function update_term_meta;
 use function var_dump;
 use WP_Error;
@@ -42,7 +43,7 @@ class OpenAgendaApi {
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
 		add_action( 'openagenda_hourly_event', array( $this, 'register_venue' ) );
-		//add_action( 'admin_init', array( $this, 'register_venue' ) );
+		add_action( 'admin_init', array( $this, 'get_acces_token' ) );
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 	}
 
@@ -318,32 +319,6 @@ class OpenAgendaApi {
 
 	}
 
-	public function get_acces_token() {
-		$secret = $this->thfo_openwp_get_api_key();
-		$args   = array(
-			'sslverify' => false,
-			'timeout'   => 15,
-			'body'      => array(
-				'grant_type' => 'authorization_code',
-				'code'       => $secret,
-			),
-		);
-
-		$ch = wp_remote_post( 'https://api.openagenda.com/v1/requestAccessToken', $args );
-		/*		curl_setopt($ch, CURLOPT_POST, true);
-
-				curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-					'grant_type' => 'authorization_code',
-					'code' => $secret,
-				));*/
-		$received_content = curl_exec( $ch );
-		if ( 200 === (int) wp_remote_retrieve_response_code( $ch ) ) {
-			$body         = wp_remote_retrieve_body( $ch );
-			$decoded_body = json_decode( $body, true );
-		}
-
-	}
-
 	/**
 	 *  Register Venue from OpenAgenda
 	 */
@@ -413,6 +388,48 @@ class OpenAgendaApi {
 				}
 			}
 		}
+	}
+
+	public function get_secret_key(){
+
+		$secret = get_option( 'openagenda_secret' );
+
+		return $secret;
+	}
+
+	/**
+	 * Retrieve access token to Openagenda data.
+	 * @return string return Openagenda token.
+	 */
+	public function get_acces_token() {
+		$transient = get_transient( 'openagenda_secret' );
+		if (empty( $transient ) ) {
+			$secret = $this->get_secret_key();
+			$args   = array(
+				'sslverify' => false,
+				'timeout'   => 15,
+				'body'      => array(
+					'grant_type' => 'authorization_code',
+					'code'       => $secret,
+				),
+			);
+
+			$ch = wp_remote_post( 'https://api.openagenda.com/v1/requestAccessToken', $args );
+
+			$received_content = curl_exec( $ch );
+			if ( 200 === (int) wp_remote_retrieve_response_code( $ch ) ) {
+				$body         = wp_remote_retrieve_body( $ch );
+				$decoded_body = json_decode( $body, true );
+				$token        = $decoded_body['access_token'];
+				set_transient( 'openagenda_secret', $decoded_body['access_token'], $decoded_body['expires_in'] );
+
+			}
+		} else {
+			$token = $transient;
+		}
+
+		return $token;
+
 	}
 
 
