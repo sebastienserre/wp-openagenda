@@ -50,10 +50,13 @@ class OpenAgendaApi {
 	 */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
-		add_action( 'openagenda_hourly_event', array( $this, 'register_venue' ) );
-		add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events' ) );
-		//add_action( 'admin_init', array( $this, 'import_oa_events' ) );
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
+
+		if ( openagenda_fs()->is__premium_only() ) {
+			add_action( 'admin_init', array( $this, 'import_oa_events__premium_only' ) );
+			add_action( 'openagenda_hourly_event', array( $this, 'register_venue__premium_only' ) );
+			add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events__premium_only' ) );
+		}
 	}
 
 	/**
@@ -354,7 +357,7 @@ class OpenAgendaApi {
 	 *
 	 * @return array key: term_id Value; term name (OA URL)
 	 */
-	public function get_agenda_list() {
+	public function get_agenda_list__premium_only() {
 		/**
 		 * Get List of Agenda
 		 */
@@ -369,7 +372,7 @@ class OpenAgendaApi {
 		return $url_oa;
 	}
 
-	public function get_venue( $uid ) {
+	public function get_venue__premium_only( $uid ) {
 		$args   = array(
 			'taxonomy'   => 'openagenda_venue',
 			'hide_empty' => false,
@@ -386,9 +389,9 @@ class OpenAgendaApi {
 	/**
 	 *  Register Venue from OpenAgenda
 	 */
-	public function register_venue() {
+	public function register_venue__premium_only() {
 
-		$url_oa = $this->get_agenda_list();
+		$url_oa = $this->get_agenda_list__premium_only();
 
 		/**
 		 * Get UID for each
@@ -405,7 +408,7 @@ class OpenAgendaApi {
 
 
 				foreach ( $decoded_body['items'] as $location ) {
-					$venues = $this->get_venue( $location['uid'] );
+					$venues = $this->get_venue__premium_only( $location['uid'] );
 
 					$name = implode( ' - ', array(
 						$location['name'],
@@ -444,7 +447,7 @@ class OpenAgendaApi {
 		}
 	}
 
-	public function get_secret_key() {
+	public function get_secret_key__premium_only() {
 
 		$secret = get_option( 'openagenda_secret' );
 
@@ -459,7 +462,7 @@ class OpenAgendaApi {
 	public function get_acces_token() {
 		$transient = get_transient( 'openagenda_secret' );
 		if ( empty( $transient ) ) {
-			$secret = $this->get_secret_key();
+			$secret = $this->get_secret_key__premium_only();
 			$args   = array(
 				'sslverify' => false,
 				'timeout'   => 15,
@@ -471,7 +474,6 @@ class OpenAgendaApi {
 
 			$ch = wp_remote_post( 'https://api.openagenda.com/v1/requestAccessToken', $args );
 
-			$received_content = curl_exec( $ch );
 			if ( 200 === (int) wp_remote_retrieve_response_code( $ch ) ) {
 				$body         = wp_remote_retrieve_body( $ch );
 				$decoded_body = json_decode( $body, true );
@@ -487,8 +489,8 @@ class OpenAgendaApi {
 
 	}
 
-	public function import_oa_events() {
-		$url_oa = $this->get_agenda_list();
+	public function import_oa_events__premium_only() {
+		$url_oa = $this->get_agenda_list__premium_only();
 
 		foreach ( $url_oa as $url ) {
 			$agendas[ $url ] = $this->thfo_openwp_retrieve_data( $url, 999, 'current' );
@@ -509,7 +511,21 @@ class OpenAgendaApi {
 				$end = $end['end'];
 				$end = strtotime( $end );
 
+				$args = array(
+						'post_type' =>  'openagenda-events',
+						'meta_key'   => '_oa_event_uid',
+						'meta_value' => $events['uid'],
+						'post_status' => 'publish',
+				);
+				$openagenda_events = get_posts(
+						$args
+				);
+				if ( ! empty( $openagenda_events ) ){
+					$id = $openagenda_events[0]->ID;
+				}
+
 				$args   = array(
+					'ID'             => $id,
 					'post_content'   => $events['longDescription']['fr'],
 					'post_title'     => $events['title']['fr'],
 					'post_excerpt'   => $events['description']['fr'],
@@ -530,7 +546,7 @@ class OpenAgendaApi {
 				$insert = wp_insert_post( $args );
 
 				// Insert Post Term venue
-				$venues    = $this->get_venue( $events['location']['uid'] );
+				$venues    = $this->get_venue__premium_only( $events['location']['uid'] );
 				$venues_id = array();
 				foreach ( $venues as $venue ) {
 					array_push( $venues_id, $venue->term_id );
@@ -543,8 +559,11 @@ class OpenAgendaApi {
 				$agendas = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
 
 				if ( ! empty( $agendas ) ) {
-					$agenda_tax = wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
+					wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
 				}
+
+				// insert Keywords
+				wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
 
 				// insert post thumbnail
 				// Gives us access to the download_url() and wp_handle_sideload() functions

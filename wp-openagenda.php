@@ -122,7 +122,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/admin/settings.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/cpt.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/venues.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/categories.php';
+			//include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/categories.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/keywords.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/custom-fields.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/agenda.php';
