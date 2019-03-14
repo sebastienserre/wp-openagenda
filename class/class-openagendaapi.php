@@ -3,6 +3,8 @@
 namespace OpenAgendaAPI;
 
 use function add_action;
+use function add_query_arg;
+use function array_merge;
 use function carbon_get_term_meta;
 use function error_log;
 use function esc_url;
@@ -43,7 +45,7 @@ class OpenAgendaApi {
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
 		add_action( 'openagenda_hourly_event', array( $this, 'register_venue' ) );
-		add_action( 'admin_init', array( $this, 'get_acces_token' ) );
+		add_action( 'admin_init', array( $this, 'import_oa_events' ) );
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 	}
 
@@ -81,10 +83,14 @@ class OpenAgendaApi {
 	 *
 	 * @param string $slug Slug of your agenda.
 	 * @param int    $nb   Number of event to retrieve. Default 10.
+	 * @param string $when Date of events. default: 'current'.
+	 *                     all: events from 01/01/1970 to 31/12/2050.
+	 *                     current: from today to 31/12/2050.
+	 *                     past: from 01/01/1970 to today.
 	 *
 	 * @return array|mixed|object|string
 	 */
-	public function thfo_openwp_retrieve_data( $url, $nb = 10 ) {
+	public function thfo_openwp_retrieve_data( $url, $nb = 10, $when = 'current' ) {
 		if ( empty( $url ) ) {
 			return '<p>' . __( 'You forgot to add an agenda\'s url to retrieve', 'wp-openagenda' ) . '</p>';
 		}
@@ -92,11 +98,28 @@ class OpenAgendaApi {
 			$nb = 10;
 		}
 
+		$today = date( 'd/m/Y' );
+		switch ( $when ) {
+			case 'current':
+				$when  = $today . '-31/12/2050';
+				break;
+			case 'all':
+				$when = '01/01/1970-31/12/2050';
+				break;
+			case 'past':
+				$when = '01/01/1970-' . $today;
+		}
+
 		$key = $this->thfo_openwp_get_api_key();
 		$uid = $this->openwp_get_uid( $url );
 		if ( $uid ) {
 
-			$url          = 'https://openagenda.com/agendas/' . $uid . '/events.json?key=' . $key . '&limit=' . $nb;
+			$url          = 'https://openagenda.com/agendas/' . $uid . '/events.json';
+			$url          = add_query_arg( array(
+				'key'   => $key,
+				'limit' => $nb,
+				'when'  => $when,
+			), $url );
 			$response     = wp_remote_get( $url );
 			$decoded_body = array();
 
@@ -320,9 +343,11 @@ class OpenAgendaApi {
 	}
 
 	/**
-	 *  Register Venue from OpenAgenda
+	 * Get OA list
+	 *
+	 * @return array key: term_id Value; term name (OA URL)
 	 */
-	public function register_venue() {
+	public function get_agenda_list() {
 		/**
 		 * Get List of Agenda
 		 */
@@ -333,6 +358,16 @@ class OpenAgendaApi {
 		foreach ( $terms as $term ) {
 			$url_oa[ $term->term_id ] = $term->name;
 		}
+
+		return $url_oa;
+	}
+
+	/**
+	 *  Register Venue from OpenAgenda
+	 */
+	public function register_venue() {
+
+		$url_oa = $this->get_agenda_list();
 
 		/**
 		 * Get UID for each
@@ -349,7 +384,7 @@ class OpenAgendaApi {
 
 
 				foreach ( $decoded_body['items'] as $location ) {
-					$args  = array(
+					$args   = array(
 						'taxonomy'   => 'openagenda_venue',
 						'hide_empty' => false,
 						'meta_key'   => '_oa_location_uid',
@@ -358,11 +393,16 @@ class OpenAgendaApi {
 					$venues = get_terms(
 						$args
 					);
-					$name = implode( ' - ', array( $location['name'], $location['city'], $location['countryCode'], $location['uid'] ) );
+					$name   = implode( ' - ', array(
+						$location['name'],
+						$location['city'],
+						$location['countryCode'],
+						$location['uid'],
+					) );
 					if ( empty( $venues ) ) {
 
 						$insert = wp_insert_term( $name, 'openagenda_venue' );
-						if ( is_wp_error( $insert ) ){
+						if ( is_wp_error( $insert ) ) {
 							$error = 'Fatal Error -- Import OpenAgenda: ' . $insert->get_error_message();
 							error_log( $error );
 						} else {
@@ -390,7 +430,7 @@ class OpenAgendaApi {
 		}
 	}
 
-	public function get_secret_key(){
+	public function get_secret_key() {
 
 		$secret = get_option( 'openagenda_secret' );
 
@@ -399,11 +439,12 @@ class OpenAgendaApi {
 
 	/**
 	 * Retrieve access token to Openagenda data.
+	 *
 	 * @return string return Openagenda token.
 	 */
 	public function get_acces_token() {
 		$transient = get_transient( 'openagenda_secret' );
-		if (empty( $transient ) ) {
+		if ( empty( $transient ) ) {
 			$secret = $this->get_secret_key();
 			$args   = array(
 				'sslverify' => false,
@@ -429,6 +470,15 @@ class OpenAgendaApi {
 		}
 
 		return $token;
+
+	}
+
+	public function import_oa_events() {
+		$url_oa = $this->get_agenda_list();
+
+		foreach ( $url_oa as $url ) {
+			$events[ $url ] = $this->thfo_openwp_retrieve_data( $url, 999 );
+		}
 
 	}
 
