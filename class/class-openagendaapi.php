@@ -4,8 +4,10 @@ namespace OpenAgendaAPI;
 
 use function add_action;
 use function add_query_arg;
+use function array_merge;
 use function array_push;
 use function esc_url;
+use function get_post_meta;
 use function get_term_meta;
 use function implode;
 use function is_null;
@@ -18,7 +20,9 @@ use function set_transient;
 use function strtotime;
 use function update_term_meta;
 use function var_dump;
+use function wp_create_nonce;
 use WP_Error;
+use function wp_get_post_cats;
 use function wp_handle_sideload;
 use function wp_remote_get;
 use function wp_set_post_terms;
@@ -53,9 +57,12 @@ class OpenAgendaApi {
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 
 		if ( openagenda_fs()->is__premium_only() ) {
-			add_action( 'admin_init', array( $this, 'import_oa_events__premium_only' ) );
-			add_action( 'openagenda_hourly_event', array( $this, 'register_venue__premium_only' ) );
-			add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events__premium_only' ) );
+			//add_action( 'admin_init', array( $this, 'import_oa_events__premium_only' ) );
+			add_action( 'admin_init', array( $this, 'export_event__premium_only' ) );
+
+			//add_action( 'openagenda_hourly_event', array( $this, 'register_venue__premium_only' ), 10 );
+			//add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events__premium_only' ), 20 );
+			//add_action( 'openagenda_hourly_event', array( $this, 'export_event__premium_only' ), 30 );
 		}
 	}
 
@@ -489,6 +496,9 @@ class OpenAgendaApi {
 
 	}
 
+	/**
+	 * Import OA events from OpenAgenda to WordPress
+	 */
 	public function import_oa_events__premium_only() {
 		$url_oa = $this->get_agenda_list__premium_only();
 
@@ -511,16 +521,16 @@ class OpenAgendaApi {
 				$end = $end['end'];
 				$end = strtotime( $end );
 
-				$args = array(
-						'post_type' =>  'openagenda-events',
-						'meta_key'   => '_oa_event_uid',
-						'meta_value' => $events['uid'],
-						'post_status' => 'publish',
+				$args              = array(
+					'post_type'   => 'openagenda-events',
+					'meta_key'    => '_oa_event_uid',
+					'meta_value'  => $events['uid'],
+					'post_status' => 'publish',
 				);
 				$openagenda_events = get_posts(
-						$args
+					$args
 				);
-				if ( ! empty( $openagenda_events ) ){
+				if ( ! empty( $openagenda_events ) ) {
 					$id = $openagenda_events[0]->ID;
 				}
 
@@ -631,6 +641,123 @@ class OpenAgendaApi {
 			}
 		}
 	}
+
+	public function export_event__premium_only() {
+		if ( empty( $_GET['test'] ) ) {
+			return;
+		}
+
+		 $options = array();
+		$agendas     = $this->get_agenda_list__premium_only();
+		$accessToken = $this->get_acces_token();
+		foreach ( $agendas as $agenda ) {
+			$agendaUid = $this->openwp_get_uid( $agenda );
+
+			// Get Post openagenda-events
+			$events = get_posts(
+					array(
+							'post_type' =>  'openagenda-events'
+					)
+			);
+
+			foreach ( $events as $event ) {
+				$eventuid = get_post_meta( $event->ID, '_oa_event_uid' );
+				if ( empty( $eventuid[0] ) ) {
+					//create
+					$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events";
+				} else {
+					//update
+					$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events/$eventuid[0]";
+				}
+
+				// retrieve event keywords
+				$keywords = wp_get_post_terms( $event->ID, 'openagenda_keyword' );
+				if ( ! empty( $keywords ) ){
+					$keys = array();
+					foreach ( $keywords as $keyword ) {
+						array_push( $keys, $keyword->name );
+					}
+					$keywords = implode( ', ', $keys );
+				}
+
+				// get min age
+				$min_age = get_post_meta( $event->ID, '_oa_min_age');
+
+				// get max age
+				$max_age = get_post_meta( $event->ID, '_oa_max_age');
+
+				$age = array(
+						'min'   => $min_age[0],
+						'max'   => $max_age[0],
+				);
+
+				// get conditions
+				$conditions = get_post_meta( $event->ID, '_oa_conditions');
+
+				//get registration
+				$registrations = get_post_meta( $event->ID, '_oa_tools');
+
+				// retrieve locationUID
+				$locationuid = wp_get_post_terms( $event->ID, 'openagenda_venue' );
+				$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid');
+
+				// get start date
+				$start = get_post_meta( $event->ID, '_oa_start_date');
+				var_dump( $start);
+
+			}
+				$data = array(
+					'slug'            => "$event->post_name-" . rand(),
+					'title'           => $event->post_title,
+					'description'     => $event->post_excerpt,
+					'longDescription' => $event->post_content,
+					'keywords'        => $keywords,
+					'age'             => $age,
+					'accessibility'   => array( 'hi', 'vi' ),
+					'conditions'      => $conditions[0],
+					'registration'    => $registrations,
+					'locationUid'     => $locationuid[0],
+					'timings'         => array(
+						array(
+							'begin' => '2019-09-05T13:45:00+0200',
+							'end'   => '2019-09-05T15:30:00+0200',
+						),
+					),
+				);
+
+				extract( array_merge( array(), $options ) );
+
+				$imageLocalPath = null;
+
+				if ( isset( $data['image'] ) && isset( $data['image']['file'] ) ) {
+					$imageLocalPath = $data['image']['file'];
+
+					unset( $data['image']['file'] );
+				}
+
+				$ch = curl_init();
+
+				curl_setopt( $ch, CURLOPT_URL, $route );
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+				curl_setopt( $ch, CURLOPT_POST, true );
+
+				$posted = array(
+					'access_token' => $accessToken,
+					'nonce'        => wp_create_nonce(),
+					'data'         => json_encode( $data ),
+				);
+
+				if ( $imageLocalPath ) {
+					$posted['image'] = $imageLocalPath;
+				}
+
+				curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
+
+				$received_content = curl_exec( $ch );
+
+				return json_decode( $received_content, true );
+			}
+		}
 
 
 }
