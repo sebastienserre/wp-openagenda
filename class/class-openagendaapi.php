@@ -3,6 +3,7 @@
 namespace OpenAgendaAPI;
 
 use function add_action;
+use function add_post_meta;
 use function add_query_arg;
 use function array_merge;
 use function array_push;
@@ -56,8 +57,8 @@ class OpenAgendaApi {
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 
 		if ( openagenda_fs()->is__premium_only() ) {
-			add_action( 'admin_init', array( $this, 'import_oa_events__premium_only' ) );
-			//add_action( 'admin_init', array( $this, 'export_event__premium_only' ) );
+			//add_action( 'admin_init', array( $this, 'import_oa_events__premium_only' ) );
+			add_action( 'admin_init', array( $this, 'export_event__premium_only' ) );
 
 			//add_action( 'openagenda_hourly_event', array( $this, 'register_venue__premium_only' ), 10 );
 			//add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events__premium_only' ), 20 );
@@ -514,23 +515,26 @@ class OpenAgendaApi {
 					$events['longDescription']['fr'] = $events['description']['fr'];
 				}
 
-				//handicap
-
 				// Date Formating
-				$start = array_pop( array_reverse( $events['timings'] ) );
-				$start = $start['start'];
-				$start = strtotime( $start );
+				$start          = array_pop( array_reverse( $events['timings'] ) );
+				$start1         = $start['start'];
+				$end1           = $start['end'];
+				$start_firstday = strtotime( $start1 );
+				$end_firstday   = strtotime( $end1 );
 
-				$end = array_pop( $events['timings'] );
-				$end = $end['end'];
-				$end = strtotime( $end );
+				$start2        = array_pop( $events['timings'] );
+				$start_lastday = $start2['start'];
+				$end_lastday   = $start2['end'];
+				$start_lastday = strtotime( $start_lastday );
+				$end_lastday   = strtotime( $end_lastday );
 
-				$args              = array(
+				$args = array(
 					'post_type'   => 'openagenda-events',
 					'meta_key'    => '_oa_event_uid',
 					'meta_value'  => $events['uid'],
 					'post_status' => 'publish',
 				);
+
 				$openagenda_events = get_posts(
 					$args
 				);
@@ -548,16 +552,26 @@ class OpenAgendaApi {
 					'comment_status' => 'closed',
 					'ping_status'    => 'closed',
 					'meta_input'     => array(
-						'_oa_conditions' => $events['conditions']['fr'],
-						'_oa_event_uid'  => $events['uid'],
-						'_oa_tools'      => $events['registrationUrl'],
-						'_oa_min_age'    => $events['age']['min'],
-						'_oa_max_age'    => $events['age']['max'],
-						'_oa_start_date' => $start,
-						'_oa_end_date'   => $end,
+						'_oa_conditions'             => $events['conditions']['fr'],
+						'_oa_event_uid'              => $events['uid'],
+						'_oa_tools'                  => $events['registrationUrl'],
+						'_oa_min_age'                => $events['age']['min'],
+						'_oa_max_age'                => $events['age']['max'],
+						'_oadate|oa_start|0|0|value' => $start_firstday,
+						'_oadate|oa_end|0|0|value'   => $end_firstday,
+						'_oadate|oa_start|1|0|value' => $start_lastday,
+						'_oadate|oa_end|1|0|value'   => $end_lastday,
 					),
 				);
 				$insert = wp_insert_post( $args );
+
+				//handicap
+				$i = 0;
+				foreach ( $events['accessibility'] as $accessibility ) {
+					add_post_meta( $insert, "_oa_a11y|||$i|value", $accessibility );
+					$i ++;
+				}
+				unset( $i );
 
 				// Insert Post Term venue
 				$venues    = $this->get_venue__premium_only( $events['location']['uid'] );
@@ -647,11 +661,11 @@ class OpenAgendaApi {
 	}
 
 	public function export_event__premium_only() {
-		if ( empty( $_GET['test'] ) && 'export' === $_GET['export'] ) {
+		if ( empty( $_GET['test'] ) && 'export' === $_GET['test'] ) {
 			return;
 		}
 
-		 $options = array();
+		$options     = array();
 		$agendas     = $this->get_agenda_list__premium_only();
 		$accessToken = $this->get_acces_token();
 		foreach ( $agendas as $agenda ) {
@@ -659,9 +673,9 @@ class OpenAgendaApi {
 
 			// Get Post openagenda-events
 			$events = get_posts(
-					array(
-							'post_type' =>  'openagenda-events'
-					)
+				array(
+					'post_type' => 'openagenda-events',
+				)
 			);
 
 			foreach ( $events as $event ) {
@@ -676,7 +690,7 @@ class OpenAgendaApi {
 
 				// retrieve event keywords
 				$keywords = wp_get_post_terms( $event->ID, 'openagenda_keyword' );
-				if ( ! empty( $keywords ) ){
+				if ( ! empty( $keywords ) ) {
 					$keys = array();
 					foreach ( $keywords as $keyword ) {
 						array_push( $keys, $keyword->name );
@@ -685,83 +699,101 @@ class OpenAgendaApi {
 				}
 
 				// get min age
-				$min_age = get_post_meta( $event->ID, '_oa_min_age');
+				$min_age = get_post_meta( $event->ID, '_oa_min_age' );
 
 				// get max age
-				$max_age = get_post_meta( $event->ID, '_oa_max_age');
+				$max_age = get_post_meta( $event->ID, '_oa_max_age' );
 
 				$age = array(
-						'min'   => $min_age[0],
-						'max'   => $max_age[0],
+					'min' => $min_age[0],
+					'max' => $max_age[0],
 				);
 
 				// get conditions
-				$conditions = get_post_meta( $event->ID, '_oa_conditions');
+				$conditions = get_post_meta( $event->ID, '_oa_conditions' );
 
 				//get registration
-				$registrations = get_post_meta( $event->ID, '_oa_tools');
+				$registrations = get_post_meta( $event->ID, '_oa_tools' );
 
 				// retrieve locationUID
 				$locationuid = wp_get_post_terms( $event->ID, 'openagenda_venue' );
-				$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid');
+				$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid' );
 
 				// get start date
-				$start = get_post_meta( $event->ID, '_oa_start_date');
-				var_dump( $start);
+				$start = carbon_get_post_meta( $event->ID, 'oadate' );
+				$debut = $start[0]['oa_start'];
 
-			}
-				$data = array(
-					'slug'            => "$event->post_name-" . rand(),
-					'title'           => $event->post_title,
-					'description'     => $event->post_excerpt,
-					'longDescription' => $event->post_content,
-					'keywords'        => $keywords,
-					'age'             => $age,
-					'accessibility'   => array( 'hi', 'vi' ),
-					'conditions'      => $conditions[0],
-					'registration'    => $registrations,
-					'locationUid'     => $locationuid[0],
-					'timings'         => array(
-						array(
-							'begin' => '2019-09-05T13:45:00+0200',
-							'end'   => '2019-09-05T15:30:00+0200',
-						),
-					),
-				);
+				//get end date
+				$fin = $start[1]['oa_end'];
 
-				extract( array_merge( array(), $options ) );
+				// day number between start and en of the events
+				$diff = $fin - $debut;
+				$diff = ceil( $diff / 86400 );
 
-				$imageLocalPath = null;
+				$i     = 0;
+				$dates = array();
+				$date  = array();
+				while ( $i < $diff ) {
+					$date = array(
+						'begin' => date( 'Y-m-d\Th:i:00+0200', $start[0]['oa_start'] + 86400 * $i ),
+						'end'   => date( 'Y-m-d\Th:i:00+0200', $start[0]['oa_end'] + 86400 * $i ),
+					);
 
-				if ( isset( $data['image'] ) && isset( $data['image']['file'] ) ) {
-					$imageLocalPath = $data['image']['file'];
-
-					unset( $data['image']['file'] );
+					array_push( $dates, $date );
+					$i ++;
 				}
 
-				$ch = curl_init();
+				//a11y
+				$a11y = carbon_get_post_meta( $event->ID, 'oa_a11y' );
 
-				curl_setopt( $ch, CURLOPT_URL, $route );
-				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-				curl_setopt( $ch, CURLOPT_POST, true );
-
-				$posted = array(
-					'access_token' => $accessToken,
-					'nonce'        => wp_create_nonce(),
-					'data'         => json_encode( $data ),
-				);
-
-				if ( $imageLocalPath ) {
-					$posted['image'] = $imageLocalPath;
-				}
-
-				curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
-
-				$received_content = curl_exec( $ch );
-
-				return json_decode( $received_content, true );
 			}
+			$data = array(
+				'slug'            => "$event->post_name-" . rand(),
+				'title'           => $event->post_title,
+				'description'     => $event->post_excerpt,
+				'longDescription' => $event->post_content,
+				'keywords'        => $keywords,
+				'age'             => $age,
+				'accessibility'   => $a11y,
+				'conditions'      => $conditions[0],
+				'registration'    => $registrations,
+				'locationUid'     => $locationuid[0],
+				'timings'         => $dates,
+			);
+
+			extract( array_merge( array(), $options ) );
+
+			$imageLocalPath = null;
+
+			if ( isset( $data['image'] ) && isset( $data['image']['file'] ) ) {
+				$imageLocalPath = $data['image']['file'];
+
+				unset( $data['image']['file'] );
+			}
+
+			$ch = curl_init();
+
+			curl_setopt( $ch, CURLOPT_URL, $route );
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+			curl_setopt( $ch, CURLOPT_POST, true );
+
+			$posted = array(
+				'access_token' => $accessToken,
+				'nonce'        => wp_create_nonce(),
+				'data'         => json_encode( $data ),
+			);
+
+			if ( $imageLocalPath ) {
+				$posted['image'] = $imageLocalPath;
+			}
+
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
+
+			$received_content = curl_exec( $ch );
+
+			return json_decode( $received_content, true );
 		}
+	}
 
 
 }

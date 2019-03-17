@@ -37,24 +37,6 @@ function oa_create_custom_fields() {
 	         )
 	         ->add_fields(
 		         array(
-			         Field::make( 'date', 'oa_start_date', __( 'start date', 'wp-openagenda' ) )
-			              ->set_storage_format( 'U' )
-			              ->set_attribute( 'placeholder', __( 'End date for this event', 'wp-openagenda' ) )
-			              ->set_picker_options( [ 'allowInput' => false ] )
-			              ->set_width( 50 ),
-		         )
-	         )
-	         ->add_fields(
-		         array(
-			         Field::make( 'date', 'oa_end_date', __( 'End date', 'wp-openagenda' ) )
-			              ->set_storage_format( 'U' )
-			              ->set_attribute( 'placeholder', __( 'End date for this event', 'wp-openagenda' ) )
-			              ->set_picker_options( [ 'allowInput' => false ] )
-			              ->set_width( 50 ),
-		         )
-	         )
-	         ->add_fields(
-		         array(
 			         Field::make( 'select', 'oa_min_age', __( 'Minimum age', 'wp-openagenda' ) )
 			              ->set_options( oa_age() )
 			              ->set_width( 50 ),
@@ -71,6 +53,28 @@ function oa_create_custom_fields() {
 		         array(
 			         Field::make( 'multiselect', 'oa_a11y', __( 'Accessibility', 'wp-openagenda' ) )
 			              ->add_options( $accessibility ),
+		         )
+	         )
+	         ->add_fields(
+		         array(
+			         Field::make( 'complex', 'oadate', __( 'date', 'wp-openagenda' ) )
+			              ->add_fields( 'date',
+				              array(
+					              Field::make( 'date_time', 'oa_start', __( 'start date', 'wp-openagenda' ) )
+					                   ->set_storage_format( 'U' )
+					                   ->set_attribute( 'placeholder', __( 'End date for this event', 'wp-openagenda' ) )
+					                   ->set_picker_options( [ 'allowInput' => false ] )
+					                   ->set_width( 50 ),
+					                   /*->set_input_format( 'd-F-Y G\hi',''),*/
+
+					              Field::make( 'date_time', 'oa_end', __( 'End date', 'wp-openagenda' ) )
+					                   ->set_storage_format( 'U' )
+					                   ->set_attribute( 'placeholder', __( 'End date for this event', 'wp-openagenda' ) )
+					                   ->set_picker_options( [ 'allowInput' => false ] )
+					                   ->set_width( 50 ),
+				              )
+			              )
+			         ->set_max(2),
 		         )
 	         );
 
