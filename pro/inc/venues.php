@@ -48,9 +48,11 @@ if ( ! function_exists( 'openagenda_venue' ) ) {
 
 }
 
+/*
 add_action( 'pre_insert_term', function ( $term, $taxonomy )
 {
 	return ( 'openagenda_venue' === $taxonomy )
 		? new WP_Error( 'term_addition_blocked', __( 'You cannot add terms to this taxonomy', 'wp-openagenda' ) )
 		: $term;
 }, 0, 2 );
+*/

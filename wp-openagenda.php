@@ -91,7 +91,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'openwp_pro_load_style__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
-				add_action( 'plugins_loaded', array( $this, 'openwp_register_script__premium_only' ), 999 );
+				add_action( 'wp_enqueue_scripts', array( $this, 'openwp_register_script__premium_only' ), 999 );
 				add_action( 'admin_print_styles', array( $this, 'openwp_admin_style__premium_only') );
 				register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
 			}
@@ -122,7 +122,6 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/admin/settings.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/cpt.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/venues.php';
-			//include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/categories.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/keywords.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/custom-fields.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/agenda.php';
@@ -132,7 +131,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcodes/class-openagendaslidershortcode.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcodes/class-openagenda-search-shortcode.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/blocks/class-openwp-block-embed.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/blocks/class-openwp-block-slider.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/cronjob.php';
 		}
 
 
