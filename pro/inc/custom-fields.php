@@ -8,6 +8,16 @@ use Carbon_Fields\Field;
 
 add_action( 'plugins_loaded', 'oa_create_custom_fields', 410 );
 function oa_create_custom_fields() {
+
+	$accessibility = array(
+		'mi' => __( 'Accessible to disabled people', 'wp-openagenda' ),
+		'hi' => __( 'Accessible to the hearing impaired', 'wp-openagenda' ),
+		'pi' => __( 'Accessible to the psychic handicapped', 'wp-openagenda' ),
+		'vi' => __( 'Accessible to visually impaired', 'wp-openagenda' ),
+		'sl' => __( 'Accessible in sign language', 'wp-openagenda' ),
+
+	);
+
 	Container::make( 'post_meta', 'OpenAgenda Data' )
 	         ->where( 'post_type', '=', 'openagenda-events' )
 	         ->add_fields(
@@ -15,11 +25,11 @@ function oa_create_custom_fields() {
 			         Field::make( 'text', 'oa_conditions', __( 'Conditions of participation, rates', 'wp-openagenda' ) ),
 		         )
 	         )
-		->add_fields(
-			array(
-				Field::make( 'text', 'oa_event_uid', __( 'Event UID', 'wp-openagenda' ) ),
-			)
-		)
+	         ->add_fields(
+		         array(
+			         Field::make( 'text', 'oa_event_uid', __( 'Event UID', 'wp-openagenda' ) ),
+		         )
+	         )
 	         ->add_fields(
 		         array(
 			         Field::make( 'text', 'oa_tools', __( 'Registration tools', 'wp-openagenda' ) ),
@@ -55,6 +65,12 @@ function oa_create_custom_fields() {
 			         Field::make( 'select', 'oa_max_age', __( 'Maximum age', 'wp-openagenda' ) )
 			              ->set_options( oa_age() )
 			              ->set_width( 50 ),
+		         )
+	         )
+	         ->add_fields(
+		         array(
+			         Field::make( 'multiselect', 'oa_a11y', __( 'Accessibility', 'wp-openagenda' ) )
+			              ->add_options( $accessibility ),
 		         )
 	         );
 

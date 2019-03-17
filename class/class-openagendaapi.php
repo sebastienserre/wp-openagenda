@@ -53,12 +53,11 @@ class OpenAgendaApi {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 
 		if ( openagenda_fs()->is__premium_only() ) {
-			//add_action( 'admin_init', array( $this, 'import_oa_events__premium_only' ) );
-			add_action( 'admin_init', array( $this, 'export_event__premium_only' ) );
+			add_action( 'admin_init', array( $this, 'import_oa_events__premium_only' ) );
+			//add_action( 'admin_init', array( $this, 'export_event__premium_only' ) );
 
 			//add_action( 'openagenda_hourly_event', array( $this, 'register_venue__premium_only' ), 10 );
 			//add_action( 'openagenda_hourly_event', array( $this, 'import_oa_events__premium_only' ), 20 );
@@ -500,6 +499,9 @@ class OpenAgendaApi {
 	 * Import OA events from OpenAgenda to WordPress
 	 */
 	public function import_oa_events__premium_only() {
+		if ( empty( $_GET['test'] ) && 'import' === $_GET['test'] ) {
+			return;
+		}
 		$url_oa = $this->get_agenda_list__premium_only();
 
 		foreach ( $url_oa as $url ) {
@@ -511,6 +513,8 @@ class OpenAgendaApi {
 				if ( is_null( $events['longDescription']['fr'] ) ) {
 					$events['longDescription']['fr'] = $events['description']['fr'];
 				}
+
+				//handicap
 
 				// Date Formating
 				$start = array_pop( array_reverse( $events['timings'] ) );
@@ -643,7 +647,7 @@ class OpenAgendaApi {
 	}
 
 	public function export_event__premium_only() {
-		if ( empty( $_GET['test'] ) ) {
+		if ( empty( $_GET['test'] ) && 'export' === $_GET['export'] ) {
 			return;
 		}
 
