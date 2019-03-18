@@ -1,8 +1,13 @@
 <?php
+
 namespace OpenAgendaAPI;
 
 use function add_action;
+use function add_query_arg;
 use function esc_url;
+use function set_transient;
+use WP_Error;
+use function wp_remote_get;
 
 /**
  * Set of methods to retrieve data from OpenAgenda
@@ -29,7 +34,6 @@ class OpenAgendaApi {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		add_action( 'admin_init', array( $this, 'thfo_openwp_retrieve_data' ) );
 		add_action( 'openagenda_check_api', array( $this, 'check_api' ) );
 	}
 
@@ -67,10 +71,14 @@ class OpenAgendaApi {
 	 *
 	 * @param string $slug Slug of your agenda.
 	 * @param int    $nb   Number of event to retrieve. Default 10.
+	 * @param string $when Date of events. default: 'current'.
+	 *                     all: events from 01/01/1970 to 31/12/2050.
+	 *                     current: from today to 31/12/2050.
+	 *                     past: from 01/01/1970 to today.
 	 *
 	 * @return array|mixed|object|string
 	 */
-	public function thfo_openwp_retrieve_data( $url, $nb = 10 ) {
+	public function thfo_openwp_retrieve_data( $url, $nb = 10, $when = 'current' ) {
 		if ( empty( $url ) ) {
 			return '<p>' . __( 'You forgot to add an agenda\'s url to retrieve', 'wp-openagenda' ) . '</p>';
 		}
@@ -78,11 +86,28 @@ class OpenAgendaApi {
 			$nb = 10;
 		}
 
+		$today = date( 'd/m/Y' );
+		switch ( $when ) {
+			case 'current':
+				$when = $today . '-31/12/2050';
+				break;
+			case 'all':
+				$when = '01/01/1970-31/12/2050';
+				break;
+			case 'past':
+				$when = '01/01/1970-' . $today;
+		}
+
 		$key = $this->thfo_openwp_get_api_key();
 		$uid = $this->openwp_get_uid( $url );
 		if ( $uid ) {
 
-			$url          = 'https://openagenda.com/agendas/' . $uid . '/events.json?key=' . $key . '&limit=' . $nb;
+			$url          = 'https://openagenda.com/agendas/' . $uid . '/events.json';
+			$url          = add_query_arg( array(
+				'key'   => $key,
+				'limit' => $nb,
+				'when'  => $when,
+			), $url );
 			$response     = wp_remote_get( $url );
 			$decoded_body = array();
 
@@ -290,21 +315,96 @@ class OpenAgendaApi {
 		$key   = $this->thfo_openwp_get_api_key();
 		$check = $this->openwp_get_uid( 'https://openagenda.com/iledefrance' );
 		//$check = wp_remote_get( 'https://api.openagenda.com/v1/events?key=' . $key . '&lang=fr' );
-		if ( null === $check ){
+		if ( null === $check ) {
 			?>
 			<div class="notice notice-error openagenda-notice">
-				<p><?php _e( 'Woot! Your API Key seems to be non valid', 'wp-openagenda'); ?></p>
-				<p><?php printf( __( '<a href="%s" target="_blank">Find help</a>', 'wp-openagenda'), esc_url('https://thivinfo.com/docs/openagenda-pour-wordpress/')); ?></p>
+				<p><?php _e( 'Woot! Your API Key seems to be non valid', 'wp-openagenda' ); ?></p>
+				<p><?php printf( __( '<a href="%s" target="_blank">Find help</a>', 'wp-openagenda' ), esc_url( 'https://thivinfo.com/docs/openagenda-pour-wordpress/' ) ); ?></p>
 			</div>
 			<?php
 		} else {
 			?>
-			<div class="notice notice-success openagenda-notice"><?php _e( 'OpenAgenda API Key valid', 'wp-openagenda'); ?></div>
-		<?php
-			}
+			<div class="notice notice-success openagenda-notice"><?php _e( 'OpenAgenda API Key valid', 'wp-openagenda' ); ?></div>
+			<?php
+		}
 
 	}
 
+	/**
+	 * Get OA list
+	 *
+	 * @return array key: term_id Value; term name (OA URL)
+	 */
+	public function get_agenda_list__premium_only() {
+		/**
+		 * Get List of Agenda
+		 */
+		$terms = get_terms( array(
+			'taxonomy'   => 'openagenda_agenda',
+			'hide_empty' => false,
+		) );
+		foreach ( $terms as $term ) {
+			$url_oa[ $term->term_id ] = $term->name;
+		}
+
+		return $url_oa;
+	}
+
+	public function get_venue__premium_only( $uid ) {
+		$args   = array(
+			'taxonomy'   => 'openagenda_venue',
+			'hide_empty' => false,
+			'meta_key'   => '_oa_location_uid',
+			'meta_value' => (string) $uid,
+		);
+		$venues = get_terms(
+			$args
+		);
+
+		return $venues;
+	}
+
+	public function get_secret_key__premium_only() {
+
+		$secret = get_option( 'openagenda_secret' );
+
+		return $secret;
+	}
+
+	/**
+	 * Retrieve access token to Openagenda data.
+	 *
+	 * @return string return Openagenda token.
+	 */
+	public function get_acces_token() {
+		$transient = get_transient( 'openagenda_secret' );
+		if ( empty( $transient ) ) {
+			$secret = $this->get_secret_key__premium_only();
+			$args   = array(
+				'sslverify' => false,
+				'timeout'   => 15,
+				'body'      => array(
+					'grant_type' => 'authorization_code',
+					'code'       => $secret,
+				),
+			);
+
+			$ch = wp_remote_post( 'https://api.openagenda.com/v1/requestAccessToken', $args );
+
+			if ( 200 === (int) wp_remote_retrieve_response_code( $ch ) ) {
+				$body         = wp_remote_retrieve_body( $ch );
+				$decoded_body = json_decode( $body, true );
+				$token        = $decoded_body['access_token'];
+				set_transient( 'openagenda_secret', $decoded_body['access_token'], $decoded_body['expires_in'] );
+
+			}
+		} else {
+			$token = $transient;
+		}
+
+		return $token;
+
+	}
 }
 
 new OpenAgendaApi();

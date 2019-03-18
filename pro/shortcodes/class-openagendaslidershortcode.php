@@ -25,6 +25,7 @@ class OpenagendaSliderShortcode {
 			'agenda_date_text_color' => '',
 			'agenda_lieu'            => 'true',
 			'number'                 => '10',
+			'display_description'    => '',
 		), $atts, 'openagenda_slider' );
 
 		wp_enqueue_script( 'slickjs' );
@@ -47,8 +48,8 @@ class OpenagendaSliderShortcode {
 	}
 
 	public function openwp_slider_html( $atts, $display_title = true ) {
-		$openwp    = new OpenAgendaApi();
-		if ( empty( $atts['number'] ) ){
+		$openwp = new OpenAgendaApi();
+		if ( empty( $atts['number'] ) ) {
 			$atts['number'] = '10';
 		}
 		$datas     = $openwp->thfo_openwp_retrieve_data( $atts['agenda_url'], $atts['number'] );
@@ -110,16 +111,22 @@ class OpenagendaSliderShortcode {
 							     style=" color:<?php echo $atts['agenda_date_text_color'] ?>">
 								<a class="bloc-openagenda__link" href="<?php echo $url; ?>"
 								   style="color:<?php echo $atts['agenda_date_text_color']; ?>;">
-								<?php echo $date ?>
+									<p class="oa_date"><?php echo $date ?></p>
+									<p class="oa_title"><?php echo $event['title']['fr'] ?></p>
 								</a>
 							</div>
+							<?php if( 'true' === $atts['display_description'] ){ ?>
+							<div class="oa_description">
+								<p><?php echo $event['description']['fr']; ?></p>
+							</div>
+						<?php } ?>
 							<?php
 							if ( 'true' === $atts['agenda_lieu'] ) {
 								?>
-							<a class="bloc-openagenda__link" href="<?php echo $url; ?>"
-							   style="color:<?php echo $atts['agenda_date_text_color']; ?>;">
-								<p class="bloc-openagenda__lieu"><?php echo $event['locationName']; ?></p>
-							</a>
+								<a class="bloc-openagenda__link" href="<?php echo $url; ?>"
+								   style="color:<?php echo $atts['agenda_date_text_color']; ?>;">
+									<p class="bloc-openagenda__lieu"><?php echo $event['locationName']; ?></p>
+								</a>
 								<?php
 							}
 							?>
