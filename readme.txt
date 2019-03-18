@@ -15,6 +15,7 @@ Display Events hosted in Openagenda.com easily in your WordPress Website.
 Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode, Gutenberg Blocks and Widget.
 Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 
+/!\ Manage your Openagenda events directly from your WordPress BackOffice (synced ones per hour)
 /!\ New on OpenAgenda for WordPress 1.5.0: Gutenberg Blocks!
 
 == Installation ==
@@ -77,6 +78,10 @@ On WP 5.0 Use the new Gutenberg Blocks!
 9. Masonry layout (Pro Version)
 
 == Changelog ==
+= 1.7.0 == 17/03/2019
+* FEATURES -- Manage your events directly in your WordPress Back-Office
+* FEATURES -- Improve the Slider Shortcode -- Add the "display_description" params ( set to "true" to enable )
+
 = 1.6.1 == 13/03/2019
 * BUGFIX -- Fix error on parsedown call
 

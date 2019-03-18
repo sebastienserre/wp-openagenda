@@ -1,36 +1,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
-"POT-Creation-Date: 2018-11-01 13:07+0000\n"
-"PO-Revision-Date: 2018-11-01 13:16+0000\n"
-"Last-Translator: sebastienserre <sebastien@thivinfo.com>\n"
-"Language-Team: Français\n"
-"Language: fr_FR\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-17 17:48+0100\n"
+"PO-Revision-Date: 2019-03-18 07:59+0100\n"
+"Language-Team: Wp Trads <contact@wolforg.eu>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/\n"
-"X-Poedit-Basepath: ../..\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: wp-openagenda.php\n"
+"X-Generator: Poedit 2.2.1\n"
+"Last-Translator: \n"
+"Language: fr_FR\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
-"Report-Msgid-Bugs-To: "
 
 #: admin/register-settings.php:20
 msgid "OpenAgenda WP"
-msgstr "WP Openagenda"
+msgstr "OpenAgenda WP"
 
 #: admin/register-settings.php:20
 msgid "OpenAgenda Settings"
-msgstr "Paramètres OpenAgenda"
+msgstr "Réglages d'OpenAgenda"
 
 #: admin/register-settings.php:28 pro/vc/openagenda-vc-main.php:66
+#: pro/blocks/class-openwp-block-embed.php:29
 msgid "General"
 msgstr "Général"
 
@@ -50,89 +43,132 @@ msgstr "Crédits"
 msgid "API Openagenda"
 msgstr "API Openagenda"
 
-#. translators: Add the OpenAGenda URL.
+#. Add the OpenAGenda URL.
 #: admin/register-settings.php:98
 #, php-format
 msgid ""
 "Create an account on <a href=\"%s\" target=\"_blank\">OpenAgenda</a>, and go "
 "to your setting page to get your API key."
 msgstr ""
-"Créer un compte sur < a href = \" %s\" target = \"_ blank\" > OpenAgenda </a>"
-", et aller à votre page de réglage pour obtenir votre clé API."
+"Créez un compte sur <a href=\"%s\" target=\"_blank\">OpenAgenda</a>, et "
+"rendez vous sur votre page de réglages pour récupérer votre clé API."
 
-#: admin/register-settings.php:112
+#: admin/register-settings.php:113
 msgid "Welcome on the support center"
-msgstr "Bienvenue dans le centre d'aide"
+msgstr "Bienvenue sur le centre d'aide"
 
-#: admin/register-settings.php:115
+#: admin/register-settings.php:116
 msgid "Documentation Center"
 msgstr "Centre de documentation"
 
-#: admin/register-settings.php:120
-msgid "Discover Our Pro Version"
-msgstr "Découvrez notre version Pro"
-
 #: admin/register-settings.php:121
+msgid "Discover Our Pro Version"
+msgstr "Découvrez notre version pro"
+
+#: admin/register-settings.php:122
 msgid ""
 "Easy display all OpenAgenda Widget without any code to copy/past! Configure "
 "and that's it"
 msgstr ""
-"Facile d'affichage tous les widget OpenAgenda sans aucun code à copier/passé!"
-" Configurer et c'est tout"
+"Affichez facilement tous les widgets OpenAgenda sans copier/coller de code ! "
+"Configurez et c’est tout"
 
-#: admin/register-settings.php:123
+#: admin/register-settings.php:124
 msgid "Upgrade Now!"
-msgstr "Mise à jour maintenant!"
+msgstr "Mettre à niveau maintenant !"
 
-#: admin/register-settings.php:139
+#: admin/register-settings.php:140
 msgid "Love OpenAgenda for WordPress ? Don't forget to rate it 5 stars!"
-msgstr "Love OpenAgenda pour WordPress? N'oubliez pas de le noter 5 étoiles!"
+msgstr "Vous aimez OPenAGenda ? N’oubliez pas de le noter avec 5 étoiles !"
 
-#. translators: This line add credits to thivinfo.com.
-#: admin/register-settings.php:192
+#. This line add credits to thivinfo.com.
+#: admin/register-settings.php:193
 #, php-format
 msgid "This plugin is created with love by <a href=\"%1$s\">%2$s</a>."
-msgstr "Ce plugin est créé avec amour par < a href = \"%1$s\" >%2$s </a>."
+msgstr "Cette extension est créée avec amour par <a href=\"%1$s\">%2$s</a>."
 
-#. translators: This line add disclosure from Openagenda.com and thivinfo.com.
-#: admin/register-settings.php:202
+#. This line add disclosure from Openagenda.com and thivinfo.com.
+#: admin/register-settings.php:203
 #, php-format
 msgid ""
 "There's no relations between <a href=\"%1$s\">%2$s</a> and <a href=\"%3$s\">"
 "%4$s</a>."
 msgstr ""
-"Il n'y a pas de relations entre < a href = \"%1$s\" >%2$s </a> et < a href = "
-"\"%3$s\" >%4$s </a>."
+"Il n'y a aucun lien entre <a href=\"%1$s\">%2$s</a> et <a href=\"%3$s\">"
+"%4$s</a>."
 
-#: class/class-openagendaapi.php:69
+#: views/main-agenda.php:13
+msgid ""
+"No event received from OpenAgenda, Please check your API Key. You can find "
+"it in your Openagenda Account. "
+msgstr ""
+"Aucun évènement recu depuis OpenAgenda. Veuillez vérifier votre clé API. "
+"Vous pourrez la trouver dans votre compte OpenAgenda. "
+
+#: views/main-agenda.php:14
+msgid "Need Help?"
+msgstr "Besoin d’aide ?"
+
+#: views/main-agenda.php:26
+#, php-format
+msgid "From %1s to %2s"
+msgstr "Du %1s au %2s"
+
+#: views/main-agenda.php:28
+#, php-format
+msgid "On: %s"
+msgstr "Le : %s"
+
+#: views/main-agenda.php:60
+msgid "Link to the event"
+msgstr "Lien vers l'évènement"
+
+#: views/main-agenda.php:60
+msgid "Read More"
+msgstr "Lire la suite"
+
+#: class/class-openagendaapi.php:83
 msgid "You forgot to add an agenda's url to retrieve"
-msgstr "Vous avez oublié d'ajouter une URL d'agenda à afficher"
+msgstr "Vous avez oublié d'ajouter une URL d’agenda à récupérer"
 
-#: class/class-openagendaapi.php:87 class/class-openagendaapi.php:90
+#: class/class-openagendaapi.php:118 class/class-openagendaapi.php:121
 msgid "Impossible to retrieve Events Data"
-msgstr "Impossible de récupérer des données d'événements"
+msgstr "Impossible de récupérer les données d'évènements"
 
-#. translators: this is a link to add events in Openagenda.com.
-#: class/class-openagendaapi.php:162
+#. this is a link to add events in Openagenda.com.
+#: class/class-openagendaapi.php:209
 #, php-format
 msgid "Have an Event to display here? <a href=\"%s\">Add it!</a>"
 msgstr ""
-"Vous avez un évènement à afficher ici? < a href = \" %s\" > Ajoutez-le! </a>"
+"Vous avez un évènement à afficher ici ? <a href=\"%s\">Ajoutez le !</a>"
 
-#: class/class-openagendaapi.php:182
+#: class/class-openagendaapi.php:229
 msgid ""
 "This agenda doesn't have any embeds layout in their params.<br> We're sorry, "
 "but wen can't display it :("
 msgstr ""
-"Votre agenda n'a pas de vue embarquée de créée. Nous sommes désolé, nous ne "
-"pouvons pas l'afficher. :-("
+"Cet agenda n'a pas de vue embarquée dans ces paramètres.<br> Nous sommes "
+"désolé, nous ne pouvons pas l'afficher :("
+
+#: class/class-openagendaapi.php:321
+msgid "Woot! Your API Key seems to be non valid"
+msgstr "Zut ! Votre clé API semble non valide"
+
+#: class/class-openagendaapi.php:322
+#, php-format
+msgid "<a href=\"%s\" target=\"_blank\">Find help</a>"
+msgstr "<a href=\"%s\" target=\"_blank\">Trouver de l'aide</a>"
+
+#: class/class-openagendaapi.php:327
+msgid "OpenAgenda API Key valid"
+msgstr "Clé API OpenAgenda valide"
 
 #: class/class-openagenda-wp-basic-widget.php:18
 msgid ""
 "Display an Openagenda.com's Agenda in your WordPress Sidebar with a "
 "beautiful widget"
 msgstr ""
-"Affichez l'agenda d'un Openagenda dans votre sidebar wordpress avec un beau "
+"Affichez un agenda Openagenda. com dans votre barre WordPress avec un beau "
 "widget"
 
 #: class/class-openagenda-wp-basic-widget.php:72
@@ -144,7 +180,7 @@ msgstr "URL OpenAgenda"
 #: class/class-openagenda-wp-basic-widget.php:81
 #: pro/vc/openagenda-vc-main.php:49
 msgid "Number of events:"
-msgstr "Nombre d'évènements"
+msgstr "Nombre d'événements :"
 
 #: class/class-openagenda-wp-basic-widget.php:89
 msgid "Languages of events:"
@@ -152,34 +188,612 @@ msgstr "Langues des évènements :"
 
 #: class/class-openagenda-wp-basic-widget.php:97
 msgid "Display Image:"
-msgstr "Afficher l'image :"
+msgstr "Afficher l’Image :"
 
 #: class/class-openagenda-wp-basic-widget.php:105
 msgid "Display event title:"
-msgstr "Afficher le titre de l'évènement :"
+msgstr "Afficher le titre de l'événement :"
 
 #: class/class-openagenda-wp-basic-widget.php:113
 msgid "Display event description:"
-msgstr "Afficher la description de l'évènement :"
+msgstr "Afficher la description de l'événement :"
 
-#: pro/shortcode/class-openagenda-search-shortcode.php:81
-#: pro/vc/openagenda-vc-main.php:68
+#: blocks/class-basicblock.php:16
+msgid "OpenAgenda Basic Block"
+msgstr "Bloc basique OpenAgenda"
+
+#: blocks/class-basicblock.php:18 blocks/class-mainagendablock.php:38
+#: pro/blocks/class-openwp-block-slider.php:26
+#: pro/blocks/class-openwp-block-embed.php:23
+msgid "Openagenda URL"
+msgstr "URL OpenAgenda"
+
+#: blocks/class-basicblock.php:19
+msgid "Number of events"
+msgstr "Nombre d’évènements"
+
+#: blocks/class-basicblock.php:30 blocks/class-mainagendablock.php:39
+#: pro/blocks/class-openwp-block-slider.php:27
+#: pro/blocks/class-openwp-block-embed.php:24
+msgid "2 letters language code"
+msgstr "Code langue à 2 lettres"
+
+#: blocks/class-basicblock.php:32
+msgid "Display Images"
+msgstr "Afficher les images"
+
+#: blocks/class-basicblock.php:34 blocks/class-basicblock.php:39
+#: blocks/class-basicblock.php:44
+msgid "Yes"
+msgstr "Oui"
+
+#: blocks/class-basicblock.php:35 blocks/class-basicblock.php:40
+#: blocks/class-basicblock.php:45
+msgid "No"
+msgstr "Non"
+
+#: blocks/class-basicblock.php:37
+msgid "Display Title"
+msgstr "Afficher le titre"
+
+#: blocks/class-basicblock.php:42
+msgid "Display description"
+msgstr "Afficher la description"
+
+#: blocks/class-basicblock.php:50
+msgid "basic Openagenda Block"
+msgstr "bloc OpenAgenda basique"
+
+#: blocks/class-mainagendablock.php:33
+msgid "OpenAgenda Main block"
+msgstr "Bloc principal OpenAgenda"
+
+#: blocks/class-mainagendablock.php:41
+msgid "Number of Events per line"
+msgstr "Nombre d'évènements par ligne"
+
+#: blocks/class-mainagendablock.php:54 pro/vc/openagenda-vc-main.php:52
+msgid "Number of Events"
+msgstr "Nombre d'événements"
+
+#: blocks/class-mainagendablock.php:80
+msgid "Description Background Color"
+msgstr "Couleur d'arrière-plan de description"
+
+#: blocks/class-mainagendablock.php:81
+msgid "Description Text Color"
+msgstr "Couleur de texte de description"
+
+#: blocks/class-mainagendablock.php:82
+msgid "Date Background Color"
+msgstr "Couleur d'arrière-plan de date"
+
+#: blocks/class-mainagendablock.php:83
+msgid "Date text Color"
+msgstr "Couleur de texte de date"
+
+#: pro/admin/settings.php:10
+msgid "Secret Key Openagenda"
+msgstr "Clé secrète Openagenda"
+
+#: pro/admin/settings.php:27
+msgid "Hello, Could you please activate my Secret Key ?"
+msgstr "Bonjour, pourriez-vous s'il vous plaît activer ma clé secrète ?"
+
+#: pro/admin/settings.php:28
+msgid "Secret Key Activation"
+msgstr "Activation de clé secrète"
+
+#. Add the OpenAGenda URL.
+#: pro/admin/settings.php:30
+#, php-format
+msgid ""
+"Send a mail to <a href=\"%s\" >OpenAgenda</a>, and ask them to activate your "
+"secret key."
+msgstr ""
+"Envoyez un mail à <a href=\"%s\">OpenAgenda</a>, et demandez-leur d'activer "
+"votre clé secrète."
+
+#: pro/shortcodes/class-openagenda-search-shortcode.php:81
+#: pro/vc/openagenda-vc-main.php:68 pro/blocks/class-openwp-block-embed.php:31
 msgid "Search"
-msgstr "Recherche"
+msgstr "Rechercher"
 
-#: pro/shortcode/class-openagenda-search-shortcode.php:107
+#: pro/shortcodes/class-openagenda-search-shortcode.php:107
 #: pro/vc/class-openagenda-search.php:88 pro/vc/openagenda-vc-main.php:70
+#: pro/blocks/class-openwp-block-embed.php:33
 msgid "Tags"
-msgstr "Mot-clés"
+msgstr "Étiquettes"
 
-#: pro/shortcode/class-openagenda-search-shortcode.php:120
+#: pro/shortcodes/class-openagenda-search-shortcode.php:120
 msgid "All"
-msgstr "Tous"
+msgstr "Tout"
 
-#: pro/shortcode/class-openagenda-search-shortcode.php:138
+#: pro/shortcodes/class-openagenda-search-shortcode.php:138
 #: pro/vc/class-openagenda-search.php:89
 msgid "Category"
 msgstr "Catégorie"
+
+#: pro/inc/custom-fields.php:13
+msgid "Accessible to disabled people"
+msgstr "Accessible aux personnes handicapées"
+
+#: pro/inc/custom-fields.php:14
+msgid "Accessible to the hearing impaired"
+msgstr "Accessible aux malentendants"
+
+#: pro/inc/custom-fields.php:15
+msgid "Accessible to the psychic handicapped"
+msgstr "Accessible aux handicapés psychiques"
+
+#: pro/inc/custom-fields.php:16
+msgid "Accessible to visually impaired"
+msgstr "Accessible aux malvoyants"
+
+#: pro/inc/custom-fields.php:17
+msgid "Accessible in sign language"
+msgstr "Accessible en langue des signes"
+
+#: pro/inc/custom-fields.php:25
+msgid "Conditions of participation, rates"
+msgstr "Conditions de participation, tarifs"
+
+#: pro/inc/custom-fields.php:30
+msgid "Event UID"
+msgstr "UID d'événement"
+
+#: pro/inc/custom-fields.php:35
+msgid "Registration tools"
+msgstr "Outils d'inscription"
+
+#: pro/inc/custom-fields.php:40
+msgid "Minimum age"
+msgstr "Âge minimum"
+
+#: pro/inc/custom-fields.php:47
+msgid "Maximum age"
+msgstr "Âge maximum"
+
+#: pro/inc/custom-fields.php:54
+msgid "Accessibility"
+msgstr "Accessibilité"
+
+#: pro/inc/custom-fields.php:60
+msgid "date"
+msgstr "date"
+
+#: pro/inc/custom-fields.php:63
+msgid "start date"
+msgstr "date de début"
+
+#: pro/inc/custom-fields.php:65 pro/inc/custom-fields.php:72
+msgid "End date for this event"
+msgstr "Date de fin pour cet événement"
+
+#: pro/inc/custom-fields.php:70
+msgid "End date"
+msgstr "Date de fin"
+
+#: pro/inc/custom-fields.php:96
+msgid "Openagenda data"
+msgstr "Données Openagenda"
+
+#: pro/inc/cpt.php:12
+msgctxt "Post Type General Name"
+msgid "OpenAgenda Events"
+msgstr "Évènements OpenAgenda"
+
+#: pro/inc/cpt.php:13
+msgctxt "Post Type Singular Name"
+msgid "OpenAgenda Event"
+msgstr "Évènement OpenAgenda"
+
+#: pro/inc/cpt.php:14 pro/inc/cpt.php:15 pro/vc/class-openagenda-search.php:27
+msgid "Openagenda"
+msgstr "Openagenda"
+
+#: pro/inc/cpt.php:16
+msgid "Event Archives"
+msgstr "Archives des évènements"
+
+#: pro/inc/cpt.php:17
+msgid "Event Attributes"
+msgstr "Attributs des évènements"
+
+#: pro/inc/cpt.php:18
+msgid "Parent Event:"
+msgstr "Évènement parent :"
+
+#: pro/inc/cpt.php:19
+msgid "All Events"
+msgstr "Tous les événements"
+
+#: pro/inc/cpt.php:20
+msgid "Add New Event"
+msgstr "Ajouter un nouvel événement"
+
+#: pro/inc/cpt.php:21
+msgid "Add New"
+msgstr "Ajouter"
+
+#: pro/inc/cpt.php:22
+msgid "New Event"
+msgstr "Nouvel évènement"
+
+#: pro/inc/cpt.php:23
+msgid "Edit Event"
+msgstr "Modifier l'événement"
+
+#: pro/inc/cpt.php:24
+msgid "Update Event"
+msgstr "Mettre à jour l'événement"
+
+#: pro/inc/cpt.php:25
+msgid "View Event"
+msgstr "Voir l'événement"
+
+#: pro/inc/cpt.php:26
+msgid "View Events"
+msgstr "Voir les évènements"
+
+#: pro/inc/cpt.php:27
+msgid "Search Event"
+msgstr "Rechercher un évènement"
+
+#: pro/inc/cpt.php:28
+msgid "Not found"
+msgstr "Non trouvé"
+
+#: pro/inc/cpt.php:29
+msgid "Not found in Trash"
+msgstr "Non trouvé dans la corbeille"
+
+#: pro/inc/cpt.php:30
+msgid "Featured Image"
+msgstr "Image mise en avant"
+
+#: pro/inc/cpt.php:31
+msgid "Set featured image"
+msgstr "Définir une image mise en avant"
+
+#: pro/inc/cpt.php:32
+msgid "Remove featured image"
+msgstr "Supprimer l'image mise en avant"
+
+#: pro/inc/cpt.php:33
+msgid "Use as featured image"
+msgstr "Utiliser comme image mise en avant"
+
+#: pro/inc/cpt.php:34
+msgid "Insert into Event"
+msgstr "Insérer dans l’événement"
+
+#: pro/inc/cpt.php:35
+msgid "Uploaded to this Event"
+msgstr "Téléversé dans cet événement"
+
+#: pro/inc/cpt.php:36
+msgid "Events list"
+msgstr "Liste d’événements"
+
+#: pro/inc/cpt.php:37
+msgid "Events list navigation"
+msgstr "Navigation de liste d’évènements"
+
+#: pro/inc/cpt.php:38
+msgid "Filter Events list"
+msgstr "Filtrer la liste d’événements"
+
+#: pro/inc/cpt.php:41 pro/inc/cpt.php:42
+msgid "OpenAgenda Event"
+msgstr "Évènement OpenAgenda"
+
+#: pro/inc/venues.php:12
+msgctxt "Taxonomy General Name"
+msgid "Venues"
+msgstr "Lieux"
+
+#: pro/inc/venues.php:13
+msgctxt "Taxonomy Singular Name"
+msgid "Venue"
+msgstr "Lieu"
+
+#: pro/inc/venues.php:14
+msgid "Venues"
+msgstr "Lieux"
+
+#: pro/inc/venues.php:15
+msgid "All Venues"
+msgstr "Tous les lieux"
+
+#: pro/inc/venues.php:16
+msgid "Parent Venue"
+msgstr "Lieu parent"
+
+#: pro/inc/venues.php:17
+msgid "Parent Venue:"
+msgstr "Lieu parent :"
+
+#: pro/inc/venues.php:18
+msgid "New Venue Name"
+msgstr "Nom du nouveau lieu"
+
+#: pro/inc/venues.php:19
+msgid "Add New Venue"
+msgstr "Ajouter un nouveau lieu"
+
+#: pro/inc/venues.php:20
+msgid "Edit Venue"
+msgstr "Modifier le lieu"
+
+#: pro/inc/venues.php:21
+msgid "Update Venue"
+msgstr "Mettre à jour le lieu"
+
+#: pro/inc/venues.php:22
+msgid "View Venue"
+msgstr "Voir le lieu"
+
+#: pro/inc/venues.php:23
+msgid "Separate Venues with commas"
+msgstr "Séparez les lieux avec des virgules"
+
+#: pro/inc/venues.php:24
+msgid "Add or remove Venues"
+msgstr "Ajouter ou supprimer des lieux"
+
+#: pro/inc/venues.php:25 pro/inc/agenda.php:24 pro/inc/categories.php:25
+#: pro/inc/keywords.php:25
+msgid "Choose from the most used"
+msgstr "Choisir parmi les plus utilisés"
+
+#: pro/inc/venues.php:26
+msgid "Popular Venues"
+msgstr "Lieux populaires"
+
+#: pro/inc/venues.php:27
+msgid "Search Venues"
+msgstr "Rechercher un lieu"
+
+#: pro/inc/venues.php:28 pro/inc/agenda.php:27 pro/inc/categories.php:28
+#: pro/inc/keywords.php:28
+msgid "Not Found"
+msgstr "Non trouvé"
+
+#: pro/inc/venues.php:29
+msgid "No Venues"
+msgstr "Aucun lieu"
+
+#: pro/inc/venues.php:30
+msgid "Venues list"
+msgstr "Liste des lieux"
+
+#: pro/inc/venues.php:31
+msgid "Venues list navigation"
+msgstr "Navigation de liste des lieux"
+
+#: pro/inc/agenda.php:11
+msgctxt "Taxonomy General Name"
+msgid "Agendas"
+msgstr "Agendas"
+
+#: pro/inc/agenda.php:12
+msgctxt "Taxonomy Singular Name"
+msgid "Agenda"
+msgstr "Agenda"
+
+#: pro/inc/agenda.php:13
+msgid "Agenda"
+msgstr "Agenda"
+
+#: pro/inc/agenda.php:14
+msgid "All Agendas"
+msgstr "Tous les agendas"
+
+#: pro/inc/agenda.php:15
+msgid "Parent Agenda"
+msgstr "Agenda parent"
+
+#: pro/inc/agenda.php:16
+msgid "Parent Agenda:"
+msgstr "Agenda parent :"
+
+#: pro/inc/agenda.php:17
+msgid "New Agenda Name"
+msgstr "Nouveau nom d’agenda"
+
+#: pro/inc/agenda.php:18
+msgid "Add New Agenda"
+msgstr "Ajouter un nouvel agenda"
+
+#: pro/inc/agenda.php:19
+msgid "Edit Agenda"
+msgstr "Modifier l'agenda"
+
+#: pro/inc/agenda.php:20
+msgid "Update Agenda"
+msgstr "Mise à jour de l'agenda"
+
+#: pro/inc/agenda.php:21
+msgid "View Agenda"
+msgstr "Voir l'agenda"
+
+#: pro/inc/agenda.php:22
+msgid "Separate Agendas with commas"
+msgstr "Séparez les agendas avec des virgules"
+
+#: pro/inc/agenda.php:23
+msgid "Add or remove Agendas"
+msgstr "Ajouter ou supprimer des agendas"
+
+#: pro/inc/agenda.php:25
+msgid "Popular Agendas"
+msgstr "Agendas populaires"
+
+#: pro/inc/agenda.php:26
+msgid "Search Agendas"
+msgstr "Recherche d’agendas"
+
+#: pro/inc/agenda.php:28
+msgid "No Agendas"
+msgstr "Aucun agenda"
+
+#: pro/inc/agenda.php:29
+msgid "Items list"
+msgstr "Liste d’éléments"
+
+#: pro/inc/agenda.php:30
+msgid "Items list navigation"
+msgstr "Navigation de liste d’éléments"
+
+#: pro/inc/categories.php:12
+msgctxt "Taxonomy General Name"
+msgid "Categories"
+msgstr "Catégories"
+
+#: pro/inc/categories.php:13
+msgctxt "Taxonomy Singular Name"
+msgid "Category"
+msgstr "Catégorie"
+
+#: pro/inc/categories.php:14 pro/vc/openagenda-vc-main.php:69
+#: pro/blocks/class-openwp-block-embed.php:32
+msgid "Categories"
+msgstr "Catégories"
+
+#: pro/inc/categories.php:15
+msgid "All Categories"
+msgstr "Toutes les catégories"
+
+#: pro/inc/categories.php:16
+msgid "Parent Category"
+msgstr "Catégorie parente"
+
+#: pro/inc/categories.php:17
+msgid "Parent Category:"
+msgstr "Catégorie parente :"
+
+#: pro/inc/categories.php:18
+msgid "New Category Name"
+msgstr "Nom de la nouvelle catégorie"
+
+#: pro/inc/categories.php:19
+msgid "Add New Category"
+msgstr "Ajouter une nouvelle catégorie"
+
+#: pro/inc/categories.php:20
+msgid "Edit Category"
+msgstr "Modifier la catégorie"
+
+#: pro/inc/categories.php:21
+msgid "Update Category"
+msgstr "Mettre à jour la catégorie"
+
+#: pro/inc/categories.php:22
+msgid "View Category"
+msgstr "Voir la catégorie"
+
+#: pro/inc/categories.php:23
+msgid "Separate Categories with commas"
+msgstr "Séparez les catégories par des virgules"
+
+#: pro/inc/categories.php:24
+msgid "Add or remove Categories"
+msgstr "Ajouter ou supprimer des catégories"
+
+#: pro/inc/categories.php:26
+msgid "Popular Categories"
+msgstr "Catégories populaires"
+
+#: pro/inc/categories.php:27
+msgid "Search Categories"
+msgstr "Recherche de catégories"
+
+#: pro/inc/categories.php:29
+msgid "No Categories"
+msgstr "Aucune catégorie"
+
+#: pro/inc/categories.php:30
+msgid "Categories list"
+msgstr "Liste des catégories"
+
+#: pro/inc/categories.php:31
+msgid "Categories list navigation"
+msgstr "Navigation de liste de catégories"
+
+#: pro/inc/keywords.php:12
+msgctxt "Taxonomy General Name"
+msgid "keywords"
+msgstr "mots-clés"
+
+#: pro/inc/keywords.php:13
+msgctxt "Taxonomy Singular Name"
+msgid "keyword"
+msgstr "mot-clé"
+
+#: pro/inc/keywords.php:14
+msgid "keywords"
+msgstr "mots-clés"
+
+#: pro/inc/keywords.php:15
+msgid "All keywords"
+msgstr "Tous les mots-clés"
+
+#: pro/inc/keywords.php:16
+msgid "Parent keyword"
+msgstr "Mot-clé parent"
+
+#: pro/inc/keywords.php:17
+msgid "Parent keyword:"
+msgstr "Mot-clé parent :"
+
+#: pro/inc/keywords.php:18
+msgid "New keyword Name"
+msgstr "Nom du nouveau mot-clé"
+
+#: pro/inc/keywords.php:19
+msgid "Add New keyword"
+msgstr "Ajouter un nouveau mot-clé"
+
+#: pro/inc/keywords.php:20
+msgid "Edit keyword"
+msgstr "Modifier le mot-clé"
+
+#: pro/inc/keywords.php:21
+msgid "Update keyword"
+msgstr "Mise à jour du mot-clé"
+
+#: pro/inc/keywords.php:22
+msgid "View keyword"
+msgstr "Voir le mot-clé"
+
+#: pro/inc/keywords.php:23
+msgid "Separate keywords with commas"
+msgstr "Séparez les mots-clés par des virgules"
+
+#: pro/inc/keywords.php:24
+msgid "Add or remove keywords"
+msgstr "Ajouter ou supprimer des mots-clés"
+
+#: pro/inc/keywords.php:26
+msgid "Popular keywords"
+msgstr "Mots-clés populaires"
+
+#: pro/inc/keywords.php:27
+msgid "Search keywords"
+msgstr "Recherche de mot-clés"
+
+#: pro/inc/keywords.php:29
+msgid "No keywords"
+msgstr "Aucun mot-clé"
+
+#: pro/inc/keywords.php:30
+msgid "keywords list"
+msgstr "liste de mots-clés"
+
+#: pro/inc/keywords.php:31
+msgid "keywords list navigation"
+msgstr "navigation de liste de mots-clés"
 
 #: pro/vc/class-openagenda-search.php:24
 msgid "OpenAgenda Search"
@@ -187,11 +801,7 @@ msgstr "Recherche OpenAgenda"
 
 #: pro/vc/class-openagenda-search.php:26
 msgid "Display your openAgenda searchbar in WordPress"
-msgstr "Afficher une barre de recherche OpenAgenda dans WordPress"
-
-#: pro/vc/class-openagenda-search.php:27
-msgid "Openagenda"
-msgstr "Openagenda"
+msgstr "Affichez votre barre de recherche openAgenda dans WordPress"
 
 #: pro/vc/class-openagenda-search.php:34 pro/vc/openagenda-vc-main.php:24
 #: pro/vc/openagenda-vc-main.php:26
@@ -212,11 +822,11 @@ msgstr "URL de l'agenda"
 
 #: pro/vc/class-openagenda-search.php:46
 msgid "my-agenda-url"
-msgstr "my-agenda-url"
+msgstr "mon-url-agenda"
 
 #: pro/vc/class-openagenda-search.php:55
 msgid "Agenda title heading"
-msgstr "Balise du titre"
+msgstr "Titre de l'agenda"
 
 #: pro/vc/class-openagenda-search.php:72
 msgid "Agenda language"
@@ -228,7 +838,7 @@ msgstr "fr"
 
 #: pro/vc/class-openagenda-search.php:83
 msgid "Check the searchg field to show."
-msgstr "Cochez les champs de recherches à afficher"
+msgstr "Cochez le champ searchg pour l’afficher."
 
 #: pro/vc/class-openagenda-search.php:87
 msgid "Date"
@@ -236,19 +846,19 @@ msgstr "Date"
 
 #: pro/vc/class-openagenda-search.php:90
 msgid "Search field"
-msgstr "Champs de recherche"
+msgstr "Champ de recherche"
 
 #: pro/vc/class-openagenda-search.php:91
 msgid "Venue"
-msgstr "Lieux"
+msgstr "Lieu"
 
 #: pro/vc/openagenda-vc-main.php:14
 msgid "Main Openagenda"
-msgstr "OpenAgenda Principal"
+msgstr "Openagenda principal"
 
 #: pro/vc/openagenda-vc-main.php:16
 msgid "Display Openagenda Script"
-msgstr "Afficher le script OpenAgenda"
+msgstr "Afficher le script Openagenda"
 
 #: pro/vc/openagenda-vc-main.php:17 pro/vc/class-openagenda-slider.php:28
 msgid "OpenAgenda"
@@ -257,61 +867,92 @@ msgstr "OpenAgenda"
 #: pro/vc/openagenda-vc-main.php:27
 msgid "Add a word between % to add a different style. Only 1 allowed"
 msgstr ""
-"Ajoutez un mot entre % pour ajouter un style différent. Seulement 1 "
-"expression entre % autorisée."
+"Ajoutez un mot entre % pour ajouter un style différent. 1 seul autorisé"
 
 #: pro/vc/openagenda-vc-main.php:39
 msgid "URL to the OpenAgenda Agenda"
-msgstr "URL vers l'Agenda OpenAgenda"
-
-#: pro/vc/openagenda-vc-main.php:52
-msgid "Number of Events"
-msgstr "Nombre d'évènements :"
+msgstr "URL de l'Agenda OpenAgenda"
 
 #: pro/vc/openagenda-vc-main.php:62
 msgid "OpenAgenda Widget to display:"
-msgstr "Widget OpenAgenda a afficher :"
+msgstr "Widget OpenAgenda à afficher :"
 
 #: pro/vc/openagenda-vc-main.php:65
 msgid "Please select an OpenAgenda Widget"
-msgstr "Merci de sélectionner un widget OpenAgenda"
+msgstr "Veuillez sélectionner un widget OpenAgenda"
 
-#: pro/vc/openagenda-vc-main.php:67
+#: pro/vc/openagenda-vc-main.php:67 pro/blocks/class-openwp-block-embed.php:30
 msgid "Map"
 msgstr "Carte"
 
-#: pro/vc/openagenda-vc-main.php:69
-msgid "Categories"
-msgstr "Catégories"
-
-#: pro/vc/openagenda-vc-main.php:71
+#: pro/vc/openagenda-vc-main.php:71 pro/blocks/class-openwp-block-embed.php:34
 msgid "Calendrier"
 msgstr "Calendrier"
 
 #: pro/vc/openagenda-vc-main.php:72
 msgid "Preview Widget"
-msgstr "Widget de prévisualisation"
+msgstr "Aperçu du widget"
 
 #: pro/vc/openagenda-vc-main.php:74
 msgid "Select the widget to display"
-msgstr "Choisissez le widget à afficher."
+msgstr "Sélectionnez le widget à afficher"
 
-#. Plugin Name of the plugin/theme
+#: pro/blocks/class-openwp-block-slider.php:20
+msgid "OpenAgenda Slider Block"
+msgstr "Bloc de diaporama OpenAgenda"
+
+#: pro/blocks/class-openwp-block-slider.php:25
+msgid "Title :"
+msgstr "Titre :"
+
+#: pro/blocks/class-openwp-block-slider.php:29
+msgid "Internal URL of Main Agenda Page:"
+msgstr "URL interne de la page d'agenda principal :"
+
+#: pro/blocks/class-openwp-block-slider.php:30
+msgid "Display venue"
+msgstr "Afficher le lieu"
+
+#: pro/blocks/class-openwp-block-slider.php:33
+msgid "Title Color"
+msgstr "Couleur du titre"
+
+#: pro/blocks/class-openwp-block-slider.php:35
+msgid "Text Color"
+msgstr "Couleur du texte"
+
+#: pro/blocks/class-openwp-block-embed.php:18
+msgid "OpenAgenda embed Block"
+msgstr "Bloc embarqué OpenAgenda"
+
+#: pro/blocks/class-openwp-block-embed.php:26
+msgid "OpenAgenda's widget"
+msgstr "Widget OpenAgenda"
+
+#: pro/blocks/class-openwp-block-embed.php:28
+msgid "Select an OpenAgenda Widget"
+msgstr "Sélectionnez un widget OpenAgenda"
+
+#: pro/blocks/class-openwp-block-embed.php:35
+msgid "Preview"
+msgstr "Aperçu"
+
+#. Name of the plugin
 msgid "WP Openagenda"
 msgstr "WP Openagenda"
 
 #. Description of the plugin
 msgid "Easily display an OpenAgenda.com in your WordPress website"
-msgstr "Afficher facilement un agenda OpenAgenda.com sur votre site WordPress"
+msgstr "Affichez facilement un OpenAgenda.com dans votre site WordPress"
 
-#. Plugin URI of the plugin/theme
+#. URI of the plugin
 msgid "https://openagenda4wp.com/"
 msgstr "https://openagenda4wp.com/"
 
-#. Author of the plugin/theme
+#. Author of the plugin
 msgid "Sébastien Serre"
 msgstr "Sébastien Serre"
 
-#. Author URI of the plugin/theme
+#. Author URI of the plugin
 msgid "http://www.thivinfo.com"
 msgstr "http://www.thivinfo.com"
