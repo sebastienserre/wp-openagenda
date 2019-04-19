@@ -155,7 +155,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 					'jquery-ui-datepicker',
 				)
 			);
-			wp_enqueue_style( 'openwp-pro', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/openwp-pro.css' );
+			wp_enqueue_style( 'openwp-pro', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/openwp-pro.css', array('slickthemecss') );
 			wp_register_script( 'IsotopeOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope.pkgd.min.js',
 				array(
 					'jquery',
