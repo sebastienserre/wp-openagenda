@@ -3,7 +3,9 @@ jQuery(document).ready(function ($) {
         infinite: true,
         autoplay: false,
         cssEase: 'linear',
-        adaptiveHeight: true
+        adaptiveHeight: true,
+        arrows: true,
+        dots: true,
     })
     ;
 });

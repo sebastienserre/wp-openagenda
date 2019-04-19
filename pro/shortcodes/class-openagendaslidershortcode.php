@@ -44,7 +44,7 @@ class OpenagendaSliderShortcode {
 			'slickjs',
 		) );
 		wp_register_style( 'slickcss', THFO_OPENWP_PLUGIN_URL . 'pro/assets/slick/slick.css' );
-		wp_register_style( 'slickthemecss', THFO_OPENWP_PLUGIN_URL . 'pro/assets/slick/slick-theme.css' );
+		wp_register_style( 'slickthemecss', THFO_OPENWP_PLUGIN_URL . 'pro/assets/slick/slick-theme.css', array('slickcss') );
 	}
 
 	public function openwp_slider_html( $atts, $display_title = true ) {
@@ -106,7 +106,7 @@ class OpenagendaSliderShortcode {
 						</div> <!-- bloc-openagenda__pic -->
 
 						<div class="bloc-openagenda__date"
-						     style="background: <?php echo $atts['agenda_date_color']; ?> color:<?php echo $atts['agenda_date_text_color']; ?>">
+						     style="background: <?php echo $atts['agenda_date_color']; ?>; color:<?php echo $atts['agenda_date_text_color']; ?>">
 							<div class="bloc-openagenda__box-title bloc-openagenda__box-title--uppercase"
 							     style=" color:<?php echo $atts['agenda_date_text_color'] ?>">
 								<a class="bloc-openagenda__link" href="<?php echo $url; ?>"
