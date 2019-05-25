@@ -6,7 +6,7 @@
  * Version: 1.7.1
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
- * Tested up to: 5.1
+ * Tested up to: 5.2
  * Text Domain: wp-openagenda
  * Domain Path: /pro/languages
  * License: GPLv3
