@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Carbon_Fields\Block;
 use Carbon_Fields\Field;
+use OpenAgendaApi;
 
 class OpenwpBlockEmbed {
 	public function __construct() {
