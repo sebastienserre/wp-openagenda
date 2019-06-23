@@ -278,13 +278,13 @@ function export_event__premium_only() {
 		);
 
 		foreach ( $events as $event ) {
-			$eventuid = get_post_meta( $event->ID, '_oa_event_uid' );
-			if ( empty( $eventuid[0] ) ) {
+			$eventuid = carbon_get_post_meta( $event->ID, 'oa_event_uid' );
+			if ( empty( $eventuid ) ) {
 				//create
 				$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events";
 			} else {
 				//update
-				$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events/$eventuid[0]";
+				$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events/$eventuid";
 			}
 
 			extract( array_merge( array(
@@ -335,10 +335,13 @@ function export_event__premium_only() {
 			$i     = 0;
 			$dates = [];
 			$date  = [];
+
 			while ( $i < $diff ) {
+				$debut = intval( $debut );
+				$end = ($debut + 86400* $i)+7200;
 				$date = array(
 					'begin' => date( 'Y-m-d\Th:i:00+0200', $debut + 86400 * $i ),
-					'end'   => date( 'Y-m-d\Th:i:00+0200', $debut + 86400 * $i ),
+					'end'   => date( 'Y-m-d\Th:i:00+0200', $end ),
 				);
 
 				array_push( $dates, $date );
