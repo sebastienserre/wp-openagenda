@@ -257,7 +257,11 @@ function import_oa_events__premium_only() {
 	}
 }
 
+add_action( 'admin_init', 'export_event__premium_only' );
 function export_event__premium_only() {
+	if ( empty( $_GET['test'] ) ){
+		return;
+	}
 	$openagenda = new OpenAgendaApi();
 
 	$options     = array( 'lang' => 'fr' );
@@ -274,13 +278,13 @@ function export_event__premium_only() {
 		);
 
 		foreach ( $events as $event ) {
-			$eventuid = get_post_meta( $event->ID, '_oa_event_uid' );
-			if ( empty( $eventuid[0] ) ) {
+			$eventuid = carbon_get_post_meta( $event->ID, 'oa_event_uid' );
+			if ( empty( $eventuid ) ) {
 				//create
 				$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events";
 			} else {
 				//update
-				$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events/$eventuid[0]";
+				$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events/$eventuid";
 			}
 
 			extract( array_merge( array(
@@ -319,23 +323,25 @@ function export_event__premium_only() {
 			$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid' );
 
 			// get start date
-			$start = carbon_get_post_meta( $event->ID, 'oadate' );
-			$debut = $start[0]['oa_start'];
+			$debut = carbon_get_post_meta( $event->ID, 'oa_start' );
 
 			//get end date
-			$fin = $start[1]['oa_end'];
+			$fin = carbon_get_post_meta( $event->ID, 'oa_end' );
 
 			// day number between start and en of the events
 			$diff = $fin - $debut;
 			$diff = ceil( $diff / 86400 );
 
 			$i     = 0;
-			$dates = array();
-			$date  = array();
+			$dates = [];
+			$date  = [];
+
 			while ( $i < $diff ) {
+				$debut = intval( $debut );
+				$end = ($debut + 86400* $i)+7200;
 				$date = array(
-					'begin' => date( 'Y-m-d\Th:i:00+0200', $start[0]['oa_start'] + 86400 * $i ),
-					'end'   => date( 'Y-m-d\Th:i:00+0200', $start[0]['oa_end'] + 86400 * $i ),
+					'begin' => date( 'Y-m-d\Th:i:00+0200', $debut + 86400 * $i ),
+					'end'   => date( 'Y-m-d\Th:i:00+0200', $end ),
 				);
 
 				array_push( $dates, $date );
@@ -346,10 +352,15 @@ function export_event__premium_only() {
 			$a11y = carbon_get_post_meta( $event->ID, 'oa_a11y' );
 
 		}
+		if ( empty( $event->post_excerpt ) ){
+			$excerpt = __( 'No data found', 'wp-openagenda' );
+		} else {
+			$excerpt = $event->post_excerpt;
+		}
 		$data = array(
 			'slug'            => "$event->post_name-" . rand(),
 			'title'           => $event->post_title,
-			'description'     => $event->post_excerpt,
+			'description'     => $excerpt,
 			'longDescription' => $event->post_content,
 			'keywords'        => $keywords,
 			'age'             => $age,
