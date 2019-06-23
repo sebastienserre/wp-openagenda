@@ -2,9 +2,9 @@
 Contributors: sebastienserre
 Tags: openagenda, agenda, events, calendar, opendata,
 Requires at least: 4.6
-Tested up to: 5.1
+Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.7.1
+Stable tag: 1.7.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -77,6 +77,14 @@ On WP 5.0 Use the new Gutenberg Blocks!
 9. Masonry layout (Pro Version)
 
 == Changelog ==
+
+= 1.7.3 == 23 juin 2019
+    * Sunc with openagenda.com is OK
+
+= 1.7.2 == 31/mai/2019
+    * BUFIX -- Remove a Fatale Error ;-)
+    * Tested up to WP 5.2
+
 = 1.7.1 == 19/04/2019
 * BUGFIX -- add dots on slider Shortcode
 
