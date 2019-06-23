@@ -24,12 +24,11 @@ function wp_openagenda_delete_pid() {
 }
 
 if ( openagenda_fs()->is__premium_only() ) {
-		add_action( 'openagenda_hourly_event', 'register_venue__premium_only', 10 );
-		add_action( 'openagenda_hourly_event', 'import_oa_events__premium_only', 20 );
-		add_action( 'openagenda_hourly_event', 'export_event__premium_only', 30 );
+	add_action( 'openagenda_hourly_event', 'register_venue__premium_only', 10 );
+	add_action( 'openagenda_hourly_event', 'import_oa_events__premium_only', 20 );
+	add_action( 'openagenda_hourly_event', 'export_event__premium_only', 30 );
 
 }
-
 
 
 /**
@@ -37,7 +36,7 @@ if ( openagenda_fs()->is__premium_only() ) {
  */
 function register_venue__premium_only() {
 	$openagenda = new OpenAgendaApi();
-	$url_oa = $openagenda->get_agenda_list__premium_only();
+	$url_oa     = $openagenda->get_agenda_list__premium_only();
 
 	/**
 	 * Get UID for each
@@ -257,11 +256,9 @@ function import_oa_events__premium_only() {
 	}
 }
 
-add_action( 'admin_init', 'export_event__premium_only' );
+//add_action( 'admin_init', 'export_event__premium_only' );
 function export_event__premium_only() {
-	if ( empty( $_GET['test'] ) ){
-		return;
-	}
+
 	$openagenda = new OpenAgendaApi();
 
 	$options     = array( 'lang' => 'fr' );
@@ -338,8 +335,8 @@ function export_event__premium_only() {
 
 			while ( $i < $diff ) {
 				$debut = intval( $debut );
-				$end = ($debut + 86400* $i)+7200;
-				$date = array(
+				$end   = ( $debut + 86400 * $i ) + 7200;
+				$date  = array(
 					'begin' => date( 'Y-m-d\Th:i:00+0200', $debut + 86400 * $i ),
 					'end'   => date( 'Y-m-d\Th:i:00+0200', $end ),
 				);
@@ -352,25 +349,44 @@ function export_event__premium_only() {
 			$a11y = carbon_get_post_meta( $event->ID, 'oa_a11y' );
 
 		}
-		if ( empty( $event->post_excerpt ) ){
+		if ( empty( $event->post_excerpt ) ) {
 			$excerpt = __( 'No data found', 'wp-openagenda' );
 		} else {
 			$excerpt = $event->post_excerpt;
 		}
 		$data = array(
 			'slug'            => "$event->post_name-" . rand(),
-			'title'           => $event->post_title,
-			'description'     => $excerpt,
-			'longDescription' => $event->post_content,
-			'keywords'        => $keywords,
+			'title'           =>
+				[
+					'fr' => $event->post_title,
+					'en' => $event->post_title,
+				],
+			'description'     =>
+				[
+					'fr' => $excerpt,
+					'en' => $excerpt,
+				],
+			'longDescription' =>
+				[
+					'fr' => $event->post_content,
+					'en' => $event->post_content,
+				],
+			'keywords'        =>
+				[
+					'fr' => $keywords,
+					'en' => $keywords,
+				],
 			'age'             => $age,
 			'accessibility'   => $a11y,
-			'conditions'      => $conditions[0],
+			'conditions'      =>
+				[
+					'fr' => $conditions[0],
+					'en' => $conditions[0],
+				],
 			'registration'    => $registrations,
 			'locationUid'     => $locationuid[0],
 			'timings'         => $dates,
 		);
-
 
 
 		$imageLocalPath = null;
@@ -391,7 +407,7 @@ function export_event__premium_only() {
 			'access_token' => $accessToken,
 			'nonce'        => rand(),
 			'data'         => json_encode( $data ),
-			'lang'  =>  'fr',
+			'lang'         => 'fr',
 		);
 
 		if ( $imageLocalPath ) {
@@ -405,10 +421,11 @@ function export_event__premium_only() {
 		$decode = json_decode( $received_content, true );
 
 		// update event uid
-		$uid = intval( $decode['event'][ 'uid' ] );
-		if ( $uid ){
+		$uid = intval( $decode['event']['uid'] );
+		if ( $uid ) {
 			add_post_meta( $event->ID, '_oa_event_uid', $uid );
 		}
+
 		return $decode;
 	}
 }
