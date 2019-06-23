@@ -256,8 +256,12 @@ function import_oa_events__premium_only() {
 	}
 }
 
-//add_action( 'admin_init', 'export_event__premium_only' );
+add_action( 'admin_init', 'export_event__premium_only' );
 function export_event__premium_only() {
+
+	$locale = get_locale();
+	$locale = explode( '_', $locale );
+	$locale = $locale[0];
 
 	$openagenda = new OpenAgendaApi();
 
@@ -354,34 +358,30 @@ function export_event__premium_only() {
 		} else {
 			$excerpt = $event->post_excerpt;
 		}
+
 		$data = array(
 			'slug'            => "$event->post_name-" . rand(),
 			'title'           =>
 				[
-					'fr' => $event->post_title,
-					'en' => $event->post_title,
+					$locale => $event->post_title,
 				],
 			'description'     =>
 				[
-					'fr' => $excerpt,
-					'en' => $excerpt,
+					$locale => $excerpt,
 				],
 			'longDescription' =>
 				[
-					'fr' => $event->post_content,
-					'en' => $event->post_content,
+					$locale => $event->post_content,
 				],
 			'keywords'        =>
 				[
-					'fr' => $keywords,
-					'en' => $keywords,
+					$locale => $keywords,
 				],
 			'age'             => $age,
 			'accessibility'   => $a11y,
 			'conditions'      =>
 				[
-					'fr' => $conditions[0],
-					'en' => $conditions[0],
+					$locale => $conditions[0],
 				],
 			'registration'    => $registrations,
 			'locationUid'     => $locationuid[0],
