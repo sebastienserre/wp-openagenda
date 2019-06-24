@@ -161,6 +161,9 @@ function import_oa_events__premium_only() {
 			);
 			$insert = wp_insert_post( $args );
 
+			carbon_set_post_meta( $insert, 'oa_start', $start_firstday);
+			carbon_set_post_meta( $insert, 'oa_end', $start_lastday);
+
 			//handicap
 			$i = 0;
 			foreach ( $events['accessibility'] as $accessibility ) {
@@ -256,7 +259,6 @@ function import_oa_events__premium_only() {
 	}
 }
 
-add_action( 'admin_init', 'export_event__premium_only' );
 function export_event__premium_only() {
 
 	$locale = get_locale();
