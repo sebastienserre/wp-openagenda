@@ -79,7 +79,7 @@ On WP 5.0 Use the new Gutenberg Blocks!
 == Changelog ==
 
 = 1.7.3 == 23 juin 2019
-    * Sunc with openagenda.com is OK
+    * Sync with openagenda.com is OK
 
 = 1.7.2 == 31/mai/2019
     * BUFIX -- Remove a Fatale Error ;-)
