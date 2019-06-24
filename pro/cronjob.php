@@ -138,13 +138,22 @@ function import_oa_events__premium_only() {
 				$id = $openagenda_events[0]->ID;
 			}
 
+			/**
+			 * Add support to TEC
+			 */
+			if ( is_tec_exists() ) {
+				$post_type = 'tribe_events';
+			} else {
+				$post_type = 'openagenda-events';
+			}
+
 			$args   = array(
 				'ID'             => $id,
 				'post_content'   => $events['longDescription']['fr'],
 				'post_title'     => $events['title']['fr'],
 				'post_excerpt'   => $events['description']['fr'],
 				'post_status'    => 'publish',
-				'post_type'      => 'openagenda-events',
+				'post_type'      => $post_type,
 				'comment_status' => 'closed',
 				'ping_status'    => 'closed',
 				'meta_input'     => array(
