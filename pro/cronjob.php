@@ -24,8 +24,8 @@ function wp_openagenda_delete_pid() {
 }
 
 if ( openagenda_fs()->is__premium_only() ) {
-	//add_action( 'openagenda_hourly_event', 'register_venue__premium_only', 10 );
-	//add_action( 'openagenda_hourly_event', 'import_oa_events__premium_only', 20 );
+	add_action( 'openagenda_hourly_event', 'register_venue__premium_only', 10 );
+	add_action( 'openagenda_hourly_event', 'import_oa_events__premium_only', 20 );
 	add_action( 'openagenda_hourly_event', 'export_event__premium_only', 30 );
 
 }
