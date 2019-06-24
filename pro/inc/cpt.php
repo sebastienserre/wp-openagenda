@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
-if ( ! function_exists( 'openagenda_event' ) ) {
+if ( ! function_exists('openagenda_event') && is_tec_exists() ) {
 
 // Register Custom Post Type
 	function openagenda_event() {

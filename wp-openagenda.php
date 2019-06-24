@@ -124,6 +124,22 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			}
 
 			include_once MY_ACF_PATH . 'acf.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/functions.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/admin/settings.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/cpt.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/venues.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/keywords.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/custom-fields.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/agenda.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/widget/class-openagenda-main-widget.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/widget/class-openagenda-slider-widget.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcodes/class-openagenda-embed-shortcode.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcodes/class-openagendaslidershortcode.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcodes/class-openagenda-search-shortcode.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/blocks/class-openwp-block-embed.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/cronjob.php';
+
+		}
 
 
 			include_once OPENWP_PRO_PATH . 'admin/settings.php';
