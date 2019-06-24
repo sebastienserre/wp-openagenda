@@ -23,6 +23,8 @@ Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 * Prioritory support
 * From only 29,99€
 
+[Buy The PRO Version](https://thivinfo.com/boutique/openagenda-pour-wordpress/ "Buy The PRO Version")
+
 == Installation ==
 * 1- unzip
 * 2- upload to wp-content/plugin
