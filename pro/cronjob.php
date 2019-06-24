@@ -338,10 +338,14 @@ function export_event__premium_only() {
 			$i     = 0;
 			$dates = [];
 			$date  = [];
+			$hfin = date( 'H:i', $fin );
+			$jdebut = date( 'Y-m-d', $debut);
+			$time = $jdebut .' '. $hfin;
+			$end = strtotime( $time );
 
 			while ( $i < $diff ) {
 				$debut = intval( $debut );
-				$end   = ( $debut + 86400 * $i ) + 7200;
+				$end   = ( $debut + 86400 * $i );
 				$date  = array(
 					'begin' => date( 'Y-m-d\Th:i:00+0200', $debut + 86400 * $i ),
 					'end'   => date( 'Y-m-d\Th:i:00+0200', $end ),
