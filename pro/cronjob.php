@@ -24,8 +24,8 @@ function wp_openagenda_delete_pid() {
 }
 
 if ( openagenda_fs()->is__premium_only() ) {
-	add_action( 'openagenda_hourly_event', 'register_venue__premium_only', 10 );
-	add_action( 'openagenda_hourly_event', 'import_oa_events__premium_only', 20 );
+	//add_action( 'openagenda_hourly_event', 'register_venue__premium_only', 10 );
+	//add_action( 'openagenda_hourly_event', 'import_oa_events__premium_only', 20 );
 	add_action( 'openagenda_hourly_event', 'export_event__premium_only', 30 );
 
 }
@@ -267,7 +267,7 @@ function export_event__premium_only() {
 
 	$openagenda = new OpenAgendaApi();
 
-	$options     = array( 'lang' => 'fr' );
+	$options     = array( 'lang' => $locale );
 	$agendas     = $openagenda->get_agenda_list__premium_only();
 	$accessToken = $openagenda->get_acces_token();
 	foreach ( $agendas as $agenda ) {
@@ -291,7 +291,7 @@ function export_event__premium_only() {
 			}
 
 			extract( array_merge( array(
-				'lang' => 'fr'
+				'lang' => $locale
 			), $options ) );
 
 			// retrieve event keywords
@@ -345,7 +345,7 @@ function export_event__premium_only() {
 
 			while ( $i < $diff ) {
 				$debut = intval( $debut );
-				$end   = ( $debut + 86400 * $i );
+				//$end   = $debut + ( 86400 * $i );
 				$date  = array(
 					'begin' => date( 'Y-m-d\Th:i:00+0200', $debut + 86400 * $i ),
 					'end'   => date( 'Y-m-d\Th:i:00+0200', $end ),
