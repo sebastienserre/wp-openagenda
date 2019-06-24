@@ -256,6 +256,7 @@ function import_oa_events__premium_only() {
 	}
 }
 
+add_action( 'save_post_openagenda-events', 'export_event__premium_only' );
 function export_event__premium_only() {
 
 	$locale = get_locale();
