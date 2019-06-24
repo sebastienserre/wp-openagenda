@@ -14,8 +14,14 @@ Display Events hosted in Openagenda.com easily in your WordPress Website.
 Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode, Gutenberg Blocks and Widget.
 Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 
-/!\ Manage your Openagenda events directly from your WordPress BackOffice (synced ones per hour)
-/!\ New on OpenAgenda for WordPress 1.5.0: Gutenberg Blocks!
+### Why Buying the Pro Version ?
+* Sync your Events directly with WordPress
+* Event created on Openagenda.com are imported as a WordPress CPT (openagenda-events)
+* Event created on WordPress are exported to OpenAgenda.com
+* Developpers can easily customize appearance by creating Templates following the WordPress Hierarchy in their WP Themes.
+* 30 days Trials
+* Prioritory support
+* From only 29,99€
 
 == Installation ==
 * 1- unzip
@@ -38,23 +44,22 @@ On WP 5.0 Use the new Gutenberg Blocks!
 * No! This plugin is developped by [Thivinfo.com](https://thivinfo.com)
 
 = Do I need to be the owner of the Agenda?
-* No! You can display all Agenda from [Openagenda.com](openagenda.com) by just copying the Agenda's slug.
+* No! You can display all Agenda from [Openagenda.com](openagenda.com) by just copying the Agenda's url.
 
 = May I display several Agenda?
 * Yes! (one by widget, shortcode, gutenberg Block)
 
 = May I give Idea?
-* Yes please use the [Github](https://github.com/sebastienserre/openagenda-wp/issues) issue
+* Yes please use the support@thivinfo.com mail adress
 
 = Where can I found help ?
-* I'm starting to write a Wiki on [Github](https://github.com/sebastienserre/openagenda-wp/wiki)
+*  Yes please use the support@thivinfo.com mail adress
 
 = I'm using Elementor Page Builder, How to use OpenAgenda for Wordpress to display events?
 * simply use the WordPress Widget, it will display your agenda on Elementor page Builder
 
 = Is it possible to create an event from my website to the OpenAgenda?
-* Not yet but at this time, you have a link to your openagenda where visitors can add events (if allowed by the OpenAgenda settings).
-* Planned to be added in the Pro Version
+* Yes!  in the Pro Version
 
 = Is OpenAgenda for WordPress is working with WPBakery Page Builder (formerly Visual Composer) ?
 * Yes! The Pro version is coming with Visual Composer element. Free one provide only WP Shortcodes and WP Widgets.
