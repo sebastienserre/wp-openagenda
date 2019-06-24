@@ -62,7 +62,8 @@ function oa_create_custom_fields() {
 			              ->set_storage_format( 'U' )
 			              ->set_attribute( 'placeholder', __( 'Start date for this event', 'wp-openagenda' ) )
 			              ->set_picker_options( [ 'allowInput' => false ] )
-			              ->set_width( 50 ),
+			              ->set_width( 50 )
+		->set_required( true ),
 		         )
 	         )
 	         ->add_fields(
@@ -72,7 +73,8 @@ function oa_create_custom_fields() {
 			              ->set_storage_format( 'U' )
 			              ->set_attribute( 'placeholder', __( 'End date for this event', 'wp-openagenda' ) )
 			              ->set_picker_options( [ 'allowInput' => false ] )
-			              ->set_width( 50 ),
+			              ->set_width( 50 )
+				         ->set_required( true ),
 		         )
 	         );
 
