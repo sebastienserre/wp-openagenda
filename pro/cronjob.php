@@ -95,6 +95,9 @@ function register_venue__premium_only() {
 /**
  * Import OA events from OpenAgenda to WordPress
  */
+if ( ! empty( $_GET['test'] ) ) {
+	add_action( 'admin_init', 'import_oa_events__premium_only' );
+}
 function import_oa_events__premium_only() {
 
 	$openagenda = new OpenAgendaApi();
@@ -111,19 +114,6 @@ function import_oa_events__premium_only() {
 				$events['longDescription']['fr'] = $events['description']['fr'];
 			}
 
-			// Date Formating
-			$start          = array_pop( array_reverse( $events['timings'] ) );
-			$start1         = $start['start'];
-			$end1           = $start['end'];
-			$start_firstday = strtotime( $start1 );
-			$end_firstday   = strtotime( $end1 );
-
-			$start2        = array_pop( $events['timings'] );
-			$start_lastday = $start2['start'];
-			$end_lastday   = $start2['end'];
-			$start_lastday = strtotime( $start_lastday );
-			$end_lastday   = strtotime( $end_lastday );
-
 			$args = array(
 				'post_type'   => 'openagenda-events',
 				'meta_key'    => '_oa_event_uid',
@@ -138,36 +128,64 @@ function import_oa_events__premium_only() {
 				$id = $openagenda_events[0]->ID;
 			}
 
+			// Date Formating
+			$start          = array_pop( array_reverse( $events['timings'] ) );
+			$start1         = $start['start'];
+			$end1           = $start['end'];
+			$start_firstday = strtotime( $start1 );
+			$end_firstday   = strtotime( $end1 );
+
+			$start2        = array_pop( $events['timings'] );
+			$start_lastday = $start2['start'];
+			$end_lastday   = $start2['end'];
+			$start_lastday = strtotime( $start_lastday );
+			$end_lastday   = strtotime( $end_lastday );
+
 			/**
 			 * Add support to TEC
 			 */
 			if ( is_tec_exists() ) {
-				$post_type = 'tribe_events';
+				$start_firstday_date = date( 'Y-m-d G:i:s', $start_firstday );
+				$end_lastday_date    = date( 'Y-m-d G:i:s', $end_lastday );
+				$args                = array(
+					'ID'             => $id,
+					'post_content'   => $events['longDescription']['fr'],
+					'post_title'     => $events['title']['fr'],
+					'post_excerpt'   => $events['description']['fr'],
+					'post_status'    => 'publish',
+					'post_type'      => 'tribe_events',
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+					'meta_input'     => array(
+						'EventURL'       => $events['conditions']['fr'],
+						'_EventStartDate' => $start_firstday_date,
+						'_EventEndDate'   => $end_lastday_date,
+					),
+				);
 			} else {
-				$post_type = 'openagenda-events';
-			}
 
-			$args   = array(
-				'ID'             => $id,
-				'post_content'   => $events['longDescription']['fr'],
-				'post_title'     => $events['title']['fr'],
-				'post_excerpt'   => $events['description']['fr'],
-				'post_status'    => 'publish',
-				'post_type'      => $post_type,
-				'comment_status' => 'closed',
-				'ping_status'    => 'closed',
-				'meta_input'     => array(
-					'_oa_conditions'             => $events['conditions']['fr'],
-					'_oa_event_uid'              => $events['uid'],
-					'_oa_tools'                  => $events['registrationUrl'],
-					'_oa_min_age'                => $events['age']['min'],
-					'_oa_max_age'                => $events['age']['max'],
-					'_oadate|oa_start|0|0|value' => $start_firstday,
-					'_oadate|oa_end|0|0|value'   => $end_firstday,
-					'_oadate|oa_start|1|0|value' => $start_lastday,
-					'_oadate|oa_end|1|0|value'   => $end_lastday,
-				),
-			);
+				$args = array(
+					'ID'             => $id,
+					'post_content'   => $events['longDescription']['fr'],
+					'post_title'     => $events['title']['fr'],
+					'post_excerpt'   => $events['description']['fr'],
+					'post_status'    => 'publish',
+					'post_type'      => 'openagenda-events',
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+					'meta_input'     => array(
+						'_oa_conditions'             => $events['conditions']['fr'],
+						'_oa_event_uid'              => $events['uid'],
+						'_oa_tools'                  => $events['registrationUrl'],
+						'_oa_min_age'                => $events['age']['min'],
+						'_oa_max_age'                => $events['age']['max'],
+						'_oadate|oa_start|0|0|value' => $start_firstday,
+						'_oadate|oa_end|0|0|value'   => $end_firstday,
+						'_oadate|oa_start|1|0|value' => $start_lastday,
+						'_oadate|oa_end|1|0|value'   => $end_lastday,
+					),
+				);
+			}
 			$insert = wp_insert_post( $args );
 
 			//handicap
