@@ -56,18 +56,17 @@ function thfo_openwp_options_page() {
 			<?php
 			switch ( $active_tab ) {
 				case 'general':
+                default:
 					settings_fields( 'openagenda-wp' );
 					do_settings_sections( 'openagenda-wp' );
-					submit_button( __( 'Save' ) );
 					break;
 				case 'help':
 					settings_fields( 'openagenda-wp-help' );
 					do_settings_sections( 'openagenda-wp-help' );
 					break;
 			}
+			submit_button( __( 'Save' ) );
 			?>
-
-
 			<?php do_settings_sections( 'openagenda-wp-credits' ); ?>
 		</form>
 	</div>
