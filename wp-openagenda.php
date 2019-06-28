@@ -120,7 +120,6 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-search.php';
 			}
 
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/functions.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/admin/settings.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/cpt.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/venues.php';
