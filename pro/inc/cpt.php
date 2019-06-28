@@ -3,7 +3,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
-if ( ! function_exists('openagenda_event') && is_tec_exists() ) {
+/**
+ * Is The Event Calendar used ?
+ */
+$tec = get_option( 'openagenda-tec' );
+if ( ! function_exists('openagenda_event') && 'yes' !== $tec ) {
 
 // Register Custom Post Type
 	function openagenda_event() {
@@ -72,9 +76,10 @@ function oa_event_metabox() {
 		add_meta_box( 'oa_event_id', 'OA Event ID', 'oa_event_id', '', 'side', 'high' );
 	}
 }
+
 function oa_event_id() {
 	global $post;
-	$event_id = get_post_meta( $post->ID, 'oa_event_uid', true );
+	$event_id = get_post_meta( $post->ID, '_oa_event_uid', true );
 	if ( $event_id ){
 		echo $event_id;
 	}
