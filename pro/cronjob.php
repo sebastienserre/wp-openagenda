@@ -95,6 +95,9 @@ function register_venue__premium_only() {
 /**
  * Import OA events from OpenAgenda to WordPress
  */
+if ( ! empty( $_GET['test'] ) ) {
+	add_action( 'admin_init', 'import_oa_events__premium_only' );
+}
 function import_oa_events__premium_only( $url_oa = '' ) {
 
 	$openagenda = new OpenAgendaApi();
@@ -116,15 +119,6 @@ function import_oa_events__premium_only( $url_oa = '' ) {
 				$events['longDescription']['fr'] = $events['description']['fr'];
 			}
 
-			// Date Formating
-			$start          = array_pop( array_reverse( $events['timings'] ) );
-			$start1         = $start['start'];
-			$start_firstday = strtotime( $start1 );
-
-			$start2        = array_pop( $events['timings'] );
-			$start_lastday = $start2['start'];
-			$start_lastday = strtotime( $start_lastday );
-
 			$args = array(
 				'post_type'   => 'openagenda-events',
 				'meta_key'    => '_oa_event_uid',
@@ -139,23 +133,57 @@ function import_oa_events__premium_only( $url_oa = '' ) {
 				$id = $openagenda_events[0]->ID;
 			}
 
-			$args   = array(
-				'ID'             => $id,
-				'post_content'   => $events['longDescription']['fr'],
-				'post_title'     => $events['title']['fr'],
-				'post_excerpt'   => $events['description']['fr'],
-				'post_status'    => 'publish',
-				'post_type'      => 'openagenda-events',
-				'comment_status' => 'closed',
-				'ping_status'    => 'closed',
-				'meta_input'     => array(
-					'_oa_conditions' => $events['conditions']['fr'],
-					'_oa_event_uid'  => $events['uid'],
-					'_oa_tools'      => $events['registrationUrl'],
-					'_oa_min_age'    => $events['age']['min'],
-					'_oa_max_age'    => $events['age']['max'],
-				),
-			);
+			// Date Formating
+			$start          = array_pop( array_reverse( $events['timings'] ) );
+			$start1         = $start['start'];
+			$start_firstday = strtotime( $start1 );
+
+			$start2        = array_pop( $events['timings'] );
+			$start_lastday = $start2['start'];
+			$start_lastday = strtotime( $start_lastday );
+
+			/**
+			 * Add support to TEC
+			 */
+			if ( is_tec_exists() ) {
+				$start_firstday_date = date( 'Y-m-d G:i:s', $start_firstday );
+				$end_lastday_date    = date( 'Y-m-d G:i:s', $end_lastday );
+				$args                = array(
+					'ID'             => $id,
+					'post_content'   => $events['longDescription']['fr'],
+					'post_title'     => $events['title']['fr'],
+					'post_excerpt'   => $events['description']['fr'],
+					'post_status'    => 'publish',
+					'post_type'      => 'tribe_events',
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+					'meta_input'     => array(
+						'EventURL'       => $events['conditions']['fr'],
+						'_EventStartDate' => $start_firstday_date,
+						'_EventEndDate'   => $end_lastday_date,
+					),
+				);
+			} else {
+
+				$args   = array(
+					'ID'             => $id,
+					'post_content'   => $events['longDescription']['fr'],
+					'post_title'     => $events['title']['fr'],
+					'post_excerpt'   => $events['description']['fr'],
+					'post_status'    => 'publish',
+					'post_type'      => $post_type,
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+					'meta_input'     => array(
+						'_oa_conditions' => $events['conditions']['fr'],
+						'_oa_event_uid'  => $events['uid'],
+						'_oa_tools'      => $events['registrationUrl'],
+						'_oa_min_age'    => $events['age']['min'],
+						'_oa_max_age'    => $events['age']['max'],
+					),
+				);
+			}
+
 			$insert = wp_insert_post( $args );
 			carbon_set_post_meta( $insert, 'oa_start', $start_firstday );
 			carbon_set_post_meta( $insert, 'oa_end', $start_lastday );
@@ -257,6 +285,7 @@ function import_oa_events__premium_only( $url_oa = '' ) {
 	}
 }
 
+add_action( 'save_post_openagenda-events', 'export_event__premium_only' );
 function export_event__premium_only() {
 
 	$locale = get_locale();
