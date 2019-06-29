@@ -144,7 +144,7 @@ function import_oa_events__premium_only() {
 			/**
 			 * Add support to TEC
 			 */
-			if ( is_tec_exists() ) {
+			if ( is_tec_used() ) {
 				$start_firstday_date = date( 'Y-m-d G:i:s', $start_firstday );
 				$end_lastday_date    = date( 'Y-m-d G:i:s', $end_lastday );
 				$args                = array(
@@ -160,8 +160,16 @@ function import_oa_events__premium_only() {
 						'EventURL'       => $events['conditions']['fr'],
 						'_EventStartDate' => $start_firstday_date,
 						'_EventEndDate'   => $end_lastday_date,
+						'_oa_event_uid' => $events['uid'],
 					),
 				);
+
+				$insert = wp_insert_post( $args );
+
+				// Insert Post Term venue
+				$venues    = $openagenda->get_venue__premium_only( $events['location']['uid'] );
+				var_dump( $venues );
+
 			} else {
 
 				$args = array(
@@ -185,36 +193,41 @@ function import_oa_events__premium_only() {
 						'_oadate|oa_end|1|0|value'   => $end_lastday,
 					),
 				);
-			}
-			$insert = wp_insert_post( $args );
 
-			//handicap
-			$i = 0;
-			foreach ( $events['accessibility'] as $accessibility ) {
-				add_post_meta( $insert, "_oa_a11y|||$i|value", $accessibility );
-				$i ++;
-			}
-			unset( $i );
+				$insert = wp_insert_post( $args );
 
-			// Insert Post Term venue
-			$venues    = $openagenda->get_venue__premium_only( $events['location']['uid'] );
-			$venues_id = array();
-			foreach ( $venues as $venue ) {
-				array_push( $venues_id, $venue->term_id );
-			}
-			if ( ! empty( $venues_id ) ) {
-				wp_set_post_terms( $insert, $venues_id, 'openagenda_venue' );
+				//handicap
+				$i = 0;
+				foreach ( $events['accessibility'] as $accessibility ) {
+					add_post_meta( $insert, "_oa_a11y|||$i|value", $accessibility );
+					$i ++;
+				}
+				unset( $i );
+
+				// Insert Post Term venue
+				$venues    = $openagenda->get_venue__premium_only( $events['location']['uid'] );
+				$venues_id = array();
+				foreach ( $venues as $venue ) {
+					array_push( $venues_id, $venue->term_id );
+				}
+				if ( ! empty( $venues_id ) ) {
+					wp_set_post_terms( $insert, $venues_id, 'openagenda_venue' );
+				}
+
+				// insert origin Agenda
+				$agendas = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
+
+				if ( ! empty( $agendas ) ) {
+					wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
+				}
+
+				// insert Keywords
+				wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
+
 			}
 
-			// insert origin Agenda
-			$agendas = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
 
-			if ( ! empty( $agendas ) ) {
-				wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
-			}
 
-			// insert Keywords
-			wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
 
 			// insert post thumbnail
 			// Gives us access to the download_url() and wp_handle_sideload() functions
