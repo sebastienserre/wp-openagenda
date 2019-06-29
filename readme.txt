@@ -83,6 +83,9 @@ On WP 5.0 Use the new Gutenberg Blocks!
 
 == Changelog ==
 
+= 1.7.4 == 29 juin 2019 =
+    * update Freemius sdk to 2.3.0
+
 = 1.7.3 == 23 juin 2019
     * Sync with openagenda.com is OK
 
