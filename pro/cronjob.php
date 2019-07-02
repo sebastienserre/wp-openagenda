@@ -114,20 +114,6 @@ function import_oa_events__premium_only() {
 				$events['longDescription']['fr'] = $events['description']['fr'];
 			}
 
-			$args = array(
-				'post_type'   => 'openagenda-events',
-				'meta_key'    => '_oa_event_uid',
-				'meta_value'  => $events['uid'],
-				'post_status' => 'publish',
-			);
-
-			$openagenda_events = get_posts(
-				$args
-			);
-			if ( ! empty( $openagenda_events ) ) {
-				$id = $openagenda_events[0]->ID;
-			}
-
 			// Date Formating
 			$start          = array_pop( array_reverse( $events['timings'] ) );
 			$start1         = $start['start'];
@@ -141,10 +127,32 @@ function import_oa_events__premium_only() {
 			$start_lastday = strtotime( $start_lastday );
 			$end_lastday   = strtotime( $end_lastday );
 
+			if ( is_tec_used() ) {
+				$post_type = 'tribe_events';
+			} else {
+				$post_type = 'openagenda-events';
+			}
+
+			$args = array(
+				'post_type'   => $post_type,
+				'meta_key'    => '_oa_event_uid',
+				'meta_value'  => $events['uid'],
+				'post_status' => 'publish',
+			);
+
+			$openagenda_events = get_posts(
+				$args
+			);
+			if ( ! empty( $openagenda_events ) ) {
+				$id = $openagenda_events[0]->ID;
+			}
+
 			/**
 			 * Add support to TEC
 			 */
 			if ( is_tec_used() ) {
+
+
 				$start_firstday_date = date( 'Y-m-d G:i:s', $start_firstday );
 				$end_lastday_date    = date( 'Y-m-d G:i:s', $end_lastday );
 				$args                = array(
@@ -157,18 +165,22 @@ function import_oa_events__premium_only() {
 					'comment_status' => 'closed',
 					'ping_status'    => 'closed',
 					'meta_input'     => array(
-						'EventURL'       => $events['conditions']['fr'],
+						'EventURL'        => $events['conditions']['fr'],
 						'_EventStartDate' => $start_firstday_date,
 						'_EventEndDate'   => $end_lastday_date,
-						'_oa_event_uid' => $events['uid'],
+						'_oa_event_uid'   => $events['uid'],
+						'_EventCost'      => $events['conditions']['fr'],
+						'_EventURL'       => $events['registrationUrl'],
 					),
 				);
 
 				$insert = wp_insert_post( $args );
 
+				// Insert Tags
+				wp_set_post_terms( $insert, $events['keywords']['fr'], 'post_tag' );
+
 				// Insert Post Term venue
-				$venues    = $openagenda->get_venue__premium_only( $events['location']['uid'] );
-				var_dump( $venues );
+				$venues = $openagenda->get_venue__premium_only( $events['location']['uid'] );
 
 			} else {
 
@@ -225,8 +237,6 @@ function import_oa_events__premium_only() {
 				wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
 
 			}
-
-
 
 
 			// insert post thumbnail
