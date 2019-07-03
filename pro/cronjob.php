@@ -114,15 +114,11 @@ function import_oa_events__premium_only() {
 			// Date Formating
 			$start          = array_pop( array_reverse( $events['timings'] ) );
 			$start1         = $start['start'];
-			$end1           = $start['end'];
 			$start_firstday = strtotime( $start1 );
-			$end_firstday   = strtotime( $end1 );
 
 			$start2        = array_pop( $events['timings'] );
 			$start_lastday = $start2['start'];
-			$end_lastday   = $start2['end'];
 			$start_lastday = strtotime( $start_lastday );
-			$end_lastday   = strtotime( $end_lastday );
 
 			$args = array(
 				'post_type'   => 'openagenda-events',
@@ -148,18 +144,16 @@ function import_oa_events__premium_only() {
 				'comment_status' => 'closed',
 				'ping_status'    => 'closed',
 				'meta_input'     => array(
-					'_oa_conditions'             => $events['conditions']['fr'],
-					'_oa_event_uid'              => $events['uid'],
-					'_oa_tools'                  => $events['registrationUrl'],
-					'_oa_min_age'                => $events['age']['min'],
-					'_oa_max_age'                => $events['age']['max'],
-					'_oadate|oa_start|0|0|value' => $start_firstday,
-					'_oadate|oa_end|0|0|value'   => $end_firstday,
-					'_oadate|oa_start|1|0|value' => $start_lastday,
-					'_oadate|oa_end|1|0|value'   => $end_lastday,
+					'_oa_conditions' => $events['conditions']['fr'],
+					'_oa_event_uid'  => $events['uid'],
+					'_oa_tools'      => $events['registrationUrl'],
+					'_oa_min_age'    => $events['age']['min'],
+					'_oa_max_age'    => $events['age']['max'],
 				),
 			);
 			$insert = wp_insert_post( $args );
+			carbon_set_post_meta( $insert, 'oa_start', $start_firstday );
+			carbon_set_post_meta( $insert, 'oa_end', $start_lastday );
 
 			//handicap
 			$i = 0;
@@ -424,6 +418,10 @@ function export_event__premium_only() {
 		if ( $uid ) {
 			add_post_meta( $event->ID, '_oa_event_uid', $uid );
 		}
+
+		//unset( $route );
+		//unset( $agendaUid );
+
 
 		return $decode;
 	}
