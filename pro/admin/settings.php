@@ -3,31 +3,50 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
-add_action( 'admin_init', 'openwp_pro_register_settings', 30);
-function openwp_pro_register_settings(){
+add_action( 'admin_init', 'openwp_pro_register_settings', 30 );
+function openwp_pro_register_settings() {
 
 	register_setting( 'openagenda-wp', 'openagenda_secret' );
 	add_settings_field( 'openagenda-wp-secret', __( 'Secret Key Openagenda', 'wp-openagenda' ), 'openwp_oa_secret', 'openagenda-wp', 'openagenda-wp' );
+	add_settings_field( 'openagenda-wp-sync', __( 'Force Sync', 'wp-openagenda' ), 'openwp_oa_sync', 'openagenda-wp',
+		'openagenda-wp' );
 
 }
 
-function openwp_oa_secret(){
+function openwp_oa_sync() {
+	$url = wp_nonce_url(
+		add_query_arg(
+			[
+				'sync' => 'now',
+			],
+			admin_url()
+		),
+		'force_sync',
+		'_wpnonce'
+	);
 	?>
-	<input type="text" name="openagenda_secret" value="<?php echo esc_html( get_option( 'openagenda_secret' ) ); ?>"/>
+    <a href="<?php echo esc_url( $url ); ?>"><?php esc_attr_e( 'Sync Agenda Now', 'wp-openagenda' ); ?></a>
+	<?php
+}
+
+function openwp_oa_secret() {
+	?>
+    <input type="text" name="openagenda_secret" value="<?php echo esc_html( get_option( 'openagenda_secret' ) ); ?>"/>
 	<?php
 	$allowed_html = array(
-			'a' => array(
-					'href' => array(),
-					'p' => array(),
-			),
-			'p'=>array(),
+		'a' => array(
+			'href' => array(),
+			'p'    => array(),
+		),
+		'p' => array(),
 
 	);
-	$link = antispambot( 'support@openagenda.com');
-	$body = __( 'Hello, Could you please activate my Secret Key ?', 'wp-openagenda' );
-	$url = 'mailto:' . $link . '?subject=' . __( 'Secret Key Activation', 'wp-openagenda') . '&body=' . $body; ?>
-	<?php // translators: Add the OpenAGenda URL. ?>
-	<p><?php printf( wp_kses( __( 'Send a mail to <a href="%s" >OpenAgenda</a>, and ask them to activate your secret key.', 'wp-openagenda' ), $allowed_html ), esc_url( $url ) ); ?></p>
+	$link         = antispambot( 'support@openagenda.com' );
+	$body         = __( 'Hello, Could you please activate my Secret Key ?', 'wp-openagenda' );
+	$url          = 'mailto:' . $link . '?subject=' . __( 'Secret Key Activation', 'wp-openagenda' ) . '&body=' . $body; ?>
+	<?php // translators: Add the OpenAGenda URL.
+	?>
+    <p><?php printf( wp_kses( __( 'Send a mail to <a href="%s" >OpenAgenda</a>, and ask them to activate your secret key.', 'wp-openagenda' ), $allowed_html ), esc_url( $url ) ); ?></p>
 	<?php
 	do_action( 'openagenda_after_secret' );
 }
