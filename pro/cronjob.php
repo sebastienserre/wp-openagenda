@@ -95,15 +95,21 @@ function register_venue__premium_only() {
 /**
  * Import OA events from OpenAgenda to WordPress
  */
-function import_oa_events__premium_only() {
+function import_oa_events__premium_only( $url_oa = '' ) {
 
 	$openagenda = new OpenAgendaApi();
 
-	$url_oa = $openagenda->get_agenda_list__premium_only();
+	if ( empty( $url_oa ) ) {
+		$url_oa = $openagenda->get_agenda_list__premium_only();
 
-	foreach ( $url_oa as $url ) {
-		$agendas[ $url ] = $openagenda->thfo_openwp_retrieve_data( $url, 999, 'current' );
+		foreach ( $url_oa as $url ) {
+			$agendas[ $url ] = $openagenda->thfo_openwp_retrieve_data( $url, 999, 'current' );
+		}
+	} else {
+		$agendas[ $url_oa ] = $openagenda->thfo_openwp_retrieve_data( $url_oa, 999, 'current' );
 	}
+
+
 
 	foreach ( $agendas as $agenda ) {
 		foreach ( $agenda['events'] as $events ) {

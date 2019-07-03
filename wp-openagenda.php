@@ -120,7 +120,6 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-search.php';
 			}
 
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/helpers.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/admin/settings.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/cpt.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/venues.php';
@@ -134,7 +133,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/shortcodes/class-openagenda-search-shortcode.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/blocks/class-openwp-block-embed.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/cronjob.php';
-
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/helpers.php';
 		}
 
 
