@@ -2,6 +2,7 @@
 
 namespace WPGC\BlOCKS\Single;
 
+use function _e;
 use Carbon_Fields\Field;
 use Carbon_Fields\Block;
 use function carbon_get_post_meta;
@@ -64,14 +65,44 @@ class OA_Event_List {
 					?>
                 </p>
                 <div class="meta">
-                    <?php
-                    $start = date_i18n( 'd F Y', carbon_get_post_meta( $event['id'], 'oa_start') );
-                    $end = date_i18n( 'd F Y', carbon_get_post_meta( $event['id'], 'oa_end' ) );
-                    printf( __( 'From %1$s to %2$s', 'wp-openagenda' ), $start, $end );
-                    ?>
-
+					<?php
+					$start      = date_i18n( 'd F Y', carbon_get_post_meta( $event['id'], 'oa_start' ) );
+					$end        = date_i18n( 'd F Y', carbon_get_post_meta( $event['id'], 'oa_end' ) );
+					$conditions = carbon_get_post_meta( $event['id'], 'oa_conditions' );
+					$tools      = carbon_get_post_meta( $event['id'], 'oa_tools' );
+					$min_age    = carbon_get_post_meta( $event['id'], 'oa_min_age' );
+					$max_age    = carbon_get_post_meta( $event['id'], 'oa_max_age' );
+					$a11y       = carbon_get_post_meta( $event['id'], 'oa_a11y' );
+					echo openwp_display_date( $start, $end );
+					?>
+					<?php
+					if ( ! empty( $conditions ) ) { ?>
+                        <h3>
+							<?php _e( 'Conditions of participation, rates', 'wp-openagenda' ); ?>
+                        </h3>
+                        <p><?php echo $conditions; ?></p>
+						<?php
+					}
+					?>
+	                <?php
+	                if ( ! empty( $tools ) ) { ?>
+                        <h3>
+			                <?php _e( 'Registration tools', 'wp-openagenda' ); ?>
+                        </h3>
+                        <p><?php echo $tools; ?></p>
+		                <?php
+	                }
+	                ?>
+	                <?php
+	                if ( ! empty( $min_age ) || ! empty( $max_age ) ) { ?>
+                        <h3>
+			                <?php _e( 'Age', 'wp-openagenda' ); ?>
+                        </h3>
+                        <p><?php echo openwp_display_age( $min_age, $max_age); ?></p>
+		                <?php
+	                }
+	                ?>
                 </div>
-
             </div>
 			<?php
 		}
