@@ -3,6 +3,7 @@
 namespace WPGC\BlOCKS\Single;
 
 use function _e;
+use function apply_filters_ref_array;
 use Carbon_Fields\Field;
 use Carbon_Fields\Block;
 use function carbon_get_post_meta;
@@ -44,67 +45,17 @@ class OA_Event_List {
 	public function render( $block ) {
 
 		foreach ( $block['openwp_event_association'] as $event ) {
-			?>
-            <div class="openagenda-event-list">
-				<?php
-				if ( has_post_thumbnail( $event['id'] ) ) {
-					?>
-                    <div class="event-thumbnail">
-						<?php
-						echo get_the_post_thumbnail( $event['id'], 'post-thumbnail' );
-						?>
-                    </div>
-					<?php
-				}
-				?>
+			$start      = date_i18n( 'd F Y', carbon_get_post_meta( $event['id'], 'oa_start' ) );
+			$end        = date_i18n( 'd F Y', carbon_get_post_meta( $event['id'], 'oa_end' ) );
+			$conditions = carbon_get_post_meta( $event['id'], 'oa_conditions' );
+			$tools      = carbon_get_post_meta( $event['id'], 'oa_tools' );
+			$min_age    = carbon_get_post_meta( $event['id'], 'oa_min_age' );
+			$max_age    = carbon_get_post_meta( $event['id'], 'oa_max_age' );
+			$a11y       = carbon_get_post_meta( $event['id'], 'oa_a11y' );
 
-                <h2><?php echo get_the_title( $event['id'] ); ?></h2>
-                <p>
-					<?php
-					echo get_the_content( '', '', $event['id'] );;
-					?>
-                </p>
-                <div class="meta">
-					<?php
-					$start      = date_i18n( 'd F Y', carbon_get_post_meta( $event['id'], 'oa_start' ) );
-					$end        = date_i18n( 'd F Y', carbon_get_post_meta( $event['id'], 'oa_end' ) );
-					$conditions = carbon_get_post_meta( $event['id'], 'oa_conditions' );
-					$tools      = carbon_get_post_meta( $event['id'], 'oa_tools' );
-					$min_age    = carbon_get_post_meta( $event['id'], 'oa_min_age' );
-					$max_age    = carbon_get_post_meta( $event['id'], 'oa_max_age' );
-					$a11y       = carbon_get_post_meta( $event['id'], 'oa_a11y' );
-					echo openwp_display_date( $start, $end );
-					?>
-					<?php
-					if ( ! empty( $conditions ) ) { ?>
-                        <h3>
-							<?php _e( 'Conditions of participation, rates', 'wp-openagenda' ); ?>
-                        </h3>
-                        <p><?php echo $conditions; ?></p>
-						<?php
-					}
-					?>
-	                <?php
-	                if ( ! empty( $tools ) ) { ?>
-                        <h3>
-			                <?php _e( 'Registration tools', 'wp-openagenda' ); ?>
-                        </h3>
-                        <p><?php echo $tools; ?></p>
-		                <?php
-	                }
-	                ?>
-	                <?php
-	                if ( ! empty( $min_age ) || ! empty( $max_age ) ) { ?>
-                        <h3>
-			                <?php _e( 'Age', 'wp-openagenda' ); ?>
-                        </h3>
-                        <p><?php echo openwp_display_age( $min_age, $max_age); ?></p>
-		                <?php
-	                }
-	                ?>
-                </div>
-            </div>
-			<?php
+		    $template = apply_filters( 'oa_block_list_template', THFO_OPENWP_PLUGIN_PATH . 'pro/template/block_list.php');
+
+		    require $template;
 		}
 
 		?>
