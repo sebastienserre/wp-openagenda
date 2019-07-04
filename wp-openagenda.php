@@ -134,7 +134,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/blocks/class-openwp-block-embed.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/cronjob.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/helpers.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/blocks/class-openwp-agenda-single.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/blocks/class-openwp-agenda-list.php';
 		}
 
 
