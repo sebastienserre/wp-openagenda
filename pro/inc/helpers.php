@@ -16,3 +16,40 @@ function openwp_sync_from_admin(){
 		import_oa_events__premium_only();
 	}
 }
+
+function openwp_display_date( $start, $end ){
+	if ( empty( $start ) ){
+		$msg = __( 'No date for this event!', 'wp-openagenda' );
+	}
+	if ( empty( $end ) ){
+		$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
+	}
+
+	if ( ! empty( $start ) && !empty( $end ) ){
+		$msg = sprintf( __( 'From %1$s to %2$s', 'wp-openagenda' ), $start, $end );
+
+		if( $start === $end ){
+			$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
+		}
+	}
+	return $msg;
+}
+
+function openwp_display_age( $min_age, $max_age){
+
+	if ( empty( $min_age ) ){
+		$msg = __( 'Welcome Everybody!', 'wp-openagenda' );
+	}
+	if ( empty( $end ) ){
+		$msg = sprintf( __( 'From %s years old', 'wp-openagenda' ), $min_age );
+	}
+
+	if ( ! empty( $start ) && !empty( $end ) ){
+		$msg = sprintf( __( 'From %1$s years old to %2$s years old', 'wp-openagenda' ), $min_age, $max_age );
+
+		if( $min_age === $max_age ){
+			$msg = sprintf( __( 'From %s years old', 'wp-openagenda' ), $end );
+		}
+	}
+	return $msg;
+}
