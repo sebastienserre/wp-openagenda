@@ -2,17 +2,10 @@
 
 namespace WPGC\BlOCKS\Single;
 
-use function _e;
-use function apply_filters_ref_array;
 use Carbon_Fields\Field;
 use Carbon_Fields\Block;
 use function carbon_get_post_meta;
 use function date_i18n;
-use function get_the_content;
-use function get_the_post_thumbnail;
-use function get_the_title;
-use function has_post_thumbnail;
-use function var_dump;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -53,6 +46,9 @@ class OA_Event_List {
 			$max_age    = carbon_get_post_meta( $event['id'], 'oa_max_age' );
 			$a11y       = carbon_get_post_meta( $event['id'], 'oa_a11y' );
 
+			/**
+			 * Filter the path to your own template
+			 */
 		    $template = apply_filters( 'oa_block_list_template', THFO_OPENWP_PLUGIN_PATH . 'pro/template/block_list.php');
 
 		    require $template;
