@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template to display the list of event
+ * used in wp-content/plugins/wp-openagenda/pro/blocks/class-openwp-agenda-list.php
+ */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
