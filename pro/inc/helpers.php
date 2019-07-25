@@ -54,6 +54,39 @@ function openwp_display_age( $min_age, $max_age){
 	return $msg;
 }
 
+// Load Template
+
+add_filter( 'template_include', 'openwp_choose_template' );
+function openwp_choose_template( $template ){
+	// Post ID
+	$post_id = get_the_ID();
+
+	// For all other CPT
+	if ( get_post_type( $post_id ) != 'openagenda-events' ) {
+		return $template;
+	}
+
+	// Else use custom template
+	if ( is_single() ) {
+		return openwp_get_template_hierarchy( 'single' );
+	}
+}
+
+function openwp_get_template_hierarchy( $template ){
+	// Get the template slug
+	$template_slug = rtrim( $template, '.php' );
+	$template = $template_slug . '.php';
+
+	// Check if a custom template exists in the theme folder, if not, load the plugin template file
+	if ( $theme_file = locate_template( array( 'openagenda/' . $template ) ) ) {
+		$file = $theme_file;
+	}
+	else {
+		$file = THFO_OPENWP_PLUGIN_PATH . '/pro/template/' . $template;
+	}
+
+	return apply_filters( 'rc_repl_template_' . $template, $file );
+}
 
 function MediaFileAlreadyExists($filename){
 	global $wpdb;
