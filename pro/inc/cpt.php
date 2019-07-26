@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
-if ( ! function_exists('openagenda_event') ) {
+if ( ! function_exists( 'openagenda_event' ) ) {
 
 // Register Custom Post Type
 	function openagenda_event() {
@@ -37,30 +37,30 @@ if ( ! function_exists('openagenda_event') ) {
 			'items_list_navigation' => __( 'Events list navigation', 'wp-openagenda' ),
 			'filter_items_list'     => __( 'Filter Events list', 'wp-openagenda' ),
 		);
-		$args = array(
-			'label'                 => __( 'OpenAgenda Event', 'wp-openagenda' ),
-			'description'           => __( 'OpenAgenda Event', 'wp-openagenda' ),
-			'labels'                => $labels,
-			'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
-			'hierarchical'          => false,
-			'public'                => false,
-			'show_ui'               => true,
-			'show_in_menu'          => true,
-			'menu_position'         => 5,
-			'menu_icon'             => 'dashicons-calendar-alt',
-			'show_in_admin_bar'     => true,
-			'show_in_nav_menus'     => true,
-			'can_export'            => true,
-			'has_archive'           => true,
-			'exclude_from_search'   => false,
-			'publicly_queryable'    => true,
-			'capability_type'       => 'page',
-			'show_in_rest'               => true,
-			'rewrite'               => true,
+		$args   = array(
+			'label'               => __( 'OpenAgenda Event', 'wp-openagenda' ),
+			'description'         => __( 'OpenAgenda Event', 'wp-openagenda' ),
+			'labels'              => $labels,
+			'supports'            => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 5,
+			'menu_icon'           => 'dashicons-calendar-alt',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'page',
+			'show_in_rest'        => true,
 		);
 		register_post_type( 'openagenda-events', $args );
 
 	}
+
 	add_action( 'init', 'openagenda_event', 0 );
 
 }
