@@ -12,3 +12,23 @@ Hide add Venue
 div#openagenda_venue-adder {
     display: none;
 }
+
+/**
+Single Openagenda
+ */
+.oa-content-area {
+    width: 1404px;
+    margin: 0 auto;
+}
+
+.oa-content aside {
+    width: 30%;
+    float: left;
+    background: #EEEEEF;
+    padding: 0 10px;
+    margin-right: 20px;
+}
+
+.oa-content {
+    margin-top: 20px;
+}
