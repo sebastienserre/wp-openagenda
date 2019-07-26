@@ -54,6 +54,48 @@ function openwp_display_age( $min_age, $max_age){
 	return $msg;
 }
 
+function openwp_display_accessibilty( $id ){
+	$a11y      = carbon_get_post_meta( $id, 'oa_a11y' );
+if ( ! empty( $a11y ) ) {
+	ob_start();
+}
+?>
+<div class="oa-a11y">
+	<?php
+	foreach ( $a11y as $access ) {
+		switch ( $access ) {
+			case 'mi':
+				$name = __( 'Accessible to disabled people', 'wp-openagenda' );
+				break;
+			case 'hi':
+				$name = __( 'Accessible to the hearing impaired', 'wp-openagenda' );
+				break;
+			case 'pi':
+				$name = __( 'Accessible to the psychic handicapped', 'wp-openagenda' );
+				break;
+			case 'vi':
+				$name = __( 'Accessible to visually impaired', 'wp-openagenda' );
+				break;
+			case 'sl':
+				$name = __( 'Accessible in sign language', 'wp-openagenda' );
+				break;
+
+		}
+		?>
+		<p class="oa-a11y-details oa-<?php echo $access ?>"><?php echo $name
+			?></p>
+		<?php
+	}
+
+
+	?>
+</div>
+
+<?php
+$a11y = ob_get_clean();
+ return apply_filters( 'oa_a11y_display', $a11y );
+}
+
 // Load Template
 
 add_filter( 'template_include', 'openwp_choose_template' );

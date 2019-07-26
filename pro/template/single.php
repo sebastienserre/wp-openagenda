@@ -7,7 +7,7 @@ $min_age   = carbon_get_the_post_meta( 'oa_min_age' );
 $max_age   = carbon_get_the_post_meta( 'oa_max_age' );
 $start     = date_i18n( 'd F Y', carbon_get_the_post_meta( 'oa_start' ) );
 $end       = date_i18n( 'd F Y', carbon_get_the_post_meta( 'oa_end' ) );
-$a11y      = carbon_get_the_post_meta( 'oa_a11y' );
+
 $condition = carbon_get_the_post_meta( 'oa_conditions' );
 $tool      = carbon_get_the_post_meta( 'oa_tools' );
 get_header();
@@ -37,39 +37,12 @@ get_header();
 
 							?>
                         </p>
-						<?php
-						if ( ! empty( $a11y ) ) {
-						?>
-                        <div class="oa-a11y">
-							<?php
-							foreach ( $a11y as $access ) {
-								switch ( $access ) {
-									case 'mi':
-										$name = __( 'Accessible to disabled people', 'wp-openagenda' );
-										break;
-									case 'hi':
-										$name = __( 'Accessible to the hearing impaired', 'wp-openagenda' );
-										break;
-									case 'pi':
-										$name = __( 'Accessible to the psychic handicapped', 'wp-openagenda' );
-										break;
-									case 'vi':
-										$name = __( 'Accessible to visually impaired', 'wp-openagenda' );
-										break;
-									case 'sl':
-										$name = __( 'Accessible in sign language', 'wp-openagenda' );
-										break;
-
-								}
-								?>
-                                <p class="oa-a11y-details oa-<?php echo $access ?>"><?php echo $name
-									?></p>
-								<?php
-							}
-							}
-
-							?>
-                        </div>
+                        <?php
+                        /**
+                         * Display acessibility
+                         */
+                        echo openwp_display_accessibilty( get_the_ID() );
+                        ?>
 
                     </aside>
                     <div class="oa-content">
