@@ -65,7 +65,8 @@ get_header();
 
                                     }
 		                            ?>
-                                    <p class="oa-a11y-details oa-<?php echo $access ?>"><?php echo $name ?></p>
+                                    <p class="oa-a11y-details oa-<?php echo $access ?>"><?php echo $name
+                                        ?></p>
                                     <?php
 		                        }
 		                        }
