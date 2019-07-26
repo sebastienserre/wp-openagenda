@@ -49,6 +49,7 @@ p.oa-a11y-details.oa-vi::before{
      content: url("./../img/vi.png" );
      position: relative;
  }
+
 p.oa-a11y-details.oa-sl::before{
     content: url("./../img/sl.png" );
     position: relative;
