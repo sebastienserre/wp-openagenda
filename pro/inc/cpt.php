@@ -64,3 +64,18 @@ if ( ! function_exists( 'openagenda_event' ) ) {
 	add_action( 'init', 'openagenda_event', 0 );
 
 }
+
+add_action( 'add_meta_boxes', 'oa_event_metabox' );
+function oa_event_metabox() {
+	global $post;
+	if ( 'openagenda-events' === get_post_type( $post->ID ) || 'tribe_events' === get_post_type( $post->ID ) ) {
+		add_meta_box( 'oa_event_id', 'OA Event ID', 'oa_event_id', '', 'side', 'high' );
+	}
+}
+function oa_event_id() {
+	global $post;
+	$event_id = get_post_meta( $post->ID, '_oa_event_uid', true );
+	if ( $event_id ){
+		echo $event_id;
+	}
+}
