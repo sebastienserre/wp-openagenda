@@ -27,11 +27,6 @@ function oa_create_custom_fields() {
 	         )
 	         ->add_fields(
 		         array(
-			         Field::make( 'text', 'oa_event_uid', __( 'Event UID', 'wp-openagenda' ) ),
-		         )
-	         )
-	         ->add_fields(
-		         array(
 			         Field::make( 'text', 'oa_tools', __( 'Registration tools', 'wp-openagenda' ) )
 				         ->set_attribute( 'placeholder', __( 'URL or email', 'wp-openagenda' ) ),
 		         )
