@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <h3>
 				<?php _e( 'Age', 'wp-openagenda' ); ?>
             </h3>
-            <p><?php echo openwp_display_age( $min_age, $max_age ); ?></p>
+            <p><?php echo openwp_display_age( $event['id]'] ); ?></p>
 			<?php
 		}
 		?>
