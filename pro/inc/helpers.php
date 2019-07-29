@@ -17,7 +17,15 @@ function openwp_sync_from_admin(){
 	}
 }
 
-function openwp_display_date( $start, $end ){
+function openwp_display_date( $id ){
+	if ( empty( $id ) ){
+	    error_log( 'WP-OpenAgenda - an id should be passed on params');
+	    return;
+    }
+
+	$start     = date_i18n( 'd F Y', carbon_get_post_meta( $id, 'oa_start' ) );
+	$end       = date_i18n( 'd F Y', carbon_get_post_meta( $id, 'oa_end' ) );
+
 	if ( empty( $start ) ){
 		$msg = __( 'No date for this event!', 'wp-openagenda' );
 	}
@@ -112,6 +120,9 @@ function openwp_choose_template( $template ){
 	if ( is_single() ) {
 		return openwp_get_template_hierarchy( 'single' );
 	}
+	if ( is_archive() ){
+	    return openwp_get_template_hierarchy( 'archive' );
+    }
 }
 
 function openwp_get_template_hierarchy( $template ){
