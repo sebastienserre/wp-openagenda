@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </p>
     <div class="meta">
 		<?php
-		echo openwp_display_date( $start, $end );
+		echo openwp_display_date( $event['id'] );
 		?>
 		<?php
 		if ( ! empty( $conditions ) ) { ?>
