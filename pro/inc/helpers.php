@@ -17,6 +17,11 @@ function openwp_sync_from_admin(){
 	}
 }
 
+/**
+ * @param $id post_id.
+ *
+ * @return string Date formated
+ */
 function openwp_display_date( $id ){
 	if ( empty( $id ) ){
 	    error_log( 'WP-OpenAgenda - an id should be passed on params');
@@ -43,6 +48,12 @@ function openwp_display_date( $id ){
 	return $msg;
 }
 
+/**
+ * @param $id post_id
+ *
+ * @return string formated age
+ *
+ */
 function openwp_display_age( $id ){
 
 	$min_age   = carbon_get_post_meta( $id, 'oa_min_age' );
