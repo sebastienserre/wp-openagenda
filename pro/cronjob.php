@@ -110,7 +110,6 @@ function import_oa_events__premium_only( $url_oa = '' ) {
 	}
 
 
-
 	foreach ( $agendas as $agenda ) {
 		foreach ( $agenda['events'] as $events ) {
 			if ( is_null( $events['longDescription']['fr'] ) ) {
@@ -424,10 +423,6 @@ function export_event__premium_only() {
 		if ( $uid ) {
 			add_post_meta( $event->ID, '_oa_event_uid', $uid );
 		}
-
-		//unset( $route );
-		//unset( $agendaUid );
-
 
 		return $decode;
 	}
