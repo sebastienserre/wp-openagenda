@@ -89,6 +89,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'openwp_load' ), 400 );
 
 			if ( openagenda_fs()->is__premium_only() ) {
+
 				register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
 			}
@@ -133,6 +134,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/views/main-agenda.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/main.php';
 
 		}
 
