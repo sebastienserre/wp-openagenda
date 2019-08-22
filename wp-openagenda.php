@@ -3,7 +3,7 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://openagenda4wp.com/
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 1.7.7b
+ * Version: 1.7.8
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.2
@@ -76,7 +76,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			/**
 			 * Define Constant
 			 */
-			define( 'THFO_OPENWP_VERSION', '1.7.7 beta' );
+			define( 'THFO_OPENWP_VERSION', '1.7.8' );
 			define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -89,6 +89,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'openwp_load' ), 400 );
 
 			if ( openagenda_fs()->is__premium_only() ) {
+
 				register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
 				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
 			}
@@ -133,6 +134,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/views/main-agenda.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/main.php';
 
 		}
 

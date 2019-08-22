@@ -194,3 +194,14 @@ function openwp_hide_past_event( $query ) {
 
 	return $query;
 }
+
+function oa_age() {
+	$i   = 0;
+	$age = array();
+	while ( $i <= 100 ) {
+		array_push( $age, $i );
+		$i ++;
+	}
+
+	return $age;
+}
