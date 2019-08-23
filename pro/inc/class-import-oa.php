@@ -40,6 +40,7 @@ use function unlink;
 use function update_field;
 use function update_post_meta;
 use function update_term_meta;
+use function var_dump;
 use function wp_check_filetype;
 use function wp_generate_attachment_metadata;
 use function wp_get_post_terms;
@@ -172,17 +173,6 @@ class Import_OA {
 					$events['longDescription']['fr'] = $events['description']['fr'];
 				}
 
-				// Date Formating
-				$start          = array_pop( array_reverse( $events['timings'] ) );
-				$start1         = $start['start'];
-				$start_firstday = strtotime( $start1 );
-				$start_firstday = date( 'Y-m-d H:i:s', $start_firstday );
-
-				$start2        = array_pop( $events['timings'] );
-				$start_lastday = $start2['start'];
-				$start_lastday = strtotime( $start_lastday );
-				$start_lastday = date( 'Y-m-d H:i:s', $start_lastday );
-
 				$args = array(
 					'post_type'   => 'openagenda-events',
 					'meta_key'    => 'oa_event_uid',
@@ -197,6 +187,23 @@ class Import_OA {
 					$id = $openagenda_events[0]->ID;
 				}
 
+				// Date Formating
+				$dates = [];
+
+				foreach ( $events['timings'] as $timing ) {
+
+						$start_firstday = strtotime( $timing['start'] );
+					$start_firstday = date( 'Y-m-d H:i:s', $start_firstday );
+
+					$start_lastday = strtotime( $timing['end'] );
+					$start_lastday = date( 'Y-m-d H:i:s', $start_lastday );
+
+					$dates[] =
+							[
+								'field_5d5e81baa7115' => $start_firstday,
+								'field_5d5e81eea7116' => $start_lastday,
+							];
+				}
 				$args   = array(
 					'ID'             => $id,
 					'post_content'   => $events['longDescription']['fr'],
@@ -215,14 +222,8 @@ class Import_OA {
 					),
 				);
 				$insert = wp_insert_post( $args );
-				$value =
-					[
-						[
-							'field_5d5e81baa7115' => $start_firstday,
-							'field_5d5e81eea7116' => $start_lastday,
-						],
-					];
-				$start = update_field( 'field_5d5e81a5a7114', $value, $insert );
+
+				$start = update_field( 'field_5d5e81a5a7114', $dates, $insert );
 
 				//handicap
 				$i = 0;
