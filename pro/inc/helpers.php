@@ -1,4 +1,7 @@
 <?php
+
+use OpenAgenda\Import\Import_OA;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
@@ -7,13 +10,15 @@ add_action( 'created_openagenda_agenda', 'openwp_launch_import_on_new_agenda', 1
 function openwp_launch_import_on_new_agenda( $term_id, $tt_id ) {
 	$agenda = get_term_by( 'id', $term_id, 'openagenda_agenda' );
 	$agenda = $agenda->name;
-	import_oa_events__premium_only( $agenda );
+	Import_OA::register_venue__premium_only();
+	Import_OA::import_oa_events__premium_only( $agenda );
 }
 
-add_action( 'admin_init', 'openwp_sync_from_admin' );
+add_action( 'admin_init', 'openwp_sync_from_admin', 15000 );
 function openwp_sync_from_admin() {
 	if ( ! empty( $_GET['sync'] ) && 'now' === $_GET['sync'] && wp_verify_nonce( $_GET['_wpnonce'], 'force_sync' ) ) {
-		import_oa_events__premium_only();
+	    Import_OA::register_venue__premium_only();
+		Import_OA::import_oa_events__premium_only();
 	}
 }
 
@@ -158,24 +163,9 @@ function openwp_get_template_hierarchy( $template ) {
 	return apply_filters( 'rc_repl_template_' . $template, $file );
 }
 
-//add_filter( 'pre_get_posts', 'openwp_chg_archive_order', 10 );
-function openwp_chg_archive_order( $query ) {
-	if ( is_post_type_archive( 'openagenda-events' ) ) {
-		$query->set( 'order', 'asc' );
-		$query->set(
-			'meta_query', [
-				[
-					'key' => 'oa_start',
-				]
-			]
-		);
-		return $query;
-	}
-}
-
 add_filter( 'pre_get_posts', 'openwp_hide_past_event', 20 );
 function openwp_hide_past_event( $query ) {
-	if ( is_post_type_archive( 'openagenda-events' ) ) {
+	if ( ! is_admin() && is_post_type_archive( 'openagenda-events' ) ) {
 		$query->set( 'order', 'ASC' );
 		$query->set( 'orderby', 'meta_value_num' );
 		$query->set( 'meta_key', '_oa_start' );

@@ -12,15 +12,22 @@ $accessibility = array(
 
 );
 
+function custom_acf_settings_textdomain( $domain ) {
+	return 'wp-openagenda';
+}
+
+add_filter( 'acf/settings/l10n_textdomain', 'custom_acf_settings_textdomain' );
+
+
 if ( function_exists( 'acf_add_local_field_group' ) ):
 
 	acf_add_local_field_group( array(
 		'key'                   => 'group_5d5e7d9037572',
-		'title'                 => 'Évenements',
+		'title'                 => __( 'Events', 'wp-openagenda' ),
 		'fields'                => array(
 			array(
 				'key'               => 'field_5d5e7e2889e37',
-				'label'             => 'Conditions of participation',
+				'label'             => __( 'Conditions of participation', 'wp-openagenda' ),
 				'name'              => 'oa_conditions',
 				'type'              => 'text',
 				'instructions'      => '',
@@ -39,7 +46,7 @@ if ( function_exists( 'acf_add_local_field_group' ) ):
 			),
 			array(
 				'key'               => 'field_5d5e7e661b977',
-				'label'             => 'Registration tools',
+				'label'             => __( 'Registration tools', 'wp-openagenda' ),
 				'name'              => 'oa_tools',
 				'type'              => 'text',
 				'instructions'      => '',
@@ -58,7 +65,7 @@ if ( function_exists( 'acf_add_local_field_group' ) ):
 			),
 			array(
 				'key'               => 'field_5d5e7e8588a69',
-				'label'             => 'Minimum age',
+				'label'             => __( 'Minimum age', 'wp-openagenda' ),
 				'name'              => 'oa_min_age',
 				'type'              => 'select',
 				'instructions'      => '',
@@ -80,7 +87,7 @@ if ( function_exists( 'acf_add_local_field_group' ) ):
 			),
 			array(
 				'key'               => 'field_5d5e7ea91df1d',
-				'label'             => 'Maximum age',
+				'label'             => __( 'Maximum age', 'wp-openagenda' ),
 				'name'              => 'oa_max_age',
 				'type'              => 'select',
 				'instructions'      => '',
@@ -102,7 +109,7 @@ if ( function_exists( 'acf_add_local_field_group' ) ):
 			),
 			array(
 				'key'               => 'field_5d5e7ec216a31',
-				'label'             => 'Accessibility',
+				'label'             => __( 'Accessibility', 'wp-openagenda' ),
 				'name'              => 'oa_a11y',
 				'type'              => 'select',
 				'instructions'      => '',
@@ -124,7 +131,7 @@ if ( function_exists( 'acf_add_local_field_group' ) ):
 			),
 			array(
 				'key'               => 'field_5d5e81a5a7114',
-				'label'             => 'Date',
+				'label'             => __( 'Date', 'wp-openagenda' ),
 				'name'              => 'oa_date',
 				'type'              => 'repeater',
 				'instructions'      => '',
@@ -143,7 +150,7 @@ if ( function_exists( 'acf_add_local_field_group' ) ):
 				'sub_fields'        => array(
 					array(
 						'key'               => 'field_5d5e81baa7115',
-						'label'             => 'start date',
+						'label'             => __( 'start date', 'wp-openagenda' ),
 						'name'              => 'oa_start',
 						'type'              => 'date_time_picker',
 						'instructions'      => '',
@@ -155,12 +162,12 @@ if ( function_exists( 'acf_add_local_field_group' ) ):
 							'id'    => '',
 						),
 						'display_format'    => 'd/m/Y g:i a',
-						'return_format'     => 'U',
+						'return_format'     => 'd/m/Y g:i a',
 						'first_day'         => 1,
 					),
 					array(
 						'key'               => 'field_5d5e81eea7116',
-						'label'             => 'End date',
+						'label'             => __( 'End date', 'wp-openagenda' ),
 						'name'              => 'oa_end',
 						'type'              => 'date_time_picker',
 						'instructions'      => '',
@@ -172,7 +179,7 @@ if ( function_exists( 'acf_add_local_field_group' ) ):
 							'id'    => '',
 						),
 						'display_format'    => 'd/m/Y g:i a',
-						'return_format'     => 'U',
+						'return_format'     => 'd/m/Y g:i a',
 						'first_day'         => 1,
 					),
 				),
