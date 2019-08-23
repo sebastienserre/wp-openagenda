@@ -54,7 +54,7 @@ if ( ! function_exists( 'openagenda_event' ) ) {
 			'has_archive'         => true,
 			'exclude_from_search' => false,
 			'publicly_queryable'  => true,
-			'capability_type'     => 'page',
+			'capability_type'     => 'post',
 			'show_in_rest'        => true,
 		);
 		register_post_type( 'openagenda-events', $args );
@@ -74,7 +74,7 @@ function oa_event_metabox() {
 }
 function oa_event_id() {
 	global $post;
-	$event_id = get_post_meta( $post->ID, '_oa_event_uid', true );
+	$event_id = get_post_meta( $post->ID, 'oa_event_uid', true );
 	if ( $event_id ){
 		echo $event_id;
 	}

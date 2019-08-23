@@ -89,9 +89,19 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'openwp_load' ), 400 );
 
 			if ( openagenda_fs()->is__premium_only() ) {
-
+				define( 'OPENWP_PRO_PATH', THFO_OPENWP_PLUGIN_PATH . 'pro/' );
+				define( 'OPENWP_PRO_URL', THFO_OPENWP_PLUGIN_URL . 'pro/' );
+				define( 'MY_ACF_PATH', OPENWP_PRO_PATH . '/3rd-party/acf/' );
+				define( 'MY_ACF_URL', OPENWP_PRO_URL . '/3rd-party/acf/' );
 				register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
-				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ) );
+				add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ), 999 );
+				add_action( 'wp_enqueue_scripts', array( $this, 'openwp_pro_load_style__premium_only' ) );
+				add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
+				add_action( 'wp_enqueue_scripts', array( $this, 'openwp_register_script__premium_only' ) );
+				add_action( 'admin_print_styles', array( $this, 'openwp_admin_style__premium_only' ) );
+
+				add_filter( 'acf/settings/url', [ $this, 'my_acf_settings_url__premium_only' ] );
+				//add_filter('acf/settings/show_admin', [ $this, 'my_acf_settings_show_admin__premium_only' ] );
 			}
 		}
 
@@ -106,7 +116,33 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		 */
 		public
 		function openwp_load_pro_files__premium_only() {
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/main.php';
+			if ( class_exists( 'Vc_Manager' ) ) {
+				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/openagenda-vc-main.php';
+				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-vc-events.php';
+				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-slider.php';
+				include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-search.php';
+			}
+
+			include_once MY_ACF_PATH . 'acf.php';
+
+
+			include_once OPENWP_PRO_PATH . 'admin/settings.php';
+			include_once OPENWP_PRO_PATH . 'inc/cpt.php';
+			include_once OPENWP_PRO_PATH . 'inc/venues.php';
+			include_once OPENWP_PRO_PATH . 'inc/keywords.php';
+			include_once OPENWP_PRO_PATH . 'inc/helpers.php';
+			include_once OPENWP_PRO_PATH . 'inc/acf-fields.php';
+			//include_once THFO_OPENWP_PLUGIN_PATH . '/pro/inc/custom-fields.php';
+			include_once OPENWP_PRO_PATH . 'inc/agenda.php';
+			include_once OPENWP_PRO_PATH . 'widget/class-openagenda-main-widget.php';
+			include_once OPENWP_PRO_PATH . 'widget/class-openagenda-slider-widget.php';
+			include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-embed-shortcode.php';
+			include_once OPENWP_PRO_PATH . 'shortcodes/class-openagendaslidershortcode.php';
+			include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-search-shortcode.php';
+			include_once OPENWP_PRO_PATH . 'blocks/class-openwp-block-embed.php';
+			include_once OPENWP_PRO_PATH . 'blocks/class-openwp-agenda-list.php';
+			include_once OPENWP_PRO_PATH . 'inc/class-import-oa.php';
+
 		}
 
 		/**
@@ -134,7 +170,6 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/views/main-agenda.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/main.php';
 
 		}
 
@@ -152,6 +187,60 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		public
 		function openwp_load_admin_style() {
 			wp_enqueue_style( 'openawp-admin-style', THFO_OPENWP_PLUGIN_URL . 'admin/assets/openwp-admin-styles.css' );
+		}
+
+		/**
+		 * Load plugin textdomain.
+		 *
+		 * @since 1.0.0
+		 */
+		public
+		function openwp_load_textdomain__premium_only() {
+			load_plugin_textdomain( 'wp-openagenda', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
+		}
+
+		public function my_acf_settings_url__premium_only( $url ) {
+			return MY_ACF_URL;
+		}
+
+		public function my_acf_settings_show_admin__premium_only( $show_admin ) {
+			return false;
+		}
+
+
+
+		public
+		function openwp_register_script__premium_only() {
+			wp_register_script( 'dateOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/datepickerOA.js',
+				array(
+					'jquery',
+					'jquery-ui-core',
+					'jquery-ui-datepicker',
+				)
+			);
+			wp_enqueue_style( 'openwp-pro', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/openwp-pro.css', array( 'slickthemecss' ) );
+			wp_register_script( 'IsotopeOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope.pkgd.min.js',
+				array(
+					'jquery',
+				)
+			);
+			wp_register_script( 'IsotopeInit', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope-init.js',
+				array(
+					'IsotopeOA',
+				)
+			);
+		}
+
+		public function openwp_admin_style__premium_only() {
+			wp_enqueue_style( 'openwp-pro', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/openwp-pro.css' );
+		}
+
+		/**
+		 * Load light style CSS
+		 */
+		public
+		function openwp_pro_load_style__premium_only() {
+			wp_enqueue_style( 'jquery-ui-dp', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/jquery-ui.min.css' );
 		}
 	}
 
