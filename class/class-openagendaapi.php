@@ -9,22 +9,19 @@ use function set_transient;
 use WP_Error;
 use function wp_remote_get;
 
-/**
- * Set of methods to retrieve data from OpenAgenda
- *
- * @author  : sebastienserre
- * @package Openagenda-api
- * @since   1.0.0
- */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
 /**
  * Retrieve Event data from OpenAgenda.com
+ * Set of methods to retrieve data from OpenAgenda
  *
- * @package: Openagenda-api.
+ * @author  : sebastienserre
+ * @package Openagenda-api
+ * @since   1.0.0
+ *
+ * @package: OpenAgendaApi.
  */
 class OpenAgendaApi {
 
@@ -40,7 +37,7 @@ class OpenAgendaApi {
 	/**
 	 * Get API stored in Options
 	 *
-	 * @return mixed
+	 * @return int OpenAgenda API Key
 	 * @since 1.0.0
 	 */
 	public function thfo_openwp_get_api_key() {
@@ -55,6 +52,8 @@ class OpenAgendaApi {
 	 * @param string $slug URL of openagenda.com Agenda.
 	 *
 	 * @return string
+     * @author sebastienserre
+     * @since 1.0.0
 	 */
 	public function openwp_get_slug( $slug ) {
 		$re = '/[a-zA-Z\.\/:]*\/([a-zA-Z\.\/:\0-_9]*)/';
@@ -77,6 +76,8 @@ class OpenAgendaApi {
 	 *                     past: from 01/01/1970 to today.
 	 *
 	 * @return array|mixed|object|string
+	 * @author sebastienserre
+	 * @since 1.0.0
 	 */
 	public function thfo_openwp_retrieve_data( $url, $nb = 10, $when = 'current' ) {
 		if ( empty( $url ) ) {
@@ -127,9 +128,11 @@ class OpenAgendaApi {
 	/**
 	 * Retrieve OpenAenda UID.
 	 *
-	 * @param mixed|string $slug OpenAgenda Agenda URL.
+	 * @param string $slug OpenAgenda Agenda URL.
 	 *
-	 * @return mixed
+	 * @return int Agenda UID
+     * @author sebastienserre
+	 * @since 1.0.0
 	 */
 	public function openwp_get_uid( $slug ) {
 		$slug = $this->openwp_get_slug( $slug );
@@ -147,11 +150,12 @@ class OpenAgendaApi {
 	}
 
 	/**
-	 * Display a basic WordPress Widget.
-	 *
-	 * @param   object $openwp_data Object with OPenagenda Events data.
-	 * @param   string $lang        Language code to display.
-	 * @param   string $slug        OpenAgenda Agenda URL.
+     * Display a WP Widget
+	 * @param $openwp_data array array with Event from OpenAgenda
+	 * @param $lang string 2 letters for your lang (refer to OA doc)
+	 * @param $instance
+	 * @author sebastienserre
+	 * @since 1.0.0
 	 */
 	public function openwp_basic_html( $openwp_data, $lang, $instance ) {
 		if ( is_array( $instance ) ) {
@@ -313,6 +317,9 @@ class OpenAgendaApi {
 		return $slugs;
 	}
 
+	/**
+	 * Check if API Key is Valid or not
+	 */
 	public function check_api() {
 		$key   = $this->thfo_openwp_get_api_key();
 		$check = $this->openwp_get_uid( 'https://openagenda.com/iledefrance' );
@@ -352,6 +359,12 @@ class OpenAgendaApi {
 		return $url_oa;
 	}
 
+	/**
+     * Retrieve venue from OpenAgenda
+	 * @param $uid int OpenAgenda UID
+	 *
+	 * @return array|int|WP_Error
+	 */
 	public function get_venue__premium_only( $uid ) {
 		$args   = array(
 			'taxonomy'   => 'openagenda_venue',
@@ -366,6 +379,10 @@ class OpenAgendaApi {
 		return $venues;
 	}
 
+	/**
+     * Retrieve Secret Key from Options
+	 * @return string Secret Key from OpenAgenda
+	 */
 	public function get_secret_key__premium_only() {
 
 		$secret = get_option( 'openagenda_secret' );
