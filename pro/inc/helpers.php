@@ -7,6 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 } // Exit if accessed directly.
 
 add_action( 'created_openagenda_agenda', 'openwp_launch_import_on_new_agenda', 10, 2 );
+
+/**
+ * Import event from OpenAgenda when an agenda is added
+ * @param $term_id
+ * @param $tt_id
+ * @since 3.0.0
+ * @authors sebastienserre
+ * @package OpenAgenda\Import
+ */
 function openwp_launch_import_on_new_agenda( $term_id, $tt_id ) {
 	$agenda = get_term_by( 'id', $term_id, 'openagenda_agenda' );
 	$agenda = $agenda->name;
@@ -15,17 +24,28 @@ function openwp_launch_import_on_new_agenda( $term_id, $tt_id ) {
 }
 
 add_action( 'admin_init', 'openwp_sync_from_admin', 15000 );
+/**
+ * Import event from OpenAgenda when the link in admin is clicked (by admin)
+ * @since 3.0.0
+ * @authors sebastienserre
+ * @package OpenAgenda\Import
+ */
 function openwp_sync_from_admin() {
 	if ( ! empty( $_GET['sync'] ) && 'now' === $_GET['sync'] && wp_verify_nonce( $_GET['_wpnonce'], 'force_sync' ) ) {
 	    Import_OA::register_venue__premium_only();
 		Import_OA::import_oa_events__premium_only();
+		Import_OA::export_event__premium_only();
 	}
 }
 
 /**
+ * Display the Event Date
  * @param $id post_id.
  *
  * @return string Date formated
+ * @since 3.0.0
+ * @authors sebastienserre
+ * @package OpenAgenda\Import
  */
 function openwp_display_date( $id ) {
 	if ( empty( $id ) ) {
@@ -56,10 +76,13 @@ function openwp_display_date( $id ) {
 }
 
 /**
+ * Dislay the attendee age
  * @param $id post_id
  *
  * @return string formated age
- *
+ * @since 3.0.0
+ * @authors sebastienserre
+ * @package OpenAgenda\Import
  */
 function openwp_display_age( $id ) {
 
@@ -84,6 +107,15 @@ function openwp_display_age( $id ) {
 	return $msg;
 }
 
+/**
+ * Display the Event Accessibility
+ * @param int $id Ebent ID
+ *
+ * @return mixed|void
+ * @since 3.0.0
+ * @authors sebastienserre
+ * @package OpenAgenda\Import
+ */
 function openwp_display_accessibilty( $id ) {
 	$a11y = carbon_get_post_meta( $id, 'oa_a11y' );
 	if ( ! empty( $a11y ) ) {
@@ -124,6 +156,12 @@ function openwp_display_accessibilty( $id ) {
 	<?php
 	$a11y = ob_get_clean();
 
+	/**
+	 * Filters the A11y HTML Markup
+     * @since 3.0.0
+	 * @authors sebastienserre
+	 * @package OpenAgenda\Import
+	 */
 	return apply_filters( 'oa_a11y_display', $a11y );
 }
 
@@ -190,6 +228,12 @@ function MediaFileAlreadyExists($filename){
 	return ($wpdb->get_var($query)  > 0) ;
 }
 
+/**
+ * @return array $age Return the attendee ages in a array
+ * @since 3.0.0
+ * @authors sebastienserre
+ * @package OpenAgenda\Import
+ */
 function oa_age() {
 	$i   = 0;
 	$age = array();
