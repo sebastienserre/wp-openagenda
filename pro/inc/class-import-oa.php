@@ -24,6 +24,7 @@ use function file_exists;
 use function filesize;
 use function fopen;
 use function fwrite;
+use function get_field;
 use function get_locale;
 use function get_post_meta;
 use function get_posts;
@@ -65,6 +66,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
+/**
+ * This Class will import event from OpenAgenda
+ * @package OpenAgenda\Import
+ * @since 3.0.0
+ * @authors sebastienserre
+ */
 class Import_OA {
 	public function __construct() {
 		add_action( 'openagenda_hourly_event', [ 'OpenAgenda\Import\Import_OA', 'register_venue__premium_only' ], 10 );
@@ -74,7 +81,11 @@ class Import_OA {
 
 	/**
 	 * Create a file with the date to avoid launching cron twice
+	 * @since 3.0.0
+	 * @authors sebastienserre
+	 * @package OpenAgenda\Import
 	 */
+
 	public static function wp_openagenda_create_pid() {
 
 		$date = date( 'd F Y @ H\hi:s' );
@@ -83,6 +94,12 @@ class Import_OA {
 		fclose( $file );
 	}
 
+	/**
+	 * Delete the created PID
+	 * @since 3.0.0
+	 * @authors sebastienserre
+	 * @package OpenAgenda\Import
+	 */
 	public static function wp_openagenda_delete_pid() {
 		if ( file_exists( THFO_OPENWP_PLUGIN_PATH . 'pid.txt' ) ) {
 			unlink( THFO_OPENWP_PLUGIN_PATH . 'pid.txt' );
@@ -90,7 +107,10 @@ class Import_OA {
 	}
 
 	/**
-	 *  Register Venue from OpenAgenda
+	 * Register Venue from OpenAgenda
+	 * @since 3.0.0
+	 * @authors sebastienserre
+	 * @package OpenAgenda\Import
 	 */
 	public static function register_venue__premium_only() {
 		$openagenda = new OpenAgendaApi();
@@ -151,7 +171,11 @@ class Import_OA {
 
 	/**
 	 * Import OA events from OpenAgenda to WordPress
+	 * @since 3.0.0
+	 * @authors sebastienserre
+	 * @package OpenAgenda\Import
 	 */
+
 	public static function import_oa_events__premium_only( $url_oa = '' ) {
 
 		$openagenda = new OpenAgendaApi();
@@ -228,9 +252,11 @@ class Import_OA {
 				//handicap
 				$i = 0;
 				foreach ( $events['accessibility'] as $accessibility ) {
-					update_field('oa_a11y', $accessibility, $insert);
+					$a11y[$accessibility] = true;
+					update_field('oa_a11y', $a11y, $insert);
 					$i ++;
 				}
+
 				unset( $i );
 
 				// Insert Post Term venue
@@ -320,6 +346,13 @@ class Import_OA {
 		}
 	}
 
+	/**
+	 * Export the local events to OpenAgenda
+	 * @return array $decode Retrun an arry with event data to store in OpenAgenda
+	 * @since 3.0.0
+	 * @authors sebastienserre
+	 * @package OpenAgenda\Import
+	 */
 	public static function export_event__premium_only() {
 
 		$locale = get_locale();
@@ -328,7 +361,7 @@ class Import_OA {
 
 		$openagenda = new OpenAgendaApi();
 
-		$options     = array( 'lang' => 'fr' );
+		$options     = array( 'lang' => $locale );
 		$agendas     = $openagenda->get_agenda_list__premium_only();
 		$accessToken = $openagenda->get_acces_token();
 		foreach ( $agendas as $agenda ) {
@@ -342,7 +375,7 @@ class Import_OA {
 			);
 
 			foreach ( $events as $event ) {
-				$eventuid = carbon_get_post_meta( $event->ID, 'oa_event_uid' );
+				$eventuid = get_post_meta( $event->ID, 'oa_event_uid', true );
 				if ( empty( $eventuid ) ) {
 					//create
 					$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events";
@@ -352,7 +385,7 @@ class Import_OA {
 				}
 
 				extract( array_merge( array(
-					'lang' => 'fr'
+					'lang' => $locale
 				), $options ) );
 
 				// retrieve event keywords
@@ -366,10 +399,10 @@ class Import_OA {
 				}
 
 				// get min age
-				$min_age = get_post_meta( $event->ID, '_oa_min_age' );
+				$min_age = get_post_meta( $event->ID, 'oa_min_age', true );
 
 				// get max age
-				$max_age = get_post_meta( $event->ID, '_oa_max_age' );
+				$max_age = get_post_meta( $event->ID, 'oa_max_age', true );
 
 				$age = array(
 					'min' => $min_age[0],
@@ -377,43 +410,29 @@ class Import_OA {
 				);
 
 				// get conditions
-				$conditions = get_post_meta( $event->ID, '_oa_conditions' );
+				$conditions = get_post_meta( $event->ID, 'oa_conditions', true );
 
 				//get registration
-				$registrations = get_post_meta( $event->ID, '_oa_tools' );
+				$registrations = get_post_meta( $event->ID, 'oa_tools' );
 
 				// retrieve locationUID
 				$locationuid = wp_get_post_terms( $event->ID, 'openagenda_venue' );
 				$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid' );
 
 				// get start date
-				$debut = carbon_get_post_meta( $event->ID, 'oa_start' );
+				$dates = get_field( 'field_5d5e81a5a7114', $event->ID );
 
-				//get end date
-				$fin = carbon_get_post_meta( $event->ID, 'oa_end' );
 
-				// day number between start and en of the events
-				$diff = $fin - $debut;
-				$diff = ceil( $diff / 86400 );
-
-				$i     = 0;
-				$dates = [];
-				$date  = [];
-
-				while ( $i < $diff ) {
-					$debut = intval( $debut );
-					$end   = ( $debut + 86400 * $i ) + 7200;
-					$date  = array(
-						'begin' => date( 'Y-m-d\Th:i:00+0200', $debut + 86400 * $i ),
-						'end'   => date( 'Y-m-d\Th:i:00+0200', $end ),
-					);
-
-					array_push( $dates, $date );
-					$i ++;
-				}
 
 				//a11y
-				$a11y = carbon_get_post_meta( $event->ID, 'oa_a11y' );
+				$a11y = get_field( 'oa_a11y', $event->ID );
+				foreach ( $a11y as $key => $value ){
+					if ( 1 === $value ){
+						$accessibility[$key] = true;
+					} else {
+						$accessibility[$key] = false;
+					}
+				}
 
 			}
 			if ( empty( $event->post_excerpt ) ) {
