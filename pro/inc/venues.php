@@ -33,13 +33,13 @@ if ( ! function_exists( 'openagenda_venue' ) ) {
 		$args = array(
 			'labels'                     => $labels,
 			'hierarchical'               => true,
-			'public'                     => false,
+			'public'                     => true,
 			'show_ui'                    => true,
 			'show_admin_column'          => false,
-			'show_in_nav_menus'          => false,
+			'show_in_nav_menus'          => true,
 			'show_tagcloud'              => false,
 			'rewrite'                    => false,
-			'show_in_rest'               => false,
+			'show_in_rest'               => true,
 		);
 		register_taxonomy( 'openagenda_venue', array( 'openagenda-events' ), $args );
 
