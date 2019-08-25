@@ -55,7 +55,7 @@ if ( ! function_exists( 'openagenda_event' ) ) {
 			'exclude_from_search' => false,
 			'publicly_queryable'  => true,
 			'capability_type'     => 'post',
-			'show_in_rest'        => true,
+			'show_in_rest'        => false,
 		);
 		register_post_type( 'openagenda-events', $args );
 
