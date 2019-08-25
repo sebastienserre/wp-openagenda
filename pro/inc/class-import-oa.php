@@ -454,7 +454,7 @@ class Import_OA {
 					$accessibility['hi'] = false;
 				}
 
-					if ( empty( $event->post_excerpt ) ) {
+				if ( empty( $event->post_excerpt ) ) {
 					if ( ! empty( $event->post_content ) ) {
 						$excerpt = $event->post_content;
 					} else {
