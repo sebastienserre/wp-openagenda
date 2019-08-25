@@ -38,7 +38,7 @@ if ( ! function_exists( 'openagenda_agenda' ) ) {
 			'show_in_nav_menus' => true,
 			'show_tagcloud'     => true,
 			'rewrite'           => false,
-			'show_in_rest'      => false,
+			'show_in_rest'      => true,
 		);
 		register_taxonomy( 'openagenda_agenda', array( 'openagenda-events', 'tribe_events' ), $args );
 
