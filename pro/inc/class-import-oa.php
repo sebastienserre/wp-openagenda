@@ -4,18 +4,15 @@
 namespace OpenAgenda\Import;
 
 use OpenAgendaAPI\OpenAgendaApi;
+use function add_action;
 use function add_post_meta;
 use function array_merge;
-use function array_pop;
 use function array_push;
-use function array_reverse;
 use function basename;
-use function ceil;
 use function curl_exec;
 use function curl_init;
 use function curl_setopt;
 use function date;
-use function date_i18n;
 use function download_url;
 use function error_log;
 use function explode;
@@ -36,15 +33,12 @@ use function intval;
 use function is_null;
 use function is_wp_error;
 use function preg_replace;
-use function rand;
-use function sanitize_text_field;
 use function set_post_thumbnail;
 use function strtotime;
 use function unlink;
 use function update_field;
 use function update_post_meta;
 use function update_term_meta;
-use function var_dump;
 use function wp_check_filetype;
 use function wp_generate_attachment_metadata;
 use function wp_get_post_terms;
@@ -84,6 +78,8 @@ class Import_OA {
 			'import_oa_events__premium_only'
 		], 20 );
 		add_action( 'openagenda_hourly_event', [ 'OpenAgenda\Import\Import_OA', 'export_event__premium_only' ], 30 );
+		add_action( 'save_post_openagenda-events', [ 'OpenAgenda\Import\Import_OA', 'export_event__premium_only' ],
+			999);
 	}
 
 	/**
@@ -450,91 +446,93 @@ class Import_OA {
 
 				//a11y
 				$a11y = get_field( 'oa_a11y', $event->ID );
-				if (! empty( $a11y ) ) {
+				if ( ! empty( $a11y ) ) {
 					foreach ( $a11y as $key => $value ) {
 						$accessibility[ $value ] = true;
 					}
-				}
-
-			}
-			if ( empty( $event->post_excerpt ) ) {
-				if ( !empty( $event->post_content) ){
-					$excerpt = sanitize_text_field( $event->post_content );
 				} else {
-					$excerpt = __( 'No data found', 'wp-openagenda' );
+					$accessibility['hi'] = false;
 				}
-			} else {
-				$excerpt = $event->post_excerpt;
+
+					if ( empty( $event->post_excerpt ) ) {
+					if ( ! empty( $event->post_content ) ) {
+						$excerpt = $event->post_content;
+					} else {
+						$excerpt = __( 'No data found', 'wp-openagenda' );
+					}
+				} else {
+					$excerpt = $event->post_excerpt;
+				}
+
+				$data = array(
+					'slug'            => "$event->post_name-" . wp_rand(),
+					'title'           =>
+						[
+							$locale => $event->post_title,
+						],
+					'description'     =>
+						[
+							$locale => $excerpt,
+						],
+					'longDescription' =>
+						[
+							$locale => $event->post_content,
+						],
+					'keywords'        =>
+						[
+							$locale => $keywords,
+						],
+					'age'             => $age,
+					'accessibility'   => $accessibility,
+					'conditions'      =>
+						[
+							$locale => $conditions,
+						],
+					'registration'    => $registrations,
+					'locationUid'     => $locationuid[0],
+					'timings'         => $timings,
+				);
+
+
+				$imageLocalPath = null;
+
+				if ( isset( $data['image'] ) && isset( $data['image']['file'] ) ) {
+					$imageLocalPath = $data['image']['file'];
+
+					unset( $data['image']['file'] );
+				}
+
+				$ch = curl_init();
+
+				curl_setopt( $ch, CURLOPT_URL, $route );
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+				curl_setopt( $ch, CURLOPT_POST, true );
+
+				$posted = array(
+					'access_token' => $accessToken,
+					'nonce'        => rand(),
+					'data'         => json_encode( $data ),
+					'lang'         => 'fr',
+				);
+
+				if ( $imageLocalPath ) {
+					$posted['image'] = $imageLocalPath;
+				}
+
+				curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
+
+				$received_content = curl_exec( $ch );
+
+				$decode = json_decode( $received_content, true );
+
+				// update event uid
+				$uid = intval( $decode['event']['uid'] );
+				if ( $uid ) {
+					add_post_meta( $event->ID, 'oa_event_uid', $uid );
+				}
+
+				return $decode;
 			}
-
-			$data = array(
-				'slug'            => "$event->post_name-" . wp_rand(),
-				'title'           =>
-					[
-						$locale => $event->post_title,
-					],
-				'description'     =>
-					[
-						$locale => $excerpt,
-					],
-				'longDescription' =>
-					[
-						$locale => $event->post_content,
-					],
-				'keywords'        =>
-					[
-						$locale => $keywords,
-					],
-				'age'             => $age,
-				'accessibility'   => $accessibility,
-				'conditions'      =>
-					[
-						$locale => $conditions,
-					],
-				'registration'    => $registrations,
-				'locationUid'     => $locationuid[0],
-				'timings'         => $timings,
-			);
-
-
-			$imageLocalPath = null;
-
-			if ( isset( $data['image'] ) && isset( $data['image']['file'] ) ) {
-				$imageLocalPath = $data['image']['file'];
-
-				unset( $data['image']['file'] );
-			}
-
-			$ch = curl_init();
-
-			curl_setopt( $ch, CURLOPT_URL, $route );
-			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-			curl_setopt( $ch, CURLOPT_POST, true );
-
-			$posted = array(
-				'access_token' => $accessToken,
-				'nonce'        => rand(),
-				'data'         => json_encode( $data ),
-				'lang'         => 'fr',
-			);
-
-			if ( $imageLocalPath ) {
-				$posted['image'] = $imageLocalPath;
-			}
-
-			curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
-
-			$received_content = curl_exec( $ch );
-
-			$decode = json_decode( $received_content, true );
-
-			// update event uid
-			$uid = intval( $decode['event']['uid'] );
-			if ( $uid ) {
-				add_post_meta( $event->ID, 'oa_event_uid', $uid );
-			}
-
-			return $decode;
 		}
 	}
 
