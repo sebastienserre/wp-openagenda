@@ -54,18 +54,18 @@ function openwp_display_date( $id ) {
 		return;
 	}
 
-	$start = date_i18n( 'd F Y', carbon_get_post_meta( $id, 'oa_start' ) );
-	$end   = date_i18n( 'd F Y', carbon_get_post_meta( $id, 'oa_end' ) );
+	$dates = get_field( 'oa_date', $id );
 
-	if ( empty( $start ) ) {
+	if ( empty( $dates ) ) {
 		$msg = __( 'No date for this event!', 'wp-openagenda' );
 	}
-	if ( empty( $end ) ) {
-		$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
-	}
 
+	foreach ( $dates as $date ){
+		$msg .= sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $date['begin'] ),
+            date_i18n( 'd F Y G\Hi', $date['end'] ) );
+    }
 	if ( ! empty( $start ) && ! empty( $end ) ) {
-		$msg = sprintf( __( 'From %1$s to %2$s', 'wp-openagenda' ), $start, $end );
+
 
 		if ( $start === $end ) {
 			$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
