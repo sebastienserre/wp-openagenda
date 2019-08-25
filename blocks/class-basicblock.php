@@ -6,6 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Carbon_Fields\Block;
 use Carbon_Fields\Field;
 
+/**
+ * Display a Basic Gutenberg Block
+ *
+ */
 class BasicBlock {
 
 	public function __construct() {

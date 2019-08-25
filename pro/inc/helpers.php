@@ -32,8 +32,8 @@ add_action( 'admin_init', 'openwp_sync_from_admin', 15000 );
  */
 function openwp_sync_from_admin() {
 	if ( ! empty( $_GET['sync'] ) && 'now' === $_GET['sync'] && wp_verify_nonce( $_GET['_wpnonce'], 'force_sync' ) ) {
-	    Import_OA::register_venue__premium_only();
-		Import_OA::import_oa_events__premium_only();
+	//    Import_OA::register_venue__premium_only();
+	//	Import_OA::import_oa_events__premium_only();
 		Import_OA::export_event__premium_only();
 	}
 }
@@ -243,4 +243,20 @@ function oa_age() {
 	}
 
 	return $age;
+}
+
+//add_filter('acf/update_value/type=date_time_picker', 'my_update_value_date_time_picker', 10, 3);
+
+/**
+ * Change the store format date
+ * @param $value string the datetime
+ * @param $post_id int
+ * @param $field string Fields to work
+ *
+ * @return false|int
+ */
+function my_update_value_date_time_picker( $value, $post_id, $field ) {
+
+	return strtotime($value);
+
 }
