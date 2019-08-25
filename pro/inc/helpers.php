@@ -76,7 +76,7 @@ function openwp_display_date( $id ) {
 }
 
 /**
- * Dislay the attendee age
+ * Display the attendee age
  * @param $id post_id
  *
  * @return string formated age
@@ -86,8 +86,8 @@ function openwp_display_date( $id ) {
  */
 function openwp_display_age( $id ) {
 
-	$min_age = carbon_get_post_meta( $id, 'oa_min_age' );
-	$max_age = carbon_get_post_meta( $id, 'oa_max_age' );
+	$min_age = get_field( 'oa_min_age', $id );
+	$max_age = get_field( 'oa_max_age', $id );
 
 	if ( empty( $min_age ) ) {
 		$msg = __( 'Welcome Everybody!', 'wp-openagenda' );
