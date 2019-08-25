@@ -201,12 +201,13 @@ function openwp_get_template_hierarchy( $template ) {
 	return apply_filters( 'rc_repl_template_' . $template, $file );
 }
 
-add_filter( 'pre_get_posts', 'openwp_hide_past_event', 20 );
+//add_filter( 'pre_get_posts', 'openwp_hide_past_event', 20 );
 function openwp_hide_past_event( $query ) {
 	if ( ! is_admin() && is_post_type_archive( 'openagenda-events' ) ) {
 		$query->set( 'order', 'ASC' );
 		$query->set( 'orderby', 'meta_value_num' );
 		$query->set( 'meta_key', '_oa_start' );
+	//	$dates = get_field( 'oa_date')
 		$query->set(
 			'meta_query',
 			[
