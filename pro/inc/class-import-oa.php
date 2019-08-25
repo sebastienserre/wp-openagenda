@@ -37,6 +37,7 @@ use function is_null;
 use function is_wp_error;
 use function preg_replace;
 use function rand;
+use function sanitize_text_field;
 use function set_post_thumbnail;
 use function strtotime;
 use function unlink;
@@ -431,35 +432,37 @@ class Import_OA {
 				// get start date
 				$dates = get_field( 'field_5d50075c33c2d', $event->ID );
 
-				/**
-				 * @todo adapter le format pour OA
-				 */
 				$i = 0;
 				foreach ( $dates as $date ) {
-					$format = 'd/m/Y H:i:s';
+					/*$format = 'd/m/Y H:i:s';
 					$begin  = \DateTime::createFromFormat( $format, $date['begin'] );
 					$begin  = $begin->format( \Datetime::W3C );
 					$begin  = strtotime( $begin );
 
 					$end = \DateTime::createFromFormat( $format, $date['end'] );
 					$end = $end->format( \Datetime::W3C );
-					$end = strtotime( $end );
+					$end = strtotime( $end );*/
 
-					$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $begin );
-					$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $end );
+					$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $date['begin'] );
+					$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
 					$i ++;
 				}
 
 				//a11y
 				$a11y = get_field( 'oa_a11y', $event->ID );
-
-				foreach ( $a11y as $key => $value ) {
+				if (! empty( $a11y ) ) {
+					foreach ( $a11y as $key => $value ) {
 						$accessibility[ $value ] = true;
+					}
 				}
 
 			}
 			if ( empty( $event->post_excerpt ) ) {
-				$excerpt = __( 'No data found', 'wp-openagenda' );
+				if ( !empty( $event->post_content) ){
+					$excerpt = sanitize_text_field( $event->post_content );
+				} else {
+					$excerpt = __( 'No data found', 'wp-openagenda' );
+				}
 			} else {
 				$excerpt = $event->post_excerpt;
 			}
@@ -528,7 +531,7 @@ class Import_OA {
 			// update event uid
 			$uid = intval( $decode['event']['uid'] );
 			if ( $uid ) {
-				add_post_meta( $event->ID, '_oa_event_uid', $uid );
+				add_post_meta( $event->ID, 'oa_event_uid', $uid );
 			}
 
 			return $decode;
