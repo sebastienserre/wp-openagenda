@@ -15,6 +15,7 @@ use function curl_exec;
 use function curl_init;
 use function curl_setopt;
 use function date;
+use function date_i18n;
 use function download_url;
 use function error_log;
 use function explode;
@@ -35,6 +36,7 @@ use function intval;
 use function is_null;
 use function is_wp_error;
 use function preg_replace;
+use function rand;
 use function set_post_thumbnail;
 use function strtotime;
 use function unlink;
@@ -49,6 +51,7 @@ use function wp_handle_sideload;
 use function wp_insert_attachment;
 use function wp_insert_post;
 use function wp_insert_term;
+use function wp_rand;
 use function wp_remote_get;
 use function wp_remote_retrieve_body;
 use function wp_remote_retrieve_response_code;
@@ -75,13 +78,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Import_OA {
 	public function __construct() {
 		add_action( 'openagenda_hourly_event', [ 'OpenAgenda\Import\Import_OA', 'register_venue__premium_only' ], 10 );
-		add_action( 'openagenda_hourly_event', [ 'OpenAgenda\Import\Import_OA', 'import_oa_events__premium_only' ], 20 );
+		add_action( 'openagenda_hourly_event', [
+			'OpenAgenda\Import\Import_OA',
+			'import_oa_events__premium_only'
+		], 20 );
 		add_action( 'openagenda_hourly_event', [ 'OpenAgenda\Import\Import_OA', 'export_event__premium_only' ], 30 );
 	}
 
 	/**
 	 * Create a file with the date to avoid launching cron twice
-	 * @since 3.0.0
+	 *
+	 * @since   3.0.0
 	 * @authors sebastienserre
 	 * @package OpenAgenda\Import
 	 */
@@ -96,7 +103,8 @@ class Import_OA {
 
 	/**
 	 * Delete the created PID
-	 * @since 3.0.0
+	 *
+	 * @since   3.0.0
 	 * @authors sebastienserre
 	 * @package OpenAgenda\Import
 	 */
@@ -108,7 +116,8 @@ class Import_OA {
 
 	/**
 	 * Register Venue from OpenAgenda
-	 * @since 3.0.0
+	 *
+	 * @since   3.0.0
 	 * @authors sebastienserre
 	 * @package OpenAgenda\Import
 	 */
@@ -171,7 +180,8 @@ class Import_OA {
 
 	/**
 	 * Import OA events from OpenAgenda to WordPress
-	 * @since 3.0.0
+	 *
+	 * @since   3.0.0
 	 * @authors sebastienserre
 	 * @package OpenAgenda\Import
 	 */
@@ -213,20 +223,18 @@ class Import_OA {
 
 				// Date Formating
 				$dates = [];
-
 				foreach ( $events['timings'] as $timing ) {
 
-						$start_firstday = strtotime( $timing['start'] );
-					$start_firstday = date( 'Y-m-d H:i:s', $start_firstday );
-
-					$start_lastday = strtotime( $timing['end'] );
-					$start_lastday = date( 'Y-m-d H:i:s', $start_lastday );
+					$begin = strtotime( $timing['start'] ) ;
+					$begin = $begin + 7200;
+					$end   = strtotime( $timing['end'] ) ;
+					$end = $end + 7200;
 
 					$dates[] =
-							[
-								'field_5d5e81baa7115' => $start_firstday,
-								'field_5d5e81eea7116' => $start_lastday,
-							];
+						[
+							'field_5d61787c65c27' => $begin,
+							'field_5d61789f65c28' => $end,
+						];
 				}
 				$args   = array(
 					'ID'             => $id,
@@ -247,13 +255,13 @@ class Import_OA {
 				);
 				$insert = wp_insert_post( $args );
 
-				$start = update_field( 'field_5d5e81a5a7114', $dates, $insert );
+				$dates = update_field( 'field_5d50075c33c2d', $dates, $insert );
 
 				//handicap
 				$i = 0;
 				foreach ( $events['accessibility'] as $accessibility ) {
-					$a11y[$accessibility] = true;
-					update_field('oa_a11y', $a11y, $insert);
+					$a11y[ $accessibility ] = true;
+					update_field( 'oa_a11y', $a11y, $insert );
 					$i ++;
 				}
 
@@ -340,16 +348,17 @@ class Import_OA {
 						$attach_data = wp_generate_attachment_metadata( $attachment_id, $filename );
 						wp_update_attachment_metadata( $attachment_id, $attach_data );
 						set_post_thumbnail( $insert, $attachment_id );
+						unset( $dates);
 					}
 				}
 			}
 		}
 	}
-
 	/**
 	 * Export the local events to OpenAgenda
+	 *
 	 * @return array $decode Retrun an arry with event data to store in OpenAgenda
-	 * @since 3.0.0
+	 * @since   3.0.0
 	 * @authors sebastienserre
 	 * @package OpenAgenda\Import
 	 */
@@ -420,17 +429,35 @@ class Import_OA {
 				$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid' );
 
 				// get start date
-				$dates = get_field( 'field_5d5e81a5a7114', $event->ID );
+				$dates = get_field( 'field_5d50075c33c2d', $event->ID );
 
+				/**
+				 * @todo adapter le format pour OA
+				 */
+				$i = 0;
+				foreach ( $dates as $date ) {
+					$format = 'd/m/Y H:i:s';
+					$begin  = \DateTime::createFromFormat( $format, $date['begin'] );
+					$begin  = $begin->format( \Datetime::W3C );
+					$begin  = strtotime( $begin );
 
+					$end = \DateTime::createFromFormat( $format, $date['end'] );
+					$end = $end->format( \Datetime::W3C );
+					$end = strtotime( $end );
+
+					$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $begin );
+					$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $end );
+					$i ++;
+				}
 
 				//a11y
 				$a11y = get_field( 'oa_a11y', $event->ID );
-				foreach ( $a11y as $key => $value ){
-					if ( 1 === $value ){
-						$accessibility[$key] = true;
+
+				foreach ( $a11y as $key => $value ) {
+					if ( 1 === $value ) {
+						$accessibility[ $key ] = true;
 					} else {
-						$accessibility[$key] = false;
+						$accessibility[ $key ] = false;
 					}
 				}
 
@@ -467,7 +494,7 @@ class Import_OA {
 					],
 				'registration'    => $registrations,
 				'locationUid'     => $locationuid[0],
-				'timings'         => $dates,
+				'timings'         => $timings,
 			);
 
 
@@ -511,5 +538,7 @@ class Import_OA {
 			return $decode;
 		}
 	}
+
 }
+
 new Import_OA();
