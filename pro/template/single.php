@@ -33,12 +33,11 @@ get_header();
 									<?php
 									_e( 'Public : ', 'wp-openagenda' );
 									echo openwp_display_age( get_the_ID() );
-
 									?>
                                 </p>
 								<?php
 								/**
-								 * Display acessibility
+								 * Display accessibility
 								 */
 								echo openwp_display_accessibilty( get_the_ID() );
 								?>
