@@ -454,11 +454,7 @@ class Import_OA {
 				$a11y = get_field( 'oa_a11y', $event->ID );
 
 				foreach ( $a11y as $key => $value ) {
-					if ( 1 === $value ) {
-						$accessibility[ $key ] = true;
-					} else {
-						$accessibility[ $key ] = false;
-					}
+						$accessibility[ $value ] = true;
 				}
 
 			}
@@ -487,10 +483,10 @@ class Import_OA {
 						$locale => $keywords,
 					],
 				'age'             => $age,
-				'accessibility'   => $a11y,
+				'accessibility'   => $accessibility,
 				'conditions'      =>
 					[
-						$locale => $conditions[0],
+						$locale => $conditions,
 					],
 				'registration'    => $registrations,
 				'locationUid'     => $locationuid[0],
