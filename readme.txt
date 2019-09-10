@@ -4,7 +4,7 @@ Tags: openagenda, agenda, events, calendar, opendata,
 Requires at least: 4.6
 Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.7.6
+Stable tag: 1.7.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -84,6 +84,9 @@ On WP 5.0 Use the new Gutenberg Blocks!
 9. Masonry layout (Pro Version)
 
 == Changelog ==
+
+== 1.7.7 == 10 sept 2019 =
+    * Do not import anymore image twice (based on filename)
 
 = 1.7.5 == 03 Juillet 2019 =
     * Correct Date import
