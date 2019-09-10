@@ -181,9 +181,6 @@ function openwp_choose_template( $template ) {
 	if ( is_single() ) {
 		return openwp_get_template_hierarchy( 'single' );
 	}
-	if ( is_archive() ) {
-		return openwp_get_template_hierarchy( 'archive' );
-	}
 }
 
 function openwp_get_template_hierarchy( $template ) {
@@ -201,28 +198,6 @@ function openwp_get_template_hierarchy( $template ) {
 	return apply_filters( 'rc_repl_template_' . $template, $file );
 }
 
-//add_filter( 'pre_get_posts', 'openwp_hide_past_event', 20 );
-function openwp_hide_past_event( $query ) {
-	if ( ! is_admin() && is_post_type_archive( 'openagenda-events' ) ) {
-		$query->set( 'order', 'ASC' );
-		$query->set( 'orderby', 'meta_value_num' );
-		$query->set( 'meta_key', '_oa_start' );
-	//	$dates = get_field( 'oa_date')
-		$query->set(
-			'meta_query',
-			[
-				[
-					'key'     => '_oa_start',
-					'type'    => 'NUMERIC',
-					'value'   => current_time( 'timestamp' ),
-					'compare' => '>=',
-				],
-			]
-		);
-	}
-
-	return $query;
-}
 function MediaFileAlreadyExists($filename){
 	global $wpdb;
 	$query = "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_value LIKE '%/$filename'";
@@ -244,20 +219,4 @@ function oa_age() {
 	}
 
 	return $age;
-}
-
-//add_filter('acf/update_value/type=date_time_picker', 'my_update_value_date_time_picker', 10, 3);
-
-/**
- * Change the store format date
- * @param $value string the datetime
- * @param $post_id int
- * @param $field string Fields to work
- *
- * @return false|int
- */
-function my_update_value_date_time_picker( $value, $post_id, $field ) {
-
-	return strtotime($value);
-
 }
