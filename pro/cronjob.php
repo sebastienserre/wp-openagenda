@@ -196,10 +196,12 @@ function import_oa_events__premium_only( $url_oa = '' ) {
 			// Download file to temp dir
 			$timeout_seconds = 5;
 			$url             = $events['originalImage'];
+			$filename        = basename( $url );
+			$file_exists     = MediaFileAlreadyExists( $filename );
 
 			// Download file to temp dir.
 			$temp_file = download_url( $url, $timeout_seconds );
-			if ( ! is_wp_error( $temp_file ) ) {
+			if ( ! is_wp_error( $temp_file ) && false === $file_exists ) {
 
 				// Array based on $_FILE as seen in PHP file uploads.
 				$file = array(

@@ -16,3 +16,9 @@ function openwp_sync_from_admin(){
 		import_oa_events__premium_only();
 	}
 }
+
+function MediaFileAlreadyExists($filename){
+	global $wpdb;
+	$query = "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_value LIKE '%/$filename'";
+	return ($wpdb->get_var($query)  > 0) ;
+}
