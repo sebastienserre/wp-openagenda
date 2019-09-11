@@ -203,20 +203,3 @@ function MediaFileAlreadyExists($filename){
 	$query = "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_value LIKE '%/$filename'";
 	return ($wpdb->get_var($query)  > 0) ;
 }
-
-/**
- * @return array $age Return the attendee ages in a array
- * @since 3.0.0
- * @authors sebastienserre
- * @package OpenAgenda\Import
- */
-function oa_age() {
-	$i   = 0;
-	$age = array();
-	while ( $i <= 100 ) {
-		array_push( $age, $i );
-		$i ++;
-	}
-
-	return $age;
-}
