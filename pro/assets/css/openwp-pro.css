@@ -12,3 +12,45 @@ Hide add Venue
 div#openagenda_venue-adder {
     display: none;
 }
+
+/**
+Single Openagenda
+ */
+.oa-content-area {
+    width: 1404px;
+    margin: 0 auto;
+}
+
+.oa-content aside {
+    width: 30%;
+    float: left;
+    background: #EEEEEF;
+    padding: 0 10px;
+    margin-right: 20px;
+}
+
+.oa-content {
+    margin-top: 20px;
+}
+
+p.oa-a11y-details.oa-mi::before{
+    content: url("./../img/mi.png" );
+    position: relative;
+}
+p.oa-a11y-details.oa-hi::before{
+    content: url("./../img/hi.png" );
+    position: relative;
+}
+p.oa-a11y-details.oa-pi::before{
+    content: url("./../img/pi.png" );
+    position: relative;
+}
+p.oa-a11y-details.oa-vi::before{
+     content: url("./../img/vi.png" );
+     position: relative;
+ }
+
+p.oa-a11y-details.oa-sl::before{
+    content: url("./../img/sl.png" );
+    position: relative;
+}
