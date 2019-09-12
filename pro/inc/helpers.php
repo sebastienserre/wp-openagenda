@@ -203,3 +203,14 @@ function MediaFileAlreadyExists($filename){
 	$query = "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_value LIKE '%/$filename'";
 	return ($wpdb->get_var($query)  > 0) ;
 }
+
+function oa_age() {
+	$i   = 0;
+	$age = array();
+	while ( $i <= 100 ) {
+		array_push( $age, $i );
+		$i ++;
+	}
+
+	return $age;
+}

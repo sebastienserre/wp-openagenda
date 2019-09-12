@@ -1,4 +1,7 @@
 <?php
+
+use OpenAgenda\TEC\The_Event_Calendar;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
@@ -6,11 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Is The Event Calendar used ?
  */
-$tec = get_option( 'openagenda-tec' );
-if ( ! function_exists('openagenda_event') && 'yes' !== $tec ) {
+if ( ! function_exists( 'openagenda_event' ) && false === The_Event_Calendar::$tec_option ) {
 
 // Register Custom Post Type
-	function openagenda_event() {
+	function openagenda_event() {   
 
 		$labels = array(
 			'name'                  => _x( 'OpenAgenda Events', 'Post Type General Name', 'wp-openagenda' ),

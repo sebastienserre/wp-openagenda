@@ -1,5 +1,6 @@
 <?php
 
+use OpenAgenda\TEC\The_Event_Calendar;
 use OpenAgendaAPI\OpenAgendaApi;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -145,7 +146,7 @@ function import_oa_events__premium_only( $url_oa = '' ) {
 			/**
 			 * Add support to TEC
 			 */
-			if ( is_tec_exists() ) {
+			if ( The_Event_Calendar::$tec_activated ) {
 				$start_firstday_date = date( 'Y-m-d G:i:s', $start_firstday );
 				$end_lastday_date    = date( 'Y-m-d G:i:s', $end_lastday );
 				$args                = array(
