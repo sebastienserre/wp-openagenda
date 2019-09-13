@@ -104,10 +104,10 @@ class The_Event_Calendar {
 			'EventEndHour'     => $end['hour'],
 			'EventEndMinute'   => $end['min'],
 			'EventCost'        => $events['conditions']['fr'],
+			'EventURL'         => $events['registrationUrl'],
 			'comment_status'   => 'closed',
 			'ping_status'      => 'closed',
 			'meta_input'       => [
-				'EventURL'     => $events['conditions']['fr'],
 				'oa_event_uid' => $events['uid'],
 			],
 		];
