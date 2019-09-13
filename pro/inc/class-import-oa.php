@@ -246,9 +246,9 @@ class Import_OA {
 				}
 
 				if ( The_Event_Calendar::$tec_used ) {
-					if ( empty( $id ) ) {
-						The_Event_Calendar::create_event( $id, $events, $dates );
-					}
+
+					$insert = The_Event_Calendar::create_event( $id, $events, $dates );
+
 				} else {
 					$args = array(
 						'ID'             => $id,
@@ -268,9 +268,11 @@ class Import_OA {
 						),
 					);
 
-				$insert = wp_insert_post( $args );
+					$insert = wp_insert_post( $args );
 
-				$dates = update_field( 'field_5d50075c33c2d', $dates, $insert );
+					$dates = update_field( 'field_5d50075c33c2d', $dates, $insert );
+					// insert Keywords
+					wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
 				}
 
 				//handicap
@@ -299,9 +301,6 @@ class Import_OA {
 				if ( ! empty( $agendas ) ) {
 					wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
 				}
-
-				// insert Keywords
-				wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
 
 				// insert post thumbnail
 				// Gives us access to the download_url() and wp_handle_sideload() functions

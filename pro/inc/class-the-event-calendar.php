@@ -10,7 +10,9 @@ use function date;
 use function esc_attr;
 use function esc_attr_e;
 use function tribe_create_event;
+use function tribe_update_event;
 use function var_dump;
+use function wp_set_post_terms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -117,10 +119,18 @@ class The_Event_Calendar {
 		$date['start'] = array_pop( array_reverse( $dates ) );
 		$date['start'] = $date['start']['field_5d61787c65c27'];
 		$date['end']   = array_pop( $dates );
-		$date['end']    =   $date['end']['field_5d61789f65c28'];
+		$date['end']   = $date['end']['field_5d61789f65c28'];
 
 		$data = self::prepare_data( $id, $events, $date );
-		$id   = tribe_create_event( $data );
+
+		if ( empty( $id ) ) {
+			$id = tribe_create_event( $data );
+		} else {
+			$id = tribe_update_event( $id, $data );
+		}
+
+		// insert Keywords
+		wp_set_post_terms( $id, $events['keywords']['fr'], 'post_tag' );
 
 		return $id;
 	}
