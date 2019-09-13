@@ -90,7 +90,7 @@ class The_Event_Calendar {
 		$end['date'] = date( $datepicker_format, $date['end'] );
 		$end['hour'] = date( 'H', $date['end'] );
 		$end['min']  = date( 'i', $date['end'] );
-		$args        = [
+		$args = [
 			'ID'               => $id,
 			'post_content'     => $events['longDescription']['fr'],
 			'post_title'       => $events['title']['fr'],
@@ -103,6 +103,7 @@ class The_Event_Calendar {
 			'EventStartMinute' => $start['min'],
 			'EventEndHour'     => $end['hour'],
 			'EventEndMinute'   => $end['min'],
+			'EventCost'        => $events['conditions']['fr'],
 			'comment_status'   => 'closed',
 			'ping_status'      => 'closed',
 			'meta_input'       => [
