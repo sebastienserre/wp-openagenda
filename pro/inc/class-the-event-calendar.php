@@ -3,10 +3,13 @@
 namespace OpenAgenda\TEC;
 
 use function add_action;
+use function array_pop;
+use function array_reverse;
 use function class_exists;
 use function date;
 use function esc_attr;
 use function esc_attr_e;
+use function tribe_create_event;
 use function var_dump;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,6 +25,7 @@ class The_Event_Calendar {
 	public function __construct() {
 		self::$tec_option    = self::tec_option_getter();
 		self::$tec_activated = self::tec_activated_getter();
+		self::$tec_used      = self::is_tec_used();
 
 		add_action( 'admin_notices', [ $this, 'tec_notices' ] );
 	}
@@ -32,7 +36,7 @@ class The_Event_Calendar {
 	 * @package wp-openagenda
 	 * @since
 	 */
-	public function tec_used_setter() {
+	public function is_tec_used() {
 		if ( true === self::$tec_activated && true === self::$tec_option ) {
 			return true;
 		}
@@ -74,22 +78,51 @@ class The_Event_Calendar {
 		}
 	}
 
-	public static function prepare_data( $id, $events ) {
-		$args = array(
-			'ID'             => $id,
-			'post_content'   => $events['longDescription']['fr'],
-			'post_title'     => $events['title']['fr'],
-			'post_excerpt'   => $events['description']['fr'],
-			'post_status'    => 'publish',
-			'post_type'      => 'tribe_events',
-			'comment_status' => 'closed',
-			'ping_status'    => 'closed',
-			'meta_input'     => [
-				'EventURL' => $events['conditions']['fr'],
+	public static function prepare_data( $id, $events, $date ) {
+		$datepicker_format = \Tribe__Date_Utils::datepicker_formats( tribe_get_option( 'datepickerFormat' ) );
+
+		$start['date'] = date( $datepicker_format, $date['start'] );
+		$start['hour'] = date( 'H', $date['start'] );
+		$start['min']  = date( 'i', $date['start'] );
+
+		$end['date'] = date( $datepicker_format, $date['end'] );
+		$end['hour'] = date( 'H', $date['end'] );
+		$end['min']  = date( 'i', $date['end'] );
+		$args        = [
+			'ID'               => $id,
+			'post_content'     => $events['longDescription']['fr'],
+			'post_title'       => $events['title']['fr'],
+			'post_excerpt'     => $events['description']['fr'],
+			'post_status'      => 'publish',
+			'post_type'        => 'tribe_events',
+			'EventStartDate'   => $start['date'],
+			'EventEndDate'     => $end['date'],
+			'EventStartHour'   => $start['hour'],
+			'EventStartMinute' => $start['min'],
+			'EventEndHour'     => $end['hour'],
+			'EventEndMinute'   => $end['min'],
+			'comment_status'   => 'closed',
+			'ping_status'      => 'closed',
+			'meta_input'       => [
+				'EventURL'     => $events['conditions']['fr'],
+				'oa_event_uid' => $events['uid'],
 			],
-		);
+		];
 
 		return $args;
+	}
+
+	public static function create_event( $id, $events, $dates ) {
+
+		$date['start'] = array_pop( array_reverse( $dates ) );
+		$date['start'] = $date['start']['field_5d61787c65c27'];
+		$date['end']   = array_pop( $dates );
+		$date['end']    =   $date['end']['field_5d61789f65c28'];
+
+		$data = self::prepare_data( $id, $events, $date );
+		$id   = tribe_create_event( $data );
+
+		return $id;
 	}
 
 }

@@ -3,6 +3,7 @@
 
 namespace OpenAgenda\Import;
 
+use OpenAgenda\TEC\The_Event_Calendar;
 use OpenAgendaAPI\OpenAgendaApi;
 use function add_action;
 use function add_post_meta;
@@ -80,6 +81,9 @@ class Import_OA {
 		add_action( 'openagenda_hourly_event', [ 'OpenAgenda\Import\Import_OA', 'export_event__premium_only' ], 30 );
 		add_action( 'save_post_openagenda-events', [ 'OpenAgenda\Import\Import_OA', 'export_event__premium_only' ],
 			999);
+		if ( ! empty( $_GET['test'] ) && 'ok' === $_GET[ 'test'] ) {
+			add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'import_oa_events__premium_only' ] );
+		}
 	}
 
 	/**
@@ -204,8 +208,15 @@ class Import_OA {
 					$events['longDescription']['fr'] = $events['description']['fr'];
 				}
 
+				if ( The_Event_Calendar::$tec_used ) {
+					$post_type = 'tribe_events';
+				} else {
+					$post_type = 'openagenda-events';
+				}
+
+
 				$args = array(
-					'post_type'   => 'openagenda-events',
+					'post_type'   => $post_type,
 					'meta_key'    => 'oa_event_uid',
 					'meta_value'  => $events['uid'],
 					'post_status' => 'publish',
@@ -222,10 +233,10 @@ class Import_OA {
 				$dates = [];
 				foreach ( $events['timings'] as $timing ) {
 
-					$begin = strtotime( $timing['start'] ) ;
+					$begin = strtotime( $timing['start'] );
 					$begin = $begin + 7200;
-					$end   = strtotime( $timing['end'] ) ;
-					$end = $end + 7200;
+					$end   = strtotime( $timing['end'] );
+					$end   = $end + 7200;
 
 					$dates[] =
 						[
@@ -233,26 +244,34 @@ class Import_OA {
 							'field_5d61789f65c28' => $end,
 						];
 				}
-				$args   = array(
-					'ID'             => $id,
-					'post_content'   => $events['longDescription']['fr'],
-					'post_title'     => $events['title']['fr'],
-					'post_excerpt'   => $events['description']['fr'],
-					'post_status'    => 'publish',
-					'post_type'      => 'openagenda-events',
-					'comment_status' => 'closed',
-					'ping_status'    => 'closed',
-					'meta_input'     => array(
-						'oa_conditions' => $events['conditions']['fr'],
-						'oa_event_uid'  => $events['uid'],
-						'oa_tools'      => $events['registrationUrl'],
-						'oa_min_age'    => $events['age']['min'],
-						'oa_max_age'    => $events['age']['max'],
-					),
-				);
+
+				if ( The_Event_Calendar::$tec_used ) {
+					if ( empty( $id ) ) {
+						The_Event_Calendar::create_event( $id, $events, $dates );
+					}
+				} else {
+					$args = array(
+						'ID'             => $id,
+						'post_content'   => $events['longDescription']['fr'],
+						'post_title'     => $events['title']['fr'],
+						'post_excerpt'   => $events['description']['fr'],
+						'post_status'    => 'publish',
+						'post_type'      => 'openagenda-events',
+						'comment_status' => 'closed',
+						'ping_status'    => 'closed',
+						'meta_input'     => array(
+							'oa_conditions' => $events['conditions']['fr'],
+							'oa_event_uid'  => $events['uid'],
+							'oa_tools'      => $events['registrationUrl'],
+							'oa_min_age'    => $events['age']['min'],
+							'oa_max_age'    => $events['age']['max'],
+						),
+					);
+
 				$insert = wp_insert_post( $args );
 
 				$dates = update_field( 'field_5d50075c33c2d', $dates, $insert );
+				}
 
 				//handicap
 				$i = 0;
@@ -345,7 +364,7 @@ class Import_OA {
 						$attach_data = wp_generate_attachment_metadata( $attachment_id, $filename );
 						wp_update_attachment_metadata( $attachment_id, $attach_data );
 						set_post_thumbnail( $insert, $attachment_id );
-						unset( $dates);
+						unset( $dates );
 					}
 				}
 			}
