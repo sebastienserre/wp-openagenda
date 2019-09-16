@@ -2,6 +2,7 @@
 
 namespace OpenAgenda\TEC;
 
+use OpenAgendaAPI\OpenAgendaApi;
 use function add_action;
 use function array_pop;
 use function array_reverse;
@@ -10,6 +11,7 @@ use function date;
 use function esc_attr;
 use function esc_attr_e;
 use function tribe_create_event;
+use function tribe_create_venue;
 use function tribe_update_event;
 use function var_dump;
 use function wp_set_post_terms;
@@ -134,6 +136,48 @@ class The_Event_Calendar {
 		wp_set_post_terms( $id, $events['keywords']['fr'], 'post_tag' );
 
 		return $id;
+	}
+	
+	/**
+     * Create a venue in The Event Calendar from Openagenda.com
+	 * @author  Sébastien SERRE
+	 * @package wp-openagenda
+	 * @since
+	 */
+	public static function create_venue() {
+		$openagenda = new OpenAgendaApi();
+		$url_oa     = $openagenda->get_agenda_list__premium_only();
+		foreach ( $url_oa as $url ) {
+			$uid       = $openagenda->openwp_get_uid( $url );
+			$decoded[] = OpenAgendaApi::get_venue_oa( $uid );
+		}
+		if ( ! empty( $decoded ) ) {
+			$venues = tribe_get_venues();
+			if ( empty( $venues ) ) {
+				foreach ( $decoded as $data ) {
+					foreach ( $data['items'] as $location ) {
+						$args = [
+							'Venue'      => $location['name'],
+							'Country'    => OpenAgendaApi::get_country( $location['countryCode'] ),
+							'City'       => $location['postalCode'],
+							'State'      => $location['countryCode'],
+							'Province'   => $location['region'],
+							'Zip'        => $location['postalCode'],
+							'Address'    => $location['address'],
+							'Phone'      => $location['phone'],
+							'URL'        => $location['website'],
+							'meta_input' => [
+								'uid' => $location['uid'],
+							]
+						];
+						$id   = tribe_create_venue( $args );
+						OpenAgendaApi::upload_thumbnail( $location['image'], $id, $location['name'] );
+					}
+				}
+			} else {
+			    // update
+			}
+		}
 	}
 
 }

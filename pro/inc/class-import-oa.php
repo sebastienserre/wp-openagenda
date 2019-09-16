@@ -82,7 +82,8 @@ class Import_OA {
 		add_action( 'save_post_openagenda-events', [ 'OpenAgenda\Import\Import_OA', 'export_event__premium_only' ],
 			999);
 		if ( ! empty( $_GET['test'] ) && 'ok' === $_GET[ 'test'] ) {
-			add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'import_oa_events__premium_only' ] );
+			add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'register_venue__premium_only' ], 10 );
+		//	add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'import_oa_events__premium_only' ] );
 		}
 	}
 
@@ -123,54 +124,57 @@ class Import_OA {
 	 * @package OpenAgenda\Import
 	 */
 	public static function register_venue__premium_only() {
-		$openagenda = new OpenAgendaApi();
-		$url_oa     = $openagenda->get_agenda_list__premium_only();
+		if ( The_Event_Calendar::$tec_used ) {
+			The_Event_Calendar::create_venue();
+		} else {
+			$openagenda = new OpenAgendaApi();
+			$url_oa     = $openagenda->get_agenda_list__premium_only();
 
-		/**
-		 * Get UID for each
-		 */
-		foreach ( $url_oa as $url ) {
-			$uid  = $openagenda->openwp_get_uid( $url );
-			$json = wp_remote_get( 'https://openagenda.com/agendas/' . $uid . '/locations.json' );
-			if ( 200 === (int) wp_remote_retrieve_response_code( $json ) ) {
-				$body         = wp_remote_retrieve_body( $json );
-				$decoded_body = json_decode( $body, true );
+			/**
+			 * Get UID for each
+			 */
+			foreach ( $url_oa as $url ) {
+				$uid          = $openagenda->openwp_get_uid( $url );
+				$decoded_body = OpenAgendaApi::get_venue_oa( $uid );
 
-				/**
-				 * get all venue to update if exists
-				 */
+				if ( ! empty( $decoded_body ) ) {
 
-				foreach ( $decoded_body['items'] as $location ) {
-					$venues = $openagenda->get_venue__premium_only( $location['uid'] );
+					/**
+					 * get all venue to update if exists
+					 */
 
-					$name = implode(
-						' - ',
-						[
-							$location['name'],
-							$location['city'],
-							$location['countryCode'],
-							$location['uid'],
-						]
-					);
-					if ( empty( $venues ) ) {
+					foreach ( $decoded_body['items'] as $location ) {
+						$venues = $openagenda->get_venue__premium_only( $location['uid'] );
 
-						$insert = wp_insert_term( $name, 'openagenda_venue' );
-						if ( is_wp_error( $insert ) ) {
-							$error = 'Fatal Error -- Import OpenAgenda: ' . $insert->get_error_message();
-							error_log( $error );
+						$name = implode(
+							' - ',
+							[
+								$location['name'],
+								$location['city'],
+								$location['countryCode'],
+								$location['uid'],
+							]
+						);
+						if ( empty( $venues ) ) {
+
+							$insert = wp_insert_term( $name, 'openagenda_venue' );
+							if ( is_wp_error( $insert ) ) {
+								$error = 'Fatal Error -- Import OpenAgenda: ' . $insert->get_error_message();
+								error_log( $error );
+							} else {
+								update_term_meta( $insert['term_id'], '_oa_location_uid', $location['uid'] );
+							}
 						} else {
-							update_term_meta( $insert['term_id'], '_oa_location_uid', $location['uid'] );
-						}
-					} else {
-						foreach ( $venues as $venue ) {
-							$locationuid = get_term_meta( $venue->term_id, '_oa_location_uid' );
-							$args        = array(
-								'name' => $name,
-							);
-							// si $locationuid existe alors update
-							$locationuid = intval( $locationuid[0] );
-							if ( $location['uid'] === $locationuid ) {
-								wp_update_term( $venue->term_id, 'openagenda_venue', $args );
+							foreach ( $venues as $venue ) {
+								$locationuid = get_term_meta( $venue->term_id, '_oa_location_uid' );
+								$args        = array(
+									'name' => $name,
+								);
+								// si $locationuid existe alors update
+								$locationuid = intval( $locationuid[0] );
+								if ( $location['uid'] === $locationuid ) {
+									wp_update_term( $venue->term_id, 'openagenda_venue', $args );
+								}
 							}
 						}
 					}
@@ -303,72 +307,12 @@ class Import_OA {
 				}
 
 				// insert post thumbnail
-				// Gives us access to the download_url() and wp_handle_sideload() functions
-				require_once( ABSPATH . 'wp-admin/includes/file.php' );
-
-				// Download file to temp dir
-				$timeout_seconds = 5;
-				$url             = $events['originalImage'];
-
-				// Download file to temp dir.
-				$temp_file = download_url( $url, $timeout_seconds );
-				if ( ! is_wp_error( $temp_file ) ) {
-
-					// Array based on $_FILE as seen in PHP file uploads.
-					$file = array(
-						'name'     => basename( $url ), // ex: wp-header-logo.png
-						'type'     => 'image/png',
-						'tmp_name' => $temp_file,
-						'error'    => 0,
-						'size'     => filesize( $temp_file ),
-					);
-
-					$overrides = array(
-						/*
-						 * Tells WordPress to not look for the POST form fields that would
-						 * normally be present, default is true, we downloaded the file from
-						 * a remote server, so there will be no form fields.
-						 */
-						'test_form'   => false,
-
-						// Setting this to false lets WordPress allow empty files, not recommended.
-						'test_size'   => true,
-
-						// A properly uploaded file will pass this test. There should be no reason to override this one.
-						'test_upload' => true,
-					);
-
-					// Move the temporary file into the uploads directory.
-					$results       = wp_handle_sideload( $file, $overrides );
-					$wp_upload_dir = wp_upload_dir();
-
-					if ( empty( $results['error'] ) ) {
-
-						$filename      = $results['file']; // Full path to the file.
-						$filetype      = wp_check_filetype( $filename, null );
-						$attachment    = array(
-							'guid'           => $wp_upload_dir['url'] . '/' . basename( $filename ),
-							'post_mime_type' => $filetype['type'],
-							'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
-							'post_content'   => '',
-							'post_status'    => 'inherit',
-						);
-						$attachment_id = wp_insert_attachment( $attachment, $filename, $insert );
-						update_post_meta( $attachment_id, '_wp_attachment_image_alt', $events['title']['fr'] );
-
-						// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
-						require_once ABSPATH . 'wp-admin/includes/image.php';
-
-						// Generate the metadata for the attachment, and update the database record.
-						$attach_data = wp_generate_attachment_metadata( $attachment_id, $filename );
-						wp_update_attachment_metadata( $attachment_id, $attach_data );
-						set_post_thumbnail( $insert, $attachment_id );
-						unset( $dates );
-					}
-				}
+				OpenAgendaApi::upload_thumbnail( $events['originalImage'], $insert, $events['title']['fr'] );
+				unset( $dates );
 			}
 		}
 	}
+
 	/**
 	 * Export the local events to OpenAgenda
 	 *
@@ -448,14 +392,6 @@ class Import_OA {
 
 				$i = 0;
 				foreach ( $dates as $date ) {
-					/*$format = 'd/m/Y H:i:s';
-					$begin  = \DateTime::createFromFormat( $format, $date['begin'] );
-					$begin  = $begin->format( \Datetime::W3C );
-					$begin  = strtotime( $begin );
-
-					$end = \DateTime::createFromFormat( $format, $date['end'] );
-					$end = $end->format( \Datetime::W3C );
-					$end = strtotime( $end );*/
 
 					$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $date['begin'] );
 					$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
