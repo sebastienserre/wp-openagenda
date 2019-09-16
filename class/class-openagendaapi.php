@@ -8,6 +8,8 @@ use function esc_url;
 use function set_transient;
 use WP_Error;
 use function wp_remote_get;
+use function wp_remote_retrieve_body;
+use function wp_remote_retrieve_response_code;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -424,6 +426,23 @@ class OpenAgendaApi {
 		return $token;
 
 	}
+
+	/**
+	 * @param $agenda_uid
+	 *
+	 * @return array List of venue registred for this Agenda.
+	 * @author  Sébastien SERRE
+	 * @package wp-openagenda
+	 * @since
+	 */
+	public static function get_venue_oa( $agenda_uid ){
+		$json = wp_remote_get( 'https://openagenda.com/agendas/' . $agenda_uid . '/locations.json' );
+		if ( 200 === (int) wp_remote_retrieve_response_code( $json ) ) {
+			$body         = wp_remote_retrieve_body( $json );
+			$decoded_body = json_decode( $body, true );
+		}
+		return $decoded_body;
+    }
 }
 
 new OpenAgendaApi();
