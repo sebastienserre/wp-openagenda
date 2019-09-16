@@ -11,11 +11,13 @@ use function basename;
 use function download_url;
 use function esc_url;
 use function filesize;
+use function get_locale;
 use function is_wp_error;
 use function preg_replace;
 use function set_post_thumbnail;
 use function set_transient;
 use WP_Error;
+use function substr;
 use function update_post_meta;
 use function var_dump;
 use function wp_check_filetype;
@@ -1046,6 +1048,12 @@ class OpenAgendaApi {
 		return $country;
 		
 	}
+	
+	public static function oa_get_locale() {
+	    $locale = get_locale();
+	    $locale = substr( $locale, 0, 2 );
+	    return $locale;
+    }
 }
 
 new OpenAgendaApi();
