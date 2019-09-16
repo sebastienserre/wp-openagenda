@@ -9,9 +9,7 @@
 	use function array_reverse;
 	use function class_exists;
 	use function date;
-	use function esc_attr;
 	use function esc_attr_e;
-	use function get_locale;
 	use function tribe_create_event;
 	use function tribe_create_venue;
 	use function tribe_update_event;
@@ -115,9 +113,6 @@
 				'EventURL'         => $events['registrationUrl'],
 				'comment_status'   => 'closed',
 				'ping_status'      => 'closed',
-				'meta_input'       => [
-					'oa_event_uid' => $events['uid'],
-				],
 			];
 			
 			return $args;
@@ -134,6 +129,7 @@
 			
 			if ( empty( $id ) ) {
 				$id = tribe_create_event( $data );
+				add_post_meta( $id, '_oa_event_uid', $events['uid'] );
 			} else {
 				$id = tribe_update_event( $id, $data );
 			}
@@ -186,7 +182,7 @@
 						// venue doesn't exists
 						if ( empty( $venue ) ) {
 							$id = tribe_create_venue( $args );
-							add_post_meta( $id, 'venue_uid', $location['uid'] );
+							add_post_meta( $id, '_oa_event_uid', $location['uid'] );
 							OpenAgendaApi::upload_thumbnail( $location['image'], $id, $location['name'] );
 						} else { //venue exits
 							foreach ( $venue as $v ) {

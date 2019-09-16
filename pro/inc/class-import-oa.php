@@ -221,7 +221,7 @@ class Import_OA {
 
 				$args = array(
 					'post_type'   => $post_type,
-					'meta_key'    => 'oa_event_uid',
+					'meta_key'    => '_oa_event_uid',
 					'meta_value'  => $events['uid'],
 					'post_status' => 'publish',
 				);

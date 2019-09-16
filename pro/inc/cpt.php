@@ -74,8 +74,8 @@ if ( ! function_exists( 'openagenda_event' ) && false === The_Event_Calendar::$t
 add_action( 'add_meta_boxes', 'oa_event_metabox' );
 function oa_event_metabox() {
 	global $post;
-	if ( 'openagenda-events' === get_post_type( $post->ID ) || 'tribe_events' === get_post_type( $post->ID ) ) {
-		add_meta_box( 'oa_event_id', 'OA Event ID', 'oa_event_id', '', 'side', 'high' );
+	if ( 'openagenda-events' === get_post_type( $post->ID ) || 'tribe_events' === get_post_type( $post->ID ) || 'tribe_venue' === get_post_type( $post->ID ) ) {
+		add_meta_box( 'oa_event_id', 'OpenAgenda ID', 'oa_event_id', '', 'side', 'high' );
 	}
 }
 
