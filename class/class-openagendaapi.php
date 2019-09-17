@@ -6,7 +6,6 @@ use finfo;
 use function add_action;
 use function add_query_arg;
 use function array_key_exists;
-use function array_search;
 use function basename;
 use function download_url;
 use function esc_url;
@@ -19,7 +18,6 @@ use function set_transient;
 use WP_Error;
 use function substr;
 use function update_post_meta;
-use function var_dump;
 use function wp_check_filetype;
 use function wp_generate_attachment_metadata;
 use function wp_handle_sideload;
@@ -61,7 +59,7 @@ class OpenAgendaApi {
 	 * @return int OpenAgenda API Key
 	 * @since 1.0.0
 	 */
-	public function thfo_openwp_get_api_key() {
+	public static function thfo_openwp_get_api_key() {
 		$key = get_option( 'openagenda_api' );
 
 		return $key;
@@ -76,7 +74,7 @@ class OpenAgendaApi {
 	 * @author sebastienserre
 	 * @since  1.0.0
 	 */
-	public function openwp_get_slug( $slug ) {
+	public static function openwp_get_slug( $slug ) {
 		$re = '/[a-zA-Z\.\/:]*\/([a-zA-Z\.\/:\0-_9]*)/';
 
 		preg_match( $re, $slug, $matches, PREG_OFFSET_CAPTURE, 0 );
@@ -100,7 +98,7 @@ class OpenAgendaApi {
 	 * @author sebastienserre
 	 * @since  1.0.0
 	 */
-	public function thfo_openwp_retrieve_data( $url, $nb = 10, $when = 'current' ) {
+	public static function thfo_openwp_retrieve_data( $url, $nb = 10, $when = 'current' ) {
 		if ( empty( $url ) ) {
 			return '<p>' . __( 'You forgot to add an agenda\'s url to retrieve', 'wp-openagenda' ) . '</p>';
 		}
@@ -120,8 +118,8 @@ class OpenAgendaApi {
 				$when = '01/01/1970-' . $today;
 		}
 
-		$key = $this->thfo_openwp_get_api_key();
-		$uid = $this->openwp_get_uid( $url );
+		$key = self::thfo_openwp_get_api_key();
+		$uid = self::openwp_get_uid( $url );
 		if ( $uid ) {
 
 			$url          = 'https://openagenda.com/agendas/' . $uid . '/events.json';
@@ -155,10 +153,10 @@ class OpenAgendaApi {
 	 * @author sebastienserre
 	 * @since  1.0.0
 	 */
-	public function openwp_get_uid( $slug ) {
-		$slug = $this->openwp_get_slug( $slug );
-		if ( ! empty( $this->thfo_openwp_get_api_key() ) ) {
-			$key      = $this->thfo_openwp_get_api_key();
+	public static function openwp_get_uid( $slug ) {
+		$slug = self::openwp_get_slug( $slug );
+		if ( ! empty( self::thfo_openwp_get_api_key() ) ) {
+			$key      = self::thfo_openwp_get_api_key();
 			$response = wp_remote_get( 'https://api.openagenda.com/v1/agendas/uid/' . $slug . '?key=' . $key );
 			if ( 200 === (int) wp_remote_retrieve_response_code( $response ) ) {
 				$body         = wp_remote_retrieve_body( $response );
@@ -183,6 +181,9 @@ class OpenAgendaApi {
 	public function openwp_basic_html( $openwp_data, $lang, $instance ) {
 		if ( is_array( $instance ) ) {
 			if ( empty( $instance['url'] ) ) {
+				/**
+				 * @todo Y'a un truc chelou la!
+				 */
 				$instance['openwp_url'] = $instance['openwp_url'];
 			} else {
 				$instance['openwp_url'] = $instance['url'];
@@ -367,7 +368,7 @@ class OpenAgendaApi {
 	 *
 	 * @return array key: term_id Value; term name (OA URL)
 	 */
-	public function get_agenda_list__premium_only() {
+	public static function get_agenda_list__premium_only() {
 		/**
 		 * Get List of Agenda
 		 */

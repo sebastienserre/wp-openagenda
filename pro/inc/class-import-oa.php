@@ -82,8 +82,9 @@ class Import_OA {
 		add_action( 'save_post_openagenda-events', [ 'OpenAgenda\Import\Import_OA', 'export_event__premium_only' ],
 			999);
 		if ( ! empty( $_GET['test'] ) && 'ok' === $_GET[ 'test'] ) {
-			add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'register_venue__premium_only' ], 10 );
-		//	add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'import_oa_events__premium_only' ] );
+		//	add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'register_venue__premium_only' ], 10 );
+		//	add_action( 'admin_init', [ 'OpenAgenda\TEC\The_Event_Calendar', 'create_organisers' ], 10 );
+			add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'import_oa_events__premium_only' ] );
 		}
 	}
 

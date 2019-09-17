@@ -10,9 +10,16 @@
 	use function class_exists;
 	use function date;
 	use function esc_attr_e;
+	use function esc_url_raw;
+	use function sanitize_email;
+	use function sanitize_text_field;
+	use function sanitize_url;
 	use function tribe_create_event;
+	use function tribe_create_organizer;
 	use function tribe_create_venue;
+	use function tribe_get_organizers;
 	use function tribe_update_event;
+	use function tribe_update_organizer;
 	use function tribe_update_venue;
 	use function var_dump;
 	use function wp_set_post_terms;
@@ -117,7 +124,6 @@
 			
 			return $args;
 		}
-		
 		public static function create_event( $id, $events, $dates ) {
 			
 			$date['start'] = array_pop( array_reverse( $dates ) );
@@ -130,8 +136,13 @@
 			if ( empty( $id ) ) {
 				$id = tribe_create_event( $data );
 				add_post_meta( $id, '_oa_event_uid', $events['uid'] );
+				
+				//create Organizer
+				self::create_organisers( $id, $events );
+				
 			} else {
 				$id = tribe_update_event( $id, $data );
+				self::update_organisers( $id, $events );
 			}
 			
 			// insert Keywords
@@ -148,8 +159,7 @@
 		 * @since
 		 */
 		public static function create_venue() {
-			$openagenda = new OpenAgendaApi();
-			$url_oa     = $openagenda->get_agenda_list__premium_only();
+			$url_oa = OpenAgendaApi::get_agenda_list__premium_only();
 			foreach ( $url_oa as $url ) {
 				$uid       = $openagenda->openwp_get_uid( $url );
 				$decoded[] = OpenAgendaApi::get_venue_oa( $uid );
@@ -189,12 +199,76 @@
 								tribe_update_venue( $v->ID, $args );
 								OpenAgendaApi::upload_thumbnail( $location['image'], $v->ID, $location['name'] );
 							}
-							
 						}
 					}
 				}
 			}
 		}
+		
+		public static function create_organisers( $id, $event ) {
+			if ( empty( $event['registration'] ) ) {
+				return;
+			}
+
+			foreach ( $event['registration'] as $registration ) {
+				switch ( $registration['type'] ) {
+					case 'link':
+						$url = $registration['value'];
+						break;
+					case 'phone':
+						$phone = $registration['value'];
+						break;
+					case 'email':
+						$mail = $registration['value'];
+						break;
+				}
+			}
+			$args = [
+				'Organizer' => 'Organiser event ' . $event['uid'],
+				'Phone'     => sanitize_text_field( $phone ),
+				'Website'   => esc_url_raw( $url ),
+				'Email'     => sanitize_email( $mail ),
+			];
+			$id   = tribe_create_organizer( $args );
+			add_post_meta( $id, '_oa_event_uid', $event['uid'] );
+		}
+		
+		public static function update_organisers( $id, $event ) {
+			$organizer = get_posts( [
+				'post_type'  => 'tribe_organizer',
+				'meta_key'   => '_oa_event_uid',
+				'meta_value' => $event['uid']
+			] );
+			
+			if ( empty( $event['registration'] ) ) {
+				return;
+			}
+			
+			foreach ( $event['registration'] as $registration ) {
+				switch ( $registration['type'] ) {
+					case 'link':
+						$url = $registration['value'];
+						break;
+					case 'phone':
+						$phone = $registration['value'];
+						break;
+					case 'email':
+						$mail = $registration['value'];
+						break;
+				}
+			}
+			$args = [
+				'Organizer' => 'Organiser event ' . $event['uid'],
+				'Phone'     => sanitize_text_field( $phone ),
+				'Website'   => esc_url_raw( $url ),
+				'Email'     => sanitize_email( $mail ),
+			];
+		 
+			foreach ( $organizer as $o ) {
+				tribe_update_organizer( $o->ID, $args );
+			}
+        }
+		
 	}
 	
 	new The_Event_Calendar();
