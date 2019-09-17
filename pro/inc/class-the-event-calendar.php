@@ -124,6 +124,7 @@
 			
 			return $args;
 		}
+		
 		public static function create_event( $id, $events, $dates ) {
 			
 			$date['start'] = array_pop( array_reverse( $dates ) );
@@ -137,12 +138,19 @@
 				$id = tribe_create_event( $data );
 				add_post_meta( $id, '_oa_event_uid', $events['uid'] );
 				
-				//create Organizer
-				self::create_organisers( $id, $events );
+				//create Organizer & assign
+				$organiser_id = self::create_organisers( $id, $events );
+				add_post_meta( $id, '_EventOrganizerID', $organiser_id );
+				
+				// create Venue & assign
+				$venued_id = self::create_venue( $events );
+				add_post_meta( $id, '_EventVenueID', $venued_id );
+				
 				
 			} else {
 				$id = tribe_update_event( $id, $data );
 				self::update_organisers( $id, $events );
+				self::create_venue( $events );
 			}
 			
 			// insert Keywords
@@ -158,58 +166,54 @@
 		 * @package wp-openagenda
 		 * @since
 		 */
-		public static function create_venue() {
-			$url_oa = OpenAgendaApi::get_agenda_list__premium_only();
-			foreach ( $url_oa as $url ) {
-				$uid       = $openagenda->openwp_get_uid( $url );
-				$decoded[] = OpenAgendaApi::get_venue_oa( $uid );
-			}
-			if ( ! empty( $decoded ) ) {
-				foreach ( $decoded as $data ) {
-					foreach ( $data['items'] as $location ) {
-						// Search for an already registred venue
-						$args   = [
-							'post_type'  => 'tribe_venue',
-							'meta_key'   => 'venue_uid',
-							'meta_value' => $location['uid'],
-						];
-						$venue  = get_posts( $args );
-						$locale = OpenAgendaApi::oa_get_locale();
-						
-						$args = [
-							'Description' => $location['description'][ $locale ],
-							'Venue'       => $location['name'],
-							'Country'     => OpenAgendaApi::get_country( $location['countryCode'] ),
-							'City'        => $location['postalCode'],
-							'State'       => $location['countryCode'],
-							'Province'    => $location['region'],
-							'Zip'         => $location['postalCode'],
-							'Address'     => $location['address'],
-							'Phone'       => $location['phone'],
-							'URL'         => $location['website'],
-						];
-						
-						// venue doesn't exists
-						if ( empty( $venue ) ) {
-							$id = tribe_create_venue( $args );
-							add_post_meta( $id, '_oa_event_uid', $location['uid'] );
-							OpenAgendaApi::upload_thumbnail( $location['image'], $id, $location['name'] );
-						} else { //venue exits
-							foreach ( $venue as $v ) {
-								tribe_update_venue( $v->ID, $args );
-								OpenAgendaApi::upload_thumbnail( $location['image'], $v->ID, $location['name'] );
-							}
-						}
-					}
+		public static function create_venue( $events ) {
+			$location = $events['location'];
+			// Search for an already registred venue
+			$args   = [
+				'post_type'  => 'tribe_venue',
+				'meta_key'   => '_oa_event_uid',
+				'meta_value' => $location['uid'],
+			];
+			$venue  = get_posts( $args );
+			$locale = OpenAgendaApi::oa_get_locale();
+			
+			$country = OpenAgendaApi::get_country( $location['countryCode'] );
+			
+			$args = [
+				'Description' => $location['description'][ $locale ],
+				'Venue'       => $location['name'],
+				'Country'     => $country,
+				'City'        => $location['postalCode'],
+				'State'       => $location['countryCode'],
+				'Province'    => $location['region'],
+				'Zip'         => $location['postalCode'],
+				'Address'     => $location['address'],
+				'Phone'       => $location['phone'],
+				'URL'         => $location['website'],
+			];
+			
+			// venue doesn't exists
+			if ( empty( $venue ) ) {
+				$id = tribe_create_venue( $args );
+				add_post_meta( $id, '_oa_event_uid', $location['uid'] );
+				OpenAgendaApi::upload_thumbnail( $location['image'], $id, $location['name'] );
+			} else { //venue exits
+				foreach ( $venue as $v ) {
+					tribe_update_venue( $v->ID, $args );
+					OpenAgendaApi::upload_thumbnail( $location['image'], $v->ID, $location['name'] );
+					$id = $v->ID;
 				}
 			}
+			
+			return $id;
 		}
 		
-		public static function create_organisers( $id, $event ) {
+		
+		public static function create_organisers( $event_id, $event ) {
 			if ( empty( $event['registration'] ) ) {
 				return;
 			}
-
+			
 			foreach ( $event['registration'] as $registration ) {
 				switch ( $registration['type'] ) {
 					case 'link':
@@ -231,6 +235,8 @@
 			];
 			$id   = tribe_create_organizer( $args );
 			add_post_meta( $id, '_oa_event_uid', $event['uid'] );
+			
+			return $id;
 		}
 		
 		public static function update_organisers( $id, $event ) {
@@ -263,11 +269,11 @@
 				'Website'   => esc_url_raw( $url ),
 				'Email'     => sanitize_email( $mail ),
 			];
-		 
+			
 			foreach ( $organizer as $o ) {
 				tribe_update_organizer( $o->ID, $args );
 			}
-        }
+		}
 		
 	}
 	

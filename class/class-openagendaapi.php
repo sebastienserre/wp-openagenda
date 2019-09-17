@@ -16,8 +16,10 @@ use function preg_replace;
 use function set_post_thumbnail;
 use function set_transient;
 use WP_Error;
+use function strtoupper;
 use function substr;
 use function update_post_meta;
+use function wc_strtoupper;
 use function wp_check_filetype;
 use function wp_generate_attachment_metadata;
 use function wp_handle_sideload;
@@ -468,6 +470,19 @@ class OpenAgendaApi {
 
 		return $decoded_body;
 	}
+	
+	public static function get_venue( $locationID ) {
+	    $key = self::thfo_openwp_get_api_key();
+	
+	    $json = wp_remote_get( "https://api.openagenda.com/v1/locations/$locationID?key=$key"  );
+		
+		if ( 200 === (int) wp_remote_retrieve_response_code( $json ) ) {
+			$body         = wp_remote_retrieve_body( $json );
+			$decoded_body = json_decode( $body, true );
+		}
+		
+		return $decoded_body;
+    }
 	
 	/**
 	 * @param $url string image url
@@ -1040,10 +1055,10 @@ class OpenAgendaApi {
 			'ZM' => 'Zambia',
 			'ZW' => 'Zimbabwe',
 		);
-		$country = array_key_exists( $code, $countries );
+		$country = array_key_exists( strtoupper( $code ), $countries );
 		
 		if ( $country ){
-		    $country = $countries[ $code ];
+		    $country = $countries[ strtoupper( $code ) ];
         }
 		
 		return $country;
