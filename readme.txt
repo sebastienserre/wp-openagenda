@@ -38,7 +38,7 @@ On WP 5.0 Use the new Gutenberg Blocks!
 
 * 1st get an Openagenda API Key in your Openagenda profile.
 * 2nd use the [openwp_basic] with with params below to customize it.
-* The param Agenda slug is mandatory. example: slug=\'my-agenda-slug\'.
+* The param Agenda slug is mandatory. example: url='my-agenda-url(complete)'.
 * The param nb is optional. Default value is 10. It will retrieve data for the \"nb\" events. example: nb=12
 * The param lang is optional. Default value is en (english). It will retrieve data with the \"lang\" params (if exists). example: lang = \'fr\'
 
@@ -52,7 +52,7 @@ On WP 5.0 Use the new Gutenberg Blocks!
 * Yes! (one by widget, shortcode, gutenberg Block)
 
 = May I give Idea?
-* Yes please use the support@thivinfo.com mail adress
+* Yes please use the support@thivinfo.com mail address
 
 = Where can I found help ?
 *  Yes please use the support@thivinfo.com mail adress
