@@ -96,7 +96,7 @@ function register_venue__premium_only() {
 /**
  * Import OA events from OpenAgenda to WordPress
  */
-if ( ! empty( $_GET['test'] ) ) {
+if ( ! empty( $_GET['test'] ) && 'ok' === $_GET['test'] ) {
 	add_action( 'admin_init', 'import_oa_events__premium_only' );
 }
 function import_oa_events__premium_only( $url_oa = '' ) {
@@ -147,23 +147,7 @@ function import_oa_events__premium_only( $url_oa = '' ) {
 			 * Add support to TEC
 			 */
 			if ( The_Event_Calendar::$tec_activated ) {
-				$start_firstday_date = date( 'Y-m-d G:i:s', $start_firstday );
-				$end_lastday_date    = date( 'Y-m-d G:i:s', $end_lastday );
-				$args                = array(
-					'ID'             => $id,
-					'post_content'   => $events['longDescription']['fr'],
-					'post_title'     => $events['title']['fr'],
-					'post_excerpt'   => $events['description']['fr'],
-					'post_status'    => 'publish',
-					'post_type'      => 'tribe_events',
-					'comment_status' => 'closed',
-					'ping_status'    => 'closed',
-					'meta_input'     => array(
-						'EventURL'       => $events['conditions']['fr'],
-						'_EventStartDate' => $start_firstday_date,
-						'_EventEndDate'   => $end_lastday_date,
-					),
-				);
+				$args = The_Event_Calendar::prepare_data( $id, $start_firstday, $end_lastday, $events );
 			} else {
 
 				$args   = array(
