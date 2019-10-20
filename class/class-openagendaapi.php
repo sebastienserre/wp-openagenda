@@ -11,6 +11,7 @@ use function download_url;
 use function esc_url;
 use function filesize;
 use function get_locale;
+use function get_transient;
 use function is_wp_error;
 use function preg_replace;
 use function set_post_thumbnail;
@@ -423,10 +424,10 @@ class OpenAgendaApi {
 	 *
 	 * @return string return Openagenda token.
 	 */
-	public function get_acces_token() {
+	public static function get_acces_token() {
 		$transient = get_transient( 'openagenda_secret' );
 		if ( empty( $transient ) ) {
-			$secret = $this->get_secret_key__premium_only();
+			$secret = self::get_secret_key__premium_only();
 			$args   = array(
 				'sslverify' => false,
 				'timeout'   => 15,
@@ -1070,6 +1071,25 @@ class OpenAgendaApi {
 	    $locale = substr( $locale, 0, 2 );
 	    return $locale;
     }
+
+	public static function get_lat_lng( $address ) {
+		$address = rawurlencode( $address );
+		$coord   = get_transient( 'geocode_' . $address );
+		if( empty( $coord ) ) {
+			$url  = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q=' . $address . '&format=json&limit=1';
+			$json = wp_remote_get( $url );
+			if ( 200 === (int) wp_remote_retrieve_response_code( $json ) ) {
+				$body = wp_remote_retrieve_body( $json );
+				$json = json_decode( $body, true );
+			}
+
+			$coord['lat']  = $json[0]['lat'];
+			$coord['long'] = $json[0]['lon'];
+			set_transient( 'geocode_' . $address, $coord, DAY_IN_SECONDS * 30 );
+		}
+		return $coord;
+
+	}
 }
 
 new OpenAgendaApi();
