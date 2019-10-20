@@ -9,18 +9,15 @@ use function add_action;
 use function add_post_meta;
 use function array_merge;
 use function array_push;
-use function basename;
 use function curl_exec;
 use function curl_init;
 use function curl_setopt;
 use function date;
-use function download_url;
 use function error_log;
 use function explode;
 use function extract;
 use function fclose;
 use function file_exists;
-use function filesize;
 use function fopen;
 use function fwrite;
 use function get_field;
@@ -33,28 +30,18 @@ use function implode;
 use function intval;
 use function is_null;
 use function is_wp_error;
-use function preg_replace;
-use function set_post_thumbnail;
 use function strtotime;
+use function tribe_get_event;
 use function unlink;
 use function update_field;
-use function update_post_meta;
 use function update_term_meta;
-use function wp_check_filetype;
-use function wp_generate_attachment_metadata;
+use function var_dump;
 use function wp_get_post_terms;
-use function wp_handle_sideload;
-use function wp_insert_attachment;
 use function wp_insert_post;
 use function wp_insert_term;
 use function wp_rand;
-use function wp_remote_get;
-use function wp_remote_retrieve_body;
-use function wp_remote_retrieve_response_code;
 use function wp_set_post_terms;
-use function wp_update_attachment_metadata;
 use function wp_update_term;
-use function wp_upload_dir;
 use const CURLOPT_POST;
 use const CURLOPT_POSTFIELDS;
 use const CURLOPT_RETURNTRANSFER;
@@ -67,25 +54,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * This Class will import event from OpenAgenda
+ *
  * @package OpenAgenda\Import
- * @since 3.0.0
+ * @since   3.0.0
  * @authors sebastienserre
  */
 class Import_OA {
 	public function __construct() {
-		add_action( 'openagenda_hourly_event', [ 'OpenAgenda\Import\Import_OA', 'register_venue__premium_only' ], 10 );
-		add_action( 'openagenda_hourly_event', [
-			'OpenAgenda\Import\Import_OA',
-			'import_oa_events__premium_only'
-		], 20 );
-		add_action( 'openagenda_hourly_event', [ 'OpenAgenda\Import\Import_OA', 'export_event__premium_only' ], 30 );
-		add_action( 'save_post_openagenda-events', [ 'OpenAgenda\Import\Import_OA', 'export_event__premium_only' ],
-			999);
-		if ( ! empty( $_GET['test'] ) && 'ok' === $_GET[ 'test'] ) {
-		//	add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'register_venue__premium_only' ], 10 );
-		//	add_action( 'admin_init', [ 'OpenAgenda\TEC\The_Event_Calendar', 'create_organisers' ], 10 );
-			add_action( 'admin_init', [ 'OpenAgenda\Import\Import_OA', 'import_oa_events__premium_only' ] );
-		}
+		add_action(
+			'openagenda_hourly_event',
+			[
+				'OpenAgenda\Import\Import_OA',
+				'register_venue__premium_only',
+			],
+			10
+		);
+		add_action(
+			'openagenda_hourly_event',
+			[
+				'OpenAgenda\Import\Import_OA',
+				'import_oa_events__premium_only',
+			],
+			20
+		);
+		add_action(
+			'openagenda_hourly_event',
+			[
+				'OpenAgenda\Import\Import_OA',
+				'export_event__premium_only',
+			],
+			30
+		);
+		add_action(
+			'save_post_openagenda-events',
+			[
+				'OpenAgenda\Import\Import_OA',
+				'export_event__premium_only',
+			],
+			999
+		);
 	}
 
 	/**
@@ -125,9 +132,6 @@ class Import_OA {
 	 * @package OpenAgenda\Import
 	 */
 	public static function register_venue__premium_only() {
-		if ( The_Event_Calendar::$tec_used ) {
-			The_Event_Calendar::create_venue();
-		} else {
 			$openagenda = new OpenAgendaApi();
 			$url_oa     = $openagenda->get_agenda_list__premium_only();
 
@@ -156,6 +160,10 @@ class Import_OA {
 								$location['uid'],
 							]
 						);
+						if ( The_Event_Calendar::$tec_used ) {
+							The_Event_Calendar::create_venue();
+						} else {
+
 						if ( empty( $venues ) ) {
 
 							$insert = wp_insert_term( $name, 'openagenda_venue' );
@@ -323,12 +331,8 @@ class Import_OA {
 	 * @package OpenAgenda\Import
 	 */
 	public static function export_event__premium_only() {
-
-		$locale = get_locale();
-		$locale = explode( '_', $locale );
-		$locale = $locale[0];
-
 		$openagenda = new OpenAgendaApi();
+		$locale     = $openagenda::oa_get_locale();
 
 		$options     = array( 'lang' => $locale );
 		$agendas     = $openagenda->get_agenda_list__premium_only();
@@ -344,7 +348,7 @@ class Import_OA {
 			);
 
 			foreach ( $events as $event ) {
-				$eventuid = get_post_meta( $event->ID, 'oa_event_uid', true );
+				$eventuid = get_post_meta( $event->ID, '_oa_event_uid', true );
 				if ( empty( $eventuid ) ) {
 					//create
 					$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events";
@@ -357,6 +361,7 @@ class Import_OA {
 					'lang' => $locale
 				), $options ) );
 
+				// General Datas
 				// retrieve event keywords
 				$keywords = wp_get_post_terms( $event->ID, 'openagenda_keyword' );
 				if ( ! empty( $keywords ) ) {
@@ -366,6 +371,38 @@ class Import_OA {
 					}
 					$keywords = implode( ', ', $keys );
 				}
+
+				// format excerpt
+				if ( empty( $event->post_excerpt ) ) {
+					if ( ! empty( $event->post_content ) ) {
+						$excerpt = $event->post_content;
+					} else {
+						$excerpt = __( 'No data found', 'wp-openagenda' );
+					}
+				} else {
+					$excerpt = $event->post_excerpt;
+				}
+
+				$data = [
+					'slug'            => "$event->post_name-" . wp_rand(),
+					'title'           =>
+						[
+							$locale => $event->post_title,
+						],
+					'description'     =>
+						[
+							$locale => $excerpt,
+						],
+					'longDescription' =>
+						[
+							$locale => $event->post_content,
+						],
+					'keywords'        =>
+						[
+							$locale => $keywords,
+						]
+				];
+
 
 				// get min age
 				$min_age = get_post_meta( $event->ID, 'oa_min_age', true );
@@ -409,45 +446,15 @@ class Import_OA {
 					$accessibility['hi'] = false;
 				}
 
-				if ( empty( $event->post_excerpt ) ) {
-					if ( ! empty( $event->post_content ) ) {
-						$excerpt = $event->post_content;
-					} else {
-						$excerpt = __( 'No data found', 'wp-openagenda' );
-					}
-				} else {
-					$excerpt = $event->post_excerpt;
-				}
-
-				$data = array(
-					'slug'            => "$event->post_name-" . wp_rand(),
-					'title'           =>
-						[
-							$locale => $event->post_title,
-						],
-					'description'     =>
-						[
-							$locale => $excerpt,
-						],
-					'longDescription' =>
-						[
-							$locale => $event->post_content,
-						],
-					'keywords'        =>
-						[
-							$locale => $keywords,
-						],
-					'age'             => $age,
-					'accessibility'   => $accessibility,
-					'conditions'      =>
-						[
-							$locale => $conditions,
-						],
-					'registration'    => $registrations,
-					'locationUid'     => $locationuid[0],
-					'timings'         => $timings,
-				);
-
+				$data['age']           = $age;
+				$data['accessibility'] = $accessibility;
+				$data['conditions']    =
+					[
+						$locale => $conditions,
+					];
+				$data['registration']  = $registrations;
+				$data['locationUid']   = $locationuid[0];
+				$data['timings']       = $timings;
 
 				$imageLocalPath = null;
 
@@ -474,6 +481,7 @@ class Import_OA {
 					$posted['image'] = $imageLocalPath;
 				}
 
+
 				curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
 
 				$received_content = curl_exec( $ch );
@@ -485,9 +493,9 @@ class Import_OA {
 				if ( $uid ) {
 					add_post_meta( $event->ID, 'oa_event_uid', $uid );
 				}
-
-				return $decode;
 			}
+
+			return $decode;
 		}
 	}
 
