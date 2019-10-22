@@ -1,6 +1,6 @@
 === OpenAgenda for WordPress ===
 Contributors: sebastienserre
-Tags: openagenda, agenda, events, calendar, opendata,
+Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.2
 Requires PHP: 5.6
@@ -12,13 +12,12 @@ Display Events hosted in Openagenda.com easily in your WordPress Website.
 
 == Description ==
 Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode, Gutenberg Blocks and Widget.
-Shortly is planned to be produced Gutenberg Blocks and page builder elements.
 
 ### Why Buying the Pro Version ?
 * Sync your Events directly with WordPress
 * Event created on Openagenda.com are imported as a WordPress CPT (openagenda-events)
 * Event created on WordPress are exported to OpenAgenda.com
-* Developpers can easily customize appearance by creating Templates following the WordPress Hierarchy in their WP Themes.
+* Connect The Event Calendar from Modern Tribe to OpenAgenda!
 * 30 days Trials
 * Prioritory support
 * From only 29,99€
@@ -66,6 +65,12 @@ On WP 5.0 Use the new Gutenberg Blocks!
 = Is OpenAgenda for WordPress is working with WPBakery Page Builder (formerly Visual Composer) ?
 * Yes! The Pro version is coming with Visual Composer element. Free one provide only WP Shortcodes and WP Widgets.
 
+= I use The Event Calendar from Modern Tribe, How to sync my events to OpenAgenda?
+* Once the The Event Calendar option checked in OpenAgenda for WordPress, save your events, they will be created to
+Openagenda.com
+* If you already have events on OpenAgenda.com, please use the "Import" link in the Openagenda for WP settings. It will
+create events in The Event Calendar.
+
 = May I test for free the Pro Version?
 * Yes! 30 days free trial. Do not hesitate.
 
@@ -84,6 +89,9 @@ On WP 5.0 Use the new Gutenberg Blocks!
 9. Masonry layout (Pro Version)
 
 == Changelog ==
+
+== 1.8.0 == 22 oct 2019 =
+    * Connect The Event Calendar by Modern Tribe to OpenAgenda.
 
 == 1.7.7 == 10 sept 2019 =
     * Do not import anymore image twice (based on filename)
