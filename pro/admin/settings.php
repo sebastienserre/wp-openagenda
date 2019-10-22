@@ -22,7 +22,7 @@ function openwp_oa_sync() {
 	$url = wp_nonce_url(
 		add_query_arg(
 			[
-				'Import' => 'now',
+				'oaimport' => 'now',
 			],
 			admin_url()
 		),

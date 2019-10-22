@@ -31,7 +31,7 @@ add_action( 'admin_init', 'openwp_sync_from_admin', 15000 );
  * @package OpenAgenda\Import
  */
 function openwp_sync_from_admin() {
-	if ( ! empty( $_GET['sync'] ) && 'now' === $_GET['sync'] && wp_verify_nonce( $_GET['_wpnonce'], 'force_sync' ) ) {
+	if ( ! empty( $_GET['oaimport'] ) && 'now' === $_GET['oaimport'] && wp_verify_nonce( $_GET['_wpnonce'], 'force_sync' ) ) {
 	    Import_OA::register_venue__premium_only();
 		Import_OA::import_oa_events__premium_only();
 		Import_OA::export_event__premium_only();
