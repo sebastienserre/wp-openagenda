@@ -40,7 +40,7 @@ if ( ! function_exists( 'openagenda_agenda' ) ) {
 			'rewrite'           => false,
 			'show_in_rest'      => true,
 		);
-		register_taxonomy( 'openagenda_agenda', array( 'openagenda-events' ), $args );
+		register_taxonomy( 'openagenda_agenda', array( 'openagenda-events', 'tribe_events' ), $args );
 
 	}
 
