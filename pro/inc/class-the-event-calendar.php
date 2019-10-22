@@ -13,9 +13,6 @@ use function array_pop;
 use function array_push;
 use function array_reverse;
 use function class_exists;
-use function curl_exec;
-use function curl_init;
-use function curl_setopt;
 use function date;
 use function esc_attr_e;
 use function esc_url_raw;
@@ -27,7 +24,6 @@ use function get_the_post_thumbnail_url;
 use function get_the_terms;
 use function implode;
 use function intval;
-use function rand;
 use function sanitize_email;
 use function sanitize_text_field;
 use function sizeof;
@@ -39,7 +35,6 @@ use function tribe_get_venue_id;
 use function tribe_update_event;
 use function tribe_update_organizer;
 use function tribe_update_venue;
-use function var_dump;
 use function wp_get_post_terms;
 use function wp_rand;
 use function wp_set_post_terms;
@@ -466,7 +461,7 @@ class The_Event_Calendar {
 
 			$posted = array(
 				'access_token' => $access_token,
-				'nonce'        => rand(),
+				'nonce'        => wp_rand(),
 				'data'         => json_encode( $data ),
 				'lang'         => $locale,
 			);
@@ -567,7 +562,7 @@ class The_Event_Calendar {
 		$locale               = OpenAgendaApi::oa_get_locale();
 		$coord                = OpenAgendaApi::get_lat_lng( $address );
 		$args['access_token'] = OpenAgendaApi::get_acces_token();
-		$args['nonce']        = rand();
+		$args['nonce']        = wp_rand();
 		$args['data']         = wp_json_encode(
 			[
 				'placename'   => $location->post_title,
