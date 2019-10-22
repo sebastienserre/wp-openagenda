@@ -8,7 +8,7 @@ function openwp_pro_register_settings() {
 
 	register_setting( 'openagenda-wp', 'openagenda_secret' );
 	add_settings_field( 'openagenda-wp-secret', __( 'Secret Key Openagenda', 'wp-openagenda' ), 'openwp_oa_secret', 'openagenda-wp', 'openagenda-wp' );
-	add_settings_field( 'openagenda-wp-sync', __( 'Force Sync', 'wp-openagenda' ), 'openwp_oa_sync', 'openagenda-wp',
+	add_settings_field( 'openagenda-wp-sync', __( 'Force Import', 'wp-openagenda' ), 'openwp_oa_sync', 'openagenda-wp',
 		'openagenda-wp' );
 
 	//add_settings_section( 'openagenda-wp-3rd', __( 'The Event Calendar', 'wp-openagenda' ), '', 'openagenda-wp-3rd' );
@@ -22,7 +22,7 @@ function openwp_oa_sync() {
 	$url = wp_nonce_url(
 		add_query_arg(
 			[
-				'sync' => 'now',
+				'Import' => 'now',
 			],
 			admin_url()
 		),
@@ -30,7 +30,7 @@ function openwp_oa_sync() {
 		'_wpnonce'
 	);
 	?>
-    <a href="<?php echo esc_url( $url ); ?>"><?php esc_attr_e( 'Sync Agenda Now', 'wp-openagenda' ); ?></a>
+    <a href="<?php echo esc_url( $url ); ?>"><?php esc_attr_e( 'Import Agenda Now', 'wp-openagenda' ); ?></a>
 	<?php
 }
 
