@@ -349,7 +349,7 @@ class OpenAgendaApi {
 	 */
 	public function check_api() {
 		$key   = $this->thfo_openwp_get_api_key();
-		$check = $this->openwp_get_uid( 'https://openagenda.com/iledefrance' );
+		$check = $this->openwp_get_uid( 'https://openagenda.com/thivinfo' );
 		//$check = wp_remote_get( 'https://api.openagenda.com/v1/events?key=' . $key . '&lang=fr' );
 		if ( null === $check ) {
 			?>
