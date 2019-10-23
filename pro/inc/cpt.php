@@ -82,7 +82,11 @@ function oa_event_metabox() {
 function oa_event_id() {
 	global $post;
 	$event_id = get_post_meta( $post->ID, '_oa_event_uid', true );
+	$error_msg = get_post_meta( $post->ID, 'geocode_error', true );
 	if ( $event_id ){
-		echo $event_id;
+		echo '<p>' . $event_id . '</p>';
+	}
+	if ( $error_msg ){
+		echo '<p class="oa-error-msg">' . $error_msg . '</p>';
 	}
 }
