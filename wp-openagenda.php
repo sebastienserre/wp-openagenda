@@ -141,8 +141,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once OPENWP_PRO_PATH . 'blocks/class-openwp-block-embed.php';
 			include_once OPENWP_PRO_PATH . 'blocks/class-openwp-agenda-list.php';
 			include_once OPENWP_PRO_PATH . 'inc/class-import-oa.php';
-
-
+			include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-tec-shortcode.php';
 		}
 
 		/**
