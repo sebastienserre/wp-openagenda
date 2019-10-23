@@ -24,6 +24,8 @@ use function get_the_post_thumbnail_url;
 use function get_the_terms;
 use function implode;
 use function intval;
+use function is_error;
+use function is_wp_error;
 use function sanitize_email;
 use function sanitize_text_field;
 use function sizeof;
@@ -555,42 +557,47 @@ class The_Event_Calendar {
 		if ( 'tribe_venue' !== get_post_type() ) {
 			return;
 		}
-		$address              = get_post_meta( $post_id, '_VenueAddress', true );
-		$zip                  = get_post_meta( $post_id, '_VenueZip', true );
-		$city                 = get_post_meta( $post_id, '_VenueCity', true );
-		$address              = $address . ' ' . $zip . ' ' . $city;
-		$locale               = OpenAgendaApi::oa_get_locale();
-		$coord                = OpenAgendaApi::get_lat_lng( $address );
-		$args['access_token'] = OpenAgendaApi::get_acces_token();
-		$args['nonce']        = wp_rand();
-		$args['data']         = wp_json_encode(
-			[
-				'placename'   => $location->post_title,
-				'description' => [
-					$locale => $location->post_content,
-				],
-				'address'     => $address,
-				'latitude'    => $coord['lat'],
-				'longitude'   => $coord['long'],
+		$address = get_post_meta( $post_id, '_VenueAddress', true );
+		$zip     = get_post_meta( $post_id, '_VenueZip', true );
+		$city    = get_post_meta( $post_id, '_VenueCity', true );
+		$address = $address . ' ' . $zip . ' ' . $city;
+		$locale  = OpenAgendaApi::oa_get_locale();
+		$coord   = OpenAgendaApi::get_lat_lng( $post_id, $address );
+		if ( $coord ) {
+			$args['access_token'] = OpenAgendaApi::get_acces_token();
+			$args['nonce']        = wp_rand();
+			$args['data']         = wp_json_encode(
+				[
+					'placename'   => $location->post_title,
+					'description' => [
+						$locale => $location->post_content,
+					],
+					'address'     => $address,
+					'latitude'    => $coord['lat'],
+					'longitude'   => $coord['long'],
 
-			]
-		);
-		$uid                  = get_post_meta( $post_id, '_oa_event_uid', true );
-		if ( empty( $uid ) ) {
-			$route = 'https://api.openagenda.com/v1/locations';
-		} else {
-			$route = 'https://api.openagenda.com/v1/locations/' . $uid;
+				]
+			);
+			$uid                  = get_post_meta( $post_id, '_oa_event_uid', true );
+			if ( empty( $uid ) ) {
+				$route = 'https://api.openagenda.com/v1/locations';
+			} else {
+				$route = 'https://api.openagenda.com/v1/locations/' . $uid;
+			}
+			$ch = curl_init();
+
+			curl_setopt( $ch, CURLOPT_URL, $route );
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+			curl_setopt( $ch, CURLOPT_POST, true );
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, $args );
+			$received_content = curl_exec( $ch );
+
+			$data         = json_decode( $received_content, true );
+			$location_uid = $data['uid'];
 		}
-		$ch = curl_init();
+		$return = update_post_meta( $post_id, '_oa_event_uid', $location_uid );
 
-		curl_setopt( $ch, CURLOPT_URL, $route );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $args );
-		$received_content = curl_exec( $ch );
-		$data             = json_decode( $received_content, true );
-		$location_uid     = $data['uid'];
-		add_post_meta( $post_id, '_oa_event_uid', $location_uid );
+		return $return;
 	}
 }
 
