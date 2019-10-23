@@ -5,6 +5,7 @@ namespace OpenAgenda\TEC;
 use DateTime;
 use DateTimeZone;
 use OpenAgendaAPI\OpenAgendaApi;
+use Tribe__Date_Utils;
 use function add_action;
 use function add_meta_box;
 use function add_post_meta;
@@ -37,10 +38,12 @@ use function strtotime;
 use function tribe_create_event;
 use function tribe_create_organizer;
 use function tribe_create_venue;
+use function tribe_get_option;
 use function tribe_get_venue_id;
 use function tribe_update_event;
 use function tribe_update_organizer;
 use function tribe_update_venue;
+use function var_dump;
 use function wp_get_post_terms;
 use function wp_rand;
 use function wp_set_post_terms;
@@ -442,18 +445,23 @@ class The_Event_Calendar {
 			}
 
 			// get date
-
-			$start_date = strtotime( $_POST['EventStartDate'] . $_POST['EventStartTime'] );
-			$end_date = strtotime( $_POST['EventEndDate'] .  $_POST['EventEndTime']);
-			$diff = intval( floor(( $end_date - $start_date ) / 86400 ) );
-			$end = strtotime( $_POST['EventStartDate'] . $_POST['EventEndTime'] );
+			$format     = Tribe__Date_Utils::datepicker_formats( tribe_get_option( 'datepickerFormat' ) );
+			$start      = DateTime::createFromFormat( $format, $_POST['EventStartDate'] );
+			$end        = DateTime::createFromFormat( $format, $_POST['EventEndDate'] );
+			$start_date = $start->format( 'U' );
+			$end_date   = $end->format( 'U' );
+			$diff       = intval( floor( ( $end_date - $start_date ) / 86400 ) );
+			$end        = DateTime::createFromFormat( 'd/m/Y H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventEndTime'] );
+			$start      = DateTime::createFromFormat( 'd/m/Y H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventStartTime'] );
+			$end        = $end->format( 'U' );
+			$start      = $start->format( 'U' );
 
 			$tz = self::get_time_zone( $start_date );
 
 			$i = 0;
-			while ( $i <= $diff ){
-				$date['begin'] = $start_date + ($i * DAY_IN_SECONDS);
-				$date['end'] = $end + ($i * DAY_IN_SECONDS);
+			while ( $i <= $diff ) {
+				$date['begin']          = $start + ( $i * DAY_IN_SECONDS );
+				$date['end']            = $end + ( $i * DAY_IN_SECONDS );
 				$timings[ $i ]['begin'] = date( "Y-m-d\TH:i:00$tz", $date['begin'] );
 				$timings[ $i ]['end']   = date( "Y-m-d\TH:i:00$tz", $date['end'] );
 				$i ++;
