@@ -493,7 +493,7 @@ class The_Event_Calendar {
 			// update event uid
 			$uid = intval( $decode['event']['uid'] );
 			if ( $uid ) {
-				add_post_meta( $event->ID, '_oa_event_uid', $uid );
+				update_post_meta( $event->ID, '_oa_event_uid', $uid );
 			}
 		}
 	}
