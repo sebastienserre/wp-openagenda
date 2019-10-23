@@ -7,6 +7,7 @@ use function add_action;
 use function add_query_arg;
 use function array_key_exists;
 use function basename;
+use function delete_post_meta;
 use function download_url;
 use function esc_url;
 use function filesize;
@@ -30,6 +31,7 @@ use function wp_remote_retrieve_body;
 use function wp_remote_retrieve_response_code;
 use function wp_update_attachment_metadata;
 use function wp_upload_dir;
+use const DAY_IN_SECONDS;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -471,23 +473,23 @@ class OpenAgendaApi {
 
 		return $decoded_body;
 	}
-	
+
 	public static function get_venue( $locationID ) {
-	    $key = self::thfo_openwp_get_api_key();
-	
-	    $json = wp_remote_get( "https://api.openagenda.com/v1/locations/$locationID?key=$key"  );
-		
+		$key = self::thfo_openwp_get_api_key();
+
+		$json = wp_remote_get( "https://api.openagenda.com/v1/locations/$locationID?key=$key" );
+
 		if ( 200 === (int) wp_remote_retrieve_response_code( $json ) ) {
 			$body         = wp_remote_retrieve_body( $json );
 			$decoded_body = json_decode( $body, true );
 		}
-		
+
 		return $decoded_body;
-    }
-	
+	}
+
 	/**
-	 * @param $url string image url
-	 * @param $id int id of post to link the image with
+	 * @param $url   string image url
+	 * @param $id    int id of post to link the image with
 	 * @param $title string title of the image
 	 *
 	 * @author  Sébastien SERRE
@@ -495,18 +497,18 @@ class OpenAgendaApi {
 	 * @since
 	 */
 	public static function upload_thumbnail( $url, $id, $title ) {
-	 
+
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
 		// Download file to temp dir
 		$timeout_seconds = 5;
-		$url = 'https:' . $url;
+		$url             = 'https:' . $url;
 		// Download file to temp dir.
 		$temp_file = download_url( $url, $timeout_seconds );
 		if ( ! is_wp_error( $temp_file ) ) {
 
-		    $filename = basename( $url );
-			$mime = self::get_file_mime_type( $filename );
+			$filename = basename( $url );
+			$mime     = self::get_file_mime_type( $filename );
 			// Array based on $_FILE as seen in PHP file uploads.
 			$file = array(
 				'name'     => $filename, // ex: wp-header-logo.png
@@ -559,12 +561,13 @@ class OpenAgendaApi {
 			}
 		}
 	}
-	
+
 	/**
-     * Retrieve the file mime type
-	 * @param $filename
+	 * Retrieve the file mime type
+	 *
+	 * @param      $filename
 	 * @param bool $debug
-     * @source https://chrisjean.com/generating-mime-type-in-php-is-not-magic/
+	 * @source https://chrisjean.com/generating-mime-type-in-php-is-not-magic/
 	 *
 	 * @return array|mixed|string
 	 * @author  Sébastien SERRE
@@ -573,26 +576,30 @@ class OpenAgendaApi {
 	 */
 	public static function get_file_mime_type( $filename, $debug = false ) {
 		if ( function_exists( 'finfo_open' ) && function_exists( 'finfo_file' ) && function_exists( 'finfo_close' ) ) {
-			$fileinfo = \finfo_open( FILEINFO_MIME );
+			$fileinfo  = \finfo_open( FILEINFO_MIME );
 			$mime_type = \finfo_file( $fileinfo, $filename );
 			finfo_close( $fileinfo );
-			
+
 			if ( ! empty( $mime_type ) ) {
-				if ( true === $debug )
+				if ( true === $debug ) {
 					return array( 'mime_type' => $mime_type, 'method' => 'fileinfo' );
+				}
+
 				return $mime_type;
 			}
 		}
 		if ( function_exists( 'mime_content_type' ) ) {
 			$mime_type = mime_content_type( $filename );
-			
+
 			if ( ! empty( $mime_type ) ) {
-				if ( true === $debug )
+				if ( true === $debug ) {
 					return array( 'mime_type' => $mime_type, 'method' => 'mime_content_type' );
+				}
+
 				return $mime_type;
 			}
 		}
-		
+
 		$mime_types = array(
 			'ai'      => 'application/postscript',
 			'aif'     => 'audio/x-aiff',
@@ -783,20 +790,24 @@ class OpenAgendaApi {
 			'xyz'     => 'chemical/x-xyz',
 			'zip'     => 'application/zip'
 		);
-		
+
 		$ext = strtolower( array_pop( explode( '.', $filename ) ) );
-		
-		if ( ! empty( $mime_types[$ext] ) ) {
-			if ( true === $debug )
-				return array( 'mime_type' => $mime_types[$ext], 'method' => 'from_array' );
-			return $mime_types[$ext];
+
+		if ( ! empty( $mime_types[ $ext ] ) ) {
+			if ( true === $debug ) {
+				return array( 'mime_type' => $mime_types[ $ext ], 'method' => 'from_array' );
+			}
+
+			return $mime_types[ $ext ];
 		}
-		
-		if ( true === $debug )
+
+		if ( true === $debug ) {
 			return array( 'mime_type' => 'application/octet-stream', 'method' => 'last_resort' );
+		}
+
 		return 'application/octet-stream';
 	}
-	
+
 	/**
 	 * @param $code string two letters code
 	 *
@@ -806,8 +817,8 @@ class OpenAgendaApi {
 	 * @since
 	 */
 	public static function get_country( $code ) {
-		
-		
+
+
 		$countries = array
 		(
 			'AF' => 'Afghanistan',
@@ -1056,39 +1067,60 @@ class OpenAgendaApi {
 			'ZM' => 'Zambia',
 			'ZW' => 'Zimbabwe',
 		);
-		$country = array_key_exists( strtoupper( $code ), $countries );
-		
-		if ( $country ){
-		    $country = $countries[ strtoupper( $code ) ];
-        }
-		
-		return $country;
-		
-	}
-	
-	public static function oa_get_locale() {
-	    $locale = get_locale();
-	    $locale = substr( $locale, 0, 2 );
-	    return $locale;
-    }
+		$country   = array_key_exists( strtoupper( $code ), $countries );
 
-	public static function get_lat_lng( $address ) {
+		if ( $country ) {
+			$country = $countries[ strtoupper( $code ) ];
+		}
+
+		return $country;
+
+	}
+
+	public static function oa_get_locale() {
+		$locale = get_locale();
+		$locale = substr( $locale, 0, 2 );
+
+		return $locale;
+	}
+
+	public static function get_lat_lng( $id, $address ) {
 		$address = rawurlencode( $address );
 		$coord   = get_transient( 'geocode_' . $address );
-		if( empty( $coord ) ) {
+		if ( false === $coord  ) {
 			$url  = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q=' . $address . '&format=json&limit=1';
 			$json = wp_remote_get( $url );
 			if ( 200 === (int) wp_remote_retrieve_response_code( $json ) ) {
 				$body = wp_remote_retrieve_body( $json );
 				$json = json_decode( $body, true );
 			}
+			if ( ! empty( $json[0]['lat'] ) || ! empty( $json[0]['lon'] ) ) {
+				$coord['lat']  = $json[0]['lat'];
+				$coord['long'] = $json[0]['lon'];
 
-			$coord['lat']  = $json[0]['lat'];
-			$coord['long'] = $json[0]['lon'];
-			set_transient( 'geocode_' . $address, $coord, DAY_IN_SECONDS * 30 );
+				set_transient( 'geocode_' . $address, $coord, DAY_IN_SECONDS * 30 );
+				delete_post_meta( $id, 'geocode_error' );
+			} else {
+			    $error_msg = __('Address not found - We\'re using zipcode and city', 'wp-openagenda' );
+			    update_post_meta( $id, 'geocode_error', $error_msg );
+				$zip     = get_post_meta( $id, '_VenueZip', true );
+				$city    = get_post_meta( $id, '_VenueCity', true );
+				$address = rawurlencode($zip . ' ' . $city );
+				$url     = 'http://nominatim.openstreetmap.org/?format=json&addressdetails=1&q=' . $address . '&format=json&limit=1';
+				$json    = wp_remote_get( $url );
+				if ( 200 === (int) wp_remote_retrieve_response_code( $json ) ) {
+					$body = wp_remote_retrieve_body( $json );
+					$json = json_decode( $body, true );
+					if ( ! empty( $json[0]['lat'] ) || ! empty( $json[0]['lon'] ) ) {
+						$coord['lat']  = $json[0]['lat'];
+						$coord['long'] = $json[0]['lon'];
+
+						set_transient( 'geocode_' . $address, $coord, DAY_IN_SECONDS * 30 );
+					}
+				}
+			}
 		}
 		return $coord;
-
 	}
 }
 
