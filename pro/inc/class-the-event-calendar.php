@@ -14,10 +14,13 @@ use function array_push;
 use function array_reverse;
 use function class_exists;
 use function date;
+use function date_i18n;
+use function error_log;
 use function esc_attr_e;
 use function esc_url_raw;
 use function explode;
 use function extract;
+use function get_field;
 use function get_post_meta;
 use function get_post_type;
 use function get_the_post_thumbnail_url;
@@ -29,6 +32,7 @@ use function is_wp_error;
 use function sanitize_email;
 use function sanitize_text_field;
 use function sizeof;
+use function sprintf;
 use function strtotime;
 use function tribe_create_event;
 use function tribe_create_organizer;
@@ -598,6 +602,27 @@ class The_Event_Calendar {
 		$return = update_post_meta( $post_id, '_oa_event_uid', $location_uid );
 
 		return $return;
+	}
+
+	public static function display_date( $id ) {
+
+		$start = strtotime( get_post_meta( $id, '_EventStartDate', true ) );
+		$end   = strtotime( get_post_meta( $id, '_EventEndDate', true ) );
+
+		if ( empty( $start ) || empty( $end ) ) {
+			$msg = __( 'No date for this event!', 'wp-openagenda' );
+		}
+		$msg = sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $start ),
+			date_i18n( 'd F Y G\Hi', $end ) );
+
+		if ( ! empty( $start ) && ! empty( $end ) ) {
+
+			if ( $start === $end ) {
+				$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
+			}
+		}
+
+		return $msg;
 	}
 }
 
