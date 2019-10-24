@@ -5,6 +5,7 @@ namespace OpenAgenda\TEC;
 use DateTime;
 use DateTimeZone;
 use OpenAgendaAPI\OpenAgendaApi;
+use Tribe__Date_Utils;
 use function add_action;
 use function add_meta_box;
 use function add_post_meta;
@@ -14,10 +15,13 @@ use function array_push;
 use function array_reverse;
 use function class_exists;
 use function date;
+use function date_i18n;
+use function error_log;
 use function esc_attr_e;
 use function esc_url_raw;
 use function explode;
 use function extract;
+use function get_field;
 use function get_post_meta;
 use function get_post_type;
 use function get_the_post_thumbnail_url;
@@ -29,14 +33,17 @@ use function is_wp_error;
 use function sanitize_email;
 use function sanitize_text_field;
 use function sizeof;
+use function sprintf;
 use function strtotime;
 use function tribe_create_event;
 use function tribe_create_organizer;
 use function tribe_create_venue;
+use function tribe_get_option;
 use function tribe_get_venue_id;
 use function tribe_update_event;
 use function tribe_update_organizer;
 use function tribe_update_venue;
+use function var_dump;
 use function wp_get_post_terms;
 use function wp_rand;
 use function wp_set_post_terms;
@@ -438,20 +445,29 @@ class The_Event_Calendar {
 			}
 
 			// get date
-
-			$start_date = strtotime( $_POST['EventStartDate'] . $_POST['EventStartTime'] );
-			$end_date = strtotime( $_POST['EventEndDate'] .  $_POST['EventEndTime']);
-			$diff = intval( floor(( $end_date - $start_date ) / 86400 ) );
-			$end = strtotime( $_POST['EventStartDate'] . $_POST['EventEndTime'] );
-
-			$tz = self::get_time_zone( $start_date );
+			$format     = Tribe__Date_Utils::datepicker_formats( tribe_get_option( 'datepickerFormat' ) );
+			$start      = DateTime::createFromFormat( $format, $_POST['EventStartDate'] );
+			$end        = DateTime::createFromFormat( $format, $_POST['EventEndDate'] );
+			$start_date = $start->format( 'U' );
+			$end_date   = $end->format( 'U' );
+			$diff       = intval( floor( ( $end_date - $start_date ) / 86400 ) );
+			$end        = DateTime::createFromFormat( 'd/m/Y H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventEndTime'] );
+			$start      = DateTime::createFromFormat( 'd/m/Y H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventStartTime'] );
+			$end        = $end->format( 'U' );
+			$start      = $start->format( 'U' );
 
 			$i = 0;
-			while ( $i <= $diff ){
-				$date['begin'] = $start_date + ($i * DAY_IN_SECONDS);
-				$date['end'] = $end + ($i * DAY_IN_SECONDS);
-				$timings[ $i ]['begin'] = date( "Y-m-d\TH:i:00$tz", $date['begin'] );
-				$timings[ $i ]['end']   = date( "Y-m-d\TH:i:00$tz", $date['end'] );
+			while ( $i <= $diff ) {
+				$date['begin']          = $start + ( $i * DAY_IN_SECONDS );
+				$date['end']            = $end + ( $i * DAY_IN_SECONDS );
+				$begin                  = new DateTime( date( 'Y-m-d\TH:i:00', $date['begin'] ), new DateTimeZone( $_POST['EventTimezone'] ) );
+				$begin                  = $begin->format( 'Y-m-d H:i:sP' );
+				$timings[ $i ]['begin'] = $begin;
+				$end                    = new DateTime( date( 'Y-m-d\TH:i:00', $date['end'] ), new DateTimeZone(
+					$_POST['EventTimezone'] ) );
+				$end                    = $end->format( 'Y-m-d H:i:sP' );
+
+				$timings[ $i ]['end'] = $end;
 				$i ++;
 			}
 
@@ -481,7 +497,7 @@ class The_Event_Calendar {
 			// update event uid
 			$uid = intval( $decode['event']['uid'] );
 			if ( $uid ) {
-				add_post_meta( $event->ID, '_oa_event_uid', $uid );
+				update_post_meta( $event->ID, '_oa_event_uid', $uid );
 			}
 		}
 	}
@@ -598,6 +614,27 @@ class The_Event_Calendar {
 		$return = update_post_meta( $post_id, '_oa_event_uid', $location_uid );
 
 		return $return;
+	}
+
+	public static function display_date( $id ) {
+
+		$start = strtotime( get_post_meta( $id, '_EventStartDate', true ) );
+		$end   = strtotime( get_post_meta( $id, '_EventEndDate', true ) );
+
+		if ( empty( $start ) || empty( $end ) ) {
+			$msg = __( 'No date for this event!', 'wp-openagenda' );
+		}
+		$msg = sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $start ),
+			date_i18n( 'd F Y G\Hi', $end ) );
+
+		if ( ! empty( $start ) && ! empty( $end ) ) {
+
+			if ( $start === $end ) {
+				$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
+			}
+		}
+
+		return $msg;
 	}
 }
 

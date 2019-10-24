@@ -4,7 +4,7 @@ Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.8.1
+Stable tag: 1.8.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -89,6 +89,10 @@ create events in The Event Calendar.
 9. Masonry layout (Pro Version)
 
 == Changelog ==
+
+== 1.8.2 == 24 oct 2019 ==
+    * FEATURE: Add The Event Calendar event List Shortcode
+    * BUGFIX: Correct Date format to correctly use the Time Zone.
 
 == 1.8.1 == 23 oct 2019 =
     * BUGFIX: Use zipcode and city when adress not found.

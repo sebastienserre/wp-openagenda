@@ -60,10 +60,10 @@ function openwp_display_date( $id ) {
 		$msg = __( 'No date for this event!', 'wp-openagenda' );
 	}
 
-	foreach ( $dates as $date ){
+	foreach ( $dates as $date ) {
 		$msg .= sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $date['begin'] ),
-            date_i18n( 'd F Y G\Hi', $date['end'] ) );
-    }
+			date_i18n( 'd F Y G\Hi', $date['end'] ) );
+	}
 	if ( ! empty( $start ) && ! empty( $end ) ) {
 
 
