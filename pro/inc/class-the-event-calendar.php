@@ -70,6 +70,7 @@ class The_Event_Calendar {
 		add_action( 'admin_notices', [ $this, 'tec_notices' ] );
 
 		add_action( 'wp_insert_post', [ 'OpenAgenda\TEC\The_Event_Calendar', 'save_event' ], 20, 2 );
+	//	add_action( 'save_post_tribe_events', [ 'OpenAgenda\TEC\The_Event_Calendar', 'save_event' ], 20, 2 );
 		add_action( 'wp_insert_post', [ 'OpenAgenda\TEC\The_Event_Calendar', 'create_venue_in_oa' ], 20, 2 );
 
 		add_action( 'add_meta_boxes', [ 'OpenAgenda\TEC\The_Event_Calendar', 'add_venue_notice_metabox' ] );
@@ -356,7 +357,7 @@ class The_Event_Calendar {
 	 * @since
 	 */
 	public static function save_event( $post_id, $event ) {
-		if ( 'tribe_events' === $event->post_type ) {
+		if ( 'tribe_events' === $event->post_type && !empty( $_POST['EventStartDate']) ) {
 			$agendas = get_the_terms( $post_id, 'openagenda_agenda' );
 			foreach ( $agendas as $agenda ) {
 				$agenda_uid                   = OpenAgendaApi::openwp_get_uid( $agenda->name );
@@ -399,7 +400,7 @@ class The_Event_Calendar {
 				if ( ! empty( $event->post_content ) ) {
 					$excerpt = $event->post_content;
 				} else {
-					$excerpt = __( 'No data found', 'wp-openagenda' );
+					$excerpt = $event->post_title;
 				}
 			} else {
 				$excerpt = $event->post_excerpt;
