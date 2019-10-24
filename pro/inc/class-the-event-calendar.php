@@ -120,7 +120,7 @@ class The_Event_Calendar {
             <div class="notice notice-warning is-dismissible">
                 <p>
 					<?php
-					esc_attr_e( 'You checked you\'re using The Event Calendar in Openagenda\'s settings but this plugin is not activated', 'wp-openagenda' );
+					esc_attr_e( 'You checked you\'re using The Event Calendar in Openagenda\'s settings but this plugin is not activated', 'wp-openagenda-pro' );
 					?>
                 </p>
             </div>
@@ -564,7 +564,7 @@ class The_Event_Calendar {
 		?>
         <div style="background: #fe5000; color: white; padding: 5px 10px">
 			<?php
-			esc_attr_e( 'Please create your venue in openagenda.com first then sync in settings', 'wp-openagenda' );
+			esc_attr_e( 'Please create your venue in openagenda.com first then sync in settings', 'wp-openagenda-pro' );
 			?>
         </div>
 		<?php
@@ -623,15 +623,17 @@ class The_Event_Calendar {
 		$end   = strtotime( get_post_meta( $id, '_EventEndDate', true ) );
 
 		if ( empty( $start ) || empty( $end ) ) {
-			$msg = __( 'No date for this event!', 'wp-openagenda' );
+			$msg = __( 'No date for this event!', 'wp-openagenda-pro' );
 		}
-		$msg = sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $start ),
+		$msg = sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda-pro' ), date_i18n( 'd F Y G\Hi', $start ),
 			date_i18n( 'd F Y G\Hi', $end ) );
 
-		if ( ! empty( $start ) && ! empty( $end ) ) {
+		if ( ! empty( $start )  && ! empty( $end ) ) {
+		    $start = date_i18n( 'd F Y', $start );
+		    $end = date_i18n( 'd F Y', $end );
 
 			if ( $start === $end ) {
-				$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
+				$msg = sprintf( __( 'On %s', 'wp-openagenda-pro' ), $end );
 			}
 		}
 

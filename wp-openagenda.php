@@ -7,7 +7,7 @@
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.2
- * Text Domain: wp-openagenda
+ * Text Domain: wp-openagenda-pro
  * Domain Path: /pro/languages
  * License: GPLv3
  *
@@ -195,7 +195,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		 */
 		public
 		function openwp_load_textdomain__premium_only() {
-			load_plugin_textdomain( 'wp-openagenda', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
+			load_plugin_textdomain( 'wp-openagenda-pro', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
 		}
 
 		public function my_acf_settings_url__premium_only( $url ) {

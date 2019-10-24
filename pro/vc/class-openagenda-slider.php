@@ -25,14 +25,14 @@ class Openagenda_Slider {
 			'name'        => __( 'Slider Openagenda', 'wp-openagenda-pro' ),
 			'base'        => 'openwp-slider',
 			'description' => __( 'Display Slider with Openagenda events', 'wp-openagenda-pro' ),
-			'category'    => __( 'OpenAgenda', 'wp-openagenda' ),
+			'category'    => __( 'OpenAgenda', 'wp-openagenda-pro' ),
 			'icon'        => THFO_OPENWP_PLUGIN_URL . '/assets/img/icon.jpg',
 			'params'      => array(
 				array(
 					'type'        => 'textfield',
 					'holder'      => 'h3',
 					'class'       => 'title-class',
-					'heading'     => __( 'OpenAgenda URL', 'wp-openagenda' ),
+					'heading'     => __( 'OpenAgenda URL', 'wp-openagenda-pro' ),
 					'param_name'  => 'agenda_url',
 					'value'       => __( 'my-agenda-URL', 'wp-openagenda-pro' ),
 					'description' => __( 'The URL of your agenda in openagenda. For example, Openagenda URL is https://openagenda.com/my-great-calendar', 'wp-openagenda-pro' ),

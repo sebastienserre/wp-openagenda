@@ -17,22 +17,22 @@ class OpenwpBlockSlider {
 	}
 
 	public function slider_block_init(){
-		Block::make( __( 'OpenAgenda Slider Block', 'wp-openagenda' ) )
+		Block::make( __( 'OpenAgenda Slider Block', 'wp-openagenda-pro' ) )
 		     ->set_category( 'custom-category', 'Openagenda', 'calendar-alt' )
 		     ->set_render_callback( array( $this, 'slider_render' ) )
 		     ->add_fields(
 			     array(
-				     Field::make( 'text', 'title', __( 'Title :', 'wp-openagenda' ) ),
-				     Field::make( 'text', 'agenda_url', __( 'Openagenda URL', 'wp-openagenda' ) ),
-				     Field::make( 'text', 'lang', __( '2 letters language code', 'wp-openagenda' ) )
+				     Field::make( 'text', 'title', __( 'Title :', 'wp-openagenda-pro' ) ),
+				     Field::make( 'text', 'agenda_url', __( 'Openagenda URL', 'wp-openagenda-pro' ) ),
+				     Field::make( 'text', 'lang', __( '2 letters language code', 'wp-openagenda-pro' ) )
 				          ->set_attribute( 'maxLength', 2 ),
-				     Field::make( 'text', 'agenda_url_intern', __( 'Internal URL of Main Agenda Page:', 'wp-openagenda' ) ),
-				     Field::make( 'checkbox', 'agenda_lieu', __( 'Display venue', 'wp-openagenda' ) )
+				     Field::make( 'text', 'agenda_url_intern', __( 'Internal URL of Main Agenda Page:', 'wp-openagenda-pro' ) ),
+				     Field::make( 'checkbox', 'agenda_lieu', __( 'Display venue', 'wp-openagenda-pro' ) )
 					     ->set_option_value( 'yes'
 				          ),
-				     Field::make( 'color', 'agenda_title_color', __( 'Title Color', 'wp-openagenda' ) ),
-				     Field::make( 'color', 'agenda_date_color', __( 'Date Color' ), 'wp-openagenda' ),
-				     Field::make( 'color', 'agenda_date_text_color', __( 'Text Color', 'wp-openagenda' ) ),
+				     Field::make( 'color', 'agenda_title_color', __( 'Title Color', 'wp-openagenda-pro' ) ),
+				     Field::make( 'color', 'agenda_date_color', __( 'Date Color' ), 'wp-openagenda-pro' ),
+				     Field::make( 'color', 'agenda_date_text_color', __( 'Text Color', 'wp-openagenda-pro' ) ),
 			     ) );
 	}
 

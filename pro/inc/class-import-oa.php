@@ -377,7 +377,7 @@ class Import_OA {
 					if ( ! empty( $event->post_content ) ) {
 						$excerpt = $event->post_content;
 					} else {
-						$excerpt = __( 'No data found', 'wp-openagenda' );
+						$excerpt = __( 'No data found', 'wp-openagenda-pro' );
 					}
 				} else {
 					$excerpt = $event->post_excerpt;

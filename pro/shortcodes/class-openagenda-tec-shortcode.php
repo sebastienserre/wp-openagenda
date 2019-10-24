@@ -46,13 +46,12 @@ class openagenda_tec_shortcode {
 		$args   =
 			[
 				'posts_per_page' => $atts['nb'],
-				'start_date'     => 'now',
 			];
 		$events = tribe_get_events( $args );
 		$agenda = OpenAgendaApi::get_agenda_list__premium_only();
 		$contribute = in_array( $atts['contribute'], $agenda );
 		if ( $contribute ){
-			$text = sprintf( wp_kses( __( 'Have an Event to display here? <a href="%s">Add it!</a>', 'wp-openagenda'
+			$text = sprintf( wp_kses( __( 'Have an Event to display here? <a href="%s">Add it!</a>', 'wp-openagenda-pro'
             ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $atts['contribute'] ) );
 			$text = apply_filters( 'openwp_custom_add_event_text', $text );
         }
@@ -70,7 +69,8 @@ class openagenda_tec_shortcode {
 
 			?>
 			<div class="oa-single-event">
-				<h4><a href="<?php echo get_the_permalink( $event->ID ); ?>"><?php echo $event->post_title; ?></a></h4>
+				<h4><a href="<?php echo get_the_permalink( $event->ID ); ?>" target="_blank"><?php echo $event->post_title;
+				?></a></h4>
                 <div class="oa-event-meta">
                     <?php
                     echo The_Event_Calendar::display_date( $event->ID );
