@@ -112,7 +112,7 @@ function thfo_openwp_help() {
 	<p><?php _e( 'Welcome on the support center', 'wp-openagenda' ); ?></p>
 	<p><?php echo $support; ?></p>
 	<p>
-		<a href="https://www.thivinfo.com/docs/openagenda-pour-wordpress/"><?php _e( 'Documentation Center', 'wp-openagenda' ); ?></a>
+		<a href="https://docs.thivinfo.com/collection/5-openagenda-pour-wordpress"><?php _e( 'Documentation Center', 'wp-openagenda' ); ?></a>
 	</p>
 	<?php
 	if ( openagenda_fs()->is_not_paying() ) {
