@@ -39,7 +39,7 @@ class openagenda_tec_shortcode {
 			$atts,
 			'oa_tec_event_list'
 		);
-		echo $this->event_list_renderer( $atts );
+		return $this->event_list_renderer( $atts );
 	}
 
 	public function event_list_renderer( $atts ) {
