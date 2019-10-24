@@ -5,10 +5,12 @@ namespace OpenAgenda\Shortcode\TEC;
 
 
 use OpenAgenda\TEC\The_Event_Calendar;
+use OpenAgendaAPI\OpenAgendaApi;
 use function add_shortcode;
 use function apply_filters;
 use function esc_attr;
 use function get_the_permalink;
+use function in_array;
 use function ob_get_flush;
 use function ob_start;
 use function shortcode_atts;
@@ -32,7 +34,7 @@ class openagenda_tec_shortcode {
 				'nb'             => 10,
 				'agenda_title'   => 'My Agenda',
 				'agenda_heading' => 'h2',
-				'contribute'     => 'yes',
+				'contribute'     => 'https://openagenda.com/thivinfo',
 			],
 			$atts,
 			'oa_tec_event_list'
@@ -47,6 +49,13 @@ class openagenda_tec_shortcode {
 				'start_date'     => 'now',
 			];
 		$events = tribe_get_events( $args );
+		$agenda = OpenAgendaApi::get_agenda_list__premium_only();
+		$contribute = in_array( $atts['contribute'], $agenda );
+		if ( $contribute ){
+			$text = sprintf( wp_kses( __( 'Have an Event to display here? <a href="%s">Add it!</a>', 'wp-openagenda'
+            ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $atts['contribute'] ) );
+			$text = apply_filters( 'openwp_custom_add_event_text', $text );
+        }
 		ob_start();
 		?>
 		<div class="oa-event-list">
@@ -55,7 +64,7 @@ class openagenda_tec_shortcode {
 		echo esc_attr( $atts['agenda_title'] );
 		?>
 		</<?php echo $atts['agenda_heading'] ?>>
-		</div>
+
 		<?php
 		foreach ( $events as $event ){
 
@@ -71,6 +80,10 @@ class openagenda_tec_shortcode {
 			</div>
 			<?php
 		}
+		echo $text;
+		?>
+        </div>
+<?php
 		$render = ob_get_clean();
 
 		return apply_filters( 'event_list_renderer', $render );
