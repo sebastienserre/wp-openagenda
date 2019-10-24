@@ -456,14 +456,18 @@ class The_Event_Calendar {
 			$end        = $end->format( 'U' );
 			$start      = $start->format( 'U' );
 
-			$tz = self::get_time_zone( $start_date );
-
 			$i = 0;
 			while ( $i <= $diff ) {
 				$date['begin']          = $start + ( $i * DAY_IN_SECONDS );
 				$date['end']            = $end + ( $i * DAY_IN_SECONDS );
-				$timings[ $i ]['begin'] = date( "Y-m-d\TH:i:00$tz", $date['begin'] );
-				$timings[ $i ]['end']   = date( "Y-m-d\TH:i:00$tz", $date['end'] );
+				$begin                  = new DateTime( date( 'Y-m-d\TH:i:00', $date['begin'] ), new DateTimeZone( $_POST['EventTimezone'] ) );
+				$begin                  = $begin->format( 'Y-m-d H:i:sP' );
+				$timings[ $i ]['begin'] = $begin;
+				$end                    = new DateTime( date( 'Y-m-d\TH:i:00', $date['end'] ), new DateTimeZone(
+					$_POST['EventTimezone'] ) );
+				$end                    = $end->format( 'Y-m-d H:i:sP' );
+
+				$timings[ $i ]['end'] = $end;
 				$i ++;
 			}
 
