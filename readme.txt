@@ -2,7 +2,7 @@
 Contributors: sebastienserre
 Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
-Tested up to: 5.2
+Tested up to: 5.3
 Requires PHP: 5.6
 Stable tag: 1.8.2
 License: GPLv3
