@@ -16,6 +16,7 @@ use function array_reverse;
 use function class_exists;
 use function date;
 use function date_i18n;
+use function defined;
 use function error_log;
 use function esc_attr_e;
 use function esc_url_raw;
@@ -51,6 +52,7 @@ use const CURLOPT_POST;
 use const CURLOPT_POSTFIELDS;
 use const CURLOPT_RETURNTRANSFER;
 use const CURLOPT_URL;
+use const WP_DEBUG;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -494,11 +496,16 @@ class The_Event_Calendar {
 			$received_content = curl_exec( $ch );
 
 			$decode = json_decode( $received_content, true );
+			if ( defined( 'WP_DEBUG') && WP_DEBUG && ! empty( $decode['error'] ) ){
+			    error_log( 'OpenAgenda: ' . $decode['error'] );
+            }
 
-			// update event uid
-			$uid = intval( $decode['event']['uid'] );
-			if ( $uid ) {
-				update_post_meta( $event->ID, '_oa_event_uid', $uid );
+			if ( empty( $decode['error'] ) ) {
+				// update event uid
+				$uid = intval( $decode['event']['uid'] );
+				if ( $uid ) {
+					update_post_meta( $event->ID, '_oa_event_uid', $uid );
+				}
 			}
 		}
 	}
