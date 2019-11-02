@@ -37,8 +37,11 @@ function thfo_openwp_options_page() {
 	} else {
 		$active_tab = 'general';
 	}
+	if ( ! openagenda_fs()->is_premium() ){
+	    $class = 'wrap-free';
+    }
 	?>
-	<div class="wrap">
+	<div class="wrap <?php echo $class ?>">
 		<h3><?php echo esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ); ?></h3>
 		<?php settings_errors(); ?>
 
@@ -67,10 +70,11 @@ function thfo_openwp_options_page() {
 			}
 			submit_button( __( 'Save' ) );
 			?>
-			<?php do_settings_sections( 'openagenda-wp-credits' ); ?>
 		</form>
+        <?php do_action( 'openagenda_after_settings' );?>
 	</div>
 	<?php
+    do_action( 'openagenda_after_settings_wrap' );
 }
 
 add_action( 'admin_init', 'thfo_openwp_register_settings' );
@@ -80,7 +84,6 @@ add_action( 'admin_init', 'thfo_openwp_register_settings' );
 function thfo_openwp_register_settings() {
 	add_settings_section( 'openagenda-wp-help', __( 'Help Center', 'wp-openagenda' ), 'thfo_openwp_help', 'openagenda-wp-help' );
 	add_settings_section( 'openagenda-wp', '', '', 'openagenda-wp' );
-	add_settings_section( 'openagenda-wp-credits', __( 'Credits', 'wp-openagenda' ), 'thfo_openwp_credits', 'openagenda-wp-credits' );
 	register_setting( 'openagenda-wp', 'openagenda_api' );
 	add_settings_field( 'openagenda-wp', __( 'API Openagenda', 'wp-openagenda' ), 'thfo_openwp_api', 'openagenda-wp', 'openagenda-wp' );
 
@@ -182,6 +185,7 @@ function thfo_openwp_stars() {
 /**
  * Add Credit to this Plugins.
  */
+add_action( 'openagenda_after_settings', 'thfo_openwp_credits');
 function thfo_openwp_credits() {
 	?>
 	<p>
@@ -206,4 +210,42 @@ function thfo_openwp_credits() {
 	</p>
 	<?php
 	echo thfo_openwp_stars();
+}
+
+add_action( 'openagenda_after_settings_wrap', 'openwp_display_ads' );
+function openwp_display_ads() {
+	$slug = get_current_screen();
+	if ( ! openagenda_fs()->is_premium() ) {
+		?>
+        <div class="ads ads-<?php echo $slug->id ?>">
+            <h3><a href="<?php echo esc_url( OPENWP_LINK ); ?>"
+                   title="<?php _e( 'link to Premium Version', 'wp-openagenda' ) ?>" target="_blank"><?php _e(
+						'OpenAgenda for WordPress Premium', 'wp-openagenda' ) ?>
+                </a></h3>
+            <ul>
+                <li><?php _e( 'No Advertising', 'wp-openagenda' ); ?></li>
+                <li><?php _e( 'All Standards features from OpenAGenda for WordPress', 'wp-openagenda' ); ?></li>
+                <li><?php _e( 'Shortcode to display your events where ever you want', 'wp-openagenda' ); ?></li>
+                <li><?php _e( 'Compatibility with The Event Calendar Plugin', 'wp-openagenda' ); ?></li>
+                <li><?php _e( 'Manage your events directly in your WP Dashboard', 'wp-openagenda' ); ?></li>
+                <li><?php _e( 'Events created in WP are exported to OpenAgenda.com', 'wp-openagenda' ); ?></li>
+                <li><?php _e( 'Events created in OpenAgenda.com are imported into WP', 'wp-openagenda' );
+                ?></li>
+                <li><?php _e( 'Automatic Update', 'wp-openagenda' ); ?></li>
+                <li><?php _e( 'Priority support', 'wp-openagenda' ); ?></li>
+
+
+            </ul>
+            <a class="product-link" href="<?php echo esc_url( OPENWP_LINK ); ?>"
+               title="<?php _e( 'link to Premium Version', 'wp-openagenda' ) ?>"
+               target="_blank"><?php printf( __( 'Buy OpenAgenda for WordPress for only %s', 'wp-openagenda' ),
+                    OPENWP_PLUGIN_PRICE );
+               ?></a>
+        </div>
+		<?php
+	}
+	?>
+    <div class="clear"></div>
+	<?php
+
 }
