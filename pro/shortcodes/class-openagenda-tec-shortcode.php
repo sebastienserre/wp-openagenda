@@ -8,6 +8,7 @@ use OpenAgenda\TEC\The_Event_Calendar;
 use OpenAgendaAPI\OpenAgendaApi;
 use function add_shortcode;
 use function apply_filters;
+use function date_i18n;
 use function esc_attr;
 use function get_the_permalink;
 use function in_array;
@@ -15,6 +16,7 @@ use function ob_get_flush;
 use function ob_start;
 use function shortcode_atts;
 use function tribe_get_events;
+use function tribe_get_start_date;
 use function var_dump;
 
 class openagenda_tec_shortcode {
@@ -46,7 +48,7 @@ class openagenda_tec_shortcode {
 		$args       =
 			[
 				'posts_per_page' => $atts['nb'],
-				'start_date'     => 'now',
+				/*'start_date'     => 'now',*/
 			];
 		$events     = tribe_get_events( $args );
 		$agenda     = OpenAgendaApi::get_agenda_list__premium_only();
@@ -67,20 +69,24 @@ class openagenda_tec_shortcode {
 
 		<?php
 		foreach ( $events as $event ) {
+			$start = tribe_get_start_date( $event->ID, false, 'U' );
+			$end = tribe_get_end_date( $event->ID, false, 'U' );
+			$today = date_i18n( 'U' );
+			if ( $start <= $today && $today <= $end ) {
+				?>
+                <div class="oa-single-event">
+                    <h4><a href="<?php echo get_the_permalink( $event->ID ); ?>"
+                           target="_blank"><?php echo $event->post_title;
+							?></a></h4>
+                    <div class="oa-event-meta">
+						<?php
+						echo The_Event_Calendar::display_date( $event->ID );
+						?>
+                    </div>
 
-			?>
-            <div class="oa-single-event">
-                <h4><a href="<?php echo get_the_permalink( $event->ID ); ?>"
-                       target="_blank"><?php echo $event->post_title;
-						?></a></h4>
-                <div class="oa-event-meta">
-					<?php
-					echo The_Event_Calendar::display_date( $event->ID );
-					?>
                 </div>
-
-            </div>
-			<?php
+				<?php
+			}
 		}
 		echo $text;
 		?>
