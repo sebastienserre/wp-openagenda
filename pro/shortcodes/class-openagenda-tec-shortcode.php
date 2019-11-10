@@ -43,47 +43,49 @@ class openagenda_tec_shortcode {
 	}
 
 	public function event_list_renderer( $atts ) {
-		$args   =
+		$args       =
 			[
 				'posts_per_page' => $atts['nb'],
+				'start_date'     => 'now',
 			];
-		$events = tribe_get_events( $args );
-		$agenda = OpenAgendaApi::get_agenda_list__premium_only();
+		$events     = tribe_get_events( $args );
+		$agenda     = OpenAgendaApi::get_agenda_list__premium_only();
 		$contribute = in_array( $atts['contribute'], $agenda );
-		if ( $contribute ){
+		if ( $contribute ) {
 			$text = sprintf( wp_kses( __( 'Have an Event to display here? <a href="%s">Add it!</a>', 'wp-openagenda-pro'
-            ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $atts['contribute'] ) );
+			), array( 'a' => array( 'href' => array() ) ) ), esc_url( $atts['contribute'] ) );
 			$text = apply_filters( 'openwp_custom_add_event_text', $text );
-        }
+		}
 		ob_start();
 		?>
-		<div class="oa-event-list">
-		<<?php echo esc_attr( $atts['agenda_heading'] ); ?>>
+        <div class="oa-event-list">
+        <<?php echo esc_attr( $atts['agenda_heading'] ); ?>>
 		<?php
 		echo esc_attr( $atts['agenda_title'] );
 		?>
-		</<?php echo $atts['agenda_heading'] ?>>
+        </<?php echo $atts['agenda_heading'] ?>>
 
 		<?php
-		foreach ( $events as $event ){
+		foreach ( $events as $event ) {
 
 			?>
-			<div class="oa-single-event">
-				<h4><a href="<?php echo get_the_permalink( $event->ID ); ?>" target="_blank"><?php echo $event->post_title;
-				?></a></h4>
+            <div class="oa-single-event">
+                <h4><a href="<?php echo get_the_permalink( $event->ID ); ?>"
+                       target="_blank"><?php echo $event->post_title;
+						?></a></h4>
                 <div class="oa-event-meta">
-                    <?php
-                    echo The_Event_Calendar::display_date( $event->ID );
-                    ?>
+					<?php
+					echo The_Event_Calendar::display_date( $event->ID );
+					?>
                 </div>
 
-			</div>
+            </div>
 			<?php
 		}
 		echo $text;
 		?>
         </div>
-<?php
+		<?php
 		$render = ob_get_clean();
 
 		return apply_filters( 'event_list_renderer', $render );
