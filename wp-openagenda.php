@@ -3,7 +3,7 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://openagenda4wp.com/
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 1.8.4
+ * Version: 1.8.5
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.3
@@ -76,7 +76,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			/**
 			 * Define Constant
 			 */
-			define( 'THFO_OPENWP_VERSION', '1.8.4' );
+			define( 'THFO_OPENWP_VERSION', '1.8.5' );
 			define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
