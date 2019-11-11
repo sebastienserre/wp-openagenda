@@ -17,22 +17,22 @@ use function class_exists;
 use function date;
 use function date_i18n;
 use function defined;
-use function error_log;
+use function delete_transient;
 use function esc_attr_e;
 use function esc_url_raw;
 use function explode;
 use function extract;
-use function get_field;
 use function get_post_meta;
 use function get_post_type;
 use function get_the_post_thumbnail_url;
 use function get_the_terms;
+use function get_transient;
 use function implode;
 use function intval;
-use function is_error;
-use function is_wp_error;
+use function json_decode;
 use function sanitize_email;
 use function sanitize_text_field;
+use function set_transient;
 use function sizeof;
 use function sprintf;
 use function strtotime;
@@ -44,6 +44,7 @@ use function tribe_get_venue_id;
 use function tribe_update_event;
 use function tribe_update_organizer;
 use function tribe_update_venue;
+use function update_option;
 use function var_dump;
 use function wp_get_post_terms;
 use function wp_rand;
@@ -70,11 +71,10 @@ class The_Event_Calendar {
 		self::$tec_used      = self::is_tec_used();
 
 		add_action( 'admin_notices', [ $this, 'tec_notices' ] );
-
+		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		//add_action( 'save_post_tribe_events', [ 'OpenAgenda\TEC\The_Event_Calendar', 'save_event' ], 20, 2 );
 		add_action( 'wp_insert_post', [ 'OpenAgenda\TEC\The_Event_Calendar', 'save_event' ], 20, 2 );
-	//	add_action( 'save_post_tribe_events', [ 'OpenAgenda\TEC\The_Event_Calendar', 'save_event' ], 20, 2 );
 		add_action( 'wp_insert_post', [ 'OpenAgenda\TEC\The_Event_Calendar', 'create_venue_in_oa' ], 20, 2 );
-
 		add_action( 'add_meta_boxes', [ 'OpenAgenda\TEC\The_Event_Calendar', 'add_venue_notice_metabox' ] );
 
 	}
@@ -128,8 +128,22 @@ class The_Event_Calendar {
             </div>
 			<?php
 		}
+		$errors = get_option( 'tec_error' );
+		if ( ! empty( $errors ) ){
+		    foreach ( $errors as $error ){
+			    ?>
+                <div class="notice notice-error">
+                    <p>
+					    <?php
+                        echo $error['msg'];
+					    ?>
+                    </p>
+                </div>
+			    <?php
+            }
+		    delete_option( 'tec_error' );
+        }
 	}
-
 	public static function prepare_data( $id, $events, $date ) {
 		$datepicker_format = \Tribe__Date_Utils::datepicker_formats( tribe_get_option( 'datepickerFormat' ) );
 
@@ -358,8 +372,26 @@ class The_Event_Calendar {
 	 * @package wp-openagenda
 	 * @since
 	 */
-	public static function save_event( $post_id, $event ) {
-		if ( 'tribe_events' === $event->post_type && !empty( $_POST['EventStartDate']) ) {
+        public static function save_event( $post_id, $event ) {
+		if ( ! empty( $_POST['venue'] && empty( $_POST['venue']['VenueID'][0] ) ) ) {
+			$error[] =
+				[
+					'id'  => $post_id,
+					'msg' => __( 'No Venue ID, Event not sent to OpenAgenda', 'wp-openagenda-pro' ),
+				];
+			update_option( 'tec_error', $error) ;
+		}
+		$terms = wp_get_post_terms( $post_id,'openagenda_agenda' );
+		if ( ! empty( $_POST) && empty( $terms ) ){
+			$error[] =
+				[
+					'id'  => $post_id,
+					'msg' => __( 'No Agenda Selected, Event not sent to OpenAgenda', 'wp-openagenda-pro' ),
+				];
+			update_option( 'tec_error', $error) ;
+        }
+		if ( 'tribe_events' === $event->post_type && ! empty( $_POST['EventStartDate'] ) ) {
+
 			$agendas = get_the_terms( $post_id, 'openagenda_agenda' );
 			foreach ( $agendas as $agenda ) {
 				$agenda_uid                   = OpenAgendaApi::openwp_get_uid( $agenda->name );
