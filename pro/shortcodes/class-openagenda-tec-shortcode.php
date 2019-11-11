@@ -72,7 +72,7 @@ class openagenda_tec_shortcode {
 			$start = tribe_get_start_date( $event->ID, false, 'U' );
 			$end = tribe_get_end_date( $event->ID, false, 'U' );
 			$today = date_i18n( 'U' );
-			if ( $start <= $today && $today <= $end ) {
+			if ( ( $start <= $today && $today <= $end ) || $start >= $today ) {
 				?>
                 <div class="oa-single-event">
                     <h4><a href="<?php echo get_the_permalink( $event->ID ); ?>"
