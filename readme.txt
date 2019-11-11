@@ -4,7 +4,7 @@ Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.8.3
+Stable tag: 1.8.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -89,6 +89,9 @@ create events in The Event Calendar.
 9. Masonry layout (Pro Version)
 
 == Changelog ==
+= 1.8.4 - 11/11/2019 =
+    * Add error message if event has no OpenAgenda or venue (The Event Calendar / Premium)
+    * Correct The Event Calendar shortcode
 
 = 1.8.3 - 02/11/2019 =
     * Ready for WP 5.3.
