@@ -68,6 +68,7 @@ Admin Free
     border-radius: 10px;
 }
 
+.openagenda-notice li:before,
 .ads-settings_page_openagenda-settings li:before {
     content: url('./img/check-mark.svg');
 }

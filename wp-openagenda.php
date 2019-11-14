@@ -34,9 +34,9 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				'slug'            => 'wp-openagenda',
 				'type'            => 'plugin',
 				'public_key'      => 'pk_ab0021b682585d81e582568095957',
-				'is_premium'      => true,
+				'is_premium'      => false,
 				'has_addons'      => false,
-				'has_paid_plans'  => true,
+				'has_paid_plans'  => false,
 				'trial'           => array(
 					'days'               => 30,
 					'is_require_payment' => false,
@@ -81,7 +81,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
 			define( 'OPENWP_LINK', 'https://thivinfo.com/extension-wordpress/openagenda-pour-wordpress/' );
-			define( 'OPENWP_PLUGIN_PRICE', '39,99€' );
+			define( 'OPENWP_PLUGIN_PRICE', '49€' );
 			/**
 			 * Load Files
 			 */
@@ -162,6 +162,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 		public
 		function thfo_openwp_load_files() {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/inc/helpers.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/inc/market.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/admin/register-settings.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagendaapi.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/shortcodes/class-openagenda-shortcode.php';
