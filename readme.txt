@@ -4,7 +4,7 @@ Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -20,7 +20,7 @@ Display Events hosted in Openagenda.com easily in your WordPress Website by usin
 * Connect The Event Calendar from Modern Tribe to OpenAgenda!
 * 30 days Trials
 * Prioritory support
-* From only 29,99€
+* From only 49€
 
 [Buy The PRO Version](https://thivinfo.com/boutique/openagenda-pour-wordpress/ "Buy The PRO Version")
 
