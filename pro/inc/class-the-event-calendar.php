@@ -71,7 +71,6 @@ class The_Event_Calendar {
 		self::$tec_used      = self::is_tec_used();
 
 		add_action( 'admin_notices', [ $this, 'tec_notices' ] );
-		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 		//add_action( 'save_post_tribe_events', [ 'OpenAgenda\TEC\The_Event_Calendar', 'save_event' ], 20, 2 );
 		add_action( 'wp_insert_post', [ 'OpenAgenda\TEC\The_Event_Calendar', 'save_event' ], 20, 2 );
 		add_action( 'wp_insert_post', [ 'OpenAgenda\TEC\The_Event_Calendar', 'create_venue_in_oa' ], 20, 2 );
