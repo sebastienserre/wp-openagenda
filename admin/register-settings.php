@@ -39,6 +39,8 @@ function thfo_openwp_options_page() {
 	}
 	if ( ! openagenda_fs()->is_premium() ){
 	    $class = 'wrap-free';
+    } else {
+	    $class = 'wrap-premium';
     }
 	?>
 	<div class="wrap <?php echo $class ?>">
