@@ -372,6 +372,9 @@ class The_Event_Calendar {
 	 * @since
 	 */
         public static function save_event( $post_id, $event ) {
+	        if ( 'tribe_events' !== get_post_type( $post_id ) ) {
+		        return;
+	        }
 		if ( ! empty( $_POST['venue'] && empty( $_POST['venue']['VenueID'][0] ) ) ) {
 			$error[] =
 				[
