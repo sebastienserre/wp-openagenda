@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WP Openagenda\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-openagenda\n"
 "POT-Creation-Date: 2019-11-11 14:49+0000\n"
-"PO-Revision-Date: 2019-11-11 14:51+0000\n"
+"PO-Revision-Date: 2019-11-17 11:18+0000\n"
 "Last-Translator: sebastienserre <sebastien@thivinfo.com>\n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Loco-Version: 2.3.1; wp-5.3-RC4-46680"
+"X-Loco-Version: 2.3.1; wp-5.3"
 
 #: pro/cronjob.php:371 pro/inc/class-import-oa.php:380
 msgid "No data found"
@@ -33,7 +33,7 @@ msgstr "Utiliser The Event Calendar  ?"
 
 #: pro/admin/settings.php:33
 msgid "Import Agenda Now"
-msgstr "Importer l'agenda parent"
+msgstr "Importer l'agenda"
 
 #: pro/admin/settings.php:50
 msgid "Hello, Could you please activate my Secret Key ?"
