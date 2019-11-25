@@ -128,21 +128,22 @@ class The_Event_Calendar {
 			<?php
 		}
 		$errors = get_option( 'tec_error' );
-		if ( ! empty( $errors ) ){
-		    foreach ( $errors as $error ){
-			    ?>
+		if ( ! empty( $errors ) ) {
+			foreach ( $errors as $error ) {
+				?>
                 <div class="notice notice-error">
                     <p>
-					    <?php
-                        echo $error['msg'];
-					    ?>
+						<?php
+						echo $error['msg'];
+						?>
                     </p>
                 </div>
-			    <?php
-            }
-		    delete_option( 'tec_error' );
-        }
+				<?php
+			}
+			delete_option( 'tec_error' );
+		}
 	}
+
 	public static function prepare_data( $id, $events, $date ) {
 		$datepicker_format = \Tribe__Date_Utils::datepicker_formats( tribe_get_option( 'datepickerFormat' ) );
 
@@ -371,27 +372,27 @@ class The_Event_Calendar {
 	 * @package wp-openagenda
 	 * @since
 	 */
-        public static function save_event( $post_id, $event ) {
-	        if ( 'tribe_events' !== get_post_type( $post_id ) ) {
-		        return;
-	        }
+	public static function save_event( $post_id, $event ) {
+		if ( 'tribe_events' !== get_post_type( $post_id ) ) {
+			return;
+		}
 		if ( ! empty( $_POST['venue'] && empty( $_POST['venue']['VenueID'][0] ) ) ) {
 			$error[] =
 				[
 					'id'  => $post_id,
 					'msg' => __( 'No Venue ID, Event not sent to OpenAgenda', 'wp-openagenda-pro' ),
 				];
-			update_option( 'tec_error', $error) ;
+			update_option( 'tec_error', $error );
 		}
-		$terms = wp_get_post_terms( $post_id,'openagenda_agenda' );
-		if ( ! empty( $_POST) && empty( $terms ) ){
+		$terms = wp_get_post_terms( $post_id, 'openagenda_agenda' );
+		if ( ! empty( $_POST ) && empty( $terms ) ) {
 			$error[] =
 				[
 					'id'  => $post_id,
 					'msg' => __( 'No Agenda Selected, Event not sent to OpenAgenda', 'wp-openagenda-pro' ),
 				];
-			update_option( 'tec_error', $error) ;
-        }
+			update_option( 'tec_error', $error );
+		}
 		if ( 'tribe_events' === $event->post_type && ! empty( $_POST['EventStartDate'] ) ) {
 
 			$agendas = get_the_terms( $post_id, 'openagenda_agenda' );
@@ -461,23 +462,23 @@ class The_Event_Calendar {
 					]
 			];
 
-			$registration = esc_url_raw( $_POST['EventURL'] );
-			$data['registration']  = [
-			        $registration,
-                ];
-			if ( 'suffix' === $_POST['EventCurrencyPosition'] ){
-			    $conditions = $_POST['EventCost'] . $_POST['EventCurrencySymbol'];
-            } else {
+			$registration         = esc_url_raw( $_POST['EventURL'] );
+			$data['registration'] = [
+				$registration,
+			];
+			if ( 'suffix' === $_POST['EventCurrencyPosition'] ) {
+				$conditions = $_POST['EventCost'] . $_POST['EventCurrencySymbol'];
+			} else {
 				$conditions = $_POST['EventCurrencySymbol'] . $_POST['EventCost'];
-            }
-			$data['conditions']    =
+			}
+			$data['conditions'] =
 				[
 					$locale => $conditions,
 				];
 
 			$location = tribe_get_venue_id( $post_id );
 			if ( ! empty( $location ) ) {
-				$location_id           = get_post_meta( $location, '_oa_event_uid', true );
+				$location_id         = get_post_meta( $location, '_oa_event_uid', true );
 				$data['locationUid'] = intval( $location_id );
 			}
 
@@ -511,8 +512,8 @@ class The_Event_Calendar {
 			$data['timings'] = $timings;
 
 			$data['image'] = [
-			        'url' => get_the_post_thumbnail_url( $event->ID ),
-            ];
+				'url' => get_the_post_thumbnail_url( $event->ID ),
+			];
 
 			$posted = array(
 				'access_token' => $access_token,
@@ -520,7 +521,7 @@ class The_Event_Calendar {
 				'data'         => json_encode( $data ),
 				'lang'         => $locale,
 			);
-			$ch = curl_init();
+			$ch     = curl_init();
 
 			curl_setopt( $ch, CURLOPT_URL, $route );
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -530,9 +531,9 @@ class The_Event_Calendar {
 			$received_content = curl_exec( $ch );
 
 			$decode = json_decode( $received_content, true );
-			if ( defined( 'WP_DEBUG') && WP_DEBUG && ! empty( $decode['error'] ) ){
-			    error_log( 'OpenAgenda: ' . $decode['error'] );
-            }
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG && ! empty( $decode['error'] ) ) {
+				error_log( 'OpenAgenda: ' . $decode['error'] );
+			}
 
 			if ( empty( $decode['error'] ) ) {
 				// update event uid
@@ -669,9 +670,9 @@ class The_Event_Calendar {
 		$msg = sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda-pro' ), date_i18n( 'd F Y G\Hi', $start ),
 			date_i18n( 'd F Y G\Hi', $end ) );
 
-		if ( ! empty( $start )  && ! empty( $end ) ) {
-		    $start = date_i18n( 'd F Y', $start );
-		    $end = date_i18n( 'd F Y', $end );
+		if ( ! empty( $start ) && ! empty( $end ) ) {
+			$start = date_i18n( 'd F Y', $start );
+			$end   = date_i18n( 'd F Y', $end );
 
 			if ( $start === $end ) {
 				$msg = sprintf( __( 'On %s', 'wp-openagenda-pro' ), $end );
