@@ -3,7 +3,7 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://openagenda4wp.com/
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 1.8.6
+ * Version: 1.8.7
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.3
@@ -20,8 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } // Exit if accessed directly.
 
 if ( ! function_exists( 'openagenda_fs' ) ) {
-
-// Create a helper function for easy SDK access.
+	// Create a helper function for easy SDK access.
 	function openagenda_fs() {
 		global $openagenda_fs;
 
@@ -30,19 +29,22 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			require_once dirname( __FILE__ ) . '/freemius/start.php';
 
 			$openagenda_fs = fs_dynamic_init( array(
-				'id'              => '2279',
-				'slug'            => 'wp-openagenda',
-				'type'            => 'plugin',
-				'public_key'      => 'pk_ab0021b682585d81e582568095957',
-				'is_premium'      => false,
-				'has_addons'      => false,
-				'has_paid_plans'  => false,
-				'trial'           => array(
+				'id'                  => '2279',
+				'slug'                => 'wp-openagenda',
+				'type'                => 'plugin',
+				'public_key'          => 'pk_ab0021b682585d81e582568095957',
+				'is_premium'          => true,
+				'premium_suffix'      => 'Pro',
+				// If your plugin is a serviceware, set this option to false.
+				'has_premium_version' => true,
+				'has_addons'          => false,
+				'has_paid_plans'      => true,
+				'trial'               => array(
 					'days'               => 30,
 					'is_require_payment' => false,
 				),
-				'has_affiliation' => 'customers',
-				'menu'            => array(
+				'has_affiliation'     => 'customers',
+				'menu'                => array(
 					'slug'   => 'openagenda-settings',
 					'parent' => array(
 						'slug' => 'options-general.php',
@@ -50,18 +52,18 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 				),
 				// Set the SDK to work in a sandbox mode (for development & testing).
 				// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
-				'secret_key'      => 'sk_^FhYDtZ;KihDaYCX}LTf80_o}-Zf!',
+				'secret_key'          => 'sk_^FhYDtZ;KihDaYCX}LTf80_o}-Zf!',
 			) );
 		}
 
 		return $openagenda_fs;
 	}
 
-// Init Freemius.
+	// Init Freemius.
 	openagenda_fs();
-// Signal that SDK was initiated.
+	// Signal that SDK was initiated.
 	do_action( 'openagenda_fs_loaded' );
-
+}
 
 	/**
 	 * Class Openagenda_WP_Main
@@ -76,7 +78,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			/**
 			 * Define Constant
 			 */
-			define( 'THFO_OPENWP_VERSION', '1.8.6' );
+			define( 'THFO_OPENWP_VERSION', '1.8.7' );
 			define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -247,4 +249,4 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 	}
 
 	new Openagenda_WP_Main();
-}
+

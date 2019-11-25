@@ -28,6 +28,7 @@ use function get_term_by;
 use function get_term_meta;
 use function implode;
 use function intval;
+use function is_array;
 use function is_null;
 use function is_wp_error;
 use function strtotime;
@@ -429,11 +430,12 @@ class Import_OA {
 				$dates = get_field( 'field_5d50075c33c2d', $event->ID );
 
 				$i = 0;
-				foreach ( $dates as $date ) {
-
-					$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $date['begin'] );
-					$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
-					$i ++;
+				if ( is_array( $dates ) ) {
+					foreach ( $dates as $date ) {
+						$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $date['begin'] );
+						$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
+						$i ++;
+					}
 				}
 
 				//a11y
