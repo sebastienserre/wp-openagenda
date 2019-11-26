@@ -39,8 +39,10 @@ function openwp_main_agenda_render_html( $events, $block ) {
 					</div>
 					<div class="openagenda_description">
 						<h3><?php echo $event['title'][ $block['lang'] ] ?></h3>
-						<?php echo $img ?>
 						<?php
+                        if ( ! empty( $img ) ) {
+	                        echo $img;
+                            }
 						if ( ! empty( $event['description'][ $block['lang'] ] ) && ( true === $block['openagenda_show_desc'] ) ) {
 							echo '<p>' . $parsedown->text( $event['description'][ $block['lang'] ] ) . '</p>';
 						}
