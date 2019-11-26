@@ -11,18 +11,9 @@ use function apply_filters;
 use Carbon_Fields\Block;
 use Carbon_Fields\Field;
 use function create_css_files;
-use function date_i18n;
-use function fopen;
 use function function_exists;
-use function get_the_archive_description;
 use function is_array;
-use function is_string;
-use function ob_get_clean;
-use function ob_start;
 use OpenAgendaApi;
-use function strtotime;
-use function wp_enqueue_script;
-use function wp_register_style;
 
 class MainAgendaBlock {
 	public function __construct() {
