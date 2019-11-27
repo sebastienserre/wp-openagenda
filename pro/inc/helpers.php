@@ -233,3 +233,17 @@ function openwp_oa_id( $column, $post_id ){
             }
     }
 }
+
+/**
+ * @param $msg
+ *
+ * @author  Sébastien SERRE
+ * @package wp-openagenda
+ * @since   1.8.9
+ */
+function openwp_debug( $msg ){
+    if ( ! defined( 'WP_DEBUG') && true !== WP_DEBUG ){
+        return;
+    }
+    error_log( $msg );
+}
