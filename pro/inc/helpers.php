@@ -214,3 +214,22 @@ function oa_age() {
 
 	return $age;
 }
+
+add_filter( 'manage_tribe_events_posts_columns', 'openwp_add_column', 10,1);
+function openwp_add_column( $columns ) {
+    $columns['oa'] = 'OpenAgenda ID';
+    return $columns;
+}
+
+add_action( 'manage_tribe_events_posts_custom_column' , 'openwp_oa_id', 10, 2 );
+function openwp_oa_id( $column, $post_id ){
+    switch ( $column ){
+        case 'oa':
+            $id = get_post_meta( $post_id, '_oa_event_uid', true );
+            if ( ! empty( $id ) ){
+                echo $id;
+            } else {
+                _e( 'Not saved to OpenAgenda', 'openagenda-pro' );
+            }
+    }
+}
