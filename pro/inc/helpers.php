@@ -231,7 +231,7 @@ function openwp_oa_id( $column, $post_id ){
             if ( ! empty( $id ) ){
                 echo $id;
             } else {
-                _e( 'Not saved to OpenAgenda', 'openagenda-pro' );
+                _e( 'Not saved to OpenAgenda', 'wp-openagenda-pro' );
             }
     }
 }

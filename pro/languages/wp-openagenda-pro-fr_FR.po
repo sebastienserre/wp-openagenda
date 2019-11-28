@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Openagenda\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-openagenda\n"
-"POT-Creation-Date: 2019-11-11 14:49+0000\n"
-"PO-Revision-Date: 2019-11-17 11:18+0000\n"
+"POT-Creation-Date: 2019-11-28 07:25+0000\n"
+"PO-Revision-Date: 2019-11-28 07:26+0000\n"
 "Last-Translator: sebastienserre <sebastien@thivinfo.com>\n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Loco-Version: 2.3.1; wp-5.3"
 
-#: pro/cronjob.php:371 pro/inc/class-import-oa.php:380
+#: pro/cronjob.php:371 pro/inc/class-import-oa.php:381
 msgid "No data found"
 msgstr "Aucune donnée n'a été trouvée"
 
@@ -183,16 +183,16 @@ msgid "Have an Event to display here? <a href=\"%s\">Add it!</a>"
 msgstr ""
 "Vous avez un évènement à afficher ici ? <a href=\"%s\">Ajoutez le !</a>"
 
-#: pro/inc/helpers.php:60 pro/inc/class-the-event-calendar.php:665
+#: pro/inc/helpers.php:60 pro/inc/class-the-event-calendar.php:685
 msgid "No date for this event!"
 msgstr "Pas de date pour cet événement !"
 
-#: pro/inc/helpers.php:64 pro/inc/class-the-event-calendar.php:667
+#: pro/inc/helpers.php:64 pro/inc/class-the-event-calendar.php:687
 #, php-format
 msgid "<p>From %1$s to %2$s</p>"
 msgstr "Du %1s au %2s"
 
-#: pro/inc/helpers.php:71 pro/inc/class-the-event-calendar.php:675
+#: pro/inc/helpers.php:71 pro/inc/class-the-event-calendar.php:695
 #, php-format
 msgid "On %s"
 msgstr "Le %s"
@@ -235,6 +235,10 @@ msgstr "Accessible aux malvoyants"
 #: pro/inc/acf-fields.php:11
 msgid "Accessible in sign language"
 msgstr "Accessible en langue des signes"
+
+#: pro/inc/helpers.php:234
+msgid "Not saved to OpenAgenda"
+msgstr "Non envoyée sur OpenAgenda"
 
 #: pro/inc/custom-fields.php:31
 msgid "URL or email"
@@ -708,7 +712,7 @@ msgstr "Début"
 msgid "End"
 msgstr "Date de fin pour cet événement"
 
-#: pro/inc/class-the-event-calendar.php:125
+#: pro/inc/class-the-event-calendar.php:126
 msgid ""
 "You checked you're using The Event Calendar in Openagenda's settings but "
 "this plugin is not activated"
@@ -716,15 +720,15 @@ msgstr ""
 "Vous avez vérifié que vous utilisez le calendrier des événements dans les "
 "paramètres d'Openagenda, mais ce plugin n'est pas activé"
 
-#: pro/inc/class-the-event-calendar.php:380
+#: pro/inc/class-the-event-calendar.php:386
 msgid "No Venue ID, Event not sent to OpenAgenda"
 msgstr "Aucun lieu sélectionné, évènement non envoyé sur OpenAgenda."
 
-#: pro/inc/class-the-event-calendar.php:389
+#: pro/inc/class-the-event-calendar.php:396
 msgid "No Agenda Selected, Event not sent to OpenAgenda"
 msgstr "Aucun OpenAgenda Sélectionné, évènement non envoyé sur OpenAgenda."
 
-#: pro/inc/class-the-event-calendar.php:606
+#: pro/inc/class-the-event-calendar.php:626
 msgid "Please create your venue in openagenda.com first then sync in settings"
 msgstr ""
 "S'il vous plaît créer votre lieu dans openagenda.com d'abord, puis "
