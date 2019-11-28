@@ -30,6 +30,8 @@ use function get_transient;
 use function implode;
 use function intval;
 use function json_decode;
+use function openwp_debug;
+use function print_r;
 use function sanitize_email;
 use function sanitize_text_field;
 use function set_transient;
@@ -376,6 +378,7 @@ class The_Event_Calendar {
 		if ( 'tribe_events' !== get_post_type( $post_id ) ) {
 			return;
 		}
+		openwp_debug( "[OA] start to export $post_id to OpenAgenda.com");
 		if ( ! empty( $_POST['venue'] && empty( $_POST['venue']['VenueID'][0] ) ) ) {
 			$error[] =
 				[
@@ -383,6 +386,7 @@ class The_Event_Calendar {
 					'msg' => __( 'No Venue ID, Event not sent to OpenAgenda', 'wp-openagenda-pro' ),
 				];
 			update_option( 'tec_error', $error );
+			openwp_debug( '[OA]:' .  $error[ 'msg' ] );
 		}
 		$terms = wp_get_post_terms( $post_id, 'openagenda_agenda' );
 		if ( ! empty( $_POST ) && empty( $terms ) ) {
@@ -392,6 +396,7 @@ class The_Event_Calendar {
 					'msg' => __( 'No Agenda Selected, Event not sent to OpenAgenda', 'wp-openagenda-pro' ),
 				];
 			update_option( 'tec_error', $error );
+			openwp_debug( '[OA]:' .  $error[ 'msg' ] );
 		}
 		if ( 'tribe_events' === $event->post_type && ! empty( $_POST['EventStartDate'] ) ) {
 
@@ -399,8 +404,13 @@ class The_Event_Calendar {
 			foreach ( $agendas as $agenda ) {
 				$agenda_uid                   = OpenAgendaApi::openwp_get_uid( $agenda->name );
 				$agenda_list[ $agenda->name ] = $agenda_uid;
+
 			}
+			$msg = implode( ', ', $agenda_list );
+			openwp_debug( "[OA] Agenda Updated: $msg" );
+
 			$access_token = OpenAgendaApi::get_acces_token();
+			openwp_debug( "[OA] access_token: $access_token" );
 			$locale       = OpenAgendaApi::oa_get_locale();
 			$options      = array( 'lang' => $locale );
 			$eventuid     = get_post_meta( $post_id, '_oa_event_uid', true );
@@ -413,6 +423,7 @@ class The_Event_Calendar {
 				//update
 				$route = "https://api.openagenda.com/v2/agendas/$agenda_uid/events/$eventuid";
 			}
+			openwp_debug( "[OA] route used: $route" );
 
 			extract(
 				array_merge(
@@ -477,9 +488,11 @@ class The_Event_Calendar {
 				];
 
 			$location = tribe_get_venue_id( $post_id );
+			openwp_debug("[OA] Location: $location");
 			if ( ! empty( $location ) ) {
 				$location_id         = get_post_meta( $location, '_oa_event_uid', true );
 				$data['locationUid'] = intval( $location_id );
+				openwp_debug("[OA] LocationUID: $location_id");
 			}
 
 			// get date
@@ -531,8 +544,11 @@ class The_Event_Calendar {
 			$received_content = curl_exec( $ch );
 
 			$decode = json_decode( $received_content, true );
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG && ! empty( $decode['error'] ) ) {
-				error_log( 'OpenAgenda: ' . $decode['error'] );
+			$msg = print_r( $decode, TRUE );
+			openwp_debug( "[OA] OA return: $msg" );
+
+			if ( ! empty( $decode['error'] ) ) {
+				openwp_debug( '[OA] decode Error:' . $decode['error'] );
 			}
 
 			if ( empty( $decode['error'] ) ) {
@@ -541,6 +557,7 @@ class The_Event_Calendar {
 				if ( $uid ) {
 					update_post_meta( $event->ID, '_oa_event_uid', $uid );
 				}
+				openwp_debug( "[OA] Event ID: $uid" );
 			}
 		}
 	}

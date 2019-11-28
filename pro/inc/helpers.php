@@ -214,3 +214,41 @@ function oa_age() {
 
 	return $age;
 }
+
+add_filter( 'manage_tribe_events_posts_columns', 'openwp_add_column', 10,1);
+add_filter( 'manage_tribe_venue_posts_columns', 'openwp_add_column', 10,1);
+function openwp_add_column( $columns ) {
+    $columns['oa'] = 'OpenAgenda ID';
+    return $columns;
+}
+
+add_action( 'manage_tribe_events_posts_custom_column' , 'openwp_oa_id', 10, 2 );
+add_action( 'manage_tribe_venue_posts_custom_column' , 'openwp_oa_id', 10, 2 );
+function openwp_oa_id( $column, $post_id ){
+    switch ( $column ){
+        case 'oa':
+            $id = get_post_meta( $post_id, '_oa_event_uid', true );
+            if ( ! empty( $id ) ){
+                echo $id;
+            } else {
+                _e( 'Not saved to OpenAgenda', 'openagenda-pro' );
+            }
+    }
+}
+
+/**
+ * @param $msg
+ *
+ * @author  Sébastien SERRE
+ * @package wp-openagenda
+ * @since   1.8.9
+ */
+function openwp_debug( $msg ) {
+	$bt     = debug_backtrace();
+	$caller = array_shift( $bt );
+	$msg    .= ' on ' . $caller['file'] . ':' . $caller['line'];
+	if ( ! defined( 'WP_DEBUG' ) && true !== WP_DEBUG ) {
+		return;
+	}
+	error_log( $msg );
+}
