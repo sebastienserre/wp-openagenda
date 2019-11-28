@@ -31,6 +31,7 @@ use function implode;
 use function intval;
 use function json_decode;
 use function openwp_debug;
+use function print_r;
 use function sanitize_email;
 use function sanitize_text_field;
 use function set_transient;
@@ -487,9 +488,11 @@ class The_Event_Calendar {
 				];
 
 			$location = tribe_get_venue_id( $post_id );
+			openwp_debug("[OA] Location: $location");
 			if ( ! empty( $location ) ) {
 				$location_id         = get_post_meta( $location, '_oa_event_uid', true );
 				$data['locationUid'] = intval( $location_id );
+				openwp_debug("[OA] LocationUID: $location_id");
 			}
 
 			// get date
@@ -541,7 +544,12 @@ class The_Event_Calendar {
 			$received_content = curl_exec( $ch );
 
 			$decode = json_decode( $received_content, true );
-			openwp_debug( '[OA] decode Error:' . $decode['error'] );
+			$msg = print_r( $decode, TRUE );
+			openwp_debug( "[OA] OA return: $msg" );
+
+			if ( ! empty( $decode['error'] ) ) {
+				openwp_debug( '[OA] decode Error:' . $decode['error'] );
+			}
 
 			if ( empty( $decode['error'] ) ) {
 				// update event uid
