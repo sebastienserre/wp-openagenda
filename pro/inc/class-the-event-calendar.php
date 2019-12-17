@@ -37,7 +37,9 @@ use function sanitize_text_field;
 use function set_transient;
 use function sizeof;
 use function sprintf;
+use function strlen;
 use function strtotime;
+use function substr;
 use function tribe_create_event;
 use function tribe_create_organizer;
 use function tribe_create_venue;
@@ -49,6 +51,7 @@ use function tribe_update_venue;
 use function update_option;
 use function var_dump;
 use function wp_get_post_terms;
+use function wp_kses;
 use function wp_rand;
 use function wp_set_post_terms;
 use const CURLOPT_POST;
@@ -444,14 +447,15 @@ class The_Event_Calendar {
 				$keywords = implode( ', ', $keys );
 			}
 			// format excerpt
-			if ( empty( $event->post_excerpt ) ) {
-				if ( ! empty( $event->post_content ) ) {
-					$excerpt = $event->post_content;
+			if ( ! empty( $event->post_content ) ) {
+				if ( strlen( $event->post_content ) > 197 ) {
+					$excerpt = substr( $event->post_content, 0, 197 );
 				} else {
-					$excerpt = $event->post_title;
+					$excerpt = $event->post_content;
 				}
+				$excerpt = sanitize_text_field( $excerpt ) . '...';
 			} else {
-				$excerpt = $event->post_excerpt;
+				$excerpt = sanitize_text_field( $event->post_title );
 			}
 			$data = [
 				'slug'            => "$event->post_name-" . wp_rand(),
@@ -502,8 +506,9 @@ class The_Event_Calendar {
 			$start_date = $start->format( 'U' );
 			$end_date   = $end->format( 'U' );
 			$diff       = intval( floor( ( $end_date - $start_date ) / 86400 ) );
-			$end        = DateTime::createFromFormat( 'd/m/Y H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventEndTime'] );
-			$start      = DateTime::createFromFormat( 'd/m/Y H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventStartTime'] );
+			$end        = DateTime::createFromFormat( $format . ' H:i', $_POST['EventStartDate'] . ' ' .
+                                                               $_POST['EventEndTime'] );
+			$start      = DateTime::createFromFormat( $format . ' H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventStartTime'] );
 			$end        = $end->format( 'U' );
 			$start      = $start->format( 'U' );
 
