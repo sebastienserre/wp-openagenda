@@ -506,8 +506,9 @@ class The_Event_Calendar {
 			$start_date = $start->format( 'U' );
 			$end_date   = $end->format( 'U' );
 			$diff       = intval( floor( ( $end_date - $start_date ) / 86400 ) );
-			$end        = DateTime::createFromFormat( 'd/m/Y H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventEndTime'] );
-			$start      = DateTime::createFromFormat( 'd/m/Y H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventStartTime'] );
+			$end        = DateTime::createFromFormat( $format . ' H:i', $_POST['EventStartDate'] . ' ' .
+                                                               $_POST['EventEndTime'] );
+			$start      = DateTime::createFromFormat( $format . ' H:i', $_POST['EventStartDate'] . ' ' . $_POST['EventStartTime'] );
 			$end        = $end->format( 'U' );
 			$start      = $start->format( 'U' );
 
