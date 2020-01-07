@@ -48,7 +48,7 @@ class openagenda_tec_shortcode {
 		$args       =
 			[
 				'posts_per_page' => $atts['nb'],
-				/*'start_date'     => 'now',*/
+				'start_date'     => 'now',
 			];
 		$events     = tribe_get_events( $args );
 		$agenda     = OpenAgendaApi::get_agenda_list__premium_only();
