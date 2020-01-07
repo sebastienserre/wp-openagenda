@@ -92,6 +92,7 @@ create events in The Event Calendar.
 
 = 1.8.11 - 07/01/2020 =
     * Hide past event on shortcode
+    * update Freemius SDK 2.3.2
 
 = 1.8.10 - 17/12/2019 =
     * correct some notice and a fatale error. (Thanks to https://stignace.net )
