@@ -19,7 +19,7 @@ Display Events hosted in Openagenda.com easily in your WordPress Website by usin
 * Event created on WordPress are exported to OpenAgenda.com
 * Connect The Event Calendar from Modern Tribe to OpenAgenda!
 * 30 days Trials
-* Prioritory support
+* Priority support
 * From only 49€
 
 [Buy The PRO Version](https://thivinfo.com/boutique/openagenda-pour-wordpress/ "Buy The PRO Version")
