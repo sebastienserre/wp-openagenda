@@ -50,17 +50,14 @@ On WP 5.0 Use the new Gutenberg Blocks!
 = May I display several Agenda?
 * Yes! (one by widget, shortcode, gutenberg Block)
 
-= May I give Idea?
-* Yes please use the support@thivinfo.com mail address
-
 = Where can I found help ?
-*  Yes please use the support@thivinfo.com mail adress
+*  [Knowledge Base](https://docs.thivinfo.com/collection/5-openagenda-pour-wordpress)
 
 = I'm using Elementor Page Builder, How to use OpenAgenda for Wordpress to display events?
 * simply use the WordPress Widget, it will display your agenda on Elementor page Builder
 
 = Is it possible to create an event from my website to the OpenAgenda?
-* Yes!  in the Pro Version
+* Yes!  in the [Pro Version](https://thivinfo.com/extension-wordpress/openagenda-pour-wordpress/)
 
 = Is OpenAgenda for WordPress is working with WPBakery Page Builder (formerly Visual Composer) ?
 * Yes! The Pro version is coming with Visual Composer element. Free one provide only WP Shortcodes and WP Widgets.
@@ -90,12 +87,14 @@ create events in The Event Calendar.
 
 == Changelog ==
 
-= 1.8.11 - 07/01/2020 =
+= 1.8.11 - 07/01/2020 = Pro & Free
     * Hide past event on shortcode
     * update Freemius SDK 2.3.2
+    * fix translation
+    * update 3rd party
 
-= 1.8.10 - 17/12/2019 =
-    * correct some notice and a fatale error. (Thanks to https://stignace.net )
+= 1.8.10 - 17/12/2019 = PRO only
+    * correct some notice and a fatal error. (Thanks to https://stignace.net )
     * correct date format (Thanks to https://stignace.net )
 
 = 1.8.8 - 26/11/2019 =
