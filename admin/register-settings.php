@@ -107,7 +107,7 @@ function thfo_openwp_api() {
 function thfo_openwp_help() {
 
 	$support_link = 'https://www.thivinfo.com/soumettre-un-ticket/';
-	$support      = sprintf( wp_kses( __( 'If you encounter a bug, you can leave me a ticket on <a href="%1$s" target="_blank">Thivinfo.com</a>', 'compare' ), array(
+	$support      = sprintf( wp_kses( __( 'If you encounter a bug, you can leave me a ticket on <a href="%1$s" target="_blank">Thivinfo.com</a>', 'wp-openagenda' ), array(
 		'a' => array(
 			'href'   => array(),
 			'target' => array()
