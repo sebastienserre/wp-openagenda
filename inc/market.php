@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
-add_action( 'admin_notices', 'OpenAgenda\market\free_user' );
+//add_action( 'admin_notices', 'OpenAgenda\market\free_user' );
 
 function free_user() {
     $screen = get_current_screen();

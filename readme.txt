@@ -72,8 +72,7 @@ create events in The Event Calendar.
 * Yes! 30 days free trial. Do not hesitate.
 
 = How expensive is the Pro Version?
-* [Check OpenAgenda for WordPress Pro Price](https://checkout.freemius
-.com/mode/dialog/plugin/2279/plan/3475/licenses/1/)
+* [Check OpenAgenda for WordPress Pro Price](https://checkout.freemius.com/mode/dialog/plugin/2279/plan/3475/licenses/unlimited/)
 
 == Screenshots ==
 1. settings

@@ -37,7 +37,7 @@ function thfo_openwp_options_page() {
 	} else {
 		$active_tab = 'general';
 	}
-	if ( ! openagenda_fs()->is_premium() ){
+	if ( ! is_openwp_pro() ){
 	    $class = 'wrap-free';
     } else {
 	    $class = 'wrap-premium';
@@ -119,11 +119,11 @@ function thfo_openwp_help() {
 		<a href="https://docs.thivinfo.com/collection/5-openagenda-pour-wordpress"><?php _e( 'Documentation Center', 'wp-openagenda' ); ?></a>
 	</p>
 	<?php
-	if ( openagenda_fs()->is_not_paying() ) {
+	if ( ! is_openwp_pro() ) {
 		echo '<section class="pro-pub">
 <h2>' . __( 'Discover Our Pro Version', 'wp-openagenda' ) . '</h2>
 <p>' . __( 'Easy display all OpenAgenda Widget without any code to copy/past! Configure and that\'s it', 'wp-openagenda' ) . '</p>';
-		echo '<p><a class="upgrade_button" href="' . openagenda_fs()->get_upgrade_url() . '">' .
+		echo '<p><a class="upgrade_button" href="' . OPENWP_LINK . '">' .
 		     __( 'Upgrade Now!', 'wp-openagenda' ) .
 		     '</a></p>';
 		echo '
@@ -216,7 +216,7 @@ function thfo_openwp_credits() {
 add_action( 'openagenda_after_settings_wrap', 'openwp_display_ads' );
 function openwp_display_ads() {
 	$slug = get_current_screen();
-	if ( ! openagenda_fs()->is_premium() ) {
+	if ( ! is_openwp_pro() ) {
 		?>
         <div class="ads ads-<?php echo $slug->id ?>">
             <h3><a href="<?php echo esc_url( OPENWP_LINK ); ?>"
