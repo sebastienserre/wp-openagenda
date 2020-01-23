@@ -87,11 +87,7 @@ function thfo_openwp_register_settings() {
 	add_settings_section( 'openagenda-wp-help', __( 'Help Center', 'wp-openagenda' ), 'thfo_openwp_help', 'openagenda-wp-help' );
 	add_settings_section( 'openagenda-wp', '', '', 'openagenda-wp' );
 	register_setting( 'openagenda-wp', 'openagenda_api' );
-	register_setting( 'openagenda-wp', 'openagenda4wp_api' );
 	add_settings_field( 'openagenda-wp', __( 'API Openagenda', 'wp-openagenda' ), 'thfo_openwp_api', 'openagenda-wp', 'openagenda-wp' );
-	add_settings_field( 'openagenda-wp-api', __( 'API Openagenda4WP', 'wp-openagenda' ), 'openwp_api',
-        'openagenda-wp', 'openagenda-wp' );
-
 }
 
 /**
@@ -105,15 +101,6 @@ function thfo_openwp_api() {
 	<p><?php printf( wp_kses( __( 'Create an account on <a href="%s" target="_blank">OpenAgenda</a>, and go to your setting page to get your API key.', 'wp-openagenda' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $url ) ); ?></p>
 	<?php
 	do_action( 'openagenda_check_api' );
-}
-
-function openwp_api() {
-	?>
-    <input type="text" name="openagenda4wp_api" value="<?php echo esc_html( get_option( 'openagenda4wp_api' ) ); ?>"/>
-	<?php $url = esc_url( 'https://thivinfo.com' ); ?>
-	<?php // translators: Add the OpenAGenda URL. ?>
-    <p><?php printf( wp_kses( __( 'Find it in your account on <a href="%s" target="_blank">Thivinfo</a> to find your API key.', 'wp-openagenda' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $url ) ); ?></p>
-	<?php
 }
 
 function thfo_openwp_help() {
