@@ -84,6 +84,13 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
 			define( 'OPENWP_LINK', 'https://thivinfo.com/extension-wordpress/openagenda-pour-wordpress/' );
 			define( 'OPENWP_PLUGIN_PRICE', '49€' );
+
+			// Update
+			define( 'THFO_CONSUMER_KEY', 'ck_f7ad715df821fa3ad0fff47d7fc099a24fa385e6');
+			define( 'THFO_CONSUMER_SECRET', 'cs_5dff11320385b6ba8c8bee647a29b0f4ebdef284');
+			define( 'WP_MAIN_FILE_PLUGIN_PATH',  __FILE__ );
+			define( 'WP_PLUGIN_ID', '2186460');
+
 			/**
 			 * Load Files
 			 */
@@ -174,6 +181,7 @@ if ( ! function_exists( 'openagenda_fs' ) ) {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/views/main-agenda.php';
 			include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-licence.php';
 
 		}
 
