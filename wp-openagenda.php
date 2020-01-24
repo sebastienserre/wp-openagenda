@@ -74,10 +74,7 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/shortcodes/sc-main-agenda.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/erusev/parsedown/Parsedown.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-wp-basic-widget.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/views/main-agenda.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-licence.php';
 
 	}
 
