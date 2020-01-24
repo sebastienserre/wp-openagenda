@@ -2,6 +2,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
+
+function is_openwp_pro() {
+    if ( '1' === get_option( 'openwppro') && function_exists( 'OpenAgenda_WP_Pro' ) ){
+        return true;
+    }
+    return false;
+}
 function create_css_files( $name, $id, $block ) {
 
 	if ( ! file_exists( WP_CONTENT_DIR . '/openagenda/css/' ) ) {
@@ -35,7 +42,7 @@ function openwp_generate_css( $block ) {
 
 	ob_start();
 
-	if ( openagenda_fs()->is_premium() && true !== $block['openagenda_masonry'] ) {
+	if ( is_openwp_pro() && true !== $block['openagenda_masonry'] ) {
 		?>
 		.main_openagenda {
 		display: grid;
