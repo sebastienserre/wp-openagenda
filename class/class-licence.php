@@ -9,6 +9,7 @@ use function define;
 use function esc_url_raw;
 use function function_exists;
 use function get_field;
+use function is_admin;
 use function version_compare;
 use function wp_remote_get;
 use function wp_remote_retrieve_body;
@@ -48,9 +49,14 @@ class Licence {
 	}
 
 	public function get_plugin_datas( $data = '' ) {
-		$datas = \get_plugin_data( WP_MAIN_FILE_PLUGIN_PATH );
+		if( ! function_exists('get_plugin_data') ){
+			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		}
+	    if ( is_admin() ) {
+		    $datas = \get_plugin_data( WP_MAIN_FILE_PLUGIN_PATH );
 
-		return $datas[ $data ];
+		    return $datas[ $data ];
+	    }
 	}
 
 	public function setKey() {

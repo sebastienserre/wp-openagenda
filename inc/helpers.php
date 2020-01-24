@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } // Exit if accessed directly.
 
 function is_openwp_pro() {
-    if ( '1' === get_option( 'openwppro') ){
+    if ( '1' === get_option( 'openwppro') && function_exists( 'OpenAgenda_WP_Pro' ) ){
         return true;
     }
     return false;

@@ -1,5 +1,5 @@
 === OpenAgenda for WordPress ===
-Contributors: sebastienserre, freemius
+Contributors: sebastienserre
 Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.3
