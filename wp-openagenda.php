@@ -3,7 +3,7 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://openagenda4wp.com/
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 1.9.1
+ * Version: 1.9.2
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.3
@@ -30,7 +30,7 @@ class Openagenda_WP_Main {
 		/**
 		 * Define Constant
 		 */
-		define( 'THFO_OPENWP_VERSION', '1.9.1' );
+		define( 'THFO_OPENWP_VERSION', '1.9.2' );
 		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -53,12 +53,11 @@ class Openagenda_WP_Main {
 	}
 
 	/**
-	 * Load Carbon-field v3
+	 * Load 3rd party
 	 */
 	public
 	function openwp_load() {
 		require_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/autoload.php';
-		\Carbon_Fields\Carbon_Fields::boot();
 	}
 
 
@@ -75,10 +74,7 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/shortcodes/sc-main-agenda.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/erusev/parsedown/Parsedown.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-wp-basic-widget.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/views/main-agenda.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-licence.php';
 
 	}
 
