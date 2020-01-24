@@ -106,6 +106,9 @@ class Licence {
 	    } else {
 	    	$key = get_option( 'openagenda4wp_api' );
 	    }
+	    if ( empty( $key ) ){
+	        return;
+        }
 		$ck               = THFO_CONSUMER_KEY;
 		$cs               = THFO_CONSUMER_SECRET;
 		$url              = "https://thivinfo.com/wp-json/lmfwc/v2/licenses/$key?consumer_key=$ck&consumer_secret=$cs";

@@ -53,12 +53,11 @@ class Openagenda_WP_Main {
 	}
 
 	/**
-	 * Load Carbon-field v3
+	 * Load 3rd party
 	 */
 	public
 	function openwp_load() {
 		require_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/autoload.php';
-		\Carbon_Fields\Carbon_Fields::boot();
 	}
 
 
