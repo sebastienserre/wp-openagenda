@@ -64,13 +64,20 @@ function thfo_openwp_options_page() {
                 default:
 					settings_fields( 'openagenda-wp' );
 					do_settings_sections( 'openagenda-wp' );
+					submit_button( __( 'Save' ) );
 					break;
 				case 'help':
 					settings_fields( 'openagenda-wp-help' );
 					do_settings_sections( 'openagenda-wp-help' );
 					break;
+                case 'import':
+                    if( is_openwp_pro() ){
+	                    openwp_add_import_content();
+                        break;
+                    }
+
 			}
-			submit_button( __( 'Save' ) );
+
 			?>
 		</form>
         <?php do_action( 'openagenda_after_settings' );?>
