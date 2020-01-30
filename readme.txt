@@ -4,7 +4,7 @@ Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -22,7 +22,7 @@ Display Events hosted in Openagenda.com easily in your WordPress Website by usin
 * Priority support
 * From only 49€
 
-[Buy The PRO Version](https://thivinfo.com/boutique/openagenda-pour-wordpress/ "Buy The PRO Version")
+[Buy The PRO Version](https://thivinfo.com/extensions-wordpress/openagenda-pour-wordpress/ "Buy The PRO Version")
 
 == Installation ==
 * 1- unzip
@@ -86,6 +86,18 @@ create events in The Event Calendar.
 9. Masonry layout (Pro Version)
 
 == Changelog ==
+
+= 1.9.3 - 30jan2020 = Free
+    * Check OA Key validity only once a day
+    * reorganize and clean some piece of code
+
+= 1.9.2 - 24jan2020 = Free
+    * Remove Carbon Fields depedancies
+    * New editor block are removed
+
+= 1.9.0 - 24Jan2020 = Pro & Free
+    * Leave Freemius
+    * 2 plugins are created, the free one and a Premium
 
 = 1.8.11 - 07/01/2020 = Pro & Free
     * Hide past event on shortcode
