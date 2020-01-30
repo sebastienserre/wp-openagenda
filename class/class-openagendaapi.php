@@ -2,7 +2,6 @@
 
 namespace OpenAgendaAPI;
 
-use finfo;
 use function add_action;
 use function add_query_arg;
 use function array_key_exists;
@@ -14,6 +13,7 @@ use function filesize;
 use function get_locale;
 use function get_transient;
 use function is_wp_error;
+use function preg_match;
 use function preg_replace;
 use function set_post_thumbnail;
 use function set_transient;
@@ -21,7 +21,6 @@ use WP_Error;
 use function strtoupper;
 use function substr;
 use function update_post_meta;
-use function wc_strtoupper;
 use function wp_check_filetype;
 use function wp_generate_attachment_metadata;
 use function wp_handle_sideload;
@@ -32,6 +31,7 @@ use function wp_remote_retrieve_response_code;
 use function wp_update_attachment_metadata;
 use function wp_upload_dir;
 use const DAY_IN_SECONDS;
+use const PREG_OFFSET_CAPTURE;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -80,10 +80,10 @@ class OpenAgendaApi {
 	 * @since  1.0.0
 	 */
 	public static function openwp_get_slug( $slug ) {
-		$re = '/[a-zA-Z\.\/:]*\/([a-zA-Z\.\/:\0-_9]*)/';
-
+		$re = '/(\/[^?]+).*/';
 		preg_match( $re, $slug, $matches, PREG_OFFSET_CAPTURE, 0 );
-
+		$re = '/[a-zA-Z\.\/:]*\/([a-zA-Z\.\/:\0-_9]*)[?a-zA-Z\.\/:\0-_9]*/';
+		preg_match( $re, $matches[1][0], $matches, PREG_OFFSET_CAPTURE, 0 );
 		$slug = untrailingslashit( $matches[1][0] );
 
 		return $slug;
@@ -150,7 +150,7 @@ class OpenAgendaApi {
 	}
 
 	/**
-	 * Retrieve OpenAenda UID.
+	 * Retrieve OpenAgenda UID.
 	 *
 	 * @param string $slug OpenAgenda Agenda URL.
 	 *

@@ -37,31 +37,31 @@ function thfo_openwp_options_page() {
 	} else {
 		$active_tab = 'general';
 	}
-	if ( ! is_openwp_pro() ){
-	    $class = 'wrap-free';
-    } else {
-	    $class = 'wrap-premium';
-    }
+	if ( ! is_openwp_pro() ) {
+		$class = 'wrap-free';
+	} else {
+		$class = 'wrap-premium';
+	}
 	?>
-	<div class="wrap <?php echo $class ?>">
-		<h3><?php echo apply_filters('openwp_settings_title', esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ) ); ?></h3>
+    <div class="wrap <?php echo $class ?>">
+        <h3><?php echo apply_filters( 'openwp_settings_title', esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ) ); ?></h3>
 		<?php settings_errors(); ?>
 
-		<h2 class="nav-tab-wrapper">
+        <h2 class="nav-tab-wrapper">
 			<?php
 			foreach ( $tabs as $tab => $value ) {
 				?>
-				<a href="<?php echo esc_url( admin_url( 'options-general.php?page=openagenda-settings&tab=' . $tab ) ); ?>"
-				   class="nav-tab <?php echo 'nav-tab-' . $tab;
+                <a href="<?php echo esc_url( admin_url( 'options-general.php?page=openagenda-settings&tab=' . $tab ) ); ?>"
+                   class="nav-tab <?php echo 'nav-tab-' . $tab;
 				   echo $active_tab === $tab ? ' nav-tab-active' : ''; ?>"><?php echo $value ?></a>
 			<?php } ?>
-		</h2>
-		<form method="post" action="options.php">
+        </h2>
+        <form method="post" action="options.php">
 			<?php $active_tab = apply_filters( 'openwp_setting_active_tab', $active_tab ); ?>
 			<?php
 			switch ( $active_tab ) {
 				case 'general':
-                default:
+				default:
 					settings_fields( 'openagenda-wp' );
 					do_settings_sections( 'openagenda-wp' );
 					submit_button( __( 'Save' ) );
@@ -70,21 +70,21 @@ function thfo_openwp_options_page() {
 					settings_fields( 'openagenda-wp-help' );
 					do_settings_sections( 'openagenda-wp-help' );
 					break;
-                case 'import':
-                    if( is_openwp_pro() ){
-	                    openwp_add_import_content();
-	                    submit_button( __( 'Import', 'wp-openagenda-pro' ) );
-                        break;
-                    }
+				case 'import':
+					if ( is_openwp_pro() ) {
+						openwp_add_import_content();
+						submit_button( __( 'Import', 'wp-openagenda-pro' ) );
+						break;
+					}
 
 			}
 
 			?>
-		</form>
-        <?php do_action( 'openagenda_after_settings' );?>
-	</div>
+        </form>
+		<?php do_action( 'openagenda_after_settings' ); ?>
+    </div>
 	<?php
-    do_action( 'openagenda_after_settings_wrap' );
+	do_action( 'openagenda_after_settings_wrap' );
 }
 
 add_action( 'admin_init', 'thfo_openwp_register_settings' );
@@ -103,10 +103,10 @@ function thfo_openwp_register_settings() {
  */
 function thfo_openwp_api() {
 	?>
-	<input type="text" name="openagenda_api" value="<?php echo esc_html( get_option( 'openagenda_api' ) ); ?>"/>
+    <input type="text" name="openagenda_api" value="<?php echo esc_html( get_option( 'openagenda_api' ) ); ?>"/>
 	<?php $url = esc_url( 'https://openagenda.com' ); ?>
 	<?php // translators: Add the OpenAGenda URL. ?>
-	<p><?php printf( wp_kses( __( 'Create an account on <a href="%s" target="_blank">OpenAgenda</a>, and go to your setting page to get your API key.', 'wp-openagenda' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $url ) ); ?></p>
+    <p><?php printf( wp_kses( __( 'Create an account on <a href="%s" target="_blank">OpenAgenda</a>, and go to your setting page to get your API key.', 'wp-openagenda' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $url ) ); ?></p>
 	<?php
 	do_action( 'openagenda_check_api' );
 }
@@ -121,11 +121,11 @@ function thfo_openwp_help() {
 		)
 	) ), esc_url( $support_link ) );
 	?>
-	<p><?php _e( 'Welcome on the support center', 'wp-openagenda' ); ?></p>
-	<p><?php echo $support; ?></p>
-	<p>
-		<a href="https://docs.thivinfo.com/collection/5-openagenda-pour-wordpress"><?php _e( 'Documentation Center', 'wp-openagenda' ); ?></a>
-	</p>
+    <p><?php _e( 'Welcome on the support center', 'wp-openagenda' ); ?></p>
+    <p><?php echo $support; ?></p>
+    <p>
+        <a href="https://docs.thivinfo.com/collection/5-openagenda-pour-wordpress"><?php _e( 'Documentation Center', 'wp-openagenda' ); ?></a>
+    </p>
 	<?php
 	if ( ! is_openwp_pro() ) {
 		echo '<section class="pro-pub">
@@ -145,7 +145,7 @@ function thfo_openwp_help() {
 function thfo_openwp_stars() {
 	$output = ob_start();
 	?>
-	<div class="openwp-stars">
+    <div class="openwp-stars">
         <span id="openwp-footer-credits">
                 <span class="dashicons dashicons-wordpress"></span>
 	        <?php _e( "Love OpenAgenda for WordPress ? Don't forget to rate it 5 stars!", "wp-openagenda" ) ?>
@@ -186,7 +186,7 @@ function thfo_openwp_stars() {
                     });
                 </script>
             </span>
-	</div>
+    </div>
 	<?php
 	return ob_get_clean();
 }
@@ -194,10 +194,10 @@ function thfo_openwp_stars() {
 /**
  * Add Credit to this Plugins.
  */
-add_action( 'openagenda_after_settings', 'thfo_openwp_credits');
+add_action( 'openagenda_after_settings', 'thfo_openwp_credits' );
 function thfo_openwp_credits() {
 	?>
-	<p>
+    <p>
 		<?php
 		$url  = 'https://thivinfo.com';
 		$text = 'Thivinfo.com';
@@ -206,8 +206,8 @@ function thfo_openwp_credits() {
 		echo $link;
 		?>
 
-	</p>
-	<p>
+    </p>
+    <p>
 		<?php
 		$url_open  = 'https://openagenda.com';
 		$text_open = 'openagenda.com';
@@ -216,7 +216,7 @@ function thfo_openwp_credits() {
 		echo $link;
 		?>
 
-	</p>
+    </p>
 	<?php
 	echo thfo_openwp_stars();
 }
@@ -231,14 +231,14 @@ function openwp_display_ads() {
                    title="<?php _e( 'link to Premium Version', 'wp-openagenda' ) ?>" target="_blank"><?php _e(
 						'OpenAgenda for WordPress Premium', 'wp-openagenda' ) ?>
                 </a></h3>
-            <?php
-            OpenAgenda\market\features_list();
-            ?>
+			<?php
+			OpenAgenda\market\features_list();
+			?>
             <a class="product-link" href="<?php echo esc_url( OPENWP_LINK ); ?>"
                title="<?php _e( 'link to Premium Version', 'wp-openagenda' ) ?>"
                target="_blank"><?php printf( __( 'Buy OpenAgenda for WordPress for only %s', 'wp-openagenda' ),
-                    OPENWP_PLUGIN_PRICE );
-               ?></a>
+					OPENWP_PLUGIN_PRICE );
+				?></a>
         </div>
 		<?php
 	}
