@@ -350,9 +350,7 @@ class OpenAgendaApi {
 	 * Check if API Key is Valid or not
 	 */
 	public function check_api() {
-		$key   = $this->thfo_openwp_get_api_key();
 		$check = $this->openwp_get_uid( 'https://openagenda.com/thivinfo' );
-		//$check = wp_remote_get( 'https://api.openagenda.com/v1/events?key=' . $key . '&lang=fr' );
 		if ( null === $check ) {
 			?>
             <div class="notice notice-error openagenda-notice">
@@ -361,11 +359,15 @@ class OpenAgendaApi {
             </div>
 			<?php
 		} else {
-			?>
-            <div class="notice notice-success openagenda-notice"><?php _e( 'OpenAgenda API Key valid', 'wp-openagenda' ); ?></div>
-			<?php
+		    $transient = get_transient( 'OA_api_key_valid' );
+		    if ( empty( $transient ) ) {
+			    set_transient( 'OA_api_key_valid', $check, HOUR_IN_SECONDS * 24 );
+			    ?>
+			    <div
+				    class="notice notice-success openagenda-notice"><?php _e( 'OpenAgenda API Key valid', 'wp-openagenda' ); ?></div>
+			    <?php
+		    }
 		}
-
 	}
 
 	/**
