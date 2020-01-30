@@ -44,7 +44,7 @@ function thfo_openwp_options_page() {
     }
 	?>
 	<div class="wrap <?php echo $class ?>">
-		<h3><?php echo esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ); ?></h3>
+		<h3><?php echo apply_filters('openwp_settings_title', esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ) ); ?></h3>
 		<?php settings_errors(); ?>
 
 		<h2 class="nav-tab-wrapper">
@@ -73,6 +73,7 @@ function thfo_openwp_options_page() {
                 case 'import':
                     if( is_openwp_pro() ){
 	                    openwp_add_import_content();
+	                    submit_button( __( 'Import', 'wp-openagenda-pro' ) );
                         break;
                     }
 
