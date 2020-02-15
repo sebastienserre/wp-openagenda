@@ -9,7 +9,7 @@
  * Tested up to: 5.3
  * Text Domain: wp-openagenda
  * License: GPLv3
- * @package         openagenda-wp
+ * @package openagenda-wp
  **/
 
 if ( ! defined( 'ABSPATH' ) ) {
