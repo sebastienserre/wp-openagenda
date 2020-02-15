@@ -37,12 +37,6 @@ class Openagenda_WP_Main {
 		define( 'OPENWP_LINK', 'https://thivinfo.com/extensions-wordpress/openagenda-pour-wordpress/' );
 		define( 'OPENWP_PLUGIN_PRICE', '49€' );
 
-		// Update
-		define( 'THFO_CONSUMER_KEY', 'ck_f7ad715df821fa3ad0fff47d7fc099a24fa385e6' );
-		define( 'THFO_CONSUMER_SECRET', 'cs_5dff11320385b6ba8c8bee647a29b0f4ebdef284' );
-		define( 'WP_MAIN_FILE_PLUGIN_PATH', __FILE__ );
-		define( 'WP_PLUGIN_ID', '2186460' );
-
 		/**
 		 * Load Files
 		 */
