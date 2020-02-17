@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package Openagenda-api
  * @since   1.0.0
  *
- * @package: OpenAgendaApi.
+ * @package : OpenAgendaApi.
  */
 class OpenAgendaApi {
 
@@ -70,17 +70,19 @@ class OpenAgendaApi {
 		return $slug;
 	}
 
-	public static function get_decoded_body( $url ){
+	public static function get_decoded_body( $url ) {
 		$response     = wp_remote_get( $url );
 		$decoded_body = array();
 
 		if ( 200 === (int) wp_remote_retrieve_response_code( $response ) ) {
 			$body         = wp_remote_retrieve_body( $response );
 			$decoded_body = json_decode( $body, true );
+
 			return $decoded_body;
 		}
+
 		return false;
-    }
+	}
 
 	/**
 	 * Retrieve data from Openagenda
@@ -127,7 +129,7 @@ class OpenAgendaApi {
 				'when'  => $when,
 			), $url );
 			$decoded_body = self::get_decoded_body( $url );
-			if ( false === $decoded_body ){
+			if ( false === $decoded_body ) {
 				$decoded_body = '<p>' . __( 'Impossible to retrieve Events Data', 'wp-openagenda' ) . '</p>';
 			}
 		} else {
@@ -149,10 +151,10 @@ class OpenAgendaApi {
 	public static function openwp_get_uid( $slug ) {
 		$slug = self::openwp_get_slug( $slug );
 		if ( ! empty( self::thfo_openwp_get_api_key() ) ) {
-			$key      = self::thfo_openwp_get_api_key();
-			$decoded_body = self::get_decoded_body('https://api.openagenda.com/v1/agendas/uid/' . $slug . '?key=' . $key );
+			$key          = self::thfo_openwp_get_api_key();
+			$decoded_body = self::get_decoded_body( 'https://api.openagenda.com/v1/agendas/uid/' . $slug . '?key=' . $key );
 			if ( false !== $decoded_body ) {
-				$uid          = $decoded_body['data']['uid'];
+				$uid = $decoded_body['data']['uid'];
 			}
 		}
 
@@ -338,14 +340,14 @@ class OpenAgendaApi {
             </div>
 			<?php
 		} else {
-		    $transient = get_transient( 'OA_api_key_valid' );
-		    if ( empty( $transient ) ) {
-			    set_transient( 'OA_api_key_valid', $check, HOUR_IN_SECONDS * 24 );
-			    ?>
-			    <div
-				    class="notice notice-success openagenda-notice"><?php _e( 'OpenAgenda API Key valid', 'wp-openagenda' ); ?></div>
-			    <?php
-		    }
+			$transient = get_transient( 'OA_api_key_valid' );
+			if ( empty( $transient ) ) {
+				set_transient( 'OA_api_key_valid', $check, HOUR_IN_SECONDS * 24 );
+				?>
+                <div
+                        class="notice notice-success openagenda-notice"><?php _e( 'OpenAgenda API Key valid', 'wp-openagenda' ); ?></div>
+				<?php
+			}
 		}
 	}
 }
