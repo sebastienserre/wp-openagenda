@@ -4,7 +4,7 @@ Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.9.4
+Stable tag: 1.9.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -86,6 +86,9 @@ create events in The Event Calendar.
 9. Masonry layout (Pro Version)
 
 == Changelog ==
+
+= 1.9.5 - 17Fev2020 =
+    * reorganize code between free and pro version
 
 = 1.9.4 - 15Fev2020 = Free
     * rm constant dedicated to Pro Version
