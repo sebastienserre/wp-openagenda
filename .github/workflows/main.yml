@@ -7,7 +7,7 @@ on:
 jobs:
   job1:
     tag:
-      name: New tag
+      name: New Release
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@master
@@ -17,7 +17,6 @@ jobs:
             SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
             SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
   job2:
-    need: job1
     tag:
       name: New Readme
       runs-on: ubuntu-latest
