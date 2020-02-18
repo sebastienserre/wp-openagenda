@@ -1,11 +1,10 @@
-name: Deploy to OpenAgenda to WordPress.org
+name: Deploy OpenAgenda for WP to WordPress.org
 on:
   push:
     tags:
       - "*"
 
-jobs:
-  job1:
+job1:
     tag:
       name: New Release
       runs-on: ubuntu-latest
@@ -16,7 +15,7 @@ jobs:
           env:
             SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
             SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-  job2:
+job2:
     tag:
       name: New Readme
       runs-on: ubuntu-latest
