@@ -1,0 +1,28 @@
+name: Deploy OpenAgenda for WP to WordPress.org
+on:
+  push:
+    tags:
+      - "*"
+jobs:
+  job1:
+    tag:
+      name: New Release
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@master
+        - name: WordPress Plugin Deploy
+          uses: 10up/action-wordpress-plugin-deploy@master
+          env:
+            SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+            SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+  job2:
+    tag:
+      name: New Readme
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@master
+        - name: WordPress.org plugin asset/readme update
+          uses: 10up/action-wordpress-plugin-asset-update@master
+          env:
+            SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+            SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
