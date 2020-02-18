@@ -5,7 +5,7 @@ on:
       - "*"
 
 jobs:
-  jobs1:
+  job1:
     tag:
       name: New tag
       runs-on: ubuntu-latest
@@ -16,8 +16,8 @@ jobs:
           env:
             SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
             SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-  jobs2:
-    need: jobs1
+  job2:
+    need: job1
     tag:
       name: New Readme
       runs-on: ubuntu-latest
