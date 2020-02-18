@@ -3,7 +3,7 @@ on:
   push:
     tags:
       - "*"
-
+jobs:
 job1:
     tag:
       name: New Release
