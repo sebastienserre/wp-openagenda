@@ -3,28 +3,16 @@ on:
   push:
     tags:
       - "*"
-
 jobs:
-  jobs1:
-    tag:
-      name: New tag
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@master
-        - name: WordPress Plugin Deploy
-          uses: 10up/action-wordpress-plugin-deploy@master
-          env:
-            SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-            SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-  jobs2:
-    need: jobs1
-    tag:
-      name: New Readme
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@master
-        - name: WordPress.org plugin asset/readme update
-          uses: 10up/action-wordpress-plugin-asset-update@master
-          env:
-            SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-            SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+  tag:
+    name: New Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: WordPress Plugin Deploy
+        uses: sebastienserre/wordpress-actions/dotorg-plugin-deploy@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLUG: wp-openagenda
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
