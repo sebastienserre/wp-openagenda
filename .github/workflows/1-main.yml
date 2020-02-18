@@ -10,7 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: WordPress Plugin Deploy
-        uses: 10up/action-wordpress-plugin-deploy@master
+        uses: Pierre-Lannoy/wordpress-actions/dotorg-plugin-deploy@master
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLUG: the-plugin-slug
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
