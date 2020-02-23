@@ -76,7 +76,7 @@ class OpenagendaSliderShortcode {
 
 		if ( 0 === $datas['total'] ) {
 			?>
-			<p><?php _e( 'Sorry, no events found', 'wp-openagenda-pro' ) ?></p>
+			<p><?php _e( 'Sorry, no events found', 'wp-openagenda' ) ?></p>
 			<?php
 		} else {
 			?>

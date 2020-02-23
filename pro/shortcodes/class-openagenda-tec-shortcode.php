@@ -54,7 +54,7 @@ class openagenda_tec_shortcode {
 		$agenda     = OpenAgendaApi::get_agenda_list__premium_only();
 		$contribute = in_array( $atts['contribute'], $agenda );
 		if ( $contribute ) {
-			$text = sprintf( wp_kses( __( 'Have an Event to display here? <a href="%s">Add it!</a>', 'wp-openagenda-pro'
+			$text = sprintf( wp_kses( __( 'Have an Event to display here? <a href="%s">Add it!</a>', 'wp-openagenda'
 			), array( 'a' => array( 'href' => array() ) ) ), esc_url( $atts['contribute'] ) );
 			$text = apply_filters( 'openwp_custom_add_event_text', $text );
 		}

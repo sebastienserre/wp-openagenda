@@ -37,11 +37,9 @@ function thfo_openwp_options_page() {
 	} else {
 		$active_tab = 'general';
 	}
-	if ( ! openagenda_fs()->is_premium() ){
-	    $class = 'wrap-free';
-    } else {
-	    $class = 'wrap-premium';
-    }
+
+	$class = 'wrap-premium';
+
 	?>
 	<div class="wrap <?php echo $class ?>">
 		<h3><?php echo esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ); ?></h3>
@@ -211,31 +209,4 @@ function thfo_openwp_credits() {
 	</p>
 	<?php
 	echo thfo_openwp_stars();
-}
-
-add_action( 'openagenda_after_settings_wrap', 'openwp_display_ads' );
-function openwp_display_ads() {
-	$slug = get_current_screen();
-	if ( ! openagenda_fs()->is_premium() ) {
-		?>
-        <div class="ads ads-<?php echo $slug->id ?>">
-            <h3><a href="<?php echo esc_url( OPENWP_LINK ); ?>"
-                   title="<?php _e( 'link to Premium Version', 'wp-openagenda' ) ?>" target="_blank"><?php _e(
-						'OpenAgenda for WordPress Premium', 'wp-openagenda' ) ?>
-                </a></h3>
-            <?php
-            OpenAgenda\market\features_list();
-            ?>
-            <a class="product-link" href="<?php echo esc_url( OPENWP_LINK ); ?>"
-               title="<?php _e( 'link to Premium Version', 'wp-openagenda' ) ?>"
-               target="_blank"><?php printf( __( 'Buy OpenAgenda for WordPress for only %s', 'wp-openagenda' ),
-                    OPENWP_PLUGIN_PRICE );
-               ?></a>
-        </div>
-		<?php
-	}
-	?>
-    <div class="clear"></div>
-	<?php
-
 }

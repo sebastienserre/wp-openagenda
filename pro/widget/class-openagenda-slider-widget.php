@@ -5,7 +5,7 @@ class Openagenda_Slider_Widget extends WP_Widget {
 	public function __construct() {
 		$widget_args = array(
 			'classname'   => 'Openagenda Slider Widget',
-			'description' => __( 'Display your Openagenda.com\'s Events in a slider in your WordPress Sidebar with a beautiful widget', 'wp-openagenda-pro' ),
+			'description' => __( 'Display your Openagenda.com\'s Events in a slider in your WordPress Sidebar with a beautiful widget', 'wp-openagenda' ),
 		);
 		parent::__construct(
 			'openwp_slider_widget',
@@ -48,7 +48,7 @@ class Openagenda_Slider_Widget extends WP_Widget {
 		</p>
 		<p>
 			<label
-					for="<?php echo $this->get_field_name( 'agenda_url' ); ?>"> <?php _e( 'OpenAgenda URL', 'wp-openagenda-pro' ); ?>
+					for="<?php echo $this->get_field_name( 'agenda_url' ); ?>"> <?php _e( 'OpenAgenda URL', 'wp-openagenda' ); ?>
 			</label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'agenda_url' ); ?>"
 			       name="<?php echo $this->get_field_name( 'agenda_url' ); ?>" type="text"
@@ -57,7 +57,7 @@ class Openagenda_Slider_Widget extends WP_Widget {
 		</p>
 		<p>
 			<label
-					for="<?php echo $this->get_field_name( 'agenda_url_intern' ); ?>"> <?php _e( 'Internal URL of Main Agenda Page:', 'wp-openagenda-pro' ); ?></label>
+					for="<?php echo $this->get_field_name( 'agenda_url_intern' ); ?>"> <?php _e( 'Internal URL of Main Agenda Page:', 'wp-openagenda' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'agenda_url_intern' ); ?>"
 			       name="<?php echo $this->get_field_name( 'agenda_url_intern' ); ?>" type="text"
 			       value="<?php echo $instance['agenda_url_intern']; ?>"/>
@@ -65,7 +65,7 @@ class Openagenda_Slider_Widget extends WP_Widget {
 		</p>
 		<p>
 			<label
-					for="<?php echo $this->get_field_name( 'agenda_lieu' ); ?>"> <?php _e( 'Display venue', 'wp-openagenda-pro' ); ?></label>
+					for="<?php echo $this->get_field_name( 'agenda_lieu' ); ?>"> <?php _e( 'Display venue', 'wp-openagenda' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'agenda_lieu' ); ?>"
 			       name="<?php echo $this->get_field_name( 'agenda_lieu' ); ?>" type="radio" value="true"
 				<?php checked( $instance['agenda_lieu'], 'true'); ?>
@@ -78,7 +78,7 @@ class Openagenda_Slider_Widget extends WP_Widget {
 		</p>
 		<p>
 			<label
-					for="<?php echo $this->get_field_name( 'number' ); ?>"> <?php _e( 'Number of Events', 'wp-openagenda-pro' ); ?></label>
+					for="<?php echo $this->get_field_name( 'number' ); ?>"> <?php _e( 'Number of Events', 'wp-openagenda' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'number' ); ?>"
 			       name="<?php echo $this->get_field_name( 'number' ); ?>" type="text"
 			       value="<?php echo $instance['number']; ?>"/>

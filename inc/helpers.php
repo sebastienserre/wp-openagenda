@@ -35,7 +35,7 @@ function openwp_generate_css( $block ) {
 
 	ob_start();
 
-	if ( openagenda_fs()->is_premium() && true !== $block['openagenda_masonry'] ) {
+	if ( ! empty($block['openagenda_masonry'] ) && true !== $block['openagenda_masonry'] ) {
 		?>
 		.main_openagenda {
 		display: grid;

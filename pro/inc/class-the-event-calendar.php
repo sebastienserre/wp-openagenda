@@ -126,7 +126,7 @@ class The_Event_Calendar {
             <div class="notice notice-warning is-dismissible">
                 <p>
 					<?php
-					esc_attr_e( 'You checked you\'re using The Event Calendar in Openagenda\'s settings but this plugin is not activated', 'wp-openagenda-pro' );
+					esc_attr_e( 'You checked you\'re using The Event Calendar in Openagenda\'s settings but this plugin is not activated', 'wp-openagenda' );
 					?>
                 </p>
             </div>
@@ -238,7 +238,9 @@ class The_Event_Calendar {
 	 * @package wp-openagenda
 	 */
 	public static function create_venue( $events = array() ) {
-		$location = $events['location'];
+	    if ( ! empty( $events['location'] ) ) {
+		    $location = $events['location'];
+	    }
 		// Search for an already registred venue
 		$args   = [
 			'post_type'  => 'tribe_venue',
@@ -386,7 +388,7 @@ class The_Event_Calendar {
 			$error[] =
 				[
 					'id'  => $post_id,
-					'msg' => __( 'No Venue ID, Event not sent to OpenAgenda', 'wp-openagenda-pro' ),
+					'msg' => __( 'No Venue ID, Event not sent to OpenAgenda', 'wp-openagenda' ),
 				];
 			update_option( 'tec_error', $error );
 			openwp_debug( '[OA]:' .  $error[ 'msg' ] );
@@ -396,7 +398,7 @@ class The_Event_Calendar {
 			$error[] =
 				[
 					'id'  => $post_id,
-					'msg' => __( 'No Agenda Selected, Event not sent to OpenAgenda', 'wp-openagenda-pro' ),
+					'msg' => __( 'No Agenda Selected, Event not sent to OpenAgenda', 'wp-openagenda' ),
 				];
 			update_option( 'tec_error', $error );
 			openwp_debug( '[OA]:' .  $error[ 'msg' ] );
@@ -628,7 +630,7 @@ class The_Event_Calendar {
 		?>
         <div style="background: #fe5000; color: white; padding: 5px 10px">
 			<?php
-			esc_attr_e( 'Please create your venue in openagenda.com first then sync in settings', 'wp-openagenda-pro' );
+			esc_attr_e( 'Please create your venue in openagenda.com first then sync in settings', 'wp-openagenda' );
 			?>
         </div>
 		<?php
@@ -687,9 +689,9 @@ class The_Event_Calendar {
 		$end   = strtotime( get_post_meta( $id, '_EventEndDate', true ) );
 
 		if ( empty( $start ) || empty( $end ) ) {
-			$msg = __( 'No date for this event!', 'wp-openagenda-pro' );
+			$msg = __( 'No date for this event!', 'wp-openagenda' );
 		}
-		$msg = sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda-pro' ), date_i18n( 'd F Y G\Hi', $start ),
+		$msg = sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $start ),
 			date_i18n( 'd F Y G\Hi', $end ) );
 
 		if ( ! empty( $start ) && ! empty( $end ) ) {
@@ -697,7 +699,7 @@ class The_Event_Calendar {
 			$end   = date_i18n( 'd F Y', $end );
 
 			if ( $start === $end ) {
-				$msg = sprintf( __( 'On %s', 'wp-openagenda-pro' ), $end );
+				$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
 			}
 		}
 

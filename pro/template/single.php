@@ -25,13 +25,13 @@ get_header();
                             <aside>
                                 <p class="oa-date">
 									<?php
-									_e( 'Date : ', 'wp-openagenda-pro' );
+									_e( 'Date : ', 'wp-openagenda' );
 									echo openwp_display_date( get_the_ID() );
 									?>
                                 </p>
                                 <p class="oa-age">
 									<?php
-									_e( 'Public : ', 'wp-openagenda-pro' );
+									_e( 'Public : ', 'wp-openagenda' );
 									echo openwp_display_age( get_the_ID() );
 									?>
                                 </p>

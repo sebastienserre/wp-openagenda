@@ -78,7 +78,7 @@ class Openagenda_search_shortcode {
 	 * @return string html code to display.
 	 */
 	public function openagenda_search_html( $uid, $embed, $atts ) {
-		$html = '<p>' . __( 'Search', 'wp-openagenda-pro' ) . '</p><div class="cbpgsc cibulSearch" data-oasc data-cbctl="' . $uid . '/' . $embed . '|' . $atts['agenda_lang'] . '" data-lang="fr"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulSearchWidget.js"></script>';
+		$html = '<p>' . __( 'Search', 'wp-openagenda' ) . '</p><div class="cbpgsc cibulSearch" data-oasc data-cbctl="' . $uid . '/' . $embed . '|' . $atts['agenda_lang'] . '" data-lang="fr"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulSearchWidget.js"></script>';
 
 		return $html;
 	}
@@ -104,7 +104,7 @@ jQuery("input.dateTo").change(function(){
 	}
 
 	public function openagenda_tag_html( $uid, $embed, $atts ) {
-		$html = '<p>' . __( 'Tags', 'wp-openagenda-pro' ) . '</p><div class="cbpgtg cibulTags" data-oatg data-cbctl="' . $uid . '/' . $embed . '"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulTagsWidget.js"></script>';
+		$html = '<p>' . __( 'Tags', 'wp-openagenda' ) . '</p><div class="cbpgtg cibulTags" data-oatg data-cbctl="' . $uid . '/' . $embed . '"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulTagsWidget.js"></script>';
 
 		return $html;
 	}
@@ -117,7 +117,7 @@ jQuery("input.dateTo").change(function(){
 
 		$html = 'Lieu:';
 		$html .= '<select class="auto-select" name="venue">';
-		$html .= '<option>' . __( 'All', 'wp-openagenda-pro' ) . '</option>';
+		$html .= '<option>' . __( 'All', 'wp-openagenda' ) . '</option>';
 		foreach ( $lieu as $key => $l ) {
 			$selected = selected( $_GET['venue'], $key, false );
 			$html     .= '<option value="' . $key . '" ' . $selected . '>' . $l . '</option>';
@@ -135,7 +135,7 @@ jQuery("select.auto-select").change(function(){
 	}
 
 	public function openagenda_category_html( $uid, $embed, $atts ) {
-		$html = '<p>' . __( 'Category', 'wp-openagenda-pro' ) . '</p><div class="cbpgct cibulCategories" data-oact data-cbctl="' . $uid . '/' . $embed . '" data-lang="' . $atts['agenda_lang'] . '"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulCategoriesWidget.js"></script>';
+		$html = '<p>' . __( 'Category', 'wp-openagenda' ) . '</p><div class="cbpgct cibulCategories" data-oact data-cbctl="' . $uid . '/' . $embed . '" data-lang="' . $atts['agenda_lang'] . '"></div><script type="text/javascript" src="//openagenda.com/js/embed/cibulCategoriesWidget.js"></script>';
 
 		return $html;
 	}

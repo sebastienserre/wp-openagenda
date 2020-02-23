@@ -368,7 +368,7 @@ function export_event__premium_only() {
 
 		}
 		if ( empty( $event->post_excerpt ) ) {
-			$excerpt = __( 'No data found', 'wp-openagenda-pro' );
+			$excerpt = __( 'No data found', 'wp-openagenda' );
 		} else {
 			$excerpt = $event->post_excerpt;
 		}

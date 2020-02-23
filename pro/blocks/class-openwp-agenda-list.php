@@ -17,12 +17,12 @@ class OA_Event_List {
 	}
 
 	public function block_init() {
-		Block::make( __( 'Openagenda Single', 'wp-openagenda-pro' ) )
+		Block::make( __( 'Openagenda Single', 'wp-openagenda' ) )
 		     ->set_category( 'custom-category', 'Openagenda', 'calendar-alt' )
 		     ->set_render_callback( array( $this, 'render' ) )
 		     ->add_fields(
 			     [
-				     Field::make( 'association', 'openwp_event_association', __( 'Event', 'wp-openagenda-pro' ) )
+				     Field::make( 'association', 'openwp_event_association', __( 'Event', 'wp-openagenda' ) )
 				          ->set_types(
 					          [
 						          [

@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		if ( ! empty( $conditions ) ) { ?>
             <h3>
-				<?php _e( 'Conditions of participation, rates', 'wp-openagenda-pro' ); ?>
+				<?php _e( 'Conditions of participation, rates', 'wp-openagenda' ); ?>
             </h3>
             <p><?php echo $conditions; ?></p>
 			<?php
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		if ( ! empty( $tools ) ) { ?>
             <h3>
-				<?php _e( 'Registration tools', 'wp-openagenda-pro' ); ?>
+				<?php _e( 'Registration tools', 'wp-openagenda' ); ?>
             </h3>
             <p><?php echo $tools; ?></p>
 			<?php
@@ -51,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		if ( ! empty( $min_age ) || ! empty( $max_age ) ) { ?>
             <h3>
-				<?php _e( 'Age', 'wp-openagenda-pro' ); ?>
+				<?php _e( 'Age', 'wp-openagenda' ); ?>
             </h3>
             <p><?php echo openwp_display_age( $event['id]'] ); ?></p>
 			<?php

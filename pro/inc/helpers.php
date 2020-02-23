@@ -57,18 +57,18 @@ function openwp_display_date( $id ) {
 	$dates = get_field( 'oa_date', $id );
 
 	if ( empty( $dates ) ) {
-		$msg = __( 'No date for this event!', 'wp-openagenda-pro' );
+		$msg = __( 'No date for this event!', 'wp-openagenda' );
 	}
 
 	foreach ( $dates as $date ) {
-		$msg .= sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda-pro' ), date_i18n( 'd F Y G\Hi', $date['begin'] ),
+		$msg .= sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $date['begin'] ),
 			date_i18n( 'd F Y G\Hi', $date['end'] ) );
 	}
 	if ( ! empty( $start ) && ! empty( $end ) ) {
 
 
 		if ( $start === $end ) {
-			$msg = sprintf( __( 'On %s', 'wp-openagenda-pro' ), $end );
+			$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
 		}
 	}
 
@@ -90,17 +90,17 @@ function openwp_display_age( $id ) {
 	$max_age = get_field( 'oa_max_age', $id );
 
 	if ( empty( $min_age ) ) {
-		$msg = __( 'Welcome Everybody!', 'wp-openagenda-pro' );
+		$msg = __( 'Welcome Everybody!', 'wp-openagenda' );
 	}
 	if ( empty( $end ) ) {
-		$msg = sprintf( __( 'From %s years old', 'wp-openagenda-pro' ), $min_age );
+		$msg = sprintf( __( 'From %s years old', 'wp-openagenda' ), $min_age );
 	}
 
 	if ( ! empty( $start ) && ! empty( $end ) ) {
-		$msg = sprintf( __( 'From %1$s years old to %2$s years old', 'wp-openagenda-pro' ), $min_age, $max_age );
+		$msg = sprintf( __( 'From %1$s years old to %2$s years old', 'wp-openagenda' ), $min_age, $max_age );
 
 		if ( $min_age === $max_age ) {
-			$msg = sprintf( __( 'From %s years old', 'wp-openagenda-pro' ), $end );
+			$msg = sprintf( __( 'From %s years old', 'wp-openagenda' ), $end );
 		}
 	}
 
@@ -127,19 +127,19 @@ function openwp_display_accessibilty( $id ) {
 		foreach ( $a11y as $access ) {
 			switch ( $access ) {
 				case 'mi':
-					$name = __( 'Accessible to disabled people', 'wp-openagenda-pro' );
+					$name = __( 'Accessible to disabled people', 'wp-openagenda' );
 					break;
 				case 'hi':
-					$name = __( 'Accessible to the hearing impaired', 'wp-openagenda-pro' );
+					$name = __( 'Accessible to the hearing impaired', 'wp-openagenda' );
 					break;
 				case 'pi':
-					$name = __( 'Accessible to the psychic handicapped', 'wp-openagenda-pro' );
+					$name = __( 'Accessible to the psychic handicapped', 'wp-openagenda' );
 					break;
 				case 'vi':
-					$name = __( 'Accessible to visually impaired', 'wp-openagenda-pro' );
+					$name = __( 'Accessible to visually impaired', 'wp-openagenda' );
 					break;
 				case 'sl':
-					$name = __( 'Accessible in sign language', 'wp-openagenda-pro' );
+					$name = __( 'Accessible in sign language', 'wp-openagenda' );
 					break;
 
 			}
@@ -231,7 +231,7 @@ function openwp_oa_id( $column, $post_id ){
             if ( ! empty( $id ) ){
                 echo $id;
             } else {
-                _e( 'Not saved to OpenAgenda', 'wp-openagenda-pro' );
+                _e( 'Not saved to OpenAgenda', 'wp-openagenda' );
             }
     }
 }

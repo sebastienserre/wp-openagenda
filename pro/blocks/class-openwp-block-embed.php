@@ -16,24 +16,24 @@ class OpenwpBlockEmbed {
 	}
 
 	public function openwp_embed_block_init() {
-		Block::make( __( 'OpenAgenda embed Block', 'wp-openagenda-pro' ) )
+		Block::make( __( 'OpenAgenda embed Block', 'wp-openagenda' ) )
 		     ->set_category( 'custom-category', 'Openagenda', 'calendar-alt' )
 		     ->set_render_callback( array( $this, 'openwp_embed_render' ) )
 		     ->add_fields(
 			     array(
-				     Field::make( 'text', 'openwp_url', __( 'Openagenda URL', 'wp-openagenda-pro' ) ),
-				     Field::make( 'text', 'lang', __( '2 letters language code', 'wp-openagenda-pro' ) )
+				     Field::make( 'text', 'openwp_url', __( 'Openagenda URL', 'wp-openagenda' ) ),
+				     Field::make( 'text', 'lang', __( '2 letters language code', 'wp-openagenda' ) )
 				          ->set_attribute( 'maxLength', 2 ),
-				     Field::make( 'select', 'widget', __( 'OpenAgenda\'s widget', 'wp-openagenda-pro' ) )
+				     Field::make( 'select', 'widget', __( 'OpenAgenda\'s widget', 'wp-openagenda' ) )
 				          ->set_options( array(
-						          'none'       => __( 'Select an OpenAgenda Widget', 'wp-openagenda-pro' ),
-						          'general'    => __( 'General', 'wp-openagenda-pro' ),
-						          'map'        => __( 'Map', 'wp-openagenda-pro' ),
-						          'search'     => __( 'Search', 'wp-openagenda-pro' ),
-						          'categories' => __( 'Categories', 'wp-openagenda-pro' ),
-						          'tags'       => __( 'Tags', 'wp-openagenda-pro' ),
-						          'calendrier' => __( 'Calendrier', 'wp-openagenda-pro' ),
-						          'preview'    => __( 'Preview', 'wp-openagenda-pro' ),
+						          'none'       => __( 'Select an OpenAgenda Widget', 'wp-openagenda' ),
+						          'general'    => __( 'General', 'wp-openagenda' ),
+						          'map'        => __( 'Map', 'wp-openagenda' ),
+						          'search'     => __( 'Search', 'wp-openagenda' ),
+						          'categories' => __( 'Categories', 'wp-openagenda' ),
+						          'tags'       => __( 'Tags', 'wp-openagenda' ),
+						          'calendrier' => __( 'Calendrier', 'wp-openagenda' ),
+						          'preview'    => __( 'Preview', 'wp-openagenda' ),
 					          )
 				          ),
 			     ) );
