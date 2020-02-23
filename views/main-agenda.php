@@ -27,13 +27,13 @@ function openwp_main_agenda_render_html( $events, $block ) {
 				} else {
 					$date = sprintf( __( 'On: %s', 'wp-openagenda' ), $firstDate );
 				}
-				if ( is_openwp_pro() && true === $block['openagenda_masonry'] ){
+				if ( !empty( $block['openagenda_masonry'] ) ){
 					wp_enqueue_script( 'IsotopeOA');
 					wp_enqueue_script( 'IsotopeInit');
 				}
 
 				?>
-				<div class="openagenda_event <?php if ( is_openwp_pro() && true === $block['openagenda_masonry'] ){ echo 'openagenda_masonry'; }?>">
+				<div class="openagenda_event <?php if ( ! empty( $block['openagenda_masonry'] ) ){ echo 'openagenda_masonry'; }?>">
 					<div class="openagenda_when">
 						<p><?php echo $date; ?></p>
 					</div>
@@ -43,7 +43,7 @@ function openwp_main_agenda_render_html( $events, $block ) {
                         if ( ! empty( $img ) ) {
 	                        echo $img;
                             }
-						if ( ! empty( $event['description'][ $block['lang'] ] ) && ( true === $block['openagenda_show_desc'] ) ) {
+						if ( ! empty( $event['description'][ $block['lang'] ] ) && ( $block['openagenda_show_desc'] ) ) {
 							echo '<p>' . $parsedown->text( $event['description'][ $block['lang'] ] ) . '</p>';
 						}
 						if ( ! empty( $event['longDescription'][ $block['lang'] ] ) && ( true === $block['openagenda_show_desc'] ) ) {

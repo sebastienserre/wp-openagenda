@@ -1,10 +1,10 @@
 === OpenAgenda for WordPress ===
-Contributors: sebastienserre
+Contributors: sebastienserre, freemius
 Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.9.6
+Stable tag: 2.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -12,17 +12,6 @@ Display Events hosted in Openagenda.com easily in your WordPress Website.
 
 == Description ==
 Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode, Gutenberg Blocks and Widget.
-
-### Why Buying the Pro Version ?
-* Sync your Events directly with WordPress
-* Event created on Openagenda.com are imported as a WordPress CPT (openagenda-events)
-* Event created on WordPress are exported to OpenAgenda.com
-* Connect The Event Calendar from Modern Tribe to OpenAgenda!
-* 30 days Trials
-* Priority support
-* From only 49€
-
-[Buy The PRO Version](https://thivinfo.com/extensions-wordpress/openagenda-pour-wordpress/ "Buy The PRO Version")
 
 == Installation ==
 * 1- unzip
@@ -57,10 +46,10 @@ On WP 5.0 Use the new Gutenberg Blocks!
 * simply use the WordPress Widget, it will display your agenda on Elementor page Builder
 
 = Is it possible to create an event from my website to the OpenAgenda?
-* Yes!  in the [Pro Version](https://thivinfo.com/extension-wordpress/openagenda-pour-wordpress/)
+* Yes!
 
 = Is OpenAgenda for WordPress is working with WPBakery Page Builder (formerly Visual Composer) ?
-* Yes! The Pro version is coming with Visual Composer element. Free one provide only WP Shortcodes and WP Widgets.
+* Yes!
 
 = I use The Event Calendar from Modern Tribe, How to sync my events to OpenAgenda?
 * Once the The Event Calendar option checked in OpenAgenda for WordPress, save your events, they will be created to
@@ -68,42 +57,21 @@ Openagenda.com
 * If you already have events on OpenAgenda.com, please use the "Import" link in the Openagenda for WP settings. It will
 create events in The Event Calendar.
 
-= May I test for free the Pro Version?
-* Yes! 30 days free trial. Do not hesitate.
-
-= How expensive is the Pro Version?
-* [Check OpenAgenda for WordPress Pro Price](https://checkout.freemius.com/mode/dialog/plugin/2279/plan/3475/licenses/unlimited/)
-
 == Screenshots ==
 1. settings
 2. display in front
 3. Free WordPress Widget
-4. Customer account embed. Free Trial Tab
-5. Visual Composer Element (PRO Version)
-6. Display OpenAgenda widget in a great WP Widget (Pro Version)
+4. Customer account embed.
+5. Visual Composer Element
+6. Display OpenAgenda widget in a great WP Widget
 7. Gutenberg Block (Front-Office and Preview)
 8. Gutenberg Block (Back-Office and Settings)
-9. Masonry layout (Pro Version)
+9. Masonry layout
 
 == Changelog ==
 
-= 1.9.5 - 17Fev2020 =
-    * reorganize code between free and pro version
-
-= 1.9.4 - 15Fev2020 = Free
-    * rm constant dedicated to Pro Version
-
-= 1.9.3 - 30jan2020 = Free
-    * Check OA Key validity only once a day
-    * reorganize and clean some piece of code
-
-= 1.9.2 - 24jan2020 = Free
-    * Remove Carbon Fields depedancies
-    * New editor block are removed
-
-= 1.9.0 - 24Jan2020 = Pro & Free
-    * Leave Freemius
-    * 2 plugins are created, the free one and a Premium
+= 2.0.0 -- 23/Fev/2020
+ * All pro features are added to the free version
 
 = 1.8.11 - 07/01/2020 = Pro & Free
     * Hide past event on shortcode

@@ -252,6 +252,9 @@ class OpenAgendaApi {
 			return __( 'This agenda doesn\'t have any embeds layout in their params.<br> We\'re sorry, but wen can\'t display it :(', 'wp-openagenda' );
 
 		}
+		if ( empty( $atts['agenda_nb'] ) ){
+			$atts['agenda_nb'] = 10;
+        }
 		switch ( $atts['widget'] ) {
 			case 'general':
 				$openagenda_code = '<iframe style="width:100%;" frameborder="0" scrolling="no" allowtransparency="allowtransparency" class="cibulFrame cbpgbdy" data-oabdy src="//openagenda.com/agendas/' . $uid . '/embeds/' . $embed . '/events?lang=fr"></iframe><script type="text/javascript" src="//openagenda.com/js/embed/cibulBodyWidget.js"></script>';
