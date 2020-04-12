@@ -2,9 +2,9 @@
 Contributors: sebastienserre
 Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.6
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -42,6 +42,9 @@ On WP 5.0 Use the new Gutenberg Blocks!
 = Where can I found help ?
 *  [Knowledge Base](https://docs.thivinfo.com/collection/5-openagenda-pour-wordpress)
 
+= Where to report a bug ?
+* Please open an isssue on my [Github](https://github.com/sebastienserre/wp-openagenda/issues)
+
 = I'm using Elementor Page Builder, How to use OpenAgenda for Wordpress to display events?
 * simply use the WordPress Widget, it will display your agenda on Elementor page Builder
 
@@ -71,7 +74,7 @@ create events in The Event Calendar.
 == Changelog ==
 
 = 2.0.0 -- 23/Fev/2020
- * All pro features are added to the free version
+ * All pro features have been added to the free version
 
 = 1.8.11 - 07/01/2020 = Pro & Free
     * Hide past event on shortcode
