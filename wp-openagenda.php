@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: WP Openagenda
- * Plugin URI: https://openagenda4wp.com/
+ * Plugin URI: https://github.com/sebastienserre/wp-openagenda
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 2.0.0
+ * Version: 2.0.2
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.3
@@ -12,7 +12,6 @@
  * License: GPLv3
  *
  * @package         openagenda-wp
- * @fs_premium_only /pro/, /.idea/
  **/
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,7 +31,7 @@ class Openagenda_WP_Main {
 		/**
 		 * Define Constant
 		 */
-		define( 'THFO_OPENWP_VERSION', '2.0.0' );
+		define( 'THFO_OPENWP_VERSION', '2.0.2' );
 		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
