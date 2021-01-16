@@ -3,10 +3,10 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://github.com/sebastienserre/wp-openagenda
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
- * Tested up to: 5.3
+ * Tested up to: 5.6
  * License: GPLv3
  *
  * @package         openagenda-wp
