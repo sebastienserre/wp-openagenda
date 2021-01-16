@@ -150,6 +150,7 @@ class OpenAgendaApi {
 	 */
 	public static function openwp_get_uid( $slug ) {
 		$slug = self::openwp_get_slug( $slug );
+		$uid = null;
 		if ( ! empty( self::thfo_openwp_get_api_key() ) ) {
 			$key          = self::thfo_openwp_get_api_key();
 			$decoded_body = self::get_decoded_body( 'https://api.openagenda.com/v1/agendas/uid/' . $slug . '?key=' . $key );
