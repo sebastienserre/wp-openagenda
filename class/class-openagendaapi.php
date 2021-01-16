@@ -377,6 +377,7 @@ class OpenAgendaApi {
 	 * @return array key: term_id Value; term name (OA URL)
 	 */
 	public static function get_agenda_list__premium_only() {
+	    $url_oa = null;
 		/**
 		 * Get List of Agenda
 		 */
@@ -384,8 +385,10 @@ class OpenAgendaApi {
 			'taxonomy'   => 'openagenda_agenda',
 			'hide_empty' => false,
 		) );
-		foreach ( $terms as $term ) {
-			$url_oa[ $term->term_id ] = $term->name;
+		if ( ! empty( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$url_oa[ $term->term_id ] = $term->name;
+			}
 		}
 
 		return $url_oa;

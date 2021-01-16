@@ -139,58 +139,60 @@ class Import_OA {
 			/**
 			 * Get UID for each
 			 */
-			foreach ( $url_oa as $url ) {
-				$uid          = $openagenda->openwp_get_uid( $url );
-				$decoded_body = OpenAgendaApi::get_venue_oa( $uid );
+			if ( ! empty( $url_oa ) && is_array( $url_oa ) ) {
+				foreach ( $url_oa as $url ) {
+					$uid          = $openagenda->openwp_get_uid( $url );
+					$decoded_body = OpenAgendaApi::get_venue_oa( $uid );
 
-				if ( ! empty( $decoded_body ) ) {
+					if ( ! empty( $decoded_body ) ) {
 
-					/**
-					 * get all venue to update if exists
-					 */
+						/**
+						 * get all venue to update if exists
+						 */
 
-					foreach ( $decoded_body['items'] as $location ) {
-						$venues = $openagenda->get_venue__premium_only( $location['uid'] );
+						foreach ( $decoded_body['items'] as $location ) {
+							$venues = $openagenda->get_venue__premium_only( $location['uid'] );
 
-						$name = implode(
-							' - ',
-							[
-								$location['name'],
-								$location['city'],
-								$location['countryCode'],
-								$location['uid'],
-							]
-						);
-						if ( The_Event_Calendar::$tec_used ) {
-							The_Event_Calendar::create_venue();
-						} else {
-
-						if ( empty( $venues ) ) {
-
-							$insert = wp_insert_term( $name, 'openagenda_venue' );
-							if ( is_wp_error( $insert ) ) {
-								$error = 'Fatal Error -- Import OpenAgenda: ' . $insert->get_error_message();
-								error_log( $error );
+							$name = implode(
+								' - ',
+								[
+									$location['name'],
+									$location['city'],
+									$location['countryCode'],
+									$location['uid'],
+								]
+							);
+							if ( The_Event_Calendar::$tec_used ) {
+								The_Event_Calendar::create_venue();
 							} else {
-								update_term_meta( $insert['term_id'], '_oa_location_uid', $location['uid'] );
-							}
-						} else {
-							foreach ( $venues as $venue ) {
-								$locationuid = get_term_meta( $venue->term_id, '_oa_location_uid' );
-								$args        = array(
-									'name' => $name,
-								);
-								// si $locationuid existe alors update
-								$locationuid = intval( $locationuid[0] );
-								if ( $location['uid'] === $locationuid ) {
-									wp_update_term( $venue->term_id, 'openagenda_venue', $args );
+
+								if ( empty( $venues ) ) {
+
+									$insert = wp_insert_term( $name, 'openagenda_venue' );
+									if ( is_wp_error( $insert ) ) {
+										$error = 'Fatal Error -- Import OpenAgenda: ' . $insert->get_error_message();
+										error_log( $error );
+									} else {
+										update_term_meta( $insert['term_id'], '_oa_location_uid', $location['uid'] );
+									}
+								} else {
+									foreach ( $venues as $venue ) {
+										$locationuid = get_term_meta( $venue->term_id, '_oa_location_uid' );
+										$args        = array(
+											'name' => $name,
+										);
+										// si $locationuid existe alors update
+										$locationuid = intval( $locationuid[0] );
+										if ( $location['uid'] === $locationuid ) {
+											wp_update_term( $venue->term_id, 'openagenda_venue', $args );
+										}
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-		}
 	}
 
 	/**
@@ -207,121 +209,123 @@ class Import_OA {
 
 		if ( empty( $url_oa ) ) {
 			$url_oa = $openagenda->get_agenda_list__premium_only();
-
-			foreach ( $url_oa as $url ) {
-				$agendas[ $url ] = $openagenda->thfo_openwp_retrieve_data( $url, 999, 'current' );
+			if( is_array( $url_oa ) ) {
+				foreach ( $url_oa as $url ) {
+					$agendas[ $url ] = $openagenda->thfo_openwp_retrieve_data( $url, 999, 'current' );
+				}
 			}
 		} else {
 			$agendas[ $url_oa ] = $openagenda->thfo_openwp_retrieve_data( $url_oa, 999, 'current' );
 		}
 
+		if ( !empty( $agendas ) && is_array( $agendas ) ) {
+			foreach ( $agendas as $agenda ) {
+				foreach ( $agenda['events'] as $events ) {
+					if ( is_null( $events['longDescription']['fr'] ) ) {
+						$events['longDescription']['fr'] = $events['description']['fr'];
+					}
 
-		foreach ( $agendas as $agenda ) {
-			foreach ( $agenda['events'] as $events ) {
-				if ( is_null( $events['longDescription']['fr'] ) ) {
-					$events['longDescription']['fr'] = $events['description']['fr'];
-				}
-
-				if ( The_Event_Calendar::$tec_used ) {
-					$post_type = 'tribe_events';
-				} else {
-					$post_type = 'openagenda-events';
-				}
+					if ( The_Event_Calendar::$tec_used ) {
+						$post_type = 'tribe_events';
+					} else {
+						$post_type = 'openagenda-events';
+					}
 
 
-				$args = array(
-					'post_type'   => $post_type,
-					'meta_key'    => '_oa_event_uid',
-					'meta_value'  => $events['uid'],
-					'post_status' => 'publish',
-				);
-
-				$openagenda_events = get_posts(
-					$args
-				);
-				if ( ! empty( $openagenda_events ) ) {
-					$id = $openagenda_events[0]->ID;
-				} else {
-					// Set ID as NULL, so that it doesn't take the previous value
-					$id = null;
-				}
-
-				// Date Formating
-				$dates = [];
-				foreach ( $events['timings'] as $timing ) {
-
-					$begin = strtotime( $timing['start'] );
-					$begin = $begin + 7200;
-					$end   = strtotime( $timing['end'] );
-					$end   = $end + 7200;
-
-					$dates[] =
-						[
-							'field_5d61787c65c27' => $begin,
-							'field_5d61789f65c28' => $end,
-						];
-				}
-
-				if ( The_Event_Calendar::$tec_used ) {
-
-					$insert = The_Event_Calendar::create_event( $id, $events, $dates );
-
-				} else {
 					$args = array(
-						'ID'             => $id,
-						'post_content'   => $events['longDescription']['fr'],
-						'post_title'     => $events['title']['fr'],
-						'post_excerpt'   => $events['description']['fr'],
-						'post_status'    => 'publish',
-						'post_type'      => 'openagenda-events',
-						'comment_status' => 'closed',
-						'ping_status'    => 'closed',
-						'meta_input'     => array(
-							'oa_conditions' => $events['conditions']['fr'],
-							'oa_event_uid'  => $events['uid'],
-							'oa_tools'      => $events['registrationUrl'],
-							'oa_min_age'    => $events['age']['min'],
-							'oa_max_age'    => $events['age']['max'],
-						),
+						'post_type'   => $post_type,
+						'meta_key'    => '_oa_event_uid',
+						'meta_value'  => $events['uid'],
+						'post_status' => 'publish',
 					);
 
-					$insert = wp_insert_post( $args );
+					$openagenda_events = get_posts(
+						$args
+					);
+					if ( ! empty( $openagenda_events ) ) {
+						$id = $openagenda_events[0]->ID;
+					} else {
+						// Set ID as NULL, so that it doesn't take the previous value
+						$id = null;
+					}
 
-					$dates = update_field( 'field_5d50075c33c2d', $dates, $insert );
-					// insert Keywords
-					wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
+					// Date Formating
+					$dates = [];
+					foreach ( $events['timings'] as $timing ) {
+
+						$begin = strtotime( $timing['start'] );
+						$begin = $begin + 7200;
+						$end   = strtotime( $timing['end'] );
+						$end   = $end + 7200;
+
+						$dates[] =
+							[
+								'field_5d61787c65c27' => $begin,
+								'field_5d61789f65c28' => $end,
+							];
+					}
+
+					if ( The_Event_Calendar::$tec_used ) {
+
+						$insert = The_Event_Calendar::create_event( $id, $events, $dates );
+
+					} else {
+						$args = array(
+							'ID'             => $id,
+							'post_content'   => $events['longDescription']['fr'],
+							'post_title'     => $events['title']['fr'],
+							'post_excerpt'   => $events['description']['fr'],
+							'post_status'    => 'publish',
+							'post_type'      => 'openagenda-events',
+							'comment_status' => 'closed',
+							'ping_status'    => 'closed',
+							'meta_input'     => array(
+								'oa_conditions' => $events['conditions']['fr'],
+								'oa_event_uid'  => $events['uid'],
+								'oa_tools'      => $events['registrationUrl'],
+								'oa_min_age'    => $events['age']['min'],
+								'oa_max_age'    => $events['age']['max'],
+							),
+						);
+
+						$insert = wp_insert_post( $args );
+
+						$dates = update_field( 'field_5d50075c33c2d', $dates, $insert );
+						// insert Keywords
+						wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
+					}
+
+					//handicap
+					$i = 0;
+					foreach ( $events['accessibility'] as $accessibility ) {
+						$a11y[ $accessibility ] = true;
+						update_field( 'oa_a11y', $a11y, $insert );
+						$i ++;
+					}
+
+					unset( $i );
+
+					// Insert Post Term venue
+					$venues    = $openagenda->get_venue__premium_only( $events['location']['uid'] );
+					$venues_id = array();
+					foreach ( $venues as $venue ) {
+						array_push( $venues_id, $venue->term_id );
+					}
+					if ( ! empty( $venues_id ) ) {
+						wp_set_post_terms( $insert, $venues_id, 'openagenda_venue' );
+					}
+
+					// insert origin Agenda
+					$agendas = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
+
+					if ( ! empty( $agendas ) ) {
+						wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
+					}
+
+					// insert post thumbnail
+					OpenAgendaApi::upload_thumbnail( $events['originalImage'], $insert, $events['title']['fr'] );
+					unset( $dates );
 				}
-
-				//handicap
-				$i = 0;
-				foreach ( $events['accessibility'] as $accessibility ) {
-					$a11y[ $accessibility ] = true;
-					update_field( 'oa_a11y', $a11y, $insert );
-					$i ++;
-				}
-
-				unset( $i );
-
-				// Insert Post Term venue
-				$venues    = $openagenda->get_venue__premium_only( $events['location']['uid'] );
-				$venues_id = array();
-				foreach ( $venues as $venue ) {
-					array_push( $venues_id, $venue->term_id );
-				}
-				if ( ! empty( $venues_id ) ) {
-					wp_set_post_terms( $insert, $venues_id, 'openagenda_venue' );
-				}
-
-				// insert origin Agenda
-				$agendas = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
-
-				if ( ! empty( $agendas ) ) {
-					wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
-				}
-
-				// insert post thumbnail
-				OpenAgendaApi::upload_thumbnail( $events['originalImage'], $insert, $events['title']['fr'] );
-				unset( $dates );
 			}
 		}
 	}
@@ -341,166 +345,169 @@ class Import_OA {
 		$options     = array( 'lang' => $locale );
 		$agendas     = $openagenda->get_agenda_list__premium_only();
 		$accessToken = $openagenda->get_acces_token();
-		foreach ( $agendas as $agenda ) {
-			$agendaUid = $openagenda->openwp_get_uid( $agenda );
 
-			// Get Post openagenda-events
-			$events = get_posts(
-				array(
-					'post_type' => 'openagenda-events',
-				)
-			);
+		if ( ! empty( $agendas ) ) {
+			foreach ( $agendas as $agenda ) {
+				$agendaUid = $openagenda->openwp_get_uid( $agenda );
 
-			foreach ( $events as $event ) {
-				$eventuid = get_post_meta( $event->ID, '_oa_event_uid', true );
-				if ( empty( $eventuid ) ) {
-					//create
-					$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events";
-				} else {
-					//update
-					$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events/$eventuid";
-				}
+				// Get Post openagenda-events
+				$events = get_posts(
+					array(
+						'post_type' => 'openagenda-events',
+					)
+				);
 
-				extract( array_merge( array(
-					'lang' => $locale
-				), $options ) );
-
-				// General Datas
-				// retrieve event keywords
-				$keywords = wp_get_post_terms( $event->ID, 'openagenda_keyword' );
-				if ( ! empty( $keywords ) ) {
-					$keys = array();
-					foreach ( $keywords as $keyword ) {
-						array_push( $keys, $keyword->name );
-					}
-					$keywords = implode( ', ', $keys );
-				}
-
-				// format excerpt
-				if ( empty( $event->post_excerpt ) ) {
-					if ( ! empty( $event->post_content ) ) {
-						$excerpt = $event->post_content;
+				foreach ( $events as $event ) {
+					$eventuid = get_post_meta( $event->ID, '_oa_event_uid', true );
+					if ( empty( $eventuid ) ) {
+						//create
+						$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events";
 					} else {
-						$excerpt = __( 'No data found', 'wp-openagenda' );
+						//update
+						$route = "https://api.openagenda.com/v2/agendas/$agendaUid/events/$eventuid";
 					}
-				} else {
-					$excerpt = $event->post_excerpt;
-				}
 
-				$data = [
-					'slug'            => "$event->post_name-" . wp_rand(),
-					'title'           =>
-						[
-							$locale => $event->post_title,
-						],
-					'description'     =>
-						[
-							$locale => $excerpt,
-						],
-					'longDescription' =>
-						[
-							$locale => $event->post_content,
-						],
-					'keywords'        =>
-						[
-							$locale => $keywords,
-						]
-				];
+					extract( array_merge( array(
+						'lang' => $locale
+					), $options ) );
 
-
-				// get min age
-				$min_age = get_post_meta( $event->ID, 'oa_min_age', true );
-
-				// get max age
-				$max_age = get_post_meta( $event->ID, 'oa_max_age', true );
-
-				$age = array(
-					'min' => $min_age[0],
-					'max' => $max_age[0],
-				);
-
-				// get conditions
-				$conditions = get_post_meta( $event->ID, 'oa_conditions', true );
-
-				//get registration
-				$registrations = get_post_meta( $event->ID, 'oa_tools' );
-
-				// retrieve locationUID
-				$locationuid = wp_get_post_terms( $event->ID, 'openagenda_venue' );
-				$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid' );
-
-				// get start date
-				$dates = get_field( 'field_5d50075c33c2d', $event->ID );
-
-				$i = 0;
-				if ( is_array( $dates ) ) {
-					foreach ( $dates as $date ) {
-						$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $date['begin'] );
-						$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
-						$i ++;
+					// General Datas
+					// retrieve event keywords
+					$keywords = wp_get_post_terms( $event->ID, 'openagenda_keyword' );
+					if ( ! empty( $keywords ) ) {
+						$keys = array();
+						foreach ( $keywords as $keyword ) {
+							array_push( $keys, $keyword->name );
+						}
+						$keywords = implode( ', ', $keys );
 					}
-				}
 
-				//a11y
-				$a11y = get_field( 'oa_a11y', $event->ID );
-				if ( ! empty( $a11y ) ) {
-					foreach ( $a11y as $key => $value ) {
-						$accessibility[ $value ] = true;
+					// format excerpt
+					if ( empty( $event->post_excerpt ) ) {
+						if ( ! empty( $event->post_content ) ) {
+							$excerpt = $event->post_content;
+						} else {
+							$excerpt = __( 'No data found', 'wp-openagenda' );
+						}
+					} else {
+						$excerpt = $event->post_excerpt;
 					}
-				} else {
-					$accessibility['hi'] = false;
-				}
 
-				$data['age']           = $age;
-				$data['accessibility'] = $accessibility;
-				$data['conditions']    =
-					[
-						$locale => $conditions,
+					$data = [
+						'slug'            => "$event->post_name-" . wp_rand(),
+						'title'           =>
+							[
+								$locale => $event->post_title,
+							],
+						'description'     =>
+							[
+								$locale => $excerpt,
+							],
+						'longDescription' =>
+							[
+								$locale => $event->post_content,
+							],
+						'keywords'        =>
+							[
+								$locale => $keywords,
+							]
 					];
-				$data['registration']  = $registrations;
-				$data['locationUid']   = $locationuid[0];
-				$data['timings']       = $timings;
 
-				$imageLocalPath = null;
 
-				if ( isset( $data['image'] ) && isset( $data['image']['file'] ) ) {
-					$imageLocalPath = $data['image']['file'];
+					// get min age
+					$min_age = get_post_meta( $event->ID, 'oa_min_age', true );
 
-					unset( $data['image']['file'] );
+					// get max age
+					$max_age = get_post_meta( $event->ID, 'oa_max_age', true );
+
+					$age = array(
+						'min' => $min_age[0],
+						'max' => $max_age[0],
+					);
+
+					// get conditions
+					$conditions = get_post_meta( $event->ID, 'oa_conditions', true );
+
+					//get registration
+					$registrations = get_post_meta( $event->ID, 'oa_tools' );
+
+					// retrieve locationUID
+					$locationuid = wp_get_post_terms( $event->ID, 'openagenda_venue' );
+					$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid' );
+
+					// get start date
+					$dates = get_field( 'field_5d50075c33c2d', $event->ID );
+
+					$i = 0;
+					if ( is_array( $dates ) ) {
+						foreach ( $dates as $date ) {
+							$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $date['begin'] );
+							$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
+							$i ++;
+						}
+					}
+
+					//a11y
+					$a11y = get_field( 'oa_a11y', $event->ID );
+					if ( ! empty( $a11y ) ) {
+						foreach ( $a11y as $key => $value ) {
+							$accessibility[ $value ] = true;
+						}
+					} else {
+						$accessibility['hi'] = false;
+					}
+
+					$data['age']           = $age;
+					$data['accessibility'] = $accessibility;
+					$data['conditions']    =
+						[
+							$locale => $conditions,
+						];
+					$data['registration']  = $registrations;
+					$data['locationUid']   = $locationuid[0];
+					$data['timings']       = $timings;
+
+					$imageLocalPath = null;
+
+					if ( isset( $data['image'] ) && isset( $data['image']['file'] ) ) {
+						$imageLocalPath = $data['image']['file'];
+
+						unset( $data['image']['file'] );
+					}
+
+					$ch = curl_init();
+
+					curl_setopt( $ch, CURLOPT_URL, $route );
+					curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+					curl_setopt( $ch, CURLOPT_POST, true );
+
+					$posted = array(
+						'access_token' => $accessToken,
+						'nonce'        => rand(),
+						'data'         => json_encode( $data ),
+						'lang'         => 'fr',
+					);
+
+					if ( $imageLocalPath ) {
+						$posted['image'] = $imageLocalPath;
+					}
+
+
+					curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
+
+					$received_content = curl_exec( $ch );
+
+					$decode = json_decode( $received_content, true );
+
+					// update event uid
+					$uid = intval( $decode['event']['uid'] );
+					if ( $uid ) {
+						add_post_meta( $event->ID, 'oa_event_uid', $uid );
+					}
 				}
 
-				$ch = curl_init();
-
-				curl_setopt( $ch, CURLOPT_URL, $route );
-				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-				curl_setopt( $ch, CURLOPT_POST, true );
-
-				$posted = array(
-					'access_token' => $accessToken,
-					'nonce'        => rand(),
-					'data'         => json_encode( $data ),
-					'lang'         => 'fr',
-				);
-
-				if ( $imageLocalPath ) {
-					$posted['image'] = $imageLocalPath;
-				}
-
-
-				curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
-
-				$received_content = curl_exec( $ch );
-
-				$decode = json_decode( $received_content, true );
-
-				// update event uid
-				$uid = intval( $decode['event']['uid'] );
-				if ( $uid ) {
-					add_post_meta( $event->ID, 'oa_event_uid', $uid );
-				}
+				return $decode;
 			}
-
-			return $decode;
 		}
 	}
 
