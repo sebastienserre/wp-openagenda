@@ -62,11 +62,11 @@ class MainAgendaBlock {
 					          )
 
 				          ),
-				     Field::make( 'checkbox', 'openagenda_show_long_desc', __( 'Show Long Description', 'wp_openagenda' ) )
+				     Field::make( 'checkbox', 'openagenda_show_long_desc', __( 'Show Long Description', 'wp-openagenda' ) )
 				          ->set_option_value( 'yes' ),
-				     Field::make( 'checkbox', 'openagenda_show_desc', __( 'Show Description', 'wp_openagenda' ) )
+				     Field::make( 'checkbox', 'openagenda_show_desc', __( 'Show Description', 'wp-openagenda' ) )
 				          ->set_option_value( 'yes' ),
-				     Field::make( 'checkbox', 'openagenda_masonry', __( 'Display Masonry (Pro Only)', 'wp_openagenda' ) )
+				     Field::make( 'checkbox', 'openagenda_masonry', __( 'Display Masonry', 'wp-openagenda' ) )
 				          ->set_option_value( 'yes' ),
 				     Field::make( 'color', 'openagenda_description_background', __( 'Description Background Color', 'wp-openagenda' ) ),
 				     Field::make( 'color', 'openagenda_description_color', __( 'Description Text Color', 'wp-openagenda' ) ),
