@@ -3,12 +3,10 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://github.com/sebastienserre/wp-openagenda
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 2.0.2
+ * Version: 2.0.4
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.3
- * Text Domain: wp-openagenda-pro
- * Domain Path: /pro/languages
  * License: GPLv3
  *
  * @package         openagenda-wp
@@ -31,7 +29,7 @@ class Openagenda_WP_Main {
 		/**
 		 * Define Constant
 		 */
-		define( 'THFO_OPENWP_VERSION', '2.0.2' );
+		define( 'THFO_OPENWP_VERSION', '2.0.4' );
 		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -51,7 +49,6 @@ class Openagenda_WP_Main {
 		register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
 		add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ), 999 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'openwp_pro_load_style__premium_only' ) );
-		add_action( 'plugins_loaded', array( $this, 'openwp_load_textdomain__premium_only' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'openwp_register_script__premium_only' ) );
 		add_action( 'admin_print_styles', array( $this, 'openwp_admin_style__premium_only' ) );
 
@@ -140,16 +137,6 @@ class Openagenda_WP_Main {
 	public
 	function openwp_load_admin_style() {
 		wp_enqueue_style( 'openawp-admin-style', THFO_OPENWP_PLUGIN_URL . 'admin/assets/openwp-admin-styles.css' );
-	}
-
-	/**
-	 * Load plugin textdomain.
-	 *
-	 * @since 1.0.0
-	 */
-	public
-	function openwp_load_textdomain__premium_only() {
-		load_plugin_textdomain( 'wp-openagenda-pro', false, basename( dirname( __FILE__ ) ) . '/pro/languages' );
 	}
 
 	public function my_acf_settings_url__premium_only( $url ) {
