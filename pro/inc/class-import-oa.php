@@ -35,6 +35,7 @@ use function strtotime;
 use function tribe_get_event;
 use function unlink;
 use function update_field;
+use function update_post_meta;
 use function update_term_meta;
 use function var_dump;
 use function wp_get_post_terms;
@@ -221,6 +222,7 @@ class Import_OA {
 		if ( !empty( $agendas ) && is_array( $agendas ) ) {
 			foreach ( $agendas as $agenda ) {
 				foreach ( $agenda['events'] as $events ) {
+
 					if ( is_null( $events['longDescription']['fr'] ) ) {
 						$events['longDescription']['fr'] = $events['description']['fr'];
 					}
@@ -293,6 +295,11 @@ class Import_OA {
 						$dates = update_field( 'field_5d50075c33c2d', $dates, $insert );
 						// insert Keywords
 						wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
+
+						//Import Event UID
+						if ( ! empty( $events['uid'] ) ){
+							update_post_meta( $insert, '_oa_event_uid', $events['uid'] );
+						}
 					}
 
 					//handicap
