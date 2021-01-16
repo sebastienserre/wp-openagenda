@@ -3,7 +3,7 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://github.com/sebastienserre/wp-openagenda
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 2.0.4
+ * Version: 2.0.2
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
  * Tested up to: 5.3
@@ -31,7 +31,7 @@ class Openagenda_WP_Main {
 		/**
 		 * Define Constant
 		 */
-		define( 'THFO_OPENWP_VERSION', '2.0.4' );
+		define( 'THFO_OPENWP_VERSION', '2.0.2' );
 		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -77,7 +77,7 @@ class Openagenda_WP_Main {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-search.php';
 		}
 
-	//	include_once MY_ACF_PATH . 'acf.php';
+		include_once MY_ACF_PATH . 'acf.php';
 		include_once OPENWP_PRO_PATH . 'inc/class-the-event-calendar.php';
 		include_once OPENWP_PRO_PATH . 'admin/settings.php';
 		include_once OPENWP_PRO_PATH . 'inc/cpt.php';
@@ -89,7 +89,7 @@ class Openagenda_WP_Main {
 		include_once OPENWP_PRO_PATH . 'inc/agenda.php';
 		include_once OPENWP_PRO_PATH . 'widget/class-openagenda-main-widget.php';
 		include_once OPENWP_PRO_PATH . 'widget/class-openagenda-slider-widget.php';
-	//	include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-embed-shortcode.php';
+		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-embed-shortcode.php';
 		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagendaslidershortcode.php';
 		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-search-shortcode.php';
 		include_once OPENWP_PRO_PATH . 'blocks/class-openwp-block-embed.php';
@@ -120,9 +120,9 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/shortcodes/sc-main-agenda.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/erusev/parsedown/Parsedown.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-wp-basic-widget.php';
-	//	include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/views/main-agenda.php';
-	//	include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
 
 	}
 

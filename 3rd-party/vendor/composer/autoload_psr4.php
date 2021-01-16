@@ -6,7 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
-    'Carbon_Fields_Plugin\\' => array($baseDir . '/wp-content/plugins/carbon-fields-plugin/core'),
     'Carbon_Fields\\' => array($vendorDir . '/htmlburger/carbon-fields/core'),
 );

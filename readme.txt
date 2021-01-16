@@ -1,10 +1,10 @@
 === OpenAgenda for WordPress ===
 Contributors: sebastienserre
-Tags: adopt-me, openagenda, agenda, events, calendar, the event calendar,
+Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.4
 Requires PHP: 5.6
-Stable tag: 2.0.3
+Stable tag: 2.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 

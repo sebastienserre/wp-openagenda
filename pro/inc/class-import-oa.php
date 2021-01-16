@@ -241,9 +241,6 @@ class Import_OA {
 				);
 				if ( ! empty( $openagenda_events ) ) {
 					$id = $openagenda_events[0]->ID;
-				} else {
-					// Set ID as NULL, so that it doesn't take the previous value
-					$id = null;
 				}
 
 				// Date Formating
