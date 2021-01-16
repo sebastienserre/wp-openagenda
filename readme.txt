@@ -4,7 +4,7 @@ Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -72,6 +72,9 @@ create events in The Event Calendar.
 9. Masonry layout
 
 == Changelog ==
+
+= 2.0.7 -- 26 jan 2021
+ * fix Importer. Event UID is now imported (#3)
 
 = 2.0.5 -- 26 jan 2021
  * Improve import. Thanks to Diego Curyk
