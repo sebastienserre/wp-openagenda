@@ -77,7 +77,7 @@ class Openagenda_WP_Main {
 			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-search.php';
 		}
 
-		include_once MY_ACF_PATH . 'acf.php';
+	//	include_once MY_ACF_PATH . 'acf.php';
 		include_once OPENWP_PRO_PATH . 'inc/class-the-event-calendar.php';
 		include_once OPENWP_PRO_PATH . 'admin/settings.php';
 		include_once OPENWP_PRO_PATH . 'inc/cpt.php';
@@ -89,7 +89,7 @@ class Openagenda_WP_Main {
 		include_once OPENWP_PRO_PATH . 'inc/agenda.php';
 		include_once OPENWP_PRO_PATH . 'widget/class-openagenda-main-widget.php';
 		include_once OPENWP_PRO_PATH . 'widget/class-openagenda-slider-widget.php';
-		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-embed-shortcode.php';
+	//	include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-embed-shortcode.php';
 		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagendaslidershortcode.php';
 		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-search-shortcode.php';
 		include_once OPENWP_PRO_PATH . 'blocks/class-openwp-block-embed.php';
@@ -120,9 +120,9 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/shortcodes/sc-main-agenda.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/erusev/parsedown/Parsedown.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/class/class-openagenda-wp-basic-widget.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
+	//	include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/views/main-agenda.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
+	//	include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
 
 	}
 
