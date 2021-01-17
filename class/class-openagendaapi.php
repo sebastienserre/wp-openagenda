@@ -403,11 +403,12 @@ class OpenAgendaApi {
 	 * @return array|int|WP_Error
 	 */
 	public function get_venue__premium_only( $uid ) {
+
 		$args   = array(
 			'taxonomy'   => 'openagenda_venue',
 			'hide_empty' => false,
 			'meta_key'   => '_oa_location_uid',
-			'meta_value' => (string) $uid,
+			'meta_value' => $uid,
 		);
 		$venues = get_terms(
 			$args

@@ -7,6 +7,7 @@ use OpenAgenda\TEC\The_Event_Calendar;
 use OpenAgendaAPI\OpenAgendaApi;
 use function add_action;
 use function add_post_meta;
+use function add_term_meta;
 use function array_merge;
 use function array_push;
 use function curl_exec;
@@ -38,6 +39,7 @@ use function update_field;
 use function update_post_meta;
 use function update_term_meta;
 use function var_dump;
+use function wp_create_term;
 use function wp_get_post_terms;
 use function wp_insert_post;
 use function wp_insert_term;
@@ -318,7 +320,13 @@ class Import_OA {
 					unset( $i );
 
 					// Insert Post Term venue
-					$venues    = $openagenda->get_venue__premium_only( $events['location']['uid'] );
+					$venues    = $openagenda->get_venue__premium_only( $events['locationUid'] );
+					if ( empty( $venues ) ) {
+						$create_term = wp_create_term( $events['locationName'], 'openagenda_venue' );
+						$add_meta    = add_term_meta( $create_term['term_id'], '_oa_location_uid',
+							$events['locationUid'] );
+						$venues      = $openagenda->get_venue__premium_only( $events['locationUid'] );
+					}
 					$venues_id = array();
 					foreach ( $venues as $venue ) {
 						array_push( $venues_id, $venue->term_id );
