@@ -37,14 +37,14 @@ class OpenagendaSliderShortcode {
 	}
 
 	public function openwp_slider_register_scripts() {
-		wp_register_script( 'slickjs', THFO_OPENWP_PLUGIN_URL . 'pro/assets/slick/slick.min.js', array( 'jquery' ) );
-		$openagendasliderjs = apply_filters( 'openwp_openagendasliderjs', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/openagenda_slick.js' );
+		wp_register_script( 'slickjs', THFO_OPENWP_PLUGIN_URL . 'assets/slick/slick.min.js', array( 'jquery' ) );
+		$openagendasliderjs = apply_filters( 'openwp_openagendasliderjs', THFO_OPENWP_PLUGIN_URL . 'assets/js/openagenda_slick.js' );
 		wp_register_script( 'openagendaSliderJS', $openagendasliderjs, array(
 			'jquery',
 			'slickjs',
 		) );
-		wp_register_style( 'slickcss', THFO_OPENWP_PLUGIN_URL . 'pro/assets/slick/slick.css' );
-		wp_register_style( 'slickthemecss', THFO_OPENWP_PLUGIN_URL . 'pro/assets/slick/slick-theme.css', array('slickcss') );
+		wp_register_style( 'slickcss', THFO_OPENWP_PLUGIN_URL . 'assets/slick/slick.css' );
+		wp_register_style( 'slickthemecss', THFO_OPENWP_PLUGIN_URL . 'assets/slick/slick-theme.css', array('slickcss') );
 	}
 
 	public function openwp_slider_html( $atts, $display_title = true ) {
