@@ -458,6 +458,7 @@ class Import_OA {
 							$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
 							$i ++;
 						}
+						$data['timings'] = $timings;
 					}
 
 					//a11y
@@ -480,7 +481,6 @@ class Import_OA {
 					if ( ! empty( $locationuid ) ) {
 						$data['locationUid'] = $locationuid[0];
 					}
-					$data['timings']       = $timings;
 
 					$imageLocalPath = null;
 
