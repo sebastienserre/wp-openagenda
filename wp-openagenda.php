@@ -33,64 +33,27 @@ class Openagenda_WP_Main {
 		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
+		define( 'MY_ACF_PATH', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/acf/' );
+		define( 'MY_ACF_URL', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/acf/' );
 
 		/**
-		 * Load Files
+		 * Actions
 		 */
-		add_action( 'plugins_loaded', array( $this, 'thfo_openwp_load_files' ) );
+		add_action( 'plugins_loaded', array( $this, 'thfo_openwp_load_files' ), 999 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'thfo_openwp_load_style' ) );
 		add_action( 'admin_print_styles', array( $this, 'openwp_load_admin_style' ) );
 		add_action( 'plugins_loaded', array( $this, 'openwp_load' ), 400 );
-
-		define( 'OPENWP_PRO_PATH', THFO_OPENWP_PLUGIN_PATH . 'pro/' );
-		define( 'OPENWP_PRO_URL', THFO_OPENWP_PLUGIN_URL . 'pro/' );
-		define( 'MY_ACF_PATH', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/acf/' );
-		define( 'MY_ACF_URL', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/acf/' );
 		register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
-		add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ), 999 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'openwp_pro_load_style__premium_only' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'openwp_register_script__premium_only' ) );
-		add_action( 'admin_print_styles', array( $this, 'openwp_admin_style__premium_only' ) );
 
 		add_filter( 'acf/settings/url', [ $this, 'my_acf_settings_url__premium_only' ] );
-		//add_filter('acf/settings/show_admin', [ $this, 'my_acf_settings_show_admin__premium_only' ] );
 	}
 
 	public function openwp_activation__premium_only() {
 		if ( ! wp_next_scheduled( 'openagenda_hourly_event' ) ) {
 			wp_schedule_event( time(), 'hourly', 'openagenda_hourly_event' );
 		}
-	}
-
-	/**
-	 * Load Pro Functions.
-	 */
-	public
-	function openwp_load_pro_files__premium_only() {
-		if ( class_exists( 'Vc_Manager' ) ) {
-			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/openagenda-vc-main.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/class-vc-events.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/class-openagenda-slider.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/class-openagenda-search.php';
-		}
-
-		include_once MY_ACF_PATH . 'acf.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/class-the-event-calendar.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/cpt.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/venues.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/keywords.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/acf-fields.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/custom-fields.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/agenda.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'widget/class-openagenda-main-widget.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'widget/class-openagenda-slider-widget.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-embed-shortcode.php';
-		include_once THFO_OPENWP_PLUGIN_PATH. 'shortcodes/class-openagendaslidershortcode.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-search-shortcode.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-openwp-block-embed.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-openwp-agenda-list.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/class-import-oa.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-tec-shortcode.php';
 	}
 
 	/**
@@ -118,6 +81,30 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-basicblock.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/views/main-agenda.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . '/blocks/class-mainagendablock.php';
+		include_once MY_ACF_PATH . 'acf.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/class-the-event-calendar.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/cpt.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/venues.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/keywords.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/acf-fields.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/custom-fields.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/agenda.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'widget/class-openagenda-main-widget.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'widget/class-openagenda-slider-widget.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-embed-shortcode.php';
+		include_once THFO_OPENWP_PLUGIN_PATH. 'shortcodes/class-openagendaslidershortcode.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-search-shortcode.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-openwp-block-embed.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-openwp-agenda-list.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/class-import-oa.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-tec-shortcode.php';
+
+		if ( class_exists( 'Vc_Manager' ) ) {
+			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/openagenda-vc-main.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/class-vc-events.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/class-openagenda-slider.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/class-openagenda-search.php';
+		}
 
 	}
 
@@ -166,10 +153,6 @@ class Openagenda_WP_Main {
 				'IsotopeOA',
 			)
 		);
-	}
-
-	public function openwp_admin_style__premium_only() {
-		wp_enqueue_style( 'openwp-pro', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/openwp-pro.css' );
 	}
 
 	/**
