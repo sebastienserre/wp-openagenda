@@ -21,6 +21,7 @@ use WP_Error;
 use function strtoupper;
 use function substr;
 use function update_post_meta;
+use function var_dump;
 use function wc_strtoupper;
 use function wp_check_filetype;
 use function wp_generate_attachment_metadata;
@@ -402,11 +403,12 @@ class OpenAgendaApi {
 	 * @return array|int|WP_Error
 	 */
 	public function get_venue__premium_only( $uid ) {
+
 		$args   = array(
 			'taxonomy'   => 'openagenda_venue',
 			'hide_empty' => false,
 			'meta_key'   => '_oa_location_uid',
-			'meta_value' => (string) $uid,
+			'meta_value' => $uid,
 		);
 		$venues = get_terms(
 			$args
@@ -1127,6 +1129,20 @@ class OpenAgendaApi {
 			}
 		}
 		return $coord;
+	}
+
+	public static function get_event_lang( $event ){
+	    if ( !empty( $event['description'] ) ){
+	        $site_locale = get_locale();
+	        $site_lang = substr( $site_locale, 0, 2 );
+	        foreach ( $event['description'] as $lang => $description ){
+	            $event_lang = $lang;
+	            if ($lang === $site_lang ){
+	                $event_lang = $lang;
+	            }
+	        }
+	    }
+	    return $event_lang;
 	}
 }
 

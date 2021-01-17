@@ -76,7 +76,7 @@ function oa_create_custom_fields() {
 
 
 
-add_action( 'plugins_loaded', 'oa_location_fields', 410 );
+add_action( 'plugins_loaded', 'oa_location_fields', 10000 );
 function oa_location_fields() {
 	Container::make( 'term_meta', __( 'Openagenda data', 'wp-openagenda' ) )
 	         ->where( 'term_taxonomy', '=', 'openagenda_venue' )
@@ -84,3 +84,4 @@ function oa_location_fields() {
 		         Field::make( 'text', 'oa_location_uid', 'LocationUID' ),
 	         ) );
 }
+

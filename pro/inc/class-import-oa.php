@@ -7,6 +7,7 @@ use OpenAgenda\TEC\The_Event_Calendar;
 use OpenAgendaAPI\OpenAgendaApi;
 use function add_action;
 use function add_post_meta;
+use function add_term_meta;
 use function array_merge;
 use function array_push;
 use function curl_exec;
@@ -38,6 +39,7 @@ use function update_field;
 use function update_post_meta;
 use function update_term_meta;
 use function var_dump;
+use function wp_create_term;
 use function wp_get_post_terms;
 use function wp_insert_post;
 use function wp_insert_term;
@@ -220,11 +222,13 @@ class Import_OA {
 		}
 
 		if ( !empty( $agendas ) && is_array( $agendas ) ) {
-			foreach ( $agendas as $agenda ) {
+			foreach ( $agendas as $agenda_name => $agenda ) {
 				foreach ( $agenda['events'] as $events ) {
 
-					if ( is_null( $events['longDescription']['fr'] ) ) {
-						$events['longDescription']['fr'] = $events['description']['fr'];
+					$lang = $openagenda::get_event_lang($events);
+
+					if ( ! empty( $events['longDescription'][$lang] ) && is_null( $events['longDescription'][$lang] ) ) {
+						$events['longDescription'][$lang] = $events['description'][$lang];
 					}
 
 					if ( The_Event_Calendar::$tec_used ) {
@@ -272,17 +276,20 @@ class Import_OA {
 						$insert = The_Event_Calendar::create_event( $id, $events, $dates );
 
 					} else {
+						if ( empty( $events['longDescription'][$lang] ) ){
+							var_dump( $events['longDescription']);
+						}
 						$args = array(
 							'ID'             => $id,
-							'post_content'   => $events['longDescription']['fr'],
-							'post_title'     => $events['title']['fr'],
-							'post_excerpt'   => $events['description']['fr'],
+							'post_content'   => $events['longDescription'][$lang],
+							'post_title'     => $events['title'][$lang],
+							'post_excerpt'   => $events['description'][$lang],
 							'post_status'    => 'publish',
 							'post_type'      => 'openagenda-events',
 							'comment_status' => 'closed',
 							'ping_status'    => 'closed',
 							'meta_input'     => array(
-								'oa_conditions' => $events['conditions']['fr'],
+								'oa_conditions' => $events['conditions'][$lang],
 								'oa_event_uid'  => $events['uid'],
 								'oa_tools'      => $events['registrationUrl'],
 								'oa_min_age'    => $events['age']['min'],
@@ -294,7 +301,7 @@ class Import_OA {
 
 						$dates = update_field( 'field_5d50075c33c2d', $dates, $insert );
 						// insert Keywords
-						wp_set_post_terms( $insert, $events['keywords']['fr'], 'openagenda_keyword' );
+						wp_set_post_terms( $insert, $events['keywords'][$lang], 'openagenda_keyword' );
 
 						//Import Event UID
 						if ( ! empty( $events['uid'] ) ){
@@ -313,7 +320,13 @@ class Import_OA {
 					unset( $i );
 
 					// Insert Post Term venue
-					$venues    = $openagenda->get_venue__premium_only( $events['location']['uid'] );
+					$venues    = $openagenda->get_venue__premium_only( $events['locationUid'] );
+					if ( empty( $venues ) ) {
+						$create_term = wp_create_term( $events['locationName'], 'openagenda_venue' );
+						$add_meta    = add_term_meta( $create_term['term_id'], '_oa_location_uid',
+							$events['locationUid'] );
+						$venues      = $openagenda->get_venue__premium_only( $events['locationUid'] );
+					}
 					$venues_id = array();
 					foreach ( $venues as $venue ) {
 						array_push( $venues_id, $venue->term_id );
@@ -323,14 +336,17 @@ class Import_OA {
 					}
 
 					// insert origin Agenda
-					$agendas = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
-
+					$agendas = get_term_by( 'name', $agenda_name, 'openagenda_agenda' );
+					if ( empty( $agendas ) ) {
+						$create_term = wp_create_term( 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
+						$agendas     = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
+					}
 					if ( ! empty( $agendas ) ) {
 						wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
 					}
 
 					// insert post thumbnail
-					OpenAgendaApi::upload_thumbnail( $events['originalImage'], $insert, $events['title']['fr'] );
+					OpenAgendaApi::upload_thumbnail( $events['originalImage'], $insert, $events['title'][$lang] );
 					unset( $dates );
 				}
 			}
@@ -428,8 +444,8 @@ class Import_OA {
 					$max_age = get_post_meta( $event->ID, 'oa_max_age', true );
 
 					$age = array(
-						'min' => $min_age[0],
-						'max' => $max_age[0],
+						'min' => $min_age,
+						'max' => $max_age,
 					);
 
 					// get conditions
@@ -440,8 +456,9 @@ class Import_OA {
 
 					// retrieve locationUID
 					$locationuid = wp_get_post_terms( $event->ID, 'openagenda_venue' );
-					$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid' );
-
+					if ( ! empty( $locationuid ) ) {
+						$locationuid = get_term_meta( $locationuid[0]->term_id, '_oa_location_uid' );
+					}
 					// get start date
 					$dates = get_field( 'field_5d50075c33c2d', $event->ID );
 
@@ -452,6 +469,7 @@ class Import_OA {
 							$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
 							$i ++;
 						}
+						$data['timings'] = $timings;
 					}
 
 					//a11y
@@ -471,8 +489,9 @@ class Import_OA {
 							$locale => $conditions,
 						];
 					$data['registration']  = $registrations;
-					$data['locationUid']   = $locationuid[0];
-					$data['timings']       = $timings;
+					if ( ! empty( $locationuid ) ) {
+						$data['locationUid'] = $locationuid[0];
+					}
 
 					$imageLocalPath = null;
 
@@ -492,7 +511,7 @@ class Import_OA {
 						'access_token' => $accessToken,
 						'nonce'        => rand(),
 						'data'         => json_encode( $data ),
-						'lang'         => 'fr',
+						'lang'         => $lang,
 					);
 
 					if ( $imageLocalPath ) {
@@ -507,9 +526,11 @@ class Import_OA {
 					$decode = json_decode( $received_content, true );
 
 					// update event uid
-					$uid = intval( $decode['event']['uid'] );
-					if ( $uid ) {
-						add_post_meta( $event->ID, 'oa_event_uid', $uid );
+					if ( ! empty( $decode['event'] ) ) {
+						$uid = intval( $decode['event']['uid'] );
+						if ( $uid ) {
+							add_post_meta( $event->ID, 'oa_event_uid', $uid );
+						}
 					}
 				}
 
