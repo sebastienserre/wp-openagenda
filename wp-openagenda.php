@@ -79,7 +79,6 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/cpt.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/venues.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/keywords.php';
-		include_once OPENWP_PRO_PATH . 'inc/helpers.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/acf-fields.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/custom-fields.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'inc/agenda.php';
