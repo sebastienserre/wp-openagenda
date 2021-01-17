@@ -44,8 +44,8 @@ class Openagenda_WP_Main {
 
 		define( 'OPENWP_PRO_PATH', THFO_OPENWP_PLUGIN_PATH . 'pro/' );
 		define( 'OPENWP_PRO_URL', THFO_OPENWP_PLUGIN_URL . 'pro/' );
-		define( 'MY_ACF_PATH', OPENWP_PRO_PATH . '/3rd-party/acf/' );
-		define( 'MY_ACF_URL', OPENWP_PRO_URL . '/3rd-party/acf/' );
+		define( 'MY_ACF_PATH', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/acf/' );
+		define( 'MY_ACF_URL', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/acf/' );
 		register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
 		add_action( 'plugins_loaded', array( $this, 'openwp_load_pro_files__premium_only' ), 999 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'openwp_pro_load_style__premium_only' ) );
