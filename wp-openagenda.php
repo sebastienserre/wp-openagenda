@@ -76,7 +76,6 @@ class Openagenda_WP_Main {
 
 		include_once MY_ACF_PATH . 'acf.php';
 		include_once OPENWP_PRO_PATH . 'inc/class-the-event-calendar.php';
-		include_once OPENWP_PRO_PATH . 'admin/settings.php';
 		include_once OPENWP_PRO_PATH . 'inc/cpt.php';
 		include_once OPENWP_PRO_PATH . 'inc/venues.php';
 		include_once OPENWP_PRO_PATH . 'inc/keywords.php';
