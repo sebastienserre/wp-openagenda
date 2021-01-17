@@ -148,20 +148,20 @@ class Openagenda_WP_Main {
 
 	public
 	function openwp_register_script__premium_only() {
-		wp_register_script( 'dateOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/datepickerOA.js',
+		wp_register_script( 'dateOA', THFO_OPENWP_PLUGIN_URL . 'assets/js/datepickerOA.js',
 			array(
 				'jquery',
 				'jquery-ui-core',
 				'jquery-ui-datepicker',
 			)
 		);
-		wp_enqueue_style( 'openwp-pro', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/openwp-pro.css', array( 'slickthemecss' ) );
-		wp_register_script( 'IsotopeOA', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope.pkgd.min.js',
+		wp_enqueue_style( 'openwp-pro', THFO_OPENWP_PLUGIN_URL . 'assets/css/openwp-pro.css', array( 'slickthemecss' ) );
+		wp_register_script( 'IsotopeOA', THFO_OPENWP_PLUGIN_URL . 'assets/js/isotope.pkgd.min.js',
 			array(
 				'jquery',
 			)
 		);
-		wp_register_script( 'IsotopeInit', THFO_OPENWP_PLUGIN_URL . 'pro/assets/js/isotope-init.js',
+		wp_register_script( 'IsotopeInit', THFO_OPENWP_PLUGIN_URL . 'assets/js/isotope-init.js',
 			array(
 				'IsotopeOA',
 			)
@@ -177,7 +177,7 @@ class Openagenda_WP_Main {
 	 */
 	public
 	function openwp_pro_load_style__premium_only() {
-		wp_enqueue_style( 'jquery-ui-dp', THFO_OPENWP_PLUGIN_URL . 'pro/assets/css/jquery-ui.min.css' );
+		wp_enqueue_style( 'jquery-ui-dp', THFO_OPENWP_PLUGIN_URL . 'assets/css/jquery-ui.min.css' );
 	}
 }
 
