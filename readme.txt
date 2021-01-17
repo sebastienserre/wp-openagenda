@@ -75,14 +75,15 @@ create events in The Event Calendar.
 == Changelog ==
 
 = 2.0.8 -- 17 jan 2021 =
- - Add Donate Link => https://github.com/sponsors/sebastienserre/
+ - Add Donate Link => [https://github.com/sponsors/sebastienserre/](https://github.com/sponsors/sebastienserre/)
  - Correct several notices during Import (#4)
  - Venues are now registered if do not exist (#2)
  - Venues are well assigned to event (#2)
  - OpenAgenda custom fields are now correctly loaded
  - Assign correct Agenda to event (#5)
  - Add a changelog.md for old Changes
- - Add a Contributors.txt to credit OpenAgenda contributors (You can contribute by fixing issue or send PR to https://github.com/sebastienserre/wp-openagenda
+ - Add a Contributors.txt to credit OpenAgenda contributors (You can contribute by fixing issue or send PR on
+ [https://github.com/sebastienserre/wp-openagenda] Github
 
 = 2.0.7 -- 16 jan 2021 =
  - fix Importer. Event UID is now imported (#3)
