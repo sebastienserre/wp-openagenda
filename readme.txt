@@ -41,7 +41,7 @@ On WP 5.0 Use the new Gutenberg Blocks!
 * Yes! (one by widget, shortcode, gutenberg Block)
 
 = Where can I found help ?
-*  [Knowledge Base](https://docs.thivinfo.com/collection/5-openagenda-pour-wordpress)
+*  You can use WordPress forum to find help.
 
 = Where to report a bug ?
 * Please open an isssue on my [Github](https://github.com/sebastienserre/wp-openagenda/issues)
