@@ -85,13 +85,13 @@ class Openagenda_WP_Main {
 		include_once OPENWP_PRO_PATH . 'inc/agenda.php';
 		include_once OPENWP_PRO_PATH . 'widget/class-openagenda-main-widget.php';
 		include_once OPENWP_PRO_PATH . 'widget/class-openagenda-slider-widget.php';
-		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-embed-shortcode.php';
-		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagendaslidershortcode.php';
-		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-search-shortcode.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-embed-shortcode.php';
+		include_once THFO_OPENWP_PLUGIN_PATH. 'shortcodes/class-openagendaslidershortcode.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-search-shortcode.php';
 		include_once OPENWP_PRO_PATH . 'blocks/class-openwp-block-embed.php';
 		include_once OPENWP_PRO_PATH . 'blocks/class-openwp-agenda-list.php';
 		include_once OPENWP_PRO_PATH . 'inc/class-import-oa.php';
-		include_once OPENWP_PRO_PATH . 'shortcodes/class-openagenda-tec-shortcode.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-tec-shortcode.php';
 	}
 
 	/**
