@@ -271,7 +271,7 @@ function openwp_get_template_hierarchy( $template ) {
 	if ( $theme_file = locate_template( array( 'openagenda/' . $template ) ) ) {
 		$file = $theme_file;
 	} else {
-		$file = THFO_OPENWP_PLUGIN_PATH . '/pro/template/' . $template;
+		$file = THFO_OPENWP_PLUGIN_PATH . '/template/' . $template;
 	}
 
 	return apply_filters( 'rc_repl_template_' . $template, $file );

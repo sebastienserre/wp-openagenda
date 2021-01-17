@@ -1,7 +1,7 @@
 <?php
 /**
  * Template to display the list of event
- * used in wp-content/plugins/wp-openagenda/pro/blocks/class-openwp-agenda-list.php
+ * used in wp-content/plugins/wp-openagenda/blocks/class-openwp-agenda-list.php
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
