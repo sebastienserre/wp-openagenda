@@ -76,11 +76,20 @@ function oa_create_custom_fields() {
 
 
 
-add_action( 'plugins_loaded', 'oa_location_fields', 410 );
+add_action( 'plugins_loaded', 'oa_location_fields', 10000 );
 function oa_location_fields() {
 	Container::make( 'term_meta', __( 'Openagenda data', 'wp-openagenda' ) )
 	         ->where( 'term_taxonomy', '=', 'openagenda_venue' )
 	         ->add_fields( array(
 		         Field::make( 'text', 'oa_location_uid', 'LocationUID' ),
+	         ) );
+}
+
+add_action( 'plugins_loaded', 'oa_agenda_fields', 10000 );
+function oa_agenda_fields() {
+	Container::make( 'term_meta', __( 'Openagenda data', 'wp-openagenda' ) )
+	         ->where( 'term_taxonomy', '=', 'openagenda_agenda' )
+	         ->add_fields( array(
+		         Field::make( 'checkbox', 'oa_sync',__( 'Agenda to Synchronize', 'wp-openagenda' ) ),
 	         ) );
 }
