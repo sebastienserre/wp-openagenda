@@ -68,10 +68,10 @@ class Openagenda_WP_Main {
 	public
 	function openwp_load_pro_files__premium_only() {
 		if ( class_exists( 'Vc_Manager' ) ) {
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/openagenda-vc-main.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-vc-events.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-slider.php';
-			include_once THFO_OPENWP_PLUGIN_PATH . '/pro/vc/class-openagenda-search.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/openagenda-vc-main.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/class-vc-events.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/class-openagenda-slider.php';
+			include_once THFO_OPENWP_PLUGIN_PATH . '/vc/class-openagenda-search.php';
 		}
 
 		include_once MY_ACF_PATH . 'acf.php';
