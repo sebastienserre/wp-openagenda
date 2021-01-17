@@ -222,7 +222,7 @@ class Import_OA {
 		}
 
 		if ( !empty( $agendas ) && is_array( $agendas ) ) {
-			foreach ( $agendas as $agenda ) {
+			foreach ( $agendas as $agenda_name => $agenda ) {
 				foreach ( $agenda['events'] as $events ) {
 
 					$lang = $openagenda::get_event_lang($events);
@@ -336,8 +336,11 @@ class Import_OA {
 					}
 
 					// insert origin Agenda
-					$agendas = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
-
+					$agendas = get_term_by( 'name', $agenda_name, 'openagenda_agenda' );
+					if ( empty( $agendas ) ) {
+						$create_term = wp_create_term( 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
+						$agendas     = get_term_by( 'name', 'https://openagenda.com/' . $events['origin']['slug'], 'openagenda_agenda' );
+					}
 					if ( ! empty( $agendas ) ) {
 						wp_set_post_terms( $insert, $agendas->term_id, 'openagenda_agenda' );
 					}
