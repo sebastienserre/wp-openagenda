@@ -85,11 +85,3 @@ function oa_location_fields() {
 	         ) );
 }
 
-add_action( 'plugins_loaded', 'oa_agenda_fields', 10000 );
-function oa_agenda_fields() {
-	Container::make( 'term_meta', __( 'Openagenda data', 'wp-openagenda' ) )
-	         ->where( 'term_taxonomy', '=', 'openagenda_agenda' )
-	         ->add_fields( array(
-		         Field::make( 'checkbox', 'oa_sync',__( 'Agenda to Synchronize', 'wp-openagenda' ) ),
-	         ) );
-}
