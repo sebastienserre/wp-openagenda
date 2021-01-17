@@ -4,7 +4,8 @@ Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.0.7
+Stable tag: 2.0.8
+Donate link: https://github.com/sponsors/sebastienserre/
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -73,10 +74,20 @@ create events in The Event Calendar.
 
 == Changelog ==
 
-= 2.0.7 -- 26 jan 2021 =
+= 2.0.8 -- 17 jan 2021 =
+ - Add Donate Link => https://github.com/sponsors/sebastienserre/
+ - Correct several notices during Import (#4)
+ - Venues are now registered if do not exist (#2)
+ - Venues are well assigned to event (#2)
+ - OpenAgenda custom fields are now correctly loaded
+ - Assign correct Agenda to event (#5)
+ - Add a changelog.md for old Changes
+ - Add a Contributors.txt to credit OpenAgenda contributors (You can contribute by fixing issue or send PR to https://github.com/sebastienserre/wp-openagenda
+
+= 2.0.7 -- 16 jan 2021 =
  - fix Importer. Event UID is now imported (#3)
 
-= 2.0.5 -- 26 jan 2021 =
+= 2.0.5 -- 16 jan 2021 =
  - Improve import. Thanks to Diego Curyk
 
 = 2.0.0 -- 23/Fev/2020 =
