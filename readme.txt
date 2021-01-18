@@ -4,7 +4,7 @@ Tags: openagenda, agenda, events, calendar, the event calendar,
 Requires at least: 4.6
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 Donate link: https://github.com/sponsors/sebastienserre/
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -73,6 +73,9 @@ create events in The Event Calendar.
 9. Masonry layout
 
 == Changelog ==
+
+= 2.1.1 & 2.1.2 -- 18 jan 2021 =
+ - Correct 2 fatales errors :-/ (#9 & #10)
 
 = 2.1.0 -- 17 jan 2021 =
  - Reorganize code.
