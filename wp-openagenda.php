@@ -40,10 +40,9 @@ class Openagenda_WP_Main {
 		/**
 		 * Actions
 		 */
-		add_action( 'plugins_loaded', array( $this, 'thfo_openwp_load_files' ), 999 );
+		add_action( 'plugins_loaded', array( $this, 'thfo_openwp_load_files' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'thfo_openwp_load_style' ) );
 		add_action( 'admin_print_styles', array( $this, 'openwp_load_admin_style' ) );
-		add_action( 'plugins_loaded', array( $this, 'openwp_load' ), 400 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'openwp_pro_load_style__premium_only' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'openwp_register_script__premium_only' ) );
 
@@ -62,30 +61,24 @@ class Openagenda_WP_Main {
 	}
 
 	/**
-	 * Load Carbon-field v3
-	 */
-	public
-	function openwp_load() {
-		require_once THFO_OPENWP_PLUGIN_PATH . '3rd-party/vendor/autoload.php';
-		\Carbon_Fields\Carbon_Fields::boot();
-	}
-
-
-	/**
 	 * Include all files needed to the plugin work
 	 */
 	public
 	function thfo_openwp_load_files() {
 
+		require_once THFO_OPENWP_PLUGIN_PATH . '3rd-party/vendor/autoload.php';
+		\Carbon_Fields\Carbon_Fields::boot();
+
 		include_once THFO_OPENWP_CUST_INC . '1-helpers.php';
-		include_once MY_ACF_PATH . 'acf.php';
-		include_once THFO_OPENWP_CUST_INC . 'acf-fields.php';
+	//	include_once MY_ACF_PATH . 'acf.php';
+	//	include_once THFO_OPENWP_CUST_INC . 'acf-fields.php';
 		include_once THFO_OPENWP_CUST_INC . 'agenda.php';
 		include_once THFO_OPENWP_CUST_INC . 'categories.php';
-		include_once THFO_OPENWP_CUST_INC . 'class-import-oa.php';
+	//	include_once THFO_OPENWP_CUST_INC . 'class-import-oa.php'; //Deactivated => ACF needed
 		include_once THFO_OPENWP_CUST_INC . 'class-the-event-calendar.php';
-		include_once THFO_OPENWP_CUST_INC . 'cpt.php';
 		include_once THFO_OPENWP_CUST_INC . 'custom-fields.php';
+		include_once THFO_OPENWP_CUST_INC . 'cpt.php';
+
 		include_once THFO_OPENWP_CUST_INC . 'keywords.php';
 		include_once THFO_OPENWP_CUST_INC . 'venues.php';
 
