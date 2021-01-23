@@ -465,11 +465,17 @@ class Import_OA {
 					$i = 0;
 					if ( is_array( $dates ) ) {
 						foreach ( $dates as $date ) {
-							$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $date['begin'] );
-							$timings[ $i ]['end']   = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
+							if( !empty($date['begin'] ) ) {
+								$timings[ $i ]['begin'] = date( 'Y-m-d\TH:i:00+0200', $date['begin'] );
+							}
+							if( !empty($date['end'] ) ) {
+								$timings[ $i ]['end'] = date( 'Y-m-d\TH:i:00+0200', $date['end'] );
+							}
 							$i ++;
 						}
-						$data['timings'] = $timings;
+						if( !empty( $timings ) ) {
+							$data['timings'] = $timings;
+						}
 					}
 
 					//a11y
