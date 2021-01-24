@@ -86,7 +86,8 @@ class Openagenda_WP_Main {
 
 		include_once THFO_OPENWP_PLUGIN_PATH . 'admin/register-settings.php';
 
-		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagendaapi.php';
+		//include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagendaapi.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagenda.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagenda-wp-basic-widget.php';
 
 		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-shortcode.php';

@@ -7,6 +7,9 @@
  * @author  sebastienserre
  */
 
+
+use WPOpenAgenda\API\Openagenda;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
@@ -26,6 +29,7 @@ function thfo_openwp_add_menu() {
 function thfo_openwp_options_page() {
 	$tabs = array(
 		'general' => __( 'General', 'wp-openagenda' ),
+		'agendas' => __( 'Agendas', 'wp-openagenda' ),
 		'help'    => __( 'Help', 'wp-openagenda' ),
 	);
 	$tabs = apply_filters( 'openwp_settings_tabs', $tabs );
@@ -58,14 +62,18 @@ function thfo_openwp_options_page() {
 			<?php $active_tab = apply_filters( 'openwp_setting_active_tab', $active_tab ); ?>
 			<?php
 			switch ( $active_tab ) {
-				case 'general':
-                default:
-					settings_fields( 'openagenda-wp' );
-					do_settings_sections( 'openagenda-wp' );
-					break;
 				case 'help':
 					settings_fields( 'openagenda-wp-help' );
 					do_settings_sections( 'openagenda-wp-help' );
+					break;
+                case 'agendas':
+	                settings_fields( 'openagenda-wp-agenda' );
+	                do_settings_sections( 'openagenda-wp-agenda' );
+	                break;
+				case 'general':
+				default:
+					settings_fields( 'openagenda-wp' );
+					do_settings_sections( 'openagenda-wp' );
 					break;
 			}
 			submit_button( __( 'Save' ) );
@@ -86,6 +94,32 @@ function thfo_openwp_register_settings() {
 	add_settings_section( 'openagenda-wp', '', '', 'openagenda-wp' );
 	register_setting( 'openagenda-wp', 'openagenda_api' );
 	add_settings_field( 'openagenda-wp', __( 'API Openagenda', 'wp-openagenda' ), 'thfo_openwp_api', 'openagenda-wp', 'openagenda-wp' );
+
+	add_settings_section( 'openagenda-wp-agenda', 'OpenAgenda', '', 'openagenda-wp-agenda' );
+	register_setting( 'openagenda-wp-agenda', 'openagenda-wp-agenda' );
+	add_settings_field( 'openagenda-wp-agenda', __( 'Select the Agenda to use' , 'wp-openagenda' ),
+	'thfo_openwp_agenda',
+        'openagenda-wp-agenda', 'openagenda-wp-agenda' );
+
+}
+
+function thfo_openwp_agenda(){
+    $list = Openagenda::$instance->get_agendas_list();
+    $uid = Openagenda::$instance->agenda_uid;
+    ?>
+    <select name="openagenda-wp-agenda">
+        <option value="" ><?php _e( 'Choose your OpenAgenda', 'wp-openagenda' ); ?></option>
+        <?php
+        foreach ( $list as $agenda ){
+        ?>
+        <option value="<?php echo $agenda['uid'] ?>" <?php selected( $uid, $agenda['uid'], true ); ?> ><?php echo
+            $agenda['title'];
+        ?></option>
+            <?php
+        }
+            ?>
+    </select>
+    <?php
 }
 
 /**
