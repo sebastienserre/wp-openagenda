@@ -6,12 +6,16 @@ namespace WPOpenAgenda\API;
 use OpenAgendaAPI\OpenAgendaApi;
 use WP_Error;
 use function _e;
+use function array_diff;
 use function esc_url;
+use function get_locale;
 use function get_option;
 use function get_transient;
+use function is_wp_error;
 use function preg_match;
 use function printf;
 use function set_transient;
+use function substr;
 use function untrailingslashit;
 use function wp_remote_get;
 use function wp_remote_post;
@@ -56,7 +60,7 @@ class Openagenda {
 	public static $instance;
 
 	public function __construct() {
-		$this->api_url = 'https://api.openagenda.com/v2/';
+		$this->api_url = 'https://api.openagenda.com/';
 		$this->api_key = $this->get_api_key();
 		$this->api_secret = $this->get_secret_key();
 		$this->agenda_uid = $this->get_agenda_uid();
@@ -96,8 +100,10 @@ class Openagenda {
 	 */
 	public function get_api_key() {
 		$key = get_option( 'openagenda_api' );
-
-		return $key;
+		if ( ! empty( $key ) ) {
+			return $key;
+		}
+		return;
 	}
 
 	/**
@@ -110,6 +116,10 @@ class Openagenda {
 		$secret = get_option( 'openagenda_secret' );
 
 		return $secret;
+	}
+
+	public function get_post_type(){
+		return 'openagenda-events';
 	}
 
 	/**
@@ -136,6 +146,21 @@ class Openagenda {
 
 	}
 
+
+	public function get_event_lang( $event ){
+		if ( !empty( $event['description'] ) ){
+			$site_locale = get_locale();
+			$site_lang = substr( $site_locale, 0, 2 );
+			foreach ( $event['description'] as $lang => $description ){
+				$event_lang = $lang;
+				if ($lang === $site_lang ){
+					$event_lang = $lang;
+				}
+			}
+		}
+		return $event_lang;
+	}
+
 	/**
 	 * Retrieve access token to Openagenda data.
 	 *
@@ -154,7 +179,7 @@ class Openagenda {
 				),
 			);
 
-			$ch = wp_remote_post( $this->api_url, $args );
+			$ch = wp_remote_post( $this->api_url . '/v2/', $args );
 
 			if ( 200 === (int) wp_remote_retrieve_response_code( $ch ) ) {
 				$body         = wp_remote_retrieve_body( $ch );
@@ -175,11 +200,22 @@ class Openagenda {
 	}
 
 	public function get_agendas_list(){
-	    $list = $this->get_data(  "me/agendas?key=$this->api_key");
-	    if ( true === $list['success'] ){
+	    $list = $this->get_data(  "v2/me/agendas?key=$this->api_key");
+		if ( is_wp_error( $list ) ) {
+			$list = array();
+			return $list;
+		}
+	    if ( $list['success'] ){
 	        return $list['items'];
         }
-		return new WP_Error( 'OpenAgenda-no-agenda', 'Agenda list empty');
+
+	}
+
+	public function get_locations(){
+		$locations = $this->get_data( "agendas/$this->agenda_uid/locations&key=$this->api_key" );
+		foreach ( $locations as $location ){
+
+		}
 	}
 
 }
