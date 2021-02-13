@@ -72,9 +72,9 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_CUST_INC . '1-helpers.php';
 	//	include_once MY_ACF_PATH . 'acf.php';
 	//	include_once THFO_OPENWP_CUST_INC . 'acf-fields.php';
-		include_once THFO_OPENWP_CUST_INC . 'agenda.php';
+	//	include_once THFO_OPENWP_CUST_INC . 'agenda.php';
 		include_once THFO_OPENWP_CUST_INC . 'categories.php';
-	//	include_once THFO_OPENWP_CUST_INC . 'class-import-oa.php'; //Deactivated => ACF needed
+	//	include_once THFO_OPENWP_CUST_INC . 'class-import-oa.php'; // Deactivated => ACF needed
 		include_once THFO_OPENWP_CUST_INC . 'class-the-event-calendar.php';
 		include_once THFO_OPENWP_CUST_INC . 'custom-fields.php';
 		include_once THFO_OPENWP_CUST_INC . 'cpt.php';
@@ -88,6 +88,7 @@ class Openagenda_WP_Main {
 
 		//include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagendaapi.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagenda.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-import.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagenda-wp-basic-widget.php';
 
 		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-shortcode.php';
