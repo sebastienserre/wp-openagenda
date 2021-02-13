@@ -74,8 +74,7 @@ class Openagenda_WP_Main {
 	//	include_once THFO_OPENWP_CUST_INC . 'acf-fields.php';
 	//	include_once THFO_OPENWP_CUST_INC . 'agenda.php';
 		include_once THFO_OPENWP_CUST_INC . 'categories.php';
-	//	include_once THFO_OPENWP_CUST_INC . 'class-import-oa.php'; // Deactivated => ACF needed
-		include_once THFO_OPENWP_CUST_INC . 'class-the-event-calendar.php';
+	//	include_once THFO_OPENWP_CUST_INC . 'class-import-oa.php'; // Deactiv
 		include_once THFO_OPENWP_CUST_INC . 'custom-fields.php';
 		include_once THFO_OPENWP_CUST_INC . 'cpt.php';
 
