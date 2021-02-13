@@ -102,7 +102,7 @@ function openwp_launch_import_on_new_agenda( $term_id, $tt_id ) {
 	Import_OA::import_oa_events__premium_only( $agenda );
 }
 
-add_action( 'admin_init', 'openwp_sync_from_admin', 15000 );
+//add_action( 'admin_init', 'openwp_sync_from_admin', 15000 );
 /**
  * Import event from OpenAgenda when the link in admin is clicked (by admin)
  * @since 3.0.0
