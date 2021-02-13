@@ -58,12 +58,14 @@ function oa_create_custom_fields() {
 				              [
 					              Field::make( 'date_time', 'oa_start', __( 'start date', 'wp-openagenda' ) )
 					                   ->set_storage_format( 'U' )
+						              ->set_input_format( 'U', 'U' )
 					                   ->set_attribute( 'placeholder', __( 'Start date for this event', 'wp-openagenda' ) )
 					                   ->set_picker_options( [ 'allowInput' => false ] )
 					                   ->set_width( 50 )
 					                   ->set_required( true ),
 					              Field::make( 'date_time', 'oa_end', __( 'End date', 'wp-openagenda' ) )
 					                   ->set_storage_format( 'U' )
+						               ->set_input_format( 'U', 'U' )
 					                   ->set_attribute( 'placeholder', __( 'End date for this event', 'wp-openagenda' ) )
 					                   ->set_picker_options( [ 'allowInput' => false ] )
 					                   ->set_width( 50 )
@@ -71,7 +73,17 @@ function oa_create_custom_fields() {
 				              ]
 			              )
 		         )
-	         );
+	         )
+		->add_fields( array(
+				Field::make( 'complex', 'crb_complex', 'Complex' )
+				     ->add_fields( array(
+					     Field::make( 'text', 'oa_text', 'Text' ),
+					     Field::make( 'text', 'ob_text', 'Text' ),
+				     )
+				     )
+
+			)
+		);
 
 
 }
