@@ -1,7 +1,5 @@
 <?php
 
-use OpenAgenda\TEC\The_Event_Calendar;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
@@ -9,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Is The Event Calendar used ?
  */
-if ( ! function_exists( 'openagenda_event' ) && false === The_Event_Calendar::$tec_option ) {
+if ( ! function_exists( 'openagenda_event' ) ) {
 
 // Register Custom Post Type
 	function openagenda_event() {   
@@ -74,7 +72,7 @@ if ( ! function_exists( 'openagenda_event' ) && false === The_Event_Calendar::$t
 add_action( 'add_meta_boxes', 'oa_event_metabox' );
 function oa_event_metabox() {
 	global $post;
-	if ( 'openagenda-events' === get_post_type( $post->ID ) || 'tribe_events' === get_post_type( $post->ID ) || 'tribe_venue' === get_post_type( $post->ID ) ) {
+	if ( 'openagenda-events' === get_post_type( $post->ID ) ) {
 		add_meta_box( 'oa_event_id', 'OpenAgenda ID', 'oa_event_id', '', 'side', 'high' );
 	}
 }
