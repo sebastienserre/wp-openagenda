@@ -138,17 +138,10 @@ class Import {
 
 				$dates[] =
 					array(
-						'oa_start' =>
-							array(
-								'date_time' => '1611516541',
-							),
-						'oa_end'   =>
-							array(
-								'date_time' => '1611516800',
-							),
+						'_type' => 'date_time',
+						'oa_start' => '1611516541',
+						'oa_end'   => '1611516800',
 					);
-				carbon_set_post_meta( $insert, 'oa_event_date' . $i .'/date_time','1611516541' );
-				carbon_set_post_meta( $insert, 'oa_event_date' . $i .'/date_time','1611516541' );
 				$i++;
 			}
 			carbon_set_post_meta( $insert, 'oa_event_date', $dates );
