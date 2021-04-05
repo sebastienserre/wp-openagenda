@@ -136,13 +136,22 @@ class Import {
 				$end_timestamp = $end->getTimestamp();
 
 
-				$dates[$i]['oa_start'] = $start_timestamp;
-				$dates[$i]['oa_end'] = $end_timestamp;
-
-				carbon_set_post_meta( $insert, 'oa_event_date', $dates );
+			/*	$dates[]['date_time'] = $start_timestamp;
+				$dates[]['date_time'] = $end_timestamp;*/
+				$dates = array(
+					array(
+						/*'date_time' => 'oa_start',*/
+						'oa_start'  => $start_timestamp,
+					),
+					array(
+						/*'date_time' => 'oa_end',*/
+						'oa_end'  => $end_timestamp,
+					)
+				);
 
 				$i++;
 			}
+			carbon_set_post_meta( $insert, 'oa_event_date', $dates );
 		}
 	}
 
