@@ -136,25 +136,13 @@ class Import {
 				$end_timestamp = $end->getTimestamp();
 
 
-				$dates[] =
-					array(
-						'_type' => 'date_time',
-						'oa_start' => '1611516541',
-						'oa_end'   => '1611516800',
-					);
+				$dates[$i]['oa_start'] = $start_timestamp;
+				$dates[$i]['oa_end'] = $end_timestamp;
+
+				carbon_set_post_meta( $insert, 'oa_event_date', $dates );
+
 				$i++;
 			}
-			carbon_set_post_meta( $insert, 'oa_event_date', $dates );
-
-			$tests = array( 'foo', 'bar', 'test');
-			$text = array();
-			foreach ( $tests as $test ){
-				$text[] = array(
-					'oa_text' => $test,
-					'ob_text' => $test,
-				);
-			}
-			carbon_set_post_meta( $insert, 'crb_complex', $text );
 		}
 	}
 

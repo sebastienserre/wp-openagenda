@@ -17,7 +17,7 @@ class Parsedown
 {
     # ~
 
-    const version = '1.6.0';
+    const version = '1.7.4';
 
     # ~
 
@@ -420,7 +420,7 @@ class Parsedown
 
     protected function blockFencedCode($Line)
     {
-        if (preg_match('/^['.$Line['text'][0].']{3,}[ ]*([\w-]+)?[ ]*$/', $Line['text'], $matches))
+        if (preg_match('/^['.$Line['text'][0].']{3,}[ ]*([^`]+)?[ ]*$/', $Line['text'], $matches))
         {
             $Element = array(
                 'name' => 'code',
@@ -429,7 +429,21 @@ class Parsedown
 
             if (isset($matches[1]))
             {
-                $class = 'language-'.$matches[1];
+                /**
+                 * https://www.w3.org/TR/2011/WD-html5-20110525/elements.html#classes
+                 * Every HTML element may have a class attribute specified.
+                 * The attribute, if specified, must have a value that is a set
+                 * of space-separated tokens representing the various classes
+                 * that the element belongs to.
+                 * [...]
+                 * The space characters, for the purposes of this specification,
+                 * are U+0020 SPACE, U+0009 CHARACTER TABULATION (tab),
+                 * U+000A LINE FEED (LF), U+000C FORM FEED (FF), and
+                 * U+000D CARRIAGE RETURN (CR).
+                 */
+                $language = substr($matches[1], 0, strcspn($matches[1], " \t\n\f\r"));
+
+                $class = 'language-'.$language;
 
                 $Element['attributes'] = array(
                     'class' => $class,
@@ -569,6 +583,8 @@ class Parsedown
             {
                 $Block['li']['text'] []= '';
 
+                $Block['loose'] = true;
+
                 unset($Block['interrupted']);
             }
 
@@ -615,6 +631,22 @@ class Parsedown
 
             return $Block;
         }
+    }
+
+    protected function blockListComplete(array $Block)
+    {
+        if (isset($Block['loose']))
+        {
+            foreach ($Block['element']['text'] as &$li)
+            {
+                if (end($li['text']) !== '')
+                {
+                    $li['text'] []= '';
+                }
+            }
+        }
+
+        return $Block;
     }
 
     #
@@ -1019,7 +1051,7 @@ class Parsedown
     # ~
     #
 
-    public function line($text)
+    public function line($text, $nonNestables=array())
     {
         $markup = '';
 
@@ -1035,6 +1067,13 @@ class Parsedown
 
             foreach ($this->InlineTypes[$marker] as $inlineType)
             {
+                # check to see if the current inline type is nestable in the current context
+
+                if ( ! empty($nonNestables) and in_array($inlineType, $nonNestables))
+                {
+                    continue;
+                }
+
                 $Inline = $this->{'inline'.$inlineType}($Excerpt);
 
                 if ( ! isset($Inline))
@@ -1054,6 +1093,13 @@ class Parsedown
                 if ( ! isset($Inline['position']))
                 {
                     $Inline['position'] = $markerPosition;
+                }
+
+                # cause the new element to 'inherit' our non nestables
+
+                foreach ($nonNestables as $non_nestable)
+                {
+                    $Inline['element']['nonNestables'][] = $non_nestable;
                 }
 
                 # the text that comes before the inline
@@ -1214,6 +1260,7 @@ class Parsedown
         $Element = array(
             'name' => 'a',
             'handler' => 'line',
+            'nonNestables' => array('Url', 'Link'),
             'text' => null,
             'attributes' => array(
                 'href' => null,
@@ -1442,17 +1489,41 @@ class Parsedown
             }
         }
 
+        $permitRawHtml = false;
+
         if (isset($Element['text']))
+        {
+            $text = $Element['text'];
+        }
+        // very strongly consider an alternative if you're writing an
+        // extension
+        elseif (isset($Element['rawHtml']))
+        {
+            $text = $Element['rawHtml'];
+            $allowRawHtmlInSafeMode = isset($Element['allowRawHtmlInSafeMode']) && $Element['allowRawHtmlInSafeMode'];
+            $permitRawHtml = !$this->safeMode || $allowRawHtmlInSafeMode;
+        }
+
+        if (isset($text))
         {
             $markup .= '>';
 
+            if (!isset($Element['nonNestables']))
+            {
+                $Element['nonNestables'] = array();
+            }
+
             if (isset($Element['handler']))
             {
-                $markup .= $this->{$Element['handler']}($Element['text']);
+                $markup .= $this->{$Element['handler']}($text, $Element['nonNestables']);
+            }
+            elseif (!$permitRawHtml)
+            {
+                $markup .= self::escape($text, true);
             }
             else
             {
-                $markup .= self::escape($Element['text'], true);
+                $markup .= $text;
             }
 
             $markup .= '</'.$Element['name'].'>';
