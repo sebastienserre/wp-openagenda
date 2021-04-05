@@ -73,18 +73,7 @@ function oa_create_custom_fields() {
 				              ]
 			              )
 		         )
-	         )
-		->add_fields( array(
-				Field::make( 'complex', 'crb_complex', 'Complex' )
-				     ->add_fields( array(
-					     Field::make( 'text', 'oa_text', 'Text' ),
-					     Field::make( 'text', 'ob_text', 'Text' ),
-				     )
-				     )
-
-			)
-		);
-
+	         );
 
 }
 
