@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '29725de7535a44ae40f736ccfed984510233735a',
+    'reference' => '83a794fcc925b6cd506c3c097ad3d37794a38a5f',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,16 @@
       'aliases' => 
       array (
       ),
-      'reference' => '29725de7535a44ae40f736ccfed984510233735a',
+      'reference' => '83a794fcc925b6cd506c3c097ad3d37794a38a5f',
+    ),
+    'composer/installers' => 
+    array (
+      'pretty_version' => 'v1.11.0',
+      'version' => '1.11.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ae03311f45dfe194412081526be2e003960df74b',
     ),
     'erusev/parsedown' => 
     array (
@@ -29,14 +38,28 @@
       ),
       'reference' => 'cb17b6477dfff935958ba01325f2e8a2bfa6dab3',
     ),
-    'htmlburger/carbon-fields' => 
+    'roundcube/plugin-installer' => 
     array (
-      'pretty_version' => 'v3.3.0',
-      'version' => '3.3.0.0',
+      'replaced' => 
+      array (
+        0 => '*',
+      ),
+    ),
+    'shama/baton' => 
+    array (
+      'replaced' => 
+      array (
+        0 => '*',
+      ),
+    ),
+    'wpackagist-plugin/advanced-custom-fields' => 
+    array (
+      'pretty_version' => '5.9.5',
+      'version' => '5.9.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '1a3fa2c50f3e25775ff3846c22fab2384312d96a',
+      'reference' => 'tags/5.9.5',
     ),
   ),
 );

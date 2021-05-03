@@ -67,15 +67,15 @@ class Openagenda_WP_Main {
 	function thfo_openwp_load_files() {
 
 		require_once THFO_OPENWP_PLUGIN_PATH . '3rd-party/vendor/autoload.php';
-		\Carbon_Fields\Carbon_Fields::boot();
+		/*\Carbon_Fields\Carbon_Fields::boot();*/
 
 		include_once THFO_OPENWP_CUST_INC . '1-helpers.php';
 	//	include_once MY_ACF_PATH . 'acf.php';
-	//	include_once THFO_OPENWP_CUST_INC . 'acf-fields.php';
+		include_once THFO_OPENWP_CUST_INC . 'acf-fields.php';
 	//	include_once THFO_OPENWP_CUST_INC . 'agenda.php';
 		include_once THFO_OPENWP_CUST_INC . 'categories.php';
 	//	include_once THFO_OPENWP_CUST_INC . 'class-import-oa.php'; // Deactiv
-		include_once THFO_OPENWP_CUST_INC . 'custom-fields.php';
+	//	include_once THFO_OPENWP_CUST_INC . 'custom-fields.php';
 		include_once THFO_OPENWP_CUST_INC . 'cpt.php';
 
 		include_once THFO_OPENWP_CUST_INC . 'keywords.php';
@@ -99,10 +99,10 @@ class Openagenda_WP_Main {
 
 		include_once THFO_OPENWP_PLUGIN_PATH . '3rd-party/vendor/erusev/parsedown/Parsedown.php';
 
-		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-basicblock.php';
+		/*include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-basicblock.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-mainagendablock.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-openwp-block-embed.php';
-		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-openwp-agenda-list.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-openwp-agenda-list.php';*/
 
 		include_once THFO_OPENWP_PLUGIN_PATH . 'views/main-agenda.php';
 

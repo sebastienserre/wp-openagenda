@@ -1,6 +1,16 @@
 {
     "require": {
-        "htmlburger/carbon-fields": "@stable",
-        "erusev/parsedown": "@stable"
-    }
+        "erusev/parsedown": "@stable",
+        "wpackagist-plugin/advanced-custom-fields":"^5.9.5"
+    },
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org",
+            "only": [
+                "wpackagist-plugin/*",
+                "wpackagist-theme/*"
+            ]
+        }
+    ]
 }
