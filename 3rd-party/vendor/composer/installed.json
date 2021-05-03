@@ -225,7 +225,7 @@
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "homepage": "https://wordpress.org/plugins/advanced-custom-fields/",
-            "install-path": "../../wp-content/plugins/advanced-custom-fields"
+            "install-path": "../advanced-custom-fields"
         }
     ],
     "dev": true,
