@@ -35,7 +35,7 @@ class Openagenda_WP_Main {
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
 		define( 'THFO_OPENWP_CUST_INC', THFO_OPENWP_PLUGIN_PATH . 'inc/' );
 		define( 'MY_ACF_PATH', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/advanced-custom-fields/' );
-		define( 'MY_ACF_URL', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/vendor/advanced-custom-fields/' );
+		define( 'MY_ACF_URL', THFO_OPENWP_PLUGIN_URL . '/3rd-party/vendor/advanced-custom-fields/' );
 
 		/**
 		 * Actions
@@ -66,16 +66,11 @@ class Openagenda_WP_Main {
 	public
 	function thfo_openwp_load_files() {
 
-		require_once THFO_OPENWP_PLUGIN_PATH . '3rd-party/vendor/autoload.php';
-		/*\Carbon_Fields\Carbon_Fields::boot();*/
-
 		include_once THFO_OPENWP_CUST_INC . '1-helpers.php';
 		include_once MY_ACF_PATH . 'acf.php';
-		include_once THFO_OPENWP_CUST_INC . 'acf-fields.php';
 	//	include_once THFO_OPENWP_CUST_INC . 'agenda.php';
 		include_once THFO_OPENWP_CUST_INC . 'categories.php';
 	//	include_once THFO_OPENWP_CUST_INC . 'class-import-oa.php'; // Deactiv
-	//	include_once THFO_OPENWP_CUST_INC . 'custom-fields.php'; // carbon fields
 		include_once THFO_OPENWP_CUST_INC . 'cpt.php';
 
 		include_once THFO_OPENWP_CUST_INC . 'keywords.php';
@@ -87,6 +82,7 @@ class Openagenda_WP_Main {
 
 		//include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagendaapi.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagenda.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-acf.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-import.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'class/class-openagenda-wp-basic-widget.php';
 
