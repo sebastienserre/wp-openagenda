@@ -15,6 +15,7 @@ class acf {
 // list of field group IDs
 	private $groups = array(
 		'group_5d5e7d9037572',
+		'group_609051be4e22b',
 	);
 
 	public function __construct() {

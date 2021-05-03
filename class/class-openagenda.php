@@ -60,7 +60,7 @@ class Openagenda {
 	public static $instance;
 
 	public function __construct() {
-		$this->api_url = 'https://api.openagenda.com/';
+		$this->api_url = 'https://api.openagenda.com/v2/';
 		$this->api_key = $this->get_api_key();
 		$this->api_secret = $this->get_secret_key();
 		$this->agenda_uid = $this->get_agenda_uid();
@@ -179,7 +179,7 @@ class Openagenda {
 				),
 			);
 
-			$ch = wp_remote_post( $this->api_url . '/v2/', $args );
+			$ch = wp_remote_post( $this->api_url, $args );
 
 			if ( 200 === (int) wp_remote_retrieve_response_code( $ch ) ) {
 				$body         = wp_remote_retrieve_body( $ch );
@@ -188,8 +188,9 @@ class Openagenda {
 			} else {
 				$this->errors[] = $ch;
 			}
-
-			$token        = $decoded_body['access_token'];
+			if ( !empty($decoded_body['access_token'] ) ) {
+				$token = $decoded_body['access_token'];
+			}
 			set_transient( 'openagenda_secret', $decoded_body['access_token'], $decoded_body['expires_in'] );
 		} else {
 			$token = $transient;
@@ -200,7 +201,7 @@ class Openagenda {
 	}
 
 	public function get_agendas_list(){
-	    $list = $this->get_data(  "v2/me/agendas?key=$this->api_key");
+	    $list = $this->get_data(  "me/agendas?key=$this->api_key");
 		if ( is_wp_error( $list ) ) {
 			$list = array();
 			return $list;
@@ -210,6 +211,14 @@ class Openagenda {
         }
 
 	}
+
+	public function export_locations( $term_id ){
+		$url = $this->api_url . 'agendas/' . $this->agenda_uid . '/locations';
+		$data = array(
+			'name' => '',
+			'address'=> ''
+		);
+ 	}
 
 	public function get_locations(){
 		$locations = $this->get_data( "agendas/$this->agenda_uid/locations&key=$this->api_key" );
