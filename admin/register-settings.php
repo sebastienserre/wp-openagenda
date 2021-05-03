@@ -45,7 +45,7 @@ function thfo_openwp_options_page() {
 	$class = 'wrap-premium';
 
 	?>
-	<div class="wrap <?php echo $class ?>">
+	<div class="wrap <?php echo $class; ?>">
 		<h3><?php echo esc_html( get_admin_page_title() . ' ' . THFO_OPENWP_VERSION ); ?></h3>
 		<?php settings_errors(); ?>
 
@@ -54,8 +54,12 @@ function thfo_openwp_options_page() {
 			foreach ( $tabs as $tab => $value ) {
 				?>
 				<a href="<?php echo esc_url( admin_url( 'options-general.php?page=openagenda-settings&tab=' . $tab ) ); ?>"
-				   class="nav-tab <?php echo 'nav-tab-' . $tab;
-				   echo $active_tab === $tab ? ' nav-tab-active' : ''; ?>"><?php echo $value ?></a>
+				   class="nav-tab 
+				   <?php
+					echo 'nav-tab-' . $tab;
+					echo $active_tab === $tab ? ' nav-tab-active' : '';
+					?>
+				   "><?php echo $value; ?></a>
 			<?php } ?>
 		</h2>
 		<form method="post" action="options.php">
@@ -66,10 +70,10 @@ function thfo_openwp_options_page() {
 					settings_fields( 'openagenda-wp-help' );
 					do_settings_sections( 'openagenda-wp-help' );
 					break;
-                case 'agendas':
-	                settings_fields( 'openagenda-wp-agenda' );
-	                do_settings_sections( 'openagenda-wp-agenda' );
-	                break;
+				case 'agendas':
+					settings_fields( 'openagenda-wp-agenda' );
+					do_settings_sections( 'openagenda-wp-agenda' );
+					break;
 				case 'general':
 				default:
 					settings_fields( 'openagenda-wp' );
@@ -79,10 +83,10 @@ function thfo_openwp_options_page() {
 			submit_button( __( 'Save' ) );
 			?>
 		</form>
-        <?php do_action( 'openagenda_after_settings' );?>
+		<?php do_action( 'openagenda_after_settings' ); ?>
 	</div>
 	<?php
-    do_action( 'openagenda_after_settings_wrap' );
+	do_action( 'openagenda_after_settings_wrap' );
 }
 
 add_action( 'admin_init', 'thfo_openwp_register_settings' );
@@ -97,29 +101,35 @@ function thfo_openwp_register_settings() {
 
 	add_settings_section( 'openagenda-wp-agenda', 'OpenAgenda', '', 'openagenda-wp-agenda' );
 	register_setting( 'openagenda-wp-agenda', 'openagenda-wp-agenda' );
-	add_settings_field( 'openagenda-wp-agenda', __( 'Select the Agenda to use' , 'wp-openagenda' ),
-	'thfo_openwp_agenda',
-        'openagenda-wp-agenda', 'openagenda-wp-agenda' );
+	add_settings_field(
+		'openagenda-wp-agenda',
+		__( 'Select the Agenda to use', 'wp-openagenda' ),
+		'thfo_openwp_agenda',
+		'openagenda-wp-agenda',
+		'openagenda-wp-agenda'
+	);
 
 }
 
-function thfo_openwp_agenda(){
-    $list = Openagenda::$instance->get_agendas_list();
-    $uid = Openagenda::$instance->agenda_uid;
-    ?>
-    <select name="openagenda-wp-agenda">
-        <option value="" ><?php _e( 'Choose your OpenAgenda', 'wp-openagenda' ); ?></option>
-        <?php
-        foreach ( $list as $agenda ){
-        ?>
-        <option value="<?php echo $agenda['uid'] ?>" <?php selected( $uid, $agenda['uid'], true ); ?> ><?php echo
-            $agenda['title'];
-        ?></option>
-            <?php
-        }
-            ?>
-    </select>
-    <?php
+function thfo_openwp_agenda() {
+	$list = Openagenda::$instance->get_agendas_list();
+	$uid  = Openagenda::$instance->agenda_uid;
+	?>
+	<select name="openagenda-wp-agenda">
+		<option value=""><?php _e( 'Choose your OpenAgenda', 'wp-openagenda' ); ?></option>
+		<?php
+		foreach ( $list as $agenda ) {
+			?>
+			<option value="<?php echo $agenda['uid']; ?>" <?php selected( $uid, $agenda['uid'], true ); ?> >
+									  <?php
+										echo $agenda['title'];
+										?>
+				</option>
+			<?php
+		}
+		?>
+	</select>
+	<?php
 }
 
 /**
@@ -138,12 +148,18 @@ function thfo_openwp_api() {
 function thfo_openwp_help() {
 
 	$support_link = 'https://www.thivinfo.com/soumettre-un-ticket/';
-	$support      = sprintf( wp_kses( __( 'If you encounter a bug, you can leave me a ticket on <a href="%1$s" target="_blank">Thivinfo.com</a>', 'wp-openagenda' ), array(
-		'a' => array(
-			'href'   => array(),
-			'target' => array()
-		)
-	) ), esc_url( $support_link ) );
+	$support      = sprintf(
+		wp_kses(
+			__( 'If you encounter a bug, you can leave me a ticket on <a href="%1$s" target="_blank">Thivinfo.com</a>', 'wp-openagenda' ),
+			array(
+				'a' => array(
+					'href'   => array(),
+					'target' => array(),
+				),
+			)
+		),
+		esc_url( $support_link )
+	);
 	?>
 	<p><?php _e( 'Welcome on the support center', 'wp-openagenda' ); ?></p>
 	<p><?php echo $support; ?></p>
@@ -156,8 +172,8 @@ function thfo_openwp_help() {
 <h2>' . __( 'Discover Our Pro Version', 'wp-openagenda' ) . '</h2>
 <p>' . __( 'Easy display all OpenAgenda Widget without any code to copy/past! Configure and that\'s it', 'wp-openagenda' ) . '</p>';
 		echo '<p><a class="upgrade_button" href="' . openagenda_fs()->get_upgrade_url() . '">' .
-		     __( 'Upgrade Now!', 'wp-openagenda' ) .
-		     '</a></p>';
+			 __( 'Upgrade Now!', 'wp-openagenda' ) .
+			 '</a></p>';
 		echo '
 	</section>';
 	}
@@ -170,46 +186,46 @@ function thfo_openwp_stars() {
 	$output = ob_start();
 	?>
 	<div class="openwp-stars">
-        <span id="openwp-footer-credits">
-                <span class="dashicons dashicons-wordpress"></span>
-	        <?php _e( "Love OpenAgenda for WordPress ? Don't forget to rate it 5 stars!", "wp-openagenda" ) ?>
+		<span id="openwp-footer-credits">
+				<span class="dashicons dashicons-wordpress"></span>
+			<?php _e( "Love OpenAgenda for WordPress ? Don't forget to rate it 5 stars!", 'wp-openagenda' ); ?>
 
-	        <span class="wporg-ratings rating-stars">
-                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=1#postform" data-rating="1"
-                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
-                                                      style="color:#FFDE24 !important;"></span></a>
-                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=2#postform" data-rating="2"
-                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
-                                                      style="color:#FFDE24 !important;"></span></a>
-                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=3#postform" data-rating="3"
-                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
-                                                      style="color:#FFDE24 !important;"></span></a>
-                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=4#postform" data-rating="4"
-                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
-                                                      style="color:#FFDE24 !important;"></span></a>
-                    <a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=5#postform" data-rating="5"
-                       title="" target="_blank"><span class="dashicons dashicons-star-filled"
-                                                      style="color:#FFDE24 !important;"></span></a>
-                </span>
-                <script>
-                    jQuery(document).ready(function ($) {
-                        $(".rating-stars").find("a").hover(
-                            function () {
-                                $(this).nextAll("a").children("span").removeClass("dashicons-star-filled").addClass("dashicons-star-empty");
-                                $(this).prevAll("a").children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
-                                $(this).children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
-                            }, function () {
-                                var rating = $("input#rating").val();
-                                if (rating) {
-                                    var list = $(".rating-stars a");
-                                    list.children("span").removeClass("dashicons-star-filled").addClass("dashicons-star-empty");
-                                    list.slice(0, rating).children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
-                                }
-                            }
-                        );
-                    });
-                </script>
-            </span>
+			<span class="wporg-ratings rating-stars">
+					<a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=1#postform" data-rating="1"
+					   title="" target="_blank"><span class="dashicons dashicons-star-filled"
+													  style="color:#FFDE24 !important;"></span></a>
+					<a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=2#postform" data-rating="2"
+					   title="" target="_blank"><span class="dashicons dashicons-star-filled"
+													  style="color:#FFDE24 !important;"></span></a>
+					<a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=3#postform" data-rating="3"
+					   title="" target="_blank"><span class="dashicons dashicons-star-filled"
+													  style="color:#FFDE24 !important;"></span></a>
+					<a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=4#postform" data-rating="4"
+					   title="" target="_blank"><span class="dashicons dashicons-star-filled"
+													  style="color:#FFDE24 !important;"></span></a>
+					<a href="//wordpress.org/support/view/plugin-reviews/wp-openagenda?rate=5#postform" data-rating="5"
+					   title="" target="_blank"><span class="dashicons dashicons-star-filled"
+													  style="color:#FFDE24 !important;"></span></a>
+				</span>
+				<script>
+					jQuery(document).ready(function ($) {
+						$(".rating-stars").find("a").hover(
+							function () {
+								$(this).nextAll("a").children("span").removeClass("dashicons-star-filled").addClass("dashicons-star-empty");
+								$(this).prevAll("a").children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
+								$(this).children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
+							}, function () {
+								var rating = $("input#rating").val();
+								if (rating) {
+									var list = $(".rating-stars a");
+									list.children("span").removeClass("dashicons-star-filled").addClass("dashicons-star-empty");
+									list.slice(0, rating).children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
+								}
+							}
+						);
+					});
+				</script>
+			</span>
 	</div>
 	<?php
 	return ob_get_clean();
@@ -218,7 +234,7 @@ function thfo_openwp_stars() {
 /**
  * Add Credit to this Plugins.
  */
-add_action( 'openagenda_after_settings', 'thfo_openwp_credits');
+add_action( 'openagenda_after_settings', 'thfo_openwp_credits' );
 function thfo_openwp_credits() {
 	?>
 	<p>
@@ -250,30 +266,35 @@ function openwp_pro_register_settings() {
 
 	register_setting( 'openagenda-wp', 'openagenda_secret' );
 	add_settings_field( 'openagenda-wp-secret', __( 'Secret Key Openagenda', 'wp-openagenda' ), 'openwp_oa_secret', 'openagenda-wp', 'openagenda-wp' );
-	add_settings_field( 'openagenda-wp-sync', __( 'Force Import', 'wp-openagenda' ), 'openwp_oa_sync', 'openagenda-wp',
-		'openagenda-wp' );
+	add_settings_field(
+		'openagenda-wp-sync',
+		__( 'Force Import', 'wp-openagenda' ),
+		'openwp_oa_sync',
+		'openagenda-wp',
+		'openagenda-wp'
+	);
 
 }
 
 function openwp_oa_sync() {
 	$url = wp_nonce_url(
 		add_query_arg(
-			[
+			array(
 				'oaimport' => 'now',
-			],
+			),
 			admin_url()
 		),
 		'force_sync',
 		'_wpnonce'
 	);
 	?>
-    <a href="<?php echo esc_url( $url ); ?>"><?php esc_attr_e( 'Import Agenda Now', 'wp-openagenda' ); ?></a>
+	<a href="<?php echo esc_url( $url ); ?>"><?php esc_attr_e( 'Import Agenda Now', 'wp-openagenda' ); ?></a>
 	<?php
 }
 
 function openwp_oa_secret() {
 	?>
-    <input type="text" name="openagenda_secret" value="<?php echo esc_html( get_option( 'openagenda_secret' ) ); ?>"/>
+	<input type="text" name="openagenda_secret" value="<?php echo esc_html( get_option( 'openagenda_secret' ) ); ?>"/>
 	<?php
 	$allowed_html = array(
 		'a' => array(
@@ -283,12 +304,14 @@ function openwp_oa_secret() {
 		'p' => array(),
 
 	);
-	$link         = antispambot( 'support@openagenda.com' );
-	$body         = __( 'Hello, Could you please activate my Secret Key ?', 'wp-openagenda' );
-	$url          = 'mailto:' . $link . '?subject=' . __( 'Secret Key Activation', 'wp-openagenda' ) . '&body=' . $body; ?>
-	<?php // translators: Add the OpenAGenda URL.
+	$link = antispambot( 'support@openagenda.com' );
+	$body = __( 'Hello, Could you please activate my Secret Key ?', 'wp-openagenda' );
+	$url  = 'mailto:' . $link . '?subject=' . __( 'Secret Key Activation', 'wp-openagenda' ) . '&body=' . $body;
 	?>
-    <p><?php printf( wp_kses( __( 'Send a mail to <a href="%s" >OpenAgenda</a>, and ask them to activate your secret key.', 'wp-openagenda' ), $allowed_html ), esc_url( $url ) ); ?></p>
+	<?php
+	// translators: Add the OpenAGenda URL.
+	?>
+	<p><?php printf( wp_kses( __( 'Send a mail to <a href="%s" >OpenAgenda</a>, and ask them to activate your secret key.', 'wp-openagenda' ), $allowed_html ), esc_url( $url ) ); ?></p>
 	<?php
 	do_action( 'openagenda_after_secret' );
 }
