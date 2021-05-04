@@ -94,6 +94,7 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_PLUGIN_PATH . 'shortcodes/class-openagenda-tec-shortcode.php';
 
 		include_once THFO_OPENWP_PLUGIN_PATH . '3rd-party/vendor/erusev/parsedown/Parsedown.php';
+		include_once THFO_OPENWP_PLUGIN_PATH . '3rd-party/vendor/acf-openstreetmap-field/index.php';
 
 		/*include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-basicblock.php';
 		include_once THFO_OPENWP_PLUGIN_PATH . 'blocks/class-mainagendablock.php';
