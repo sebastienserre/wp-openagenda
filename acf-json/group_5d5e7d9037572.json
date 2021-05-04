@@ -333,9 +333,9 @@
             "sub_fields": [
                 {
                     "key": "field_5d61787c65c27",
-                    "label": "Début",
+                    "label": "Starting day",
                     "name": "begin",
-                    "type": "date_time_picker",
+                    "type": "date_picker",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -344,15 +344,15 @@
                         "class": "",
                         "id": ""
                     },
-                    "display_format": "d\/m\/Y H:i:s",
-                    "return_format": "U",
+                    "display_format": "d\/m\/Y",
+                    "return_format": "d\/m\/Y",
                     "first_day": 1
                 },
                 {
                     "key": "field_5d61789f65c28",
-                    "label": "End",
+                    "label": "ending day",
                     "name": "end",
-                    "type": "date_time_picker",
+                    "type": "date_picker",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -361,9 +361,41 @@
                         "class": "",
                         "id": ""
                     },
-                    "display_format": "d\/m\/Y H:i:s",
-                    "return_format": "U",
+                    "display_format": "d\/m\/Y",
+                    "return_format": "d\/m\/Y",
                     "first_day": 1
+                },
+                {
+                    "key": "field_6091242831743",
+                    "label": "Starting hour",
+                    "name": "starting_hour",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a"
+                },
+                {
+                    "key": "field_6091243f31744",
+                    "label": "Ending hour",
+                    "name": "ending_hour",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a"
                 }
             ]
         }
@@ -385,5 +417,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1620066525
+    "modified": 1620124753
 }

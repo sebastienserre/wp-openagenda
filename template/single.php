@@ -4,8 +4,8 @@
  * To customize it, you can sopy it to your-theme/openagenda/single.php
  */
 
-$condition = carbon_get_the_post_meta( 'oa_conditions' );
-$tool      = carbon_get_the_post_meta( 'oa_tools' );
+$condition = get_field( 'oa_conditions' );
+$tool      = get_field( 'oa_tools' );
 get_header();
 
 ?>

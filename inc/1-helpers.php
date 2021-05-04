@@ -38,47 +38,47 @@ function openwp_generate_css( $block ) {
 
 	ob_start();
 
-	if ( ! empty($block['openagenda_masonry'] ) && true !== $block['openagenda_masonry'] ) {
+	if ( ! empty( $block['openagenda_masonry'] ) && true !== $block['openagenda_masonry'] ) {
 		?>
-		.main_openagenda {
-		display: grid;
-		grid-template-columns: repeat(<?php echo $block['nb_events_per_line'] ?>, auto);
-		grid-gap: 10px 20px;
-		}
+        .main_openagenda {
+        display: grid;
+        grid-template-columns: repeat(<?php echo $block['nb_events_per_line'] ?>, auto);
+        grid-gap: 10px 20px;
+        }
 		<?php
 	} else { ?>
-		.openagenda_event.openagenda_masonry {
-		float: left;
-		width: calc( <?php echo $width ?>% - 10px );
-		margin: 0 5px 10px 5px;
-		}
+        .openagenda_event.openagenda_masonry {
+        float: left;
+        width: calc( <?php echo $width ?>% - 10px );
+        margin: 0 5px 10px 5px;
+        }
 		<?php
 	}
 	?>
-	.openagenda_when {
-	background: <?php echo $openagenda_date_background; ?>;
-	color: <?php echo $openagenda_date_color; ?>;
-	}
-	.openagenda_when p {
-	text-align: center;
-	}
-	.openagenda_event {
-	background: <?php echo $openagenda_description_background ?>;
-	color: <?php echo $openagenda_description_color ?>;
-	}
-	.openagenda_event p,
-	.openagenda_event h3{
-	margin: 0;
-	}
+    .openagenda_when {
+    background: <?php echo $openagenda_date_background; ?>;
+    color: <?php echo $openagenda_date_color; ?>;
+    }
+    .openagenda_when p {
+    text-align: center;
+    }
+    .openagenda_event {
+    background: <?php echo $openagenda_description_background ?>;
+    color: <?php echo $openagenda_description_color ?>;
+    }
+    .openagenda_event p,
+    .openagenda_event h3{
+    margin: 0;
+    }
 
-	.openagenda_description,
-	.openagenda_meta{
-	padding: 10px;
-	}
+    .openagenda_description,
+    .openagenda_meta{
+    padding: 10px;
+    }
 
-	.openagenda_event_image {
-	text-align: center;
-	}
+    .openagenda_event_image {
+    text-align: center;
+    }
 	<?php
 	$css = ob_get_clean();
 
@@ -89,9 +89,11 @@ add_action( 'created_openagenda_agenda', 'openwp_launch_import_on_new_agenda', 1
 
 /**
  * Import event from OpenAgenda when an agenda is added
+ *
  * @param $term_id
  * @param $tt_id
- * @since 3.0.0
+ *
+ * @since   3.0.0
  * @authors sebastienserre
  * @package OpenAgenda\Import
  */
@@ -105,7 +107,8 @@ function openwp_launch_import_on_new_agenda( $term_id, $tt_id ) {
 //add_action( 'admin_init', 'openwp_sync_from_admin', 15000 );
 /**
  * Import event from OpenAgenda when the link in admin is clicked (by admin)
- * @since 3.0.0
+ *
+ * @since   3.0.0
  * @authors sebastienserre
  * @package OpenAgenda\Import
  */
@@ -119,10 +122,11 @@ function openwp_sync_from_admin() {
 
 /**
  * Display the Event Date
+ *
  * @param $id post_id.
  *
  * @return string Date formated
- * @since 3.0.0
+ * @since   3.0.0
  * @authors sebastienserre
  * @package OpenAgenda\Import
  */
@@ -133,22 +137,18 @@ function openwp_display_date( $id ) {
 		return;
 	}
 
-	$dates = get_field( 'oa_date', $id );
+	$dates   = get_field( 'oa_date', $id );
+	$startts = strtotime( $dates['begin'] );
+	$endts   = strtotime( '05/31/2021' );
 
 	if ( empty( $dates ) ) {
 		$msg = __( 'No date for this event!', 'wp-openagenda' );
 	}
 
-	foreach ( $dates as $date ) {
-		$msg .= sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $date['begin'] ),
-			date_i18n( 'd F Y G\Hi', $date['end'] ) );
-	}
-	if ( ! empty( $start ) && ! empty( $end ) ) {
+	$msg = sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), $dates['begin'], $dates['end'] );
 
-
-		if ( $start === $end ) {
-			$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
-		}
+	if ( $dates['end'] === $dates['begin'] ) {
+		$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $dates['begin'] );
 	}
 
 	return $msg;
@@ -156,10 +156,11 @@ function openwp_display_date( $id ) {
 
 /**
  * Display the attendee age
+ *
  * @param $id post_id
  *
  * @return string formated age
- * @since 3.0.0
+ * @since   3.0.0
  * @authors sebastienserre
  * @package OpenAgenda\Import
  */
@@ -188,15 +189,16 @@ function openwp_display_age( $id ) {
 
 /**
  * Display the Event Accessibility
+ *
  * @param int $id Ebent ID
  *
  * @return mixed|void
- * @since 3.0.0
+ * @since   3.0.0
  * @authors sebastienserre
  * @package OpenAgenda\Import
  */
 function openwp_display_accessibilty( $id ) {
-	$a11y = carbon_get_post_meta( $id, 'oa_a11y' );
+	$a11y = get_field( 'oa_a11y', $id );
 	if ( ! empty( $a11y ) ) {
 		ob_start();
 	}
@@ -237,7 +239,8 @@ function openwp_display_accessibilty( $id ) {
 
 	/**
 	 * Filters the A11y HTML Markup
-	 * @since 3.0.0
+	 *
+	 * @since   3.0.0
 	 * @authors sebastienserre
 	 * @package OpenAgenda\Import
 	 */
@@ -277,10 +280,11 @@ function openwp_get_template_hierarchy( $template ) {
 	return apply_filters( 'rc_repl_template_' . $template, $file );
 }
 
-function MediaFileAlreadyExists($filename){
+function MediaFileAlreadyExists( $filename ) {
 	global $wpdb;
 	$query = "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_value LIKE '%/$filename'";
-	return ($wpdb->get_var($query)  > 0) ;
+
+	return ( $wpdb->get_var( $query ) > 0 );
 }
 
 function oa_age() {
@@ -294,20 +298,21 @@ function oa_age() {
 	return $age;
 }
 
-add_filter( 'manage_tribe_events_posts_columns', 'openwp_add_column', 10,1);
-add_filter( 'manage_tribe_venue_posts_columns', 'openwp_add_column', 10,1);
+add_filter( 'manage_tribe_events_posts_columns', 'openwp_add_column', 10, 1 );
+add_filter( 'manage_tribe_venue_posts_columns', 'openwp_add_column', 10, 1 );
 function openwp_add_column( $columns ) {
 	$columns['oa'] = 'OpenAgenda ID';
+
 	return $columns;
 }
 
-add_action( 'manage_tribe_events_posts_custom_column' , 'openwp_oa_id', 10, 2 );
-add_action( 'manage_tribe_venue_posts_custom_column' , 'openwp_oa_id', 10, 2 );
-function openwp_oa_id( $column, $post_id ){
-	switch ( $column ){
+add_action( 'manage_tribe_events_posts_custom_column', 'openwp_oa_id', 10, 2 );
+add_action( 'manage_tribe_venue_posts_custom_column', 'openwp_oa_id', 10, 2 );
+function openwp_oa_id( $column, $post_id ) {
+	switch ( $column ) {
 		case 'oa':
 			$id = get_post_meta( $post_id, '_oa_event_uid', true );
-			if ( ! empty( $id ) ){
+			if ( ! empty( $id ) ) {
 				echo $id;
 			} else {
 				_e( 'Not saved to OpenAgenda', 'wp-openagenda' );

@@ -16,6 +16,7 @@ class acf {
 	private $groups = array(
 		'group_5d5e7d9037572',
 		'group_609051be4e22b',
+		'group_60911dad385cd',
 	);
 
 	public function __construct() {
