@@ -74,7 +74,7 @@ class Openagenda_WP_Main {
 		include_once THFO_OPENWP_CUST_INC . 'cpt.php';
 
 		include_once THFO_OPENWP_CUST_INC . 'keywords.php';
-		include_once THFO_OPENWP_CUST_INC . 'venues.php';
+		include_once THFO_OPENWP_CUST_INC . 'locations.php';
 
 
 

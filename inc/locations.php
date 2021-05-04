@@ -73,7 +73,7 @@ function oa_venue_metabox() {
 
 function oa_venue_id() {
 	global $post;
-	$event_id = get_post_meta( $post->ID, 'oa_venue_uid', true );
+	$event_id = get_post_meta( $post->ID, 'oa_location_uid', true );
 	if ( $event_id ){
 		echo '<p>' . $event_id . '</p>';
 	}

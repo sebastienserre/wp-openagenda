@@ -92,7 +92,7 @@ class Openagenda {
 		self::$instance   = $this;
 
 		add_action( 'admin_init', array( $this, 'get_agendas_list' ) );
-		add_action( 'save_post_venue', array( $this, 'export_locations' ), 10, 3 );
+		add_action( 'save_post_venue', array( $this, 'export_location' ), 10, 3 );
 	}
 
 	/**
@@ -262,14 +262,18 @@ class Openagenda {
 
 	}
 
-	public function export_locations( $post_ID, $post, $update ) {
-		$url          = $this->api_url . 'agendas/' . $this->agenda_uid . '/locations';
+	public function export_location( $post_ID, $post, $update ) {
+		$location_uid = get_post_meta( $post_ID, 'oa_location_uid', true);
+		$url          = $this->api_url . 'agendas/' . $this->agenda_uid . '/locations/';
+		if( ! empty( $location_uid ) ){
+			$url = $url . $location_uid;
+		}
 
 		$fields       = get_fields( $post_ID );
 		$country = nominatim()->get_country_code( $fields['oa_loc_address']['center_lat'], $fields['oa_loc_address']['center_lng'] );
 		$data         = array(
-			'uid' =>'',
-			'name'      => esc_attr( $post->post_name ),
+			'uid' => $location_uid,
+			'name'      => esc_attr( $post->post_title ),
 			'address'   => esc_attr( $fields['oa_loc_address']['address'] ),
 			'latitude'  => esc_attr( $fields['oa_loc_address']['center_lat'] ),
 			'longitude' => esc_attr( $fields['oa_loc_address']['center_lng'] ),
@@ -278,7 +282,7 @@ class Openagenda {
 		);
 		$venue = $this->export_data( $url, $data );
 		if ( false !== $venue ) {
-			update_post_meta( $post_ID, 'oa_venue_uid', $venue );
+			update_post_meta( $post_ID, 'oa_location_uid', $venue );
 		}
 	}
 
