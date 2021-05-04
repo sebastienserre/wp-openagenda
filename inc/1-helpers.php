@@ -40,45 +40,46 @@ function openwp_generate_css( $block ) {
 
 	if ( ! empty( $block['openagenda_masonry'] ) && true !== $block['openagenda_masonry'] ) {
 		?>
-        .main_openagenda {
-        display: grid;
-        grid-template-columns: repeat(<?php echo $block['nb_events_per_line'] ?>, auto);
-        grid-gap: 10px 20px;
-        }
+		.main_openagenda {
+		display: grid;
+		grid-template-columns: repeat(<?php echo $block['nb_events_per_line']; ?>, auto);
+		grid-gap: 10px 20px;
+		}
 		<?php
-	} else { ?>
-        .openagenda_event.openagenda_masonry {
-        float: left;
-        width: calc( <?php echo $width ?>% - 10px );
-        margin: 0 5px 10px 5px;
-        }
+	} else {
+		?>
+		.openagenda_event.openagenda_masonry {
+		float: left;
+		width: calc( <?php echo $width; ?>% - 10px );
+		margin: 0 5px 10px 5px;
+		}
 		<?php
 	}
 	?>
-    .openagenda_when {
-    background: <?php echo $openagenda_date_background; ?>;
-    color: <?php echo $openagenda_date_color; ?>;
-    }
-    .openagenda_when p {
-    text-align: center;
-    }
-    .openagenda_event {
-    background: <?php echo $openagenda_description_background ?>;
-    color: <?php echo $openagenda_description_color ?>;
-    }
-    .openagenda_event p,
-    .openagenda_event h3{
-    margin: 0;
-    }
+	.openagenda_when {
+	background: <?php echo $openagenda_date_background; ?>;
+	color: <?php echo $openagenda_date_color; ?>;
+	}
+	.openagenda_when p {
+	text-align: center;
+	}
+	.openagenda_event {
+	background: <?php echo $openagenda_description_background; ?>;
+	color: <?php echo $openagenda_description_color; ?>;
+	}
+	.openagenda_event p,
+	.openagenda_event h3{
+	margin: 0;
+	}
 
-    .openagenda_description,
-    .openagenda_meta{
-    padding: 10px;
-    }
+	.openagenda_description,
+	.openagenda_meta{
+	padding: 10px;
+	}
 
-    .openagenda_event_image {
-    text-align: center;
-    }
+	.openagenda_event_image {
+	text-align: center;
+	}
 	<?php
 	$css = ob_get_clean();
 
@@ -203,7 +204,7 @@ function openwp_display_accessibilty( $id ) {
 		ob_start();
 	}
 	?>
-    <div class="oa-a11y">
+	<div class="oa-a11y">
 		<?php
 		foreach ( $a11y as $access ) {
 			switch ( $access ) {
@@ -225,14 +226,16 @@ function openwp_display_accessibilty( $id ) {
 
 			}
 			?>
-            <p class="oa-a11y-details oa-<?php echo $access ?>"><?php echo $name
-				?></p>
+			<p class="oa-a11y-details oa-<?php echo $access; ?>">
+													<?php
+													echo $name
+													?>
+				</p>
 			<?php
 		}
 
-
 		?>
-    </div>
+	</div>
 
 	<?php
 	$a11y = ob_get_clean();
@@ -260,9 +263,14 @@ function openwp_choose_template( $template ) {
 	}
 
 	// Else use custom template
-	if ( is_single() ) {
+	if ( is_singular( 'openagenda-events' ) ) {
 		return openwp_get_template_hierarchy( 'single' );
 	}
+	if ( is_post_type_archive( 'openagenda-events' ) ) {
+		return openwp_get_template_hierarchy( 'archive' );
+	}
+
+	return $template;
 }
 
 function openwp_get_template_hierarchy( $template ) {
@@ -298,27 +306,6 @@ function oa_age() {
 	return $age;
 }
 
-add_filter( 'manage_tribe_events_posts_columns', 'openwp_add_column', 10, 1 );
-add_filter( 'manage_tribe_venue_posts_columns', 'openwp_add_column', 10, 1 );
-function openwp_add_column( $columns ) {
-	$columns['oa'] = 'OpenAgenda ID';
-
-	return $columns;
-}
-
-add_action( 'manage_tribe_events_posts_custom_column', 'openwp_oa_id', 10, 2 );
-add_action( 'manage_tribe_venue_posts_custom_column', 'openwp_oa_id', 10, 2 );
-function openwp_oa_id( $column, $post_id ) {
-	switch ( $column ) {
-		case 'oa':
-			$id = get_post_meta( $post_id, '_oa_event_uid', true );
-			if ( ! empty( $id ) ) {
-				echo $id;
-			} else {
-				_e( 'Not saved to OpenAgenda', 'wp-openagenda' );
-			}
-	}
-}
 
 /**
  * @param $msg
@@ -330,9 +317,45 @@ function openwp_oa_id( $column, $post_id ) {
 function openwp_debug( $msg ) {
 	$bt     = debug_backtrace();
 	$caller = array_shift( $bt );
-	$msg    .= ' on ' . $caller['file'] . ':' . $caller['line'];
+	$msg   .= ' on ' . $caller['file'] . ':' . $caller['line'];
 	if ( ! defined( 'WP_DEBUG' ) && true !== WP_DEBUG ) {
 		return;
 	}
 	error_log( $msg );
+}
+
+function get_venue_data( $event_id ) {
+	$event_venue = get_field( 'oa_event_venues', $event_id );
+
+	return get_field( 'oa_loc_address', $event_venue[0] );
+}
+
+function display_map( $event_id ) {
+	$venue_data = get_venue_data( $event_id );
+	?>
+	<div id="mapid" style="height: 400px">
+		<div class="marker" data-url="<?php the_permalink(); ?>"
+			 data-title='<h3><a href="{{{PHP2}}}" rel="bookmark"><?php the_title(); ?></a></h3>'
+			 data-lat="<?php echo $venue_data['lat']; ?>"
+			 data-lng="<?php echo $venue_data['lng']; ?>">
+		</div>
+	</div>
+	<script>
+		jQuery(function ($) {
+			var map = L.map('mapid').setView([ <?php echo $venue_data['lat']; ?>,  <?php echo $venue_data['lng']; ?>], <?php echo $venue_data['zoom']; ?>);
+			L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+				attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
+				subdomains: 'abcd',
+				maxZoom: 19,
+			}).addTo(map);
+			$('.marker').each(function () {
+				var lat = $(this).attr('data-lat');
+				var lng = $(this).attr('data-lng');
+				var name = $(this).attr('data-title');
+				var marker = new L.marker([lat, lng]).bindPopup(name).addTo(map);
+			});
+		});
+
+	</script>
+	<?php
 }

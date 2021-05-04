@@ -121,6 +121,12 @@ class Openagenda_WP_Main {
 	public
 	function thfo_openwp_load_style() {
 		wp_enqueue_style( 'openwp', THFO_OPENWP_PLUGIN_URL . 'assets/css/openwp.css' );
+
+		if ( is_singular( 'openagenda-events' ) ) {
+			wp_enqueue_style( 'leaflet-style', THFO_OPENWP_PLUGIN_URL . 'assets/js/leaflet/leaflet.css' );
+			wp_enqueue_script( 'leaflet-js', THFO_OPENWP_PLUGIN_URL . 'assets/js/leaflet/leaflet.js', array( 'jquery' ), '1.0', true );
+			wp_enqueue_script( 'leaflet-init', THFO_OPENWP_PLUGIN_URL . 'assets/js/osm-event.js', array( 'jquery', 'leaflet-js' ), '1.0', true );
+		}
 	}
 
 	/**

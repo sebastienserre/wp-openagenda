@@ -10,6 +10,8 @@ use function add_action;
 use function array_diff;
 use function esc_attr;
 use function esc_url;
+use function function_exists;
+use function get_field;
 use function get_fields;
 use function get_locale;
 use function get_option;
@@ -249,5 +251,10 @@ class Openagenda {
 	}
 
 }
-
 new Openagenda();
+
+if ( ! function_exists( 'openagenda' ) ) {
+	function openagenda() {
+		return openagenda::$instance;
+	}
+}
