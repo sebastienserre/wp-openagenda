@@ -8,6 +8,11 @@ use WP_Error;
 use function _e;
 use function add_action;
 use function array_diff;
+use function curl_close;
+use function curl_exec;
+use function curl_init;
+use function curl_setopt;
+use function curl_setopt_array;
 use function esc_attr;
 use function esc_url;
 use function function_exists;
@@ -19,13 +24,28 @@ use function get_transient;
 use function is_wp_error;
 use function preg_match;
 use function printf;
+use function rand;
 use function set_transient;
 use function substr;
 use function untrailingslashit;
+use function update_post_meta;
+use function var_dump;
 use function wp_remote_get;
 use function wp_remote_post;
 use function wp_remote_retrieve_body;
 use function wp_remote_retrieve_response_code;
+use function WPOpenAgenda\Nominatim\nominatim;
+use const CURL_HTTP_VERSION_1_1;
+use const CURLOPT_CUSTOMREQUEST;
+use const CURLOPT_ENCODING;
+use const CURLOPT_FOLLOWLOCATION;
+use const CURLOPT_HTTP_VERSION;
+use const CURLOPT_MAXREDIRS;
+use const CURLOPT_POST;
+use const CURLOPT_POSTFIELDS;
+use const CURLOPT_RETURNTRANSFER;
+use const CURLOPT_TIMEOUT;
+use const CURLOPT_URL;
 use const PREG_OFFSET_CAPTURE;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -178,34 +198,17 @@ class Openagenda {
 	 */
 	public function get_acces_token() {
 		$transient = get_transient( 'openagenda_secret' );
+
 		if ( empty( $transient ) ) {
 			$url  = $this->api_url . 'requestAccessToken';
-			$curl = curl_init();
-
-			curl_setopt_array(
-				$curl,
-				array(
-					CURLOPT_URL            => $url,
-					CURLOPT_RETURNTRANSFER => true,
-					CURLOPT_ENCODING       => '',
-					CURLOPT_MAXREDIRS      => 10,
-					CURLOPT_TIMEOUT        => 0,
-					CURLOPT_FOLLOWLOCATION => true,
-					CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-					CURLOPT_CUSTOMREQUEST  => 'POST',
-					CURLOPT_POSTFIELDS     => array(
-						'code'       => $this->api_secret,
-						'grant_type' => 'authorization_code',
-					),
-				)
+			$payload = array(
+				'code'       => $this->api_secret,
+				'grant_type' => 'authorization_code',
 			);
 
-			$response = curl_exec( $curl );
+			$decoded_body = $this->oa_remote_post( $url, $payload);
 
-			curl_close( $curl );
-
-			if ( ! empty( $response ) ) {
-				$decoded_body = json_decode( $response, true );
+			if ( ! empty( $decoded_body ) ) {
 				$token        = $decoded_body[ access_token ];
 				$expire       = $decoded_body['expires_in'] - 1;
 				set_transient( 'openagenda_secret', $token, $expire );
@@ -216,6 +219,34 @@ class Openagenda {
 
 		return $token;
 
+	}
+
+	public function oa_remote_post( $url, $payload ){
+		$curl = curl_init();
+
+		curl_setopt_array(
+			$curl,
+			array(
+				CURLOPT_URL            => $url,
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING       => '',
+				CURLOPT_MAXREDIRS      => 10,
+				CURLOPT_TIMEOUT        => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST  => 'POST',
+				CURLOPT_POSTFIELDS     => $payload,
+			)
+		);
+
+		$response = curl_exec( $curl );
+
+		curl_close( $curl );
+
+		if ( ! empty( $response ) ) {
+			$decoded_body = json_decode( $response, true );
+			return $decoded_body;
+		}
 	}
 
 	public function get_agendas_list() {
@@ -233,14 +264,46 @@ class Openagenda {
 
 	public function export_locations( $post_ID, $post, $update ) {
 		$url          = $this->api_url . 'agendas/' . $this->agenda_uid . '/locations';
-		$access_token = $this->get_acces_token();
+
 		$fields       = get_fields( $post_ID );
+		$country = nominatim()->get_country_code( $fields['oa_loc_address']['center_lat'], $fields['oa_loc_address']['center_lng'] );
 		$data         = array(
+			'uid' =>'',
 			'name'      => esc_attr( $post->post_name ),
 			'address'   => esc_attr( $fields['oa_loc_address']['address'] ),
 			'latitude'  => esc_attr( $fields['oa_loc_address']['center_lat'] ),
 			'longitude' => esc_attr( $fields['oa_loc_address']['center_lng'] ),
+			'countryCode' => $country,
+
 		);
+		$venue = $this->export_data( $url, $data );
+		if ( false !== $venue ) {
+			update_post_meta( $post_ID, 'oa_venue_uid', $venue );
+		}
+	}
+
+	public function export_data( $url, $data ) {
+		$access_token = $this->get_acces_token();
+		$posted       = array(
+			'access_token' => $access_token,
+			'nonce'        => rand(),
+			'data'         => json_encode( $data ),
+		);
+		$ch = curl_init();
+
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
+
+		$received_content = curl_exec( $ch );
+
+		$decode = json_decode( $received_content, true );
+		if ( true === $decode['success'] ){
+			$uid = $decode['location']['uid'];
+			return $uid;
+		}
+		return false;
 	}
 
 	public function get_locations() {

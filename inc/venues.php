@@ -62,3 +62,19 @@ if ( ! function_exists('venues') ) {
 	add_action( 'init', 'venues', 0 );
 
 }
+
+add_action( 'add_meta_boxes', 'oa_venue_metabox' );
+function oa_venue_metabox() {
+	global $post;
+	if ( 'venue' === get_post_type( $post->ID ) ) {
+		add_meta_box( 'oa_event_id', 'UID', 'oa_venue_id', '', 'side', 'high' );
+	}
+}
+
+function oa_venue_id() {
+	global $post;
+	$event_id = get_post_meta( $post->ID, 'oa_venue_uid', true );
+	if ( $event_id ){
+		echo '<p>' . $event_id . '</p>';
+	}
+}

@@ -324,12 +324,27 @@ function openwp_debug( $msg ) {
 	error_log( $msg );
 }
 
+/**
+ * @param $event_id
+ *
+ * @return mixed
+ * @author  sebastien
+ * @package wp-openagenda
+ * @since   2.2.0
+ */
 function get_venue_data( $event_id ) {
 	$event_venue = get_field( 'oa_event_venues', $event_id );
 
 	return get_field( 'oa_loc_address', $event_venue[0] );
 }
 
+/**
+ * @param $event_id
+ *
+ * @author  sebastien
+ * @package wp-openagenda
+ * @since   2.2.0
+ */
 function display_map( $event_id ) {
 	$venue_data = get_venue_data( $event_id );
 	?>
