@@ -5,33 +5,24 @@ namespace WPOpenAgenda\API;
 
 use OpenAgendaAPI\OpenAgendaApi;
 use WP_Error;
-use function _e;
 use function add_action;
-use function array_diff;
 use function curl_close;
 use function curl_exec;
 use function curl_init;
 use function curl_setopt;
 use function curl_setopt_array;
 use function esc_attr;
-use function esc_url;
 use function function_exists;
-use function get_field;
 use function get_fields;
 use function get_locale;
 use function get_option;
+use function get_post_meta;
 use function get_transient;
 use function is_wp_error;
-use function preg_match;
-use function printf;
-use function rand;
 use function set_transient;
 use function substr;
-use function untrailingslashit;
 use function update_post_meta;
-use function var_dump;
 use function wp_remote_get;
-use function wp_remote_post;
 use function wp_remote_retrieve_body;
 use function wp_remote_retrieve_response_code;
 use function WPOpenAgenda\Nominatim\nominatim;
@@ -46,7 +37,6 @@ use const CURLOPT_POSTFIELDS;
 use const CURLOPT_RETURNTRANSFER;
 use const CURLOPT_TIMEOUT;
 use const CURLOPT_URL;
-use const PREG_OFFSET_CAPTURE;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -290,7 +280,7 @@ class Openagenda {
 		$access_token = $this->get_acces_token();
 		$posted       = array(
 			'access_token' => $access_token,
-			'nonce'        => rand(),
+			'nonce'        => wp_rand(),
 			'data'         => json_encode( $data ),
 		);
 		$ch = curl_init();
