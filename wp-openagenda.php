@@ -43,7 +43,7 @@ class Openagenda_WP_Main {
 		add_action( 'plugins_loaded', array( $this, 'load_files' ) );
 	}
 
-	function define_constant(){
+	public function define_constant(){
 		/**
 		 * Define Constant
 		 */
@@ -56,7 +56,7 @@ class Openagenda_WP_Main {
 		define( 'MY_ACF_URL', THFO_OPENWP_PLUGIN_URL . '/3rd-party/vendor/advanced-custom-fields/' );
 	}
 
-	function load_files(){
+	public function load_files(){
 		$files = scandir( THFO_OPENWP_CUST_INC );
 
 		//Load files
@@ -69,5 +69,5 @@ class Openagenda_WP_Main {
 
 }
 
-$openagenda = new Openagenda_WP_Main();
+new Openagenda_WP_Main();
 
