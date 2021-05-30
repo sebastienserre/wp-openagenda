@@ -1,0 +1,139 @@
+{
+    "key": "group_609051be4e22b",
+    "title": "Lieu",
+    "fields": [
+        {
+            "center_lat": 53.5507112,
+            "center_lng": 10.0006485,
+            "zoom": 12,
+            "key": "field_60905324041ed",
+            "label": "Address",
+            "name": "oa_loc_address",
+            "type": "open_street_map",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "raw",
+            "layers": [
+                "OpenStreetMap.Mapnik"
+            ],
+            "allow_map_layers": 1,
+            "height": 400,
+            "max_markers": ""
+        },
+        {
+            "key": "field_6090549b041ee",
+            "label": "Access",
+            "name": "oa_loc_access",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_609054c7d1841",
+            "label": "Image Credits",
+            "name": "oa_loc_image_credits",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_609054f130dcc",
+            "label": "Website",
+            "name": "oa_loc_website",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_6090550730dcd",
+            "label": "E-Mail",
+            "name": "oa_loc_e-mail",
+            "type": "email",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_60905547ea913",
+            "label": "Phone",
+            "name": "oa_loc_phone",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "venue"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1620244481
+}
