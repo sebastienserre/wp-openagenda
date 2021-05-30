@@ -8,7 +8,9 @@
  */
 
 
-use WPOpenAgenda\API\Openagenda;
+use Cassandra\Varint;
+use Openagenda\OpenAgenda\Openagenda;
+use function Openagenda\Location\Import\OA_Import_locations;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -133,8 +135,11 @@ function thfo_openwp_register_settings() {
 }
 
 function thfo_openwp_agenda() {
-	$list = Openagenda::$instance->get_agendas_list();
-	$uid  = Openagenda::$instance->agenda_uid;
+
+    $list = OpenAgenda()->get_agendas_list();
+	$uid  = Openagenda()->agenda_uid;
+	$test = OA_Import_locations()->insert_location();
+	var_dump( $test );
 	?>
 	<select name="openagenda-wp-agenda">
 		<option value=""><?php _e( 'Choose your OpenAgenda', 'wp-openagenda' ); ?></option>
@@ -241,7 +246,7 @@ function thfo_openwp_stars() {
 									var list = $(".rating-stars a");
 									list.children("span").removeClass("dashicons-star-filled").addClass("dashicons-star-empty");
 									list.slice(0, rating).children("span").removeClass("dashicons-star-empty").addClass("dashicons-star-filled");
-								}
+    								}
 							}
 						);
 					});
