@@ -11,18 +11,26 @@ use function curl_exec;
 use function curl_init;
 use function curl_setopt;
 use function curl_setopt_array;
+use function delete_transient;
 use function esc_attr;
 use function function_exists;
 use function get_fields;
 use function get_locale;
 use function get_option;
+use function get_post;
 use function get_post_meta;
 use function get_transient;
+use function implode;
 use function is_wp_error;
+use function self_admin_url;
 use function set_transient;
 use function substr;
+use function update_field;
 use function update_post_meta;
+use function var_dump;
+use function wp_rand;
 use function wp_remote_get;
+use function wp_remote_post;
 use function wp_remote_retrieve_body;
 use function wp_remote_retrieve_response_code;
 use function WPOpenAgenda\Nominatim\nominatim;
@@ -47,7 +55,7 @@ class Openagenda {
 	/**
 	 * OpenAgenda API URL
 	 */
-	private $api_url;
+	public $api_url;
 
 	/**
 	 * OpenAgenda API Key
@@ -75,11 +83,12 @@ class Openagenda {
 	public static $instance;
 
 	public function __construct() {
-		$this->api_url    = 'https://api.openagenda.com/v2/';
-		$this->api_key    = $this->get_api_key();
-		$this->api_secret = $this->get_secret_key();
-		$this->agenda_uid = $this->get_agenda_uid();
-		self::$instance   = $this;
+		self::$instance     = $this;
+		$this->api_url      = 'https://api.openagenda.com/v2/';
+		$this->api_key      = $this->get_api_key();
+		$this->api_secret   = $this->get_secret_key();
+		$this->agenda_uid   = $this->get_agenda_uid();
+		$this->access_token = $this->get_acces_token();
 
 		add_action( 'admin_init', array( $this, 'get_agendas_list' ) );
 		add_action( 'save_post_venue', array( $this, 'export_location' ), 10, 3 );
@@ -136,10 +145,6 @@ class Openagenda {
 		return $secret;
 	}
 
-	public function get_post_type() {
-		return 'openagenda-events';
-	}
-
 	/**
 	 * Retrieve data from OpenAgenda.com through API
 	 *
@@ -152,8 +157,12 @@ class Openagenda {
 	 */
 
 	public function get_data( $args ) {
-		$url      = $this->api_url . $args;
-		$response = wp_remote_get( $this->api_url . $args );
+		$response = wp_remote_get( $this->api_url . $args, array(
+			'headers' => array(
+				'access-token' => $this->access_token,
+				'nonce' => wp_rand(),
+			)
+		));
 		if ( 200 === (int) wp_remote_retrieve_response_code( $response ) ) {
 			$body         = wp_remote_retrieve_body( $response );
 			$decoded_body = json_decode( $body, true );
@@ -190,17 +199,17 @@ class Openagenda {
 		$transient = get_transient( 'openagenda_secret' );
 
 		if ( empty( $transient ) ) {
-			$url  = $this->api_url . 'requestAccessToken';
+			$url     = $this->api_url . 'requestAccessToken';
 			$payload = array(
 				'code'       => $this->api_secret,
 				'grant_type' => 'authorization_code',
 			);
 
-			$decoded_body = $this->oa_remote_post( $url, $payload);
+			$decoded_body = $this->oa_remote_post( $url, $payload );
 
 			if ( ! empty( $decoded_body ) ) {
-				$token        = $decoded_body[ access_token ];
-				$expire       = $decoded_body['expires_in'] - 1;
+				$token  = $decoded_body[ access_token ];
+				$expire = $decoded_body['expires_in'] - 1;
 				set_transient( 'openagenda_secret', $token, $expire );
 			}
 		} else {
@@ -211,7 +220,7 @@ class Openagenda {
 
 	}
 
-	public function oa_remote_post( $url, $payload ){
+	public function oa_remote_post( $url, $payload ) {
 		$curl = curl_init();
 
 		curl_setopt_array(
@@ -230,8 +239,19 @@ class Openagenda {
 		);
 
 		$response = curl_exec( $curl );
-
 		curl_close( $curl );
+
+		/*$response = wp_remote_post( $url,
+			array(
+				'headers' => array(
+					'access-token' => $this->access_token,
+					'nonce'        => wp_rand(),
+				),
+				'body'    => $payload,
+			),
+		);*/
+
+
 
 		if ( ! empty( $response ) ) {
 			$decoded_body = json_decode( $response, true );
@@ -240,6 +260,9 @@ class Openagenda {
 	}
 
 	public function get_agendas_list() {
+		if ( get_transient( 'oa_agenda_list' ) ) {
+			return get_transient( 'oa_agenda_list' );
+		}
 		$list = $this->get_data( "me/agendas?key=$this->api_key" );
 		if ( is_wp_error( $list ) ) {
 			$list = array();
@@ -247,26 +270,27 @@ class Openagenda {
 			return $list;
 		}
 		if ( $list['success'] ) {
+			set_transient( 'oa_agenda_list', $list['items'], 3600 );
 			return $list['items'];
 		}
 
 	}
 
 	public function export_location( $post_ID, $post, $update ) {
-		$location_uid = get_post_meta( $post_ID, 'oa_location_uid', true);
+		$location_uid = get_post_meta( $post_ID, 'oa_location_uid', true );
 		$url          = $this->api_url . 'agendas/' . $this->agenda_uid . '/locations/';
-		if( ! empty( $location_uid ) ){
+		if ( ! empty( $location_uid ) ) {
 			$url = $url . $location_uid;
 		}
 
-		$fields       = get_fields( $post_ID );
+		$fields  = get_fields( $post_ID );
 		$country = nominatim()->get_country_code( $fields['oa_loc_address']['center_lat'], $fields['oa_loc_address']['center_lng'] );
-		$data         = array(
-			'uid' => $location_uid,
-			'name'      => esc_attr( $post->post_title ),
-			'address'   => esc_attr( $fields['oa_loc_address']['address'] ),
-			'latitude'  => esc_attr( $fields['oa_loc_address']['center_lat'] ),
-			'longitude' => esc_attr( $fields['oa_loc_address']['center_lng'] ),
+		$data    = array(
+			'uid'         => $location_uid,
+			'name'        => esc_attr( $post->post_title ),
+			'address'     => esc_attr( $fields['oa_loc_address']['address'] ),
+			'latitude'    => esc_attr( $fields['oa_loc_address']['center_lat'] ),
+			'longitude'   => esc_attr( $fields['oa_loc_address']['center_lng'] ),
 			'countryCode' => $country,
 
 		);
@@ -277,34 +301,121 @@ class Openagenda {
 	}
 
 	public function export_data( $url, $data ) {
-		$access_token = $this->get_acces_token();
 		$posted       = array(
-			'access_token' => $access_token,
+			'access_token' => $this->get_acces_token(),
 			'nonce'        => wp_rand(),
 			'data'         => json_encode( $data ),
 		);
-		$ch = curl_init();
+
+		$received_content = wp_remote_post( $url, $posted );
+		/*$ch           = curl_init();
 
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_POST, true );
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $posted );
 
-		$received_content = curl_exec( $ch );
+		$received_content = curl_exec( $ch );*/
 
 		$decode = json_decode( $received_content, true );
-		if ( true === $decode['success'] ){
+		if ( 403 === (int) wp_remote_retrieve_response_code( $received_content ) ){
+			delete_transient( 'openagenda_secret' );
+			$this->export_data( $url, $data );
+		}
+		if ( true === $decode['success'] ) {
 			$uid = $decode['location']['uid'];
 			return $uid;
 		}
 		return false;
 	}
 
-	public function get_locations() {
-		$locations = $this->get_data( "agendas/$this->agenda_uid/locations&key=$this->api_key" );
-		foreach ( $locations as $location ) {
-
+	/**
+	 * @param $location
+	 *
+	 * @return int|WP_Error
+	 * @author  sebastien
+	 * @package wp-openagenda
+	 * @since
+	 */
+	public function insert_location( $location ) {
+		$locale = substr( get_locale(), 0, 2 );
+		$args   = array(
+			'post_type'  => 'venue',
+			'meta_query' => array(
+				'relation' => 'AND',
+				array(
+					'key'   => 'oa_location_uid',
+					'value' => $location['uid'],
+				),
+			),
+		);
+		$venue  = get_posts( $args );
+		$venue  = $venue[0];
+		$id     = '';
+		if ( ! empty( $venue ) ) {
+			$id = $venue->ID;
 		}
+		$postarr = array(
+			'ID'           => $id,
+			'post_content' => $location['description'][ $locale ],
+			'post_title'   => $location['name'],
+			'post_type'    => 'venue',
+			'post_status'   => 'publish',
+			'meta_input'   => array(
+				'oa_location_uid' => $location['uid'],
+			),
+		);
+		$id      = wp_insert_post( $postarr );
+
+		// ACF fields
+		$address = implode(
+			', ',
+			array(
+				$location['address'],
+				$location['postalCode'],
+				$location['city'],
+				$location['region'],
+				$location['region'],
+				$location['countryCode'],
+			),
+		);
+		$osm = array(
+			'lat'     => $location['latitude'],
+			'lng'     => $location['longitude'],
+			'zoom'    => 12,
+			'markers' => array(
+				array(
+					'label'         => $address,
+					'default_label' => $address,
+					'lat'           => $location['latitude'],
+					'lng'           => $location['longitude'],
+				),
+			),
+			'address' => $address,
+			'layers'  => array(
+				'OpenStreetMap.Mapnik',
+			),
+			'version' => '1.3.2',
+		);
+		update_field( 'oa_loc_address', $osm, $id );
+
+		// Access
+		update_field( 'oa_loc_access', $location['access'][$locale], $id );
+
+		// Image Credits
+		update_field( 'oa_loc_image_credits', $location['imageCredits'], $id );
+
+		// Website
+		update_field( 'oa_loc_website', $location['website'], $id );
+
+		//Email
+		update_field( 'oa_loc_e-mail', $location['email'], $id );
+
+		//Phone
+		update_field( 'oa_loc_phone', $location['phone'], $id );
+
+
+		return $id;
 	}
 
 }

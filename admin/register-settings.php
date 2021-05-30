@@ -30,6 +30,7 @@ function thfo_openwp_options_page() {
 	$tabs = array(
 		'general' => __( 'General', 'wp-openagenda' ),
 		'agendas' => __( 'Agendas', 'wp-openagenda' ),
+		'tools'   => __( 'Tools', 'wp-openagenda' ),
 		'help'    => __( 'Help', 'wp-openagenda' ),
 	);
 	$tabs = apply_filters( 'openwp_settings_tabs', $tabs );
@@ -74,6 +75,10 @@ function thfo_openwp_options_page() {
 					settings_fields( 'openagenda-wp-agenda' );
 					do_settings_sections( 'openagenda-wp-agenda' );
 					break;
+				case 'tools':
+					settings_fields( 'openagenda-wp-tools' );
+					do_settings_sections( 'openagenda-wp-tools' );
+					break;
 				case 'general':
 				default:
 					settings_fields( 'openagenda-wp' );
@@ -96,6 +101,22 @@ add_action( 'admin_init', 'thfo_openwp_register_settings' );
 function thfo_openwp_register_settings() {
 	add_settings_section( 'openagenda-wp-help', __( 'Help Center', 'wp-openagenda' ), 'thfo_openwp_help', 'openagenda-wp-help' );
 	add_settings_section( 'openagenda-wp', '', '', 'openagenda-wp' );
+	add_settings_section( 'openagenda-wp-tools', '', '', 'openagenda-wp-tools' );
+	add_settings_field(
+		'openagenda-wp-sync',
+		__( 'Force Import', 'wp-openagenda' ),
+		'openwp_oa_sync',
+		'openagenda-wp-tools',
+		'openagenda-wp-tools'
+	);
+	add_settings_field(
+		'openagenda-wp-import-locations',
+		__( 'Import locations', 'wp-openagenda' ),
+		'openwp_oa_import_locations',
+		'openagenda-wp-tools',
+		'openagenda-wp-tools'
+	);
+
 	register_setting( 'openagenda-wp', 'openagenda_api' );
 	add_settings_field( 'openagenda-wp', __( 'API Openagenda', 'wp-openagenda' ), 'thfo_openwp_api', 'openagenda-wp', 'openagenda-wp' );
 
@@ -266,13 +287,7 @@ function openwp_pro_register_settings() {
 
 	register_setting( 'openagenda-wp', 'openagenda_secret' );
 	add_settings_field( 'openagenda-wp-secret', __( 'Secret Key Openagenda', 'wp-openagenda' ), 'openwp_oa_secret', 'openagenda-wp', 'openagenda-wp' );
-	add_settings_field(
-		'openagenda-wp-sync',
-		__( 'Force Import', 'wp-openagenda' ),
-		'openwp_oa_sync',
-		'openagenda-wp',
-		'openagenda-wp'
-	);
+
 
 }
 
@@ -291,6 +306,22 @@ function openwp_oa_sync() {
 	<a href="<?php echo esc_url( $url ); ?>"><?php esc_attr_e( 'Import Agenda Now', 'wp-openagenda' ); ?></a>
 	<?php
 }
+function openwp_oa_import_locations() {
+	$url = wp_nonce_url(
+		add_query_arg(
+			array(
+				'oa-import-locations' => 'now',
+			),
+			admin_url()
+		),
+		'sync',
+		'_wpnonce'
+	);
+	?>
+    <a href="<?php echo esc_url( $url ); ?>"><?php esc_attr_e( 'Import Locations Now', 'wp-openagenda' ); ?></a>
+	<?php
+}
+
 
 function openwp_oa_secret() {
 	?>

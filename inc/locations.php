@@ -41,7 +41,7 @@ if ( ! function_exists('venues') ) {
 			'label'                 => __( 'Venue', 'wp-openagenda' ),
 			'description'           => __( 'Event Venue', 'wp-openagenda' ),
 			'labels'                => $labels,
-			'supports'              => array( 'title', 'thumbnail' ),
+			'supports'              => array( 'title', 'thumbnail', 'editor' ),
 			'hierarchical'          => false,
 			'public'                => true,
 			'show_ui'               => true,

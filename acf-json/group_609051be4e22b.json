@@ -27,25 +27,6 @@
             "max_markers": ""
         },
         {
-            "key": "field_6090557d8c94d",
-            "label": "Description",
-            "name": "oa_loc_description",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "maxlength": 5001,
-            "rows": "",
-            "new_lines": ""
-        },
-        {
             "key": "field_6090549b041ee",
             "label": "Access",
             "name": "oa_loc_access",
@@ -154,5 +135,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1620145369
+    "modified": 1620244481
 }
