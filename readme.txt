@@ -4,14 +4,19 @@ Tags: openagenda, agenda, events, calendar,
 Requires at least: 4.6
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.1.6
+Stable tag: 2.1.7
 Donate link: https://github.com/sponsors/sebastienserre/
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-Display Events hosted in Openagenda.com easily in your WordPress Website.
+** UNMAINTENED PLUGIN **
+Please do not install it, it will break soon.
+Install the official OpenAGenda Plugin: https://wordpress.org/plugins/openagenda/
+
 
 == Description ==
+Please do not install it, it will break soon.
+Install the official OpenAGenda Plugin: https://wordpress.org/plugins/openagenda/
 Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode, Gutenberg Blocks and Widget.
 
 == Installation ==
@@ -73,6 +78,8 @@ create events in The Event Calendar.
 9. Masonry layout
 
 == Changelog ==
+= 2.1.7 -- 02 February 2022 =
+ - New API by Openagenda not supported by this plugin. It will break. Please USE https://wordpress.org/plugins/openagenda/
 
 = 2.1.5 & 2.1.6 -- 30 may 2021 =
  - Testing with latest WP version. All seems OK
