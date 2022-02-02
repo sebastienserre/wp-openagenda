@@ -29,7 +29,7 @@ class Openagenda_WP_Main {
 		/**
 		 * Define Constant
 		 */
-		define( 'THFO_OPENWP_VERSION', '2.1.6' );
+		define( 'THFO_OPENWP_VERSION', '2.1.7' );
 		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
