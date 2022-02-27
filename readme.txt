@@ -9,14 +9,10 @@ Donate link: https://github.com/sponsors/sebastienserre/
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-** UNMAINTENED PLUGIN **
-Please do not install it, it will break soon.
 Install the official OpenAGenda Plugin: https://wordpress.org/plugins/openagenda/
 
 
 == Description ==
-Please do not install it, it will break soon.
-Install the official OpenAGenda Plugin: https://wordpress.org/plugins/openagenda/
 Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode, Gutenberg Blocks and Widget.
 
 == Installation ==
@@ -43,7 +39,7 @@ On WP 5.0 Use the new Gutenberg Blocks!
 * No! You can display all Agenda from [Openagenda.com](openagenda.com) by just copying the Agenda's url.
 
 = May I display several Agenda?
-* Yes! (one by widget, shortcode, gutenberg Block)
+* No!
 
 = Where can I found help ?
 *  You can use WordPress forum to find help.
@@ -78,6 +74,11 @@ create events in The Event Calendar.
 9. Masonry layout
 
 == Changelog ==
+= 2.5.0 -- 27 February 2022 =
+ - Support the OpenAgenda V2 API. Not really tested, please test on Staging / developement website.
+ - Add a UID (field in the settings)
+ - *STOP* The Event Calendar support.
+
 = 2.1.7 -- 02 February 2022 =
  - New API by Openagenda not supported by this plugin. It will break. Please USE https://wordpress.org/plugins/openagenda/
 

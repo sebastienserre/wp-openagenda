@@ -343,9 +343,7 @@ class OpenAgendaApi {
 	 * Check if API Key is Valid or not
 	 */
 	public function check_api() {
-		$key   = $this->thfo_openwp_get_api_key();
 		$check = $this->openwp_get_uid( 'https://openagenda.com/thivinfo' );
-		//$check = wp_remote_get( 'https://api.openagenda.com/v1/events?key=' . $key . '&lang=fr' );
 		if ( null === $check ) {
 			?>
             <div class="notice notice-error openagenda-notice">
@@ -436,7 +434,7 @@ class OpenAgendaApi {
 				),
 			);
 
-			$ch = wp_remote_post( 'https://api.openagenda.com/v1/requestAccessToken', $args );
+			$ch = wp_remote_post( 'https://api.openagenda.com/v2/requestAccessToken', $args );
 
 			if ( 200 === (int) wp_remote_retrieve_response_code( $ch ) ) {
 				$body         = wp_remote_retrieve_body( $ch );
@@ -473,8 +471,9 @@ class OpenAgendaApi {
 
 	public static function get_venue( $locationID ) {
 		$key = self::thfo_openwp_get_api_key();
+        $uid = get_option( 'openagenda-uid' );
 
-		$json = wp_remote_get( "https://api.openagenda.com/v1/locations/$locationID?key=$key" );
+		$json = wp_remote_get( "https://api.openagenda.com/v2/agendas/$uid/locations/$locationID?key=$key" );
 
 		if ( 200 === (int) wp_remote_retrieve_response_code( $json ) ) {
 			$body         = wp_remote_retrieve_body( $json );

@@ -1,7 +1,5 @@
 <?php
 
-use OpenAgenda\TEC\The_Event_Calendar;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
@@ -9,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Is The Event Calendar used ?
  */
-if ( ! function_exists( 'openagenda_event' ) && false === The_Event_Calendar::$tec_option ) {
+if ( ! function_exists( 'openagenda_event' ) ) {
 
 // Register Custom Post Type
 	function openagenda_event() {   
