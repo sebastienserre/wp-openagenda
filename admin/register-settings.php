@@ -85,7 +85,17 @@ function thfo_openwp_register_settings() {
 	add_settings_section( 'openagenda-wp-help', __( 'Help Center', 'wp-openagenda' ), 'thfo_openwp_help', 'openagenda-wp-help' );
 	add_settings_section( 'openagenda-wp', '', '', 'openagenda-wp' );
 	register_setting( 'openagenda-wp', 'openagenda_api' );
+	register_setting('openagenda-wp', 'openagenda_uid');
 	add_settings_field( 'openagenda-wp', __( 'API Openagenda', 'wp-openagenda' ), 'thfo_openwp_api', 'openagenda-wp', 'openagenda-wp' );
+	add_settings_field('openagenda-uid', __('Agenda UID','wp-openagenda'), 'vc_openagenda_uid', 'openagenda-wp', 'openagenda-wp');
+
+}
+
+function vc_openagenda_uid(){
+	?>
+    <input type="text" name="openagenda_uid" value="<?php echo get_option('openagenda_uid')?>"/>
+    <p><?php _e('Find your UID key in the bottom right of your Openagenda page.','wp-openagenda') ?></p>
+	<?php
 }
 
 /**
