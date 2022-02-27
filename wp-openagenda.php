@@ -6,7 +6,7 @@
  * Version: 2.5
  * Author: Sébastien Serre
  * Author URI: http://www.thivinfo.com
- * Tested up to: 5.7
+ * Tested up to: 5.9
  * License: GPLv3
  *
  * @package         openagenda-wp

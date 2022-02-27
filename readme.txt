@@ -9,9 +9,6 @@ Donate link: https://github.com/sponsors/sebastienserre/
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-Install the official OpenAGenda Plugin: https://wordpress.org/plugins/openagenda/
-
-
 == Description ==
 Display Events hosted in Openagenda.com easily in your WordPress Website by using shortcode, Gutenberg Blocks and Widget.
 
@@ -74,7 +71,7 @@ create events in The Event Calendar.
 9. Masonry layout
 
 == Changelog ==
-= 2.5.0 -- 27 February 2022 =
+= 2.5 -- 27 February 2022 =
  - Support the OpenAgenda V2 API. Not really tested, please test on Staging / developement website.
  - Add a UID (field in the settings)
  - *STOP* The Event Calendar support.
