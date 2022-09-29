@@ -66,8 +66,6 @@ create events in The Event Calendar.
 4. Customer account embed.
 5. Visual Composer Element
 6. Display OpenAgenda widget in a great WP Widget
-7. Gutenberg Block (Front-Office and Preview)
-8. Gutenberg Block (Back-Office and Settings)
 9. Masonry layout
 
 == Changelog ==
