@@ -133,21 +133,23 @@ function openwp_display_date( $id ) {
 		return;
 	}
 
-	$dates = get_field( 'oa_date', $id );
+	$dates_begin = get_field( 'oa_date_begin', $id );
+	$dates_end = get_field( 'oa_date_end', $id );
 
-	if ( empty( $dates ) ) {
+	if ( empty( $dates_begin ) && empty( $dates_end ) ) {
 		$msg = __( 'No date for this event!', 'wp-openagenda' );
 	}
 
-	foreach ( $dates as $date ) {
-		$msg .= sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $date['begin'] ),
-			date_i18n( 'd F Y G\Hi', $date['end'] ) );
+	if ( $dates_begin !== $dates_end ){
+		$msg .= sprintf( __( '<p>From %1$s to %2$s</p>', 'wp-openagenda' ), date_i18n( 'd F Y G\Hi', $dates_begin ),
+			date_i18n( 'd F Y G\Hi', $dates_end ) );
 	}
-	if ( ! empty( $start ) && ! empty( $end ) ) {
+
+    if ( ! empty( $dates_begin ) && ! empty( $dates_end ) ) {
 
 
-		if ( $start === $end ) {
-			$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $end );
+		if ( $dates_begin === $dates_end ) {
+			$msg = sprintf( __( 'On %s', 'wp-openagenda' ), $dates_end );
 		}
 	}
 

@@ -266,8 +266,8 @@ class Import_OA {
 
 						$dates[] =
 							[
-								'field_5d61787c65c27' => $begin,
-								'field_5d61789f65c28' => $end,
+								'field_5d50075c33c2d' => $begin,
+								'field_6335343ca1855' => $end,
 							];
 					}
 
@@ -299,7 +299,10 @@ class Import_OA {
 
 						$insert = wp_insert_post( $args );
 
-						$dates = update_field( 'field_5d50075c33c2d', $dates, $insert );
+						//insert dates
+						update_field( 'field_5d50075c33c2d', $dates['field_5d50075c33c2d'], $insert );
+						update_field( 'field_6335343ca1855', $dates['field_6335343ca1855'], $insert );
+
 						// insert Keywords
 						wp_set_post_terms( $insert, $events['keywords'][$lang], 'openagenda_keyword' );
 
