@@ -34,8 +34,7 @@ class Openagenda_WP_Main {
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
 		define( 'THFO_OPENWP_CUST_INC', THFO_OPENWP_PLUGIN_PATH . 'inc/' );
-		define( 'MY_ACF_PATH', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/acf/' );
-		define( 'MY_ACF_URL', THFO_OPENWP_PLUGIN_PATH . '/3rd-party/acf/' );
+
 
 		/**
 		 * Actions
@@ -46,11 +45,12 @@ class Openagenda_WP_Main {
 		add_action( 'plugins_loaded', array( $this, 'openwp_load' ), 400 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'openwp_pro_load_style__premium_only' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'openwp_register_script__premium_only' ) );
+		add_action( 'plugins_loaded', array( $this, 'openwp_load_acf' ) );
 
 		/**
 		 * Filters
 		 */
-		add_filter( 'acf/settings/url', [ $this, 'my_acf_settings_url__premium_only' ] );
+	//
 
 		register_activation_hook( __FILE__, array( $this, 'openwp_activation__premium_only' ) );
 	}
@@ -78,7 +78,6 @@ class Openagenda_WP_Main {
 	function thfo_openwp_load_files() {
 
 		include_once THFO_OPENWP_CUST_INC . '1-helpers.php';
-		include_once MY_ACF_PATH . 'acf.php';
 		include_once THFO_OPENWP_CUST_INC . 'acf-fields.php';
 		include_once THFO_OPENWP_CUST_INC . 'agenda.php';
 		include_once THFO_OPENWP_CUST_INC . 'categories.php';
@@ -176,6 +175,18 @@ class Openagenda_WP_Main {
 	public
 	function openwp_pro_load_style__premium_only() {
 		wp_enqueue_style( 'jquery-ui-dp', THFO_OPENWP_PLUGIN_URL . 'assets/css/jquery-ui.min.css' );
+	}
+
+	public function openwp_load_acf(){
+		// do not load if alreadt activated standalone
+		if ( class_exists( 'ACF') ){
+			return;
+		}
+		define( 'MY_ACF_PATH', THFO_OPENWP_PLUGIN_PATH . '3rd-party/acf/' );
+		define( 'MY_ACF_URL', THFO_OPENWP_PLUGIN_URL . '3rd-party/acf/' );
+		add_filter( 'acf/settings/url', [ $this, 'my_acf_settings_url__premium_only' ] );
+
+		include_once MY_ACF_PATH . 'acf.php';
 	}
 }
 
