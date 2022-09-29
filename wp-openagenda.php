@@ -3,10 +3,10 @@
  * Plugin Name: WP Openagenda
  * Plugin URI: https://github.com/sebastienserre/wp-openagenda
  * Description: Easily display an OpenAgenda.com in your WordPress website
- * Version: 2.5
+ * Version: 2.6
  * Author: Sébastien Serre
- * Author URI: http://www.thivinfo.com
- * Tested up to: 5.9
+ * Author URI: http://thivinfo.com
+ * Tested up to: 6.0
  * License: GPLv3
  *
  * @package         openagenda-wp
@@ -29,7 +29,7 @@ class Openagenda_WP_Main {
 		/**
 		 * Define Constant
 		 */
-		define( 'THFO_OPENWP_VERSION', '2.5' );
+		define( 'THFO_OPENWP_VERSION', '2.6' );
 		define( 'THFO_OPENWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'THFO_OPENWP_PLUGIN_DIR', untrailingslashit( THFO_OPENWP_PLUGIN_PATH ) );
@@ -179,12 +179,14 @@ class Openagenda_WP_Main {
 
 	public function openwp_load_acf(){
 		// do not load if alreadt activated standalone
+		add_filter( 'acf/settings/show_admin', '__return_false' );
 		if ( class_exists( 'ACF') ){
 			return;
 		}
 		define( 'MY_ACF_PATH', THFO_OPENWP_PLUGIN_PATH . '3rd-party/acf/' );
 		define( 'MY_ACF_URL', THFO_OPENWP_PLUGIN_URL . '3rd-party/acf/' );
 		add_filter( 'acf/settings/url', [ $this, 'my_acf_settings_url__premium_only' ] );
+
 
 		include_once MY_ACF_PATH . 'acf.php';
 	}
