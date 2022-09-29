@@ -178,7 +178,7 @@ class Openagenda_WP_Main {
 	}
 
 	public function openwp_load_acf(){
-		// do not load if alreadt activated standalone
+		// do not load if already activated standalone
 		add_filter( 'acf/settings/show_admin', '__return_false' );
 		if ( class_exists( 'ACF') ){
 			return;
