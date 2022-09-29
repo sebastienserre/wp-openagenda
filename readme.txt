@@ -2,9 +2,9 @@
 Contributors: sebastienserre
 Tags: openagenda, agenda, events, calendar,
 Requires at least: 5.5
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 7.4
-Stable tag: 2.5
+Stable tag: 2.6
 Donate link: https://github.com/sponsors/sebastienserre/
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -69,6 +69,11 @@ create events in The Event Calendar.
 9. Masonry layout
 
 == Changelog ==
+
+= 2.6 -- 29 september 2022 =
+- Remove use of ACF PRO (not allowed by wp.org).
+- Recurrent events are no more available.
+
 = 2.5 -- 27 February 2022 =
  - Support the OpenAgenda V2 API. Not really tested, please test on Staging / developement website.
  - Add a UID (field in the settings)
